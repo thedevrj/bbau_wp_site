@@ -12,10 +12,10 @@ git checkout $BRANCH
 git pull origin $BRANCH
 
 echo "→ Fixing permissions (themes + uploads only)"
-chown -R www-data:www-data wp-content/themes wp-content/uploads
 find wp-content/themes -type d -exec chmod 775 {} \;
 find wp-content/themes -type f -exec chmod 664 {} \;
-
+find wp-content/uploads -type d -exec chmod 775 {} \;
+find wp-content/uploads -type f -exec chmod 664 {} \;
 echo "→ Restarting containers"
 docker compose down
 docker compose up -d
