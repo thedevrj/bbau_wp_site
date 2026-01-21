@@ -16,7 +16,6 @@ jobs:
         run: |
           set -e
 
-          # HARD FAIL if secrets are missing
           test -n "${{ secrets.DEV_SERVER_HOST }}"
           test -n "${{ secrets.DEV_SERVER_USER }}"
           test -n "${{ secrets.DEV_SERVER_SSH_KEY }}"
@@ -25,7 +24,8 @@ jobs:
           echo "${{ secrets.DEV_SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
-          ssh-keyscan -H "${{ secrets.DEV_SERVER_HOST }}" >> ~/.ssh/known_hosts
+          # Tolerant ssh-keyscan (CI-safe)
+          ssh-keyscan -p 22 -T 10 "${{ secrets.DEV_SERVER_HOST }}" >> ~/.ssh/known_hosts || true
 
           echo "SSH ready"
 
