@@ -7,30 +7,13 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Setup SSH
+      - name: Deploy DEV
         run: |
-          set -e
-
-          test -n "${{ secrets.DEV_SERVER_HOST }}"
-          test -n "${{ secrets.DEV_SERVER_USER }}"
-          test -n "${{ secrets.DEV_SERVER_SSH_KEY }}"
-
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEV_SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-
-          # Tolerant ssh-keyscan (CI-safe)
-          ssh-keyscan -p 22 -T 10 "${{ secrets.DEV_SERVER_HOST }}" >> ~/.ssh/known_hosts || true
-
-          echo "SSH ready"
-
-      - name: Deploy to DEV
-        run: |
-          ssh -o StrictHostKeyChecking=yes \
-          ${{ secrets.DEV_SERVER_USER }}@${{ secrets.DEV_SERVER_HOST }} \
-          "cd /srv/apps/wordpress/dev && ./deploy-dev.sh"
+          cd /srv/apps/wordpress/dev
+          ./deploy-dev.sh
