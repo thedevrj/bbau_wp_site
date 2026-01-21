@@ -1,0 +1,926 @@
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ================= TOP BAR ================= */
+.top-bar {
+  width: 100%;
+  height: 45px;
+  background: #1f6f8b;
+}
+
+.top-bar-container {
+  width: 1440px;
+  height: 45px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 14px;
+  gap: 103px;
+}
+
+/* LEFT LINKS */
+.top-left {
+  display: flex;
+  gap: 17px;
+}
+
+.top-left a {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 400;
+  text-decoration: none;
+  padding: 14px 0 15px;
+  white-space: nowrap;
+}
+
+/* RIGHT AREA */
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-right span {
+  color: #ffffff;
+  cursor: pointer;
+  padding: 14px 0 15px;
+}
+
+.top-right span:nth-child(1) { font-size: 14px; }
+.top-right span:nth-child(2) { font-size: 12px; }
+.top-right span:nth-child(3) { font-size: 10px; }
+
+.lang-img {
+  height: 22px;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+/* SEARCH CONTAINER */
+.search-box {
+  width: 88px;
+  height: 25px;
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  overflow: hidden;
+}
+
+/* INPUT — HARD RESET */
+.search-box input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  font-size: 11px;
+  line-height: 25px;
+  color: #555;
+  appearance: none;
+  box-shadow: none;
+}
+
+.search-box input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ICON */
+.search-icon {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  margin-left: 4px;
+  pointer-events: none;
+}
+
+/* ================= HEADER ================= */
+.main-header {
+  width: 100%;
+  height: 94px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Bootstrap container override for exact layout */
+.main-header .container-xxl {
+  max-width: 1440px;
+  height: 94px;
+
+  padding-left: 100px;
+  padding-right: 100px;
+
+  box-sizing: border-box;
+}
+
+/* LOGO */
+.logo {
+  width: 29px;
+  height: 51px;
+  flex-shrink: 0;
+}
+
+/* UNIVERSITY NAME BLOCK */
+.univ-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Hindi name */
+.univ-hindi {
+  font-family: "Noto Serif TC", serif;
+  font-size: 18px;
+  line-height: 17px;
+  letter-spacing: 0.68px;
+  color: #0B3C5D;
+  -webkit-text-stroke: 1px #0B3C5D;
+  white-space: nowrap;
+}
+
+/* English name */
+.univ-english {
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: -0.9px;
+  color: #0B3C5D;
+  white-space: nowrap;
+}
+
+/* Subtitle */
+.univ-subtitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #0D2B66;
+  text-align: center;      /* 🔥 KEY */
+  align-self: center;      /* 🔥 KEY */
+  margin-top: 1px;         /* small spacing under English */
+}
+
+
+/* ================= NAVIGATION ================= */
+/* ================= HOME ICON IN NAV ================= */
+
+/* Home link behaves like other nav items */
+.header-nav .nav-home {
+  display: flex;
+  align-items: center;
+  height: 94px;              /* same as nav */
+  line-height: 94px;
+}
+
+/* Home icon size = text height */
+.header-nav .nav-home img {
+  height: 14px;              /* visually matches 13px font */
+  width: auto;
+  display: block;
+}
+
+/* Same gap as other items */
+.header-nav {
+  gap: 24px;                 /* already matches About */
+}
+
+.header-nav {
+  height: 94px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.header-nav .nav-home:hover img {
+  opacity: 0.75;
+}
+
+
+.header-nav a {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #000000;
+  text-decoration: none;
+  line-height: 94px;
+}
+
+/* ================= RIGHT IMAGE ================= */
+.header-photo img {
+  width: 98px;
+  height: 94px;
+  object-fit: cover;
+}
+
+  /* Desktop stays exactly the same */
+
+@media (max-width: 1199px) {
+
+  .main-header {
+    height: auto;
+  }
+
+  .main-header .container-xxl {
+    padding-left: 24px;
+    padding-right: 24px;
+    height: auto;
+  }
+
+  .header-nav {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .main-header {
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .main-header .container-xxl {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    text-align: center;
+    gap: 6px;
+  }
+
+  /* Center brand */
+  .main-header .d-flex.align-items-center {
+    flex-direction: column;
+  }
+
+  .univ-name {
+    align-items: center;
+  }
+
+  .univ-hindi {
+    font-size: 14px;
+  }
+
+  .univ-english {
+    font-size: 13px;
+  }
+
+  .univ-subtitle {
+    font-size: 11px;
+  }
+
+  /* Nav already hidden by d-none d-lg-flex */
+}
+
+
+/* ================= HERO ================= */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 588px;
+  overflow: hidden;
+}
+
+/* ORIGINAL IMAGE SUPPORT (kept) */
+.hero-img {
+  width: 100%;
+  height: 588px;
+  object-fit: cover;
+  display: block;
+}
+
+/* HERO CAPTION (unchanged) */
+.hero-caption {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 4px;
+  max-width: 760px;
+  font-size: 14px;
+  line-height: 1.4;
+  z-index: 2;
+}
+
+.hero-caption .author {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ================= HERO BACKGROUND VIDEO (ADDED ONLY) ================= */
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* subtle overlay – same visual feel */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.15);
+  z-index: 1;
+}
+
+/* ================= ANNOUNCEMENT BAR ================= */
+.announce-bar {
+  width: 100%;
+  height: 53px;
+  background: #ffffff;
+  border-top: 3px solid #A41F7F;
+  border-bottom: 3px solid #A41F7F;
+  overflow: hidden;
+}
+
+.announce-container {
+  width: 1440px;
+  height: 53px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.announce-track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: announce-slide 22s linear infinite;
+}
+
+.announce-track span {
+  padding: 0 24px;
+  font-family: "Poppins", sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  height: 53px;
+  display: flex;
+  align-items: center;
+}
+
+.announce-track span:nth-child(1) { color: #000; }
+.announce-track span:nth-child(2) { color: #1f4fb2; }
+.announce-track span:nth-child(3) { color: #A41F7F; }
+
+.announce-track span:not(:last-child) {
+  border-right: 1px solid #A41F7F;
+}
+
+@keyframes announce-slide {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ================= GLANCE, VC, NOTICE ================= */
+/* (UNCHANGED — your existing code continues exactly as before) */
+/* ================= HEADER RESPONSIVE : TABLET ================= */
+@media (max-width: 1199px) {
+
+  .top-bar-container,
+  .header-container {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .logo {
+    left: 20px;
+  }
+
+  .univ-name {
+    left: 60px;
+  }
+
+  .header-nav {
+    left: 360px;
+    gap: 16px;
+  }
+
+  .header-photo img {
+    right: 20px;
+  }
+}
+/* ================= UNIVERSITY AT A GLANCE ================= */
+
+.glance-section {
+  width: 100%;
+  height: 463px;
+  margin-top: 0;
+  background: url("/wp-content/uploads/2026/01/DJI_0012-scaled.jpg")
+    no-repeat center center;
+  background-size: cover;
+}
+
+/* DARK OVERLAY */
+.glance-overlay {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* CONTAINER */
+.glance-container {
+  width: 1440px;
+  height: 463px;
+  padding: 20px 110px;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+/* ================= TITLE ================= */
+.glance-title {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 45.7px;
+  margin-bottom: 12px;
+
+  background: linear-gradient(90deg, #ffffff, #f9f9f9, #999999);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-decoration: underline;
+}
+
+/* DESCRIPTION */
+.glance-desc {
+  max-width: 1150px;
+  margin: 0 auto 28px auto;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+}
+
+/* ================= STATS GRID ================= */
+.glance-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 20px;
+  margin-top: 12px; /* aligns icons under text */
+}
+
+/* ================= SINGLE STAT ================= */
+.stat {
+  display: flex;
+  align-items: center;     /* 🔥 vertical alignment */
+  gap: 2px;                /* 🔥 EXACT 2px gap */
+  height: 140px;
+  text-align: left;
+}
+
+/* ICON (NO BOX) */
+.stat img {
+  width: 104px;
+  height: 69px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  flex-shrink: 0;
+}
+
+/* TEXT */
+.stat-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2px; /* optical alignment like screenshot */
+}
+
+/* NUMBER */
+.stat-text .num {
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* LABEL */
+.stat-text .label {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  margin-top: 2px;
+  opacity: 0.95;
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 1199px) {
+
+  .glance-section {
+    height: auto;
+  }
+
+  .glance-container {
+    width: 100%;
+    height: auto;
+    padding: 32px 24px;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 767px) {
+
+  .glance-container {
+    padding: 24px 16px;
+  }
+
+  .glance-title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .glance-desc {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .glance-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat {
+    height: auto;
+  }
+
+  .stat img {
+    width: 72px;
+    height: auto;
+  }
+
+  .stat-text .num {
+    font-size: 20px;
+  }
+
+  .stat-text .label {
+    font-size: 11px;
+  }
+}
+
+
+/* ================= VC SECTION ================= */
+
+.vc-section {
+  
+  width: 100%;
+  background-color: #999999;
+  padding: 30px;
+}
+
+/* CONTAINER */
+.vc-container {
+  width: 1440px;
+  height: 321px;
+  margin: 0 auto;
+  
+  display: flex;
+  gap: 22px;
+
+  padding-left: 18px;
+  padding-right: 18px;
+
+  box-sizing: border-box;
+}
+
+/* ================= LEFT IMAGE ================= */
+
+.vc-image {
+  width: 391px;
+  height: 321px;
+}
+
+.vc-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 45px;
+}
+
+/* ================= RIGHT CONTENT ================= */
+
+.vc-content {
+  width: 986px;
+  height: 321px;
+
+  background: #1f6f8b;
+  border-radius: 45px;
+
+  padding: 32px 40px 45px;
+  box-sizing: border-box;
+
+  color: #ffffffd4;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* TITLE */
+.vc-content h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color:#e3d133;
+}
+
+/* TEXT */
+.vc-text {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  flex: 1;
+}
+
+/* GREETING */
+.vc-greeting {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* ================= BUTTON ================= */
+
+.vc-btn-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1px;
+}
+
+.vc-btn {
+  width: 118px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+
+  color: #FFFFFF;
+  background: #e4cf10;
+
+  border-radius: 17px;
+  text-decoration: none;
+
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.vc-btn:hover {
+  background: #F88017;
+  color: #FDE0BC;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+/* ================= RESPONSIVE ================= */
+
+/* TABLET */
+@media (max-width: 1199px) {
+  .vc-container {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .vc-image,
+  .vc-content {
+    width: 100%;
+    height: auto;
+  }
+
+  .vc-image {
+    height: 320px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 767px) {
+  .vc-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .vc-image {
+    height: 240px;
+  }
+
+  .vc-image img,
+  .vc-content {
+    border-radius: 32px;
+  }
+
+  .vc-content {
+    padding: 24px 20px 32px;
+  }
+
+  .vc-content h3 {
+    font-size: 24px;
+  }
+
+  .vc-text {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .vc-btn {
+    width: 110px;
+    height: 32px;
+    font-size: 13px;
+  }
+}
+/* ================= INFO / NOTICE SECTION ================= */
+
+
+.info-section {
+  width: 100%;
+  height: 510px;                 /* 🔥 FIXED HEIGHT */
+  margin-top: 32px;
+}
+
+.info-container {
+  width: 1440px;
+  height: 510px;                 /* match section */
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+
+
+/* COLUMN HEADINGS (OUTSIDE BOXES) */
+.info-headings {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 10px;
+}
+
+.info-headings h4 {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: #d94a2c;
+}
+
+/* GRID */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+/* BOX */
+.info-box {
+  height: 510px;                 /* 🔥 FIXED */
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+}
+
+/* SCROLL AREA */
+.info-scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;                 /* Firefox */
+  scrollbar-color: #d32f2f #f1f1f1;      /* 🔥 RED SCROLL */
+}
+
+/* ===== CHROME / EDGE / SAFARI SCROLLBAR ===== */
+.info-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.info-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.info-scroll::-webkit-scrollbar-thumb {
+  background-color: #d32f2f;   /* 🔥 RED */
+  border-radius: 10px;
+}
+
+.info-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #b71c1c;   /* darker red */
+}
+
+/* LINK ITEM */
+.info-item {
+  display: flex;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  padding: 14px 10px;
+  color: #000000;
+  text-decoration: none;
+  position: relative;
+  transition: background 0.25s ease;
+}
+
+/* FULL WIDTH DIVIDER */
+.info-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #e5e5e5;
+}
+
+.info-item:last-child::after {
+  display: none;
+}
+
+/* HOVER */
+.info-item:hover {
+  background: #f4f7fb;
+}
+
+/* VIEW ALL BUTTON */
+.info-link {
+  margin-top: 14px;
+  height: 36px;
+  padding: 0 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  background: #f28c28;
+  color: #ffffff;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.info-link.dark {
+  background: #1f1f1f;
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 1199px) {
+  .info-container {
+    width: 100%;
+    padding: 0 24px;
+  }
+
+  .info-headings,
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 767px) {
+
+  .info-section,
+  .info-container,
+  .info-box {
+    height: auto;          /* 🔥 auto on mobile */
+  }
+
+  .info-container {
+    padding: 0 16px;
+  }
+
+  .info-headings,
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-item {
+    font-size: 16px;
+  }
+}

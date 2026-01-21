@@ -1,0 +1,22 @@
+# Secrets
+.env
+
+# WordPress state
+wp-content/uploads/
+wp-content/plugins/
+wp-content/cache/
+wp-content/upgrade/
+
+# Allow themes only
+!wp-content/themes/
+!wp-content/themes/**
+
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Database / volumes
+db_data/
