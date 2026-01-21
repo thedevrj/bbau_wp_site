@@ -3,7 +3,7 @@
 get_header();
 ?>
 
-<!-- ================= HERO SECTION ================= -->
+<!-- ================= HERO SECTION home ================= -->
 <section class="hero">
   <video class="hero-video" autoplay muted loop playsinline>
     <source src="/wp-content/uploads/2026/01/BBAU-home-video-HD-1080p.mp4" type="video/mp4">

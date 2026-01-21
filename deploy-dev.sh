@@ -10,10 +10,7 @@ cd $APP_DIR
 git fetch origin
 git checkout $BRANCH
 git pull origin $BRANCH
-
-echo "→ Fixing permissions (themes ONLY)"
-chmod -R u+rwX,go+rX wp-content/themes
-
+#checking deploy
 echo "→ Restarting containers"
 docker-compose down
 docker-compose up -d
