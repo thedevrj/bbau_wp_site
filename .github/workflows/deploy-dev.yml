@@ -14,14 +14,23 @@ jobs:
 
       - name: Setup SSH
         run: |
+          set -e
+
+          # HARD FAIL if secrets are missing
+          test -n "${{ secrets.DEV_SERVER_HOST }}"
+          test -n "${{ secrets.DEV_SERVER_USER }}"
+          test -n "${{ secrets.DEV_SERVER_SSH_KEY }}"
+
           mkdir -p ~/.ssh
           echo "${{ secrets.DEV_SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.DEV_SERVER_HOST }} >> ~/.ssh/known_hosts
+
+          ssh-keyscan -H "${{ secrets.DEV_SERVER_HOST }}" >> ~/.ssh/known_hosts
+
+          echo "SSH ready"
 
       - name: Deploy to DEV
         run: |
-          ssh ${{ secrets.DEV_SERVER_USER }}@${{ secrets.DEV_SERVER_HOST }} "
-            cd /srv/apps/wordpress/dev &&
-            ./deploy-dev.sh
-          "
+          ssh -o StrictHostKeyChecking=yes \
+          ${{ secrets.DEV_SERVER_USER }}@${{ secrets.DEV_SERVER_HOST }} \
+          "cd /srv/apps/wordpress/dev && ./deploy-dev.sh"
