@@ -250,7 +250,7 @@ get_header();
       </div>
 
       <div class="slider-card">
-        <img src="/wp-content/uploads/2026/01/vc1-scaled.jpg">
+        <img src="/wp-content/uploads/2026/01/vc1-scaled-1.jpg">
       </div>
 
       <div class="slider-card">
