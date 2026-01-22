@@ -1,0 +1,19 @@
+name: Deploy stag
+
+on:
+  push:
+    branches:
+      - stag
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy Stag
+        run: |
+          cd /srv/apps/wordpress/stag
+          ./deploy-stag.sh
