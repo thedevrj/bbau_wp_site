@@ -825,7 +825,7 @@ body {
   display: flex;
   gap: 22px;
 
-  padding: 0 18px;              /* side spacing */
+  padding: 0 40px;              /* side spacing */
   box-sizing: border-box;
 
   align-items: stretch;         /* 🔥 image & content same height */
@@ -834,7 +834,7 @@ body {
 /* ================= LEFT IMAGE ================= */
 
 .vc-image {
-  width: 391px;
+  width: 430px;
   flex-shrink: 0;
 }
 
