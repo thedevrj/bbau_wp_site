@@ -10,13 +10,13 @@ body {
 }
 
 /* ================= TOP BAR ================= */
-/* ================= TOP BAR ================= */
 
-/* Global gap only for TOP BAR */
+/* ================= GLOBAL GAP ================= */
 :root {
   --top-bar-gap: 100px;   /* default (1440 & below) */
 }
 
+/* ================= TOP BAR ================= */
 .top-bar {
   width: 100%;
   height: 45px;
@@ -60,6 +60,18 @@ body {
   text-decoration: none;
   padding: 14px 0 15px;
   white-space: nowrap;
+
+  /* 🔥 HOVER SETUP */
+  display: inline-block;
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* 🔥 HOVER EFFECT */
+.top-left a:hover {
+  color: #FF9933;              /* saffron */
+  transform: scale(1.08);      /* equal zoom both sides */
 }
 
 /* ================= RIGHT AREA ================= */
@@ -73,20 +85,39 @@ body {
   color: #ffffff;
   cursor: pointer;
   padding: 14px 0 15px;
+
+  /* 🔥 HOVER SETUP */
+  display: inline-block;
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 0.25s ease, color 0.25s ease;
 }
 
 .top-right span:nth-child(1) { font-size: 14px; }
 .top-right span:nth-child(2) { font-size: 12px; }
 .top-right span:nth-child(3) { font-size: 10px; }
 
-/* LANGUAGE ICON */
+/* 🔥 HOVER EFFECT */
+.top-right span:hover {
+  color: #f47e09;
+  transform: scale(1.15);
+}
+
+/* ================= LANGUAGE ICON ================= */
 .lang-img {
   height: 22px;
   margin-left: 6px;
   cursor: pointer;
+
+  transition: transform 0.3s ease;
+  transform-origin: center center;
 }
 
-/* SEARCH CONTAINER — FIXED SIZE */
+.lang-img:hover {
+  transform: scale(1.12);
+}
+
+/* ================= SEARCH BOX ================= */
 .search-box {
   width: 88px;
   height: 25px;
@@ -99,13 +130,21 @@ body {
 
   padding: 0 8px;
   box-sizing: border-box;
+  overflow: hidden;
 
-  overflow: hidden;          /* 🔥 IMPORTANT: prevents overlap */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transform-origin: center center;
+}
+
+/* 🔥 SEARCH HOVER */
+.search-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 2px rgba(255,153,51,0.35);
 }
 
 /* INPUT — LOCKED */
 .search-box input {
-  width: 100%;               /* 🔥 fixed width */
+  width: 100%;
   height: 100%;
 
   border: none;
@@ -127,39 +166,34 @@ body {
   box-shadow: none;
 }
 
-/* REMOVE ALL FOCUS EFFECTS */
 .search-box input:focus {
   outline: none;
   box-shadow: none;
 }
 
-/* ICON */
+/* SEARCH ICON */
 .search-icon {
   font-size: 12px;
   margin-left: 4px;
   pointer-events: none;
   flex-shrink: 0;
 }
+
 /* ================= TABLET VIEW ================= */
 @media (max-width: 1199px) {
-
-  /* Reduce side gaps */
   .top-bar-container {
     padding-left: 32px;
     padding-right: 32px;
   }
 
-  /* Reduce gap between links */
   .top-left {
     gap: 12px;
   }
 
-  /* Slightly smaller text */
   .top-left a {
     font-size: 11px;
   }
 
-  /* Search pill scales down */
   .search-box {
     width: 72px;
     height: 24px;
@@ -175,7 +209,6 @@ body {
   }
 }
 
-
 /* ================= MOBILE ================= */
 @media (max-width: 767px) {
   .top-bar-container {
@@ -184,9 +217,10 @@ body {
   }
 
   .top-left {
-    display: none; /* optional */
+    display: none;
   }
 }
+
 
 
 
@@ -307,6 +341,7 @@ body {
 
 .menu > li > a {
 	padding-top: 19px !important;
+  
   display: block;
   padding: 0px 15px;
   color: #222;
@@ -455,10 +490,95 @@ body {
   }
 }
 
+/* ================= FIX MEGA & DROPDOWN POSITION ================= */
+
+/* Height of underline + spacing */
+:root {
+  --menu-underline-gap: 12px;
+}
+
+/* DROPDOWN */
+.dropdown-menu {
+  top: calc(100% + var(--menu-underline-gap));
+}
+
+/* MEGA MENU */
+.mega-menu {
+  top: calc(100% + var(--menu-underline-gap));
+}
+
+/* ================= MAIN TOP MENU HOVER ================= */
+
+/* ================= TOP LEVEL MENU ================= */
+.menu > li > a {
+  position: relative;
+  transition: transform 0.25s ease, color 0.25s ease;
+  transform-origin: center;
+}
+
+.menu > li > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: #FF9933;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+.menu > li > a:hover {
+  color: #FF9933;
+  transform: scale(1.08);
+}
+
+.menu > li > a:hover::after {
+  transform: scaleX(1);
+}
+/* ================= DROPDOWN LINKS ================= */
+.dropdown-menu li a {
+  position: relative;
+  transition: transform 0.22s ease, color 0.22s ease, background 0.22s ease;
+  transform-origin: center;
+}
+
+.dropdown-menu li a:hover {
+  color: #FF9933;
+  background: rgba(255,153,51,0.08);
+  transform: scale(1.05);
+}
+
+/* ================= MEGA MENU LINKS ================= */
+.mega-menu a {
+  position: relative;
+  transition: transform 0.22s ease, color 0.22s ease;
+  transform-origin: center;
+}
+
+.mega-menu a:hover {
+  color: #FF9933;
+  transform: scale(1.05);
+}
+.mega-column h6 {
+  transition: transform 0.25s ease;
+}
+
+.mega-column h6:hover {
+  transform: translateY(-2px);
+}
+.mega-column h6 {
+  transition: transform 0.25s ease;
+}
+
+.mega-column h6:hover {
+  transform: translateY(-2px);
+}
 
 
 
-
+/* ================= HERO ================= */
 /* ================= HERO ================= */
 .hero {
   position: relative;
