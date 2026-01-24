@@ -167,9 +167,6 @@ get_header();
                     <div class="vc-slide"><img
                             src="http://172.35.2.130:9001/wp-content/uploads/2026/01/PXL_20250925_101748138-scaled.jpg"
                             alt="Vice Chancellor"></div>
-                    <div class="vc-slide"><img
-                            src="http://172.35.2.130:9001/wp-content/uploads/2026/01/PXL_20251119_060517716-scaled.jpg"
-                            alt="Vice Chancellor"></div>
                 </div>
             </div>
         </div>
