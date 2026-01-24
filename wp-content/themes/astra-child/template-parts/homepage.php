@@ -153,7 +153,7 @@ get_header();
         <div class="vc-image">
             <div class="vc-slider" aria-roledescription="carousel">
                 <div class="vc-slider-track">
-                    <div class="vc-slide"><img
+                    <div class="vc-slide"><img 
                             src="/wp-content/uploads/2026/01/bd84e33f73912eca5938f36a7148b43ace88498f.png"
                             alt="Vice Chancellor"></div>
                     <div class="vc-slide"><img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/VC-SIR-4.png"
