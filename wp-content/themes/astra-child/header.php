@@ -24,9 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
-    <?php astra_body_top(); ?>
-
+<body>
     <!-- ================= TOP BAR ================= -->
     <div class="top-bar">
         <div class="container-xxl d-flex justify-content-between align-items-center">
@@ -190,7 +188,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <li><a href="#">Hostels</a></li>
                             <li><a href="#">Raj Bhasha Cell</a></li>
                             <li><a href="#">USIC</a></li>
-                            <li><a href="#">SC/ST/OBC Cell</a></li>
                             <li><a href="#">Gender Cell</a></li>
                             <li><a href="#">Other Amenities</a></li>
                         </ul>
@@ -230,6 +227,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         </div>
     </header>
+</body>
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
