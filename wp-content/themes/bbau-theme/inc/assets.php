@@ -39,3 +39,19 @@ function bbau_enqueue_assets() {
 }
 
 add_action('wp_enqueue_scripts', 'bbau_enqueue_assets');
+
+function load_bootstrap() {
+    wp_enqueue_style(
+        'bootstrap-css',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css'
+    );
+
+    wp_enqueue_script(
+        'bootstrap-js',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js',
+        array('jquery'),
+        null,
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'load_bootstrap');

@@ -31,7 +31,7 @@
 
 <body>
 
-<div id="page" class="site">
+<div  class="">
 
 	<header class="main-header">
 		<div class="top-bar">
@@ -55,7 +55,7 @@
                 <span>A</span>
                 <span>A-</span>
 
-                <img src="/wp-content/uploads/2026/01/H-E-converter.png" alt="Language Toggle" class="lang-img">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/language.png" alt="Language Toggle" class="lang-img">
 
                 <div class="search-box">
                     <input type="text" placeholder="Search" aria-label="Search">
@@ -70,7 +70,7 @@
             <!-- LEFT BRAND -->
             <div class="d-flex align-items-center">
 
-                <img src="/wp-content/uploads/2026/01/logo.png" class="logo me-2" alt="University Logo">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/bbau_logo.png" class="logo me-2" alt="University Logo">
 
                 <div class="univ-name">
                     <div class="univ-hindi">
@@ -92,7 +92,7 @@
                 <ul class="menu">
                     <li>
                         <a href="/" class="nav-home" aria-label="Home">
-                            <img src="/wp-content/uploads/2026/01/Home.jpg" alt="Home">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/home.jpg" alt="Home">
                         </a>
                     </li>
                     <!-- ABOUT (MEGA MENU) -->
@@ -113,34 +113,8 @@
 
             <!-- RIGHT IMAGE -->
             <div class="header-photo d-none d-lg-block">
-                <img src="/wp-content/uploads/2026/01/ambedkar.png" alt="Dr. B. R. Ambedkar">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/ambedkar.png" alt="Dr. B. R. Ambedkar">
             </div>
 
         </div>
     </header>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-        if (window.innerWidth <= 991) {
-
-            document.querySelectorAll(".dropdown > a").forEach(link => {
-                link.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    const submenu = this.nextElementSibling;
-                    // Close other open menus
-                    document.querySelectorAll(".dropdown-menu, .mega-menu").forEach(menu => {
-                        if (menu !== submenu) {
-                            menu.style.display = "none";
-                        }
-                    });
-                    // Toggle current
-                    submenu.style.display =
-                        submenu.style.display === "block" ? "none" : "block";
-                });
-            });
-
-        }
-
-    });
-    </script>
