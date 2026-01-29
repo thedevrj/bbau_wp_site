@@ -1,0 +1,19 @@
+name: Deploy Prod
+
+on:
+  push:
+    branches:
+      - live
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy Prod
+        run: |
+          cd /srv/apps/wordpress/prod
+          ./deploy-prod.sh

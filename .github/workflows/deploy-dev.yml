@@ -1,0 +1,19 @@
+name: Deploy DEV
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy DEV
+        run: |
+          cd /srv/apps/wordpress/dev
+          ./deploy-dev.sh
