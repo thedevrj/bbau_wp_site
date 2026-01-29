@@ -26,38 +26,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <body>
     <!-- ================= TOP BAR ================= -->
-    <div class="top-bar">
-        <div class="container-xxl d-flex justify-content-between align-items-center">
+<div class="top-bar">
+  <div class="container-xxl top-bar-container">
 
-            <!-- LEFT LINKS -->
-            <div class="top-left d-flex gap-3 flex-wrap">
-                <a href="#">Skip to main content</a>
-                <a href="#">Faculty</a>
-                <a href="#">Library</a>
-                <a href="#">IQAC</a>
-                <a href="#">Examination</a>
-                <a href="#">Alumni</a>
-                <a href="#">SamarthERP@BBAU</a>
-                <a href="#">Accreditation</a>
-                <a href="#">Login</a>
-            </div>
-
-            <!-- RIGHT CONTROLS -->
-            <div class="top-right d-flex align-items-center gap-2">
-                <span>A+</span>
-                <span>A</span>
-                <span>A-</span>
-
-                <img src="/wp-content/uploads/2026/01/H-E-converter.png" alt="Language Toggle" class="lang-img">
-
-                <div class="search-box">
-                    <input type="text" placeholder="Search" aria-label="Search">
-                    <span class="search-icon">🔍</span>
-                </div>
-            </div>
-
-        </div>
+    <!-- LEFT LINKS -->
+    <div class="top-left">
+      <a href="#">Skip to main content</a>
+      <a href="#">Faculty</a>
+      <a href="#">Library</a>
+      <a href="#">IQAC</a>
+      <a href="#">Examination</a>
+      <a href="#">Alumni</a>
+      <a href="#">SamarthERP@BBAU</a>
+      <a href="#">Accreditation</a>
+      <a href="#">Login</a>
     </div>
+
+    <!-- RIGHT CONTROLS -->
+    <div class="top-right">
+      <span class="font-big">A+</span>
+      <span class="font-medium">A</span>
+      <span class="font-small">A-</span>
+
+      <img src="/wp-content/uploads/2026/01/H-E-converter.png"
+           alt="Language Toggle"
+           class="lang-img">
+
+      <div class="search-box">
+        <input type="text" placeholder="Search" aria-label="Search">
+        <span class="search-icon">🔍</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 
     <!-- ================= MAIN HEADER ================= -->
     <header class="main-header">
@@ -88,7 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <ul class="menu">
                     <li>
                         <a href="/" class="nav-home" aria-label="Home">
-                            <img src="/wp-content/uploads/2026/01/Home.jpg" alt="Home">
+                            <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/Home.jpg" alt="Home">
                         </a>
                     </li>
                     <!-- ABOUT (MEGA MENU) -->

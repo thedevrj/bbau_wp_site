@@ -1,213 +1,124 @@
-:root {
-  --top-bar-gap: 100px;   /* default (1440 & below) */
-}
-
+/* =====================================================
 /* ================= TOP BAR ================= */
 .top-bar {
   width: 100%;
   height: 45px;
   background: #1f6f8b;
-  margin: 0;
 }
 
-/* INNER WRAPPER — NO BOOTSTRAP CONTAINER */
+/* ================= CONTAINER OVERRIDE ================= */
 .top-bar-container {
-  width: 100%;
   height: 45px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
-  padding-left: var(--top-bar-gap);
-  padding-right: var(--top-bar-gap);
-
-  margin: 0;
-  box-sizing: border-box;
+  padding-left: 100px !important;
+  padding-right: 100px !important;
 }
 
-/* ================= LARGE DESKTOP (1600px+) ================= */
-@media (min-width: 1600px) {
-  :root {
-    --top-bar-gap: 150px;
-  }
-}
-
-/* ================= LEFT LINKS ================= */
+/* ================= LEFT ================= */
 .top-left {
   display: flex;
-  gap: 17px;
+  align-items: center;
+  gap: 16px;
 }
 
 .top-left a {
   color: #ffffff;
   font-size: 12px;
-  font-weight: 400;
   text-decoration: none;
-  padding: 14px 0 15px;
   white-space: nowrap;
-
-  /* 🔥 HOVER SETUP */
-  display: inline-block;
-  transform: scale(1);
-  transform-origin: center center;
-  transition: transform 0.25s ease, color 0.25s ease;
 }
 
-/* 🔥 HOVER EFFECT */
 .top-left a:hover {
-  color: #FF9933;              /* saffron */
-  transform: scale(1.08);      /* equal zoom both sides */
+  color: #ff9933;
 }
 
-/* ================= RIGHT AREA ================= */
+/* ================= RIGHT ================= */
 .top-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  white-space: nowrap;
 }
 
+/* FORCE WHITE COLOR */
 .top-right span {
-  color: #ffffff;
+  color: #ffffff !important;
   cursor: pointer;
-  padding: 14px 0 15px;
-
-  /* 🔥 HOVER SETUP */
-  display: inline-block;
-  transform: scale(1);
-  transform-origin: center center;
-  transition: transform 0.25s ease, color 0.25s ease;
 }
 
-.top-right span:nth-child(1) { font-size: 14px; }
-.top-right span:nth-child(2) { font-size: 12px; }
-.top-right span:nth-child(3) { font-size: 10px; }
+/* FONT SIZE CONTROL */
+.font-big {
+  font-size: 15px;
+  font-weight: 600;
+}
 
-/* 🔥 HOVER EFFECT */
+.font-medium {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.font-small {
+  font-size: 11px;
+  font-weight: 500;
+}
+
 .top-right span:hover {
-  color: #f47e09;
-  transform: scale(1.15);
+  color: #ff9933 !important;
 }
 
-/* ================= LANGUAGE ICON ================= */
+/* ================= LANGUAGE ================= */
 .lang-img {
   height: 22px;
-  margin-left: 6px;
+  margin-left: 8px;
   cursor: pointer;
-
-  transition: transform 0.3s ease;
-  transform-origin: center center;
 }
 
-.lang-img:hover {
-  transform: scale(1.12);
-}
-
-/* ================= SEARCH BOX ================= */
+/* ================= SEARCH ================= */
 .search-box {
-  width: 88px;
-  height: 25px;
+  width: 90px;
+  height: 26px;
 
   background: #ffffff;
   border-radius: 20px;
 
   display: flex;
   align-items: center;
-
   padding: 0 8px;
-  box-sizing: border-box;
-  overflow: hidden;
-
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  transform-origin: center center;
 }
 
-/* 🔥 SEARCH HOVER */
-.search-box:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 0 2px rgba(255,153,51,0.35);
-}
-
-/* INPUT — LOCKED */
 .search-box input {
   width: 100%;
-  height: 100%;
-
   border: none;
   outline: none;
-
-  padding: 0;
-  margin: 0;
-
-  background: transparent;
-
   font-size: 11px;
-  line-height: 25px;
-  color: #555;
-
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  box-shadow: none;
 }
 
-.search-box input:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-/* SEARCH ICON */
 .search-icon {
   font-size: 12px;
-  margin-left: 4px;
-  pointer-events: none;
-  flex-shrink: 0;
 }
 
-/* ================= TABLET VIEW ================= */
+/* ================= RESPONSIVE ================= */
 @media (max-width: 1199px) {
   .top-bar-container {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  .top-left {
-    gap: 12px;
-  }
-
-  .top-left a {
-    font-size: 11px;
-  }
-
-  .search-box {
-    width: 72px;
-    height: 24px;
-  }
-
-  .search-box input {
-    font-size: 10px;
-    line-height: 24px;
-  }
-
-  .search-icon {
-    font-size: 11px;
+    padding-left: 32px !important;
+    padding-right: 32px !important;
   }
 }
 
-/* ================= MOBILE ================= */
 @media (max-width: 767px) {
   .top-bar-container {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 
   .top-left {
     display: none;
   }
 }
-
-
 
 
 
