@@ -225,7 +225,6 @@ body {
 
 
 /* ================= HEADER ================= */
-/* ================= HEADER ================= */
 .main-header {
   width: 100%;
   height: 94px;
@@ -236,20 +235,18 @@ body {
 /* DEFAULT VALUE */
 :root {
   --header-gap: 100px;
+  --menu-underline-gap: 12px;
 }
 
 /* HEADER */
 .header-inner {
   width: 100%;
   height: 94px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding-left: var(--header-gap);
   padding-right: var(--header-gap);
-
   box-sizing: border-box;
 }
 
@@ -259,8 +256,6 @@ body {
     --header-gap: 150px;
   }
 }
-
-
 
 /* ================= LEFT ================= */
 .header-left {
@@ -320,41 +315,57 @@ body {
   gap: 24px;
 }
 
-.header-nav a {
-  font-family: "Poppins", sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  color: #000;
-  text-decoration: none;
-}
-
-.nav-home img {
-  height: 14px;
-}
-
-
 /* ================= MENU BASE ================= */
 .menu {
   list-style: none;
   display: flex;
 }
 
-.menu > li > a {
-	padding-top: 19px !important;
-  
-  display: block;
-  padding: 0px 15px;
-  color: #222;
+.menu > li {
+  position: relative; /* 🔥 REQUIRED */
 }
 
+.menu > li > a {
+  display: block;
+  padding: 19px 15px 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #222;
+  text-decoration: none;
+  position: relative;
+  transition: transform 0.25s ease, color 0.25s ease;
+  transform-origin: center;
+}
+
+/* UNDERLINE */
+.menu > li > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: #FF9933;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+/* HOVER MAIN MENU */
 .menu > li > a:hover {
-  background: #e6f0ff;
+  color: #FF9933;
+  transform: scale(1.08);
+}
+
+.menu > li > a:hover::after {
+  transform: scaleX(1);
 }
 
 /* ================= DROPDOWN ================= */
 .dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + var(--menu-underline-gap));
   left: 0;
   min-width: 240px;
   background: #fff;
@@ -363,25 +374,10 @@ body {
   z-index: 999;
 }
 
-.dropdown:hover > .dropdown-menu {
-  display: block;
-}
-
-.dropdown-menu a {
-  padding: 10px 15px;
-  display: block;
-  color: #333;
-  text-decoration: none;
-}
-
-.dropdown-menu a:hover {
-  background: #f1f5ff;
-}
-
 /* ================= MEGA MENU ================= */
 .mega-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + var(--menu-underline-gap));
   left: 0;
   width: 520px;
   background: #fff;
@@ -393,45 +389,69 @@ body {
   z-index: 999;
 }
 
-.mega:hover > .mega-menu {
-  display: grid;
+/* 🔥 KEEP MENU OPEN (IMPORTANT FIX) */
+.menu > li:hover > .dropdown-menu,
+.menu > li:hover > .mega-menu {
+  display: block;
 }
 
+/* INVISIBLE BRIDGE (prevents closing) */
+.menu > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: var(--menu-underline-gap);
+  background: transparent;
+}
+
+/* ================= DROPDOWN LINKS ================= */
+.dropdown-menu a {
+  display: block;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  transition: transform 0.22s ease, color 0.22s ease, background 0.22s ease;
+}
+
+.dropdown-menu a:hover {
+  color: #FF9933;
+  background: rgba(255,153,51,0.08);
+  transform: scale(1.05);
+}
+
+/* ================= MEGA MENU LINKS ================= */
 .mega-column h6 {
   font-weight: 600;
   margin-bottom: 10px;
   color: #003366;
+  transition: transform 0.25s ease;
+}
+
+.mega-column h6:hover {
+  transform: translateY(-2px);
 }
 
 .mega-column a {
   display: block;
   padding: 6px 0;
-  color: #444;
   font-size: 14px;
+  color: #444;
   text-decoration: none;
+  transition: transform 0.22s ease, color 0.22s ease;
 }
 
 .mega-column a:hover {
-  color: #003366;
+  color: #FF9933;
+  transform: scale(1.05);
 }
 
 /* ================= LONG MENU ================= */
 .dropdown-menu.long {
   max-height: 420px;
   overflow-y: auto;
-}
-
-/* ================= MOBILE FIX ================= */
-@media (max-width: 991px) {
-  .menu {
-    flex-direction: column;
-  }
-
-  .dropdown-menu,
-  .mega-menu {
-    position: static;
-    box-shadow: none;
-  }
 }
 
 /* ================= RIGHT IMAGE ================= */
@@ -441,7 +461,6 @@ body {
   object-fit: cover;
   display: block;
 }
-
 
 /* ================= TABLET ================= */
 @media (max-width: 1199px) {
@@ -456,6 +475,24 @@ body {
 }
 
 /* ================= MOBILE ================= */
+@media (max-width: 991px) {
+  .menu {
+    flex-direction: column;
+  }
+
+  .dropdown-menu,
+  .mega-menu {
+    position: static;
+    box-shadow: none;
+    display: none;
+  }
+
+  .menu > li:hover > .dropdown-menu,
+  .menu > li:hover > .mega-menu {
+    display: block;
+  }
+}
+
 @media (max-width: 767px) {
   .main-header {
     height: auto;
@@ -490,95 +527,6 @@ body {
   }
 }
 
-/* ================= FIX MEGA & DROPDOWN POSITION ================= */
-
-/* Height of underline + spacing */
-:root {
-  --menu-underline-gap: 12px;
-}
-
-/* DROPDOWN */
-.dropdown-menu {
-  top: calc(100% + var(--menu-underline-gap));
-}
-
-/* MEGA MENU */
-.mega-menu {
-  top: calc(100% + var(--menu-underline-gap));
-}
-
-/* ================= MAIN TOP MENU HOVER ================= */
-
-/* ================= TOP LEVEL MENU ================= */
-.menu > li > a {
-  position: relative;
-  transition: transform 0.25s ease, color 0.25s ease;
-  transform-origin: center;
-}
-
-.menu > li > a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 2px;
-  background: #FF9933;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.25s ease;
-}
-
-.menu > li > a:hover {
-  color: #FF9933;
-  transform: scale(1.08);
-}
-
-.menu > li > a:hover::after {
-  transform: scaleX(1);
-}
-/* ================= DROPDOWN LINKS ================= */
-.dropdown-menu li a {
-  position: relative;
-  transition: transform 0.22s ease, color 0.22s ease, background 0.22s ease;
-  transform-origin: center;
-}
-
-.dropdown-menu li a:hover {
-  color: #FF9933;
-  background: rgba(255,153,51,0.08);
-  transform: scale(1.05);
-}
-
-/* ================= MEGA MENU LINKS ================= */
-.mega-menu a {
-  position: relative;
-  transition: transform 0.22s ease, color 0.22s ease;
-  transform-origin: center;
-}
-
-.mega-menu a:hover {
-  color: #FF9933;
-  transform: scale(1.05);
-}
-.mega-column h6 {
-  transition: transform 0.25s ease;
-}
-
-.mega-column h6:hover {
-  transform: translateY(-2px);
-}
-.mega-column h6 {
-  transition: transform 0.25s ease;
-}
-
-.mega-column h6:hover {
-  transform: translateY(-2px);
-}
-
-
-
-/* ================= HERO ================= */
 /* ================= HERO ================= */
 .hero {
   position: relative;
@@ -758,178 +706,215 @@ body {
   }
 }
 
-/* ================= UNIVERSITY AT A GLANCE ================= */
+/* =====================================================
+   GLOBAL RESET (SAFE FOR ALL DEVICES)
+===================================================== */
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img {
+  display: block;
+}
+
+/* =====================================================
+   GLOBAL RESET university at a glance section
+===================================================== */
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img {
+  display: block;
+}
+
+/* =====================================================
+   UNIVERSITY AT A GLANCE – SECTION
+===================================================== */
 .glance-section {
   width: 100%;
-  height: 463px;
-  margin: 0;
-  background: url("/wp-content/uploads/2026/01/DJI_0012-scaled.jpg")
+  background: url("http://172.35.2.130:9001/wp-content/uploads/2026/01/DJI_0012-scaled.jpg")
     no-repeat center center;
   background-size: cover;
 }
 
-/* OVERLAY */
 .glance-overlay {
-  width: 100%;
-  height: 100%;
   background: rgba(0, 0, 0, 0.45);
-
-  /* 🔥 KEY FIX: vertical centering */
   display: flex;
+  justify-content: center;
   align-items: center;
+  padding: 2rem 0;
 }
 
-/* MAIN CONTAINER */
 .glance-container {
   width: 100%;
-  height: 463px;
-  margin: 0;
-  padding: 20px 110px;     /* exact desktop spacing */
-  box-sizing: border-box;
+  padding: 0 7vw;
   color: #ffffff;
 }
 
-/* ================= TITLE ================= */
+/* =====================================================
+   TITLE & DESCRIPTION
+===================================================== */
 .glance-title {
   text-align: center;
   font-family: "Roboto", sans-serif;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 500;
-  line-height: 45.7px;
-  margin: 0 0 10px 0;
-
-  background: linear-gradient(90deg, #ffffff, #f9f9f9, #999999);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
+  margin-bottom: 0.75rem;
+  color: #f5de10;
   text-decoration: underline;
 }
 
-/* DESCRIPTION */
 .glance-desc {
-  max-width: 1200px;
-  margin: 0 auto 14px auto;   /* 🔥 reduced spacing */
   text-align: center;
   font-family: "Poppins", sans-serif;
-  font-size: 20px;
-  line-height: 1.5;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
 }
 
-/* ================= STATS GRID ================= */
+/* =====================================================
+   STATS GRID – DESKTOP (UNCHANGED)
+===================================================== */
 .glance-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 32px;
-  row-gap: 0;
-  margin-top: 0;             /* 🔥 no push down */
+  gap: 3rem;
 }
 
-/* ================= SINGLE STAT ================= */
+/* =====================================================
+   SINGLE STAT
+===================================================== */
 .stat {
   display: flex;
   align-items: center;
-  gap: 2px;                  /* 🔥 EXACT icon–number gap */
-  height: 140px;
+  gap: 0; /* no gap between icon & number */
 }
 
-/* ICON */
-.stat img {
-  width: 104px;
-  height: 69px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
+/* =====================================================
+   ICON
+===================================================== */
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-/* TEXT */
+.icon-box img {
+  height: 5em; /* scales with number */
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(20deg);
+}
+
+/* =====================================================
+   TEXT
+===================================================== */
 .stat-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 2px;          /* optical alignment */
 }
 
-/* NUMBER */
 .stat-text .num {
   font-family: "Poppins", sans-serif;
-  font-size: 40px;
+  font-size: 2.8rem;
   font-weight: 700;
   line-height: 1;
 }
 
-/* LABEL */
 .stat-text .label {
-  font-family: "Poppins", sans-serif;
-  font-size: 12px;
-  margin-top: 2px;
-  opacity: 0.95;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  opacity: 0.9;
+  color: #E0E0E0 ;
 }
+/* ================= TABLET ONLY (iPad Air FIX) ================= */
 
-/* ================= TABLET ================= */
-@media (max-width: 1199px) {
-
-  .glance-section {
-    height: auto;
-  }
-
-  .glance-overlay {
-    align-items: flex-start;
-  }
+@media (min-width: 768px) and (max-width: 1024px) {
 
   .glance-container {
-    height: auto;
-    padding: 32px 32px;
-  }
-
-  .glance-desc {
-    font-size: 16px;
-  }
-
-  .stat-text .num {
-    font-size: 32px;
+    padding-left: 4vw;
+    padding-right: 6vw;   /*right gap */
   }
 }
 
-/* ================= MOBILE ================= */
-@media (max-width: 767px) {
-
-  .glance-container {
-    padding: 24px 16px;
-  }
-
-  .glance-title {
-    font-size: 24px;
-    line-height: 32px;
-  }
-
-  .glance-desc {
-    font-size: 13px;
-    margin-bottom: 20px;
-  }
 
   .glance-stats {
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* keep 4–4 like desktop */
+    gap: 2rem 1.5rem;        /* tighter spacing */
   }
 
   .stat {
-    height: auto;
+    gap: 0.5rem;             /* reduce crowding */
   }
 
-  .stat img {
-    width: 72px;
-    height: auto;
+  .icon-box img {
+    height: 4.6em;           /* slightly smaller icons */
   }
 
   .stat-text .num {
-    font-size: 20px;
+    font-size: 2.1rem;       /* scale down numbers */
   }
 
   .stat-text .label {
-    font-size: 11px;
+    font-size: 0.75rem;
+  }
+
+
+/* ================= MOBILE ONLY ================= */
+@media (max-width: 767px) {
+
+  .glance-stats {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: .5rem;
+
+    overflow-x: auto;          /* ✅ ALLOW HORIZONTAL SCROLL */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    white-space: nowrap;
+  }
+
+  .stat {
+    flex: 0 0 auto;            /* ✅ prevent shrinking */
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .icon-box img {
+    height: 4.4em;
+  }
+
+  .stat-text .num {
+    font-size: 1.8rem;
+  }
+
+  .stat-text .label {
+    font-size: 0.7rem;
   }
 }
+
+
+
 /* ================= VICE CHANCELLOR SECTION ================= */
 
 .vc-section {

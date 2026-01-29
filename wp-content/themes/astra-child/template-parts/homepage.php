@@ -6,7 +6,7 @@ get_header();
 <!-- ================= HERO SECTION ================= -->
 <section class="hero">
     <video class="hero-video" autoplay muted loop playsinline>
-        <source src="/wp-content/uploads/2026/01/BBAU-home-video-HD-1080p.mp4" type="video/mp4">
+        <source src="http://172.35.2.130:9001/wp-content/uploads/2026/01/BBAU-home-video-HD-1080p.mp4" type="video/mp4">
     </video>
 
     <div class="hero-overlay"></div>
@@ -35,90 +35,108 @@ get_header();
 
 
 <!-- ================= UNIVERSITY AT A GLANCE ================= -->
+<!-- ================= UNIVERSITY AT A GLANCE ================= -->
 <section class="glance-section">
-    <div class="glance-overlay container-fluid">
-        <div class="glance-container">
+  <div class="glance-overlay container-fluid">
+    <div class="glance-container">
 
-            <h2 class="glance-title">University at a Glance</h2>
+      <h2 class="glance-title">University at a Glance</h2>
 
-            <p class="glance-desc">
-                Babasaheb Bhimrao Ambedkar University, a premier Central University
-                located in the historic capital city of Lucknow, Uttar Pradesh,
-                stands as a beacon of academic excellence and social empowerment.
-                The University equips students with knowledge, professional skills,
-                and deep-rooted values to contribute responsibly to society.
-            </p>
+      <p class="glance-desc">
+        Babasaheb Bhimrao Ambedkar University, a premier Central University
+        located in the historic capital city of Lucknow, Uttar Pradesh,
+        stands as a beacon of academic excellence and social empowerment.
+        The University equips students with knowledge, professional skills,
+        and deep-rooted values to contribute responsibly to society.
+      </p>
 
-            <div class="glance-stats">
+      <div class="glance-stats">
 
-                <div class="stat">
-                    <img src="/wp-content/uploads/2026/01/Rectangle-81.png" alt="Inception">
-                    <div class="stat-text">
-                        <span class="num">1996</span>
-                        <span class="label">Inception</span>
-                    </div>
-                </div>
-
-                <div class="stat">
-                    <img src="/wp-content/uploads/2026/01/school_icon-removebg-1.png" alt="Schools">
-                    <div class="stat-text">
-                        <span class="num">18</span>
-                        <span class="label">Schools</span>
-                    </div>
-                </div>
-
-                <div class="stat">
-                    <img src="/wp-content/uploads/2026/01/Academic_staff-removebg-1.png" alt="Academic Staff">
-                    <div class="stat-text">
-                        <span class="num">250</span>
-                        <span class="label">Academic Staff</span>
-                    </div>
-                </div>
-
-                <div class="stat">
-                    <img src="/wp-content/uploads/2026/01/satellite_campus-removebg-1.png" alt="Satellite Campus">
-                    <div class="stat-text">
-                        <span class="num">1</span>
-                        <span class="label">Satellite Campus</span>
-                    </div>
-                </div>
-
-                <div class="stat">
-                    <img src="/wp-content/uploads/2026/01/school_icon-removebg-1.png" alt="Campus Area">
-                    <div class="stat-text">
-                        <span class="num">250+</span>
-                        <span class="label">Campus Area (Acres)</span>
-                    </div>
-                </div>
-
-                <div class="stat">
-                    <img src="/wp-content/uploads/2026/01/Departments-removebg-2.png" alt="Departments">
-                    <div class="stat-text">
-                        <span class="num">40+</span>
-                        <span class="label">Departments</span>
-                    </div>
-                </div>
-
-                <div class="stat">
-                    <img src="/wp-content/uploads/2026/01/Programme_-removebg-1.png" alt="Programmes">
-                    <div class="stat-text">
-                        <span class="num">100+</span>
-                        <span class="label">Programmes</span>
-                    </div>
-                </div>
-
-                <div class="stat">
-                    <img src="/wp-content/uploads/2026/01/Student-removebg-1.png" alt="Students">
-                    <div class="stat-text">
-                        <span class="num">6000+</span>
-                        <span class="label">Students</span>
-                    </div>
-                </div>
-
-            </div>
+        <div class="stat">
+          <div class="icon-box">
+            <img src="http://localhost:9001/wp-content/uploads/2026/01/3a22b5f7994b62b879bbf39f2f8b582c6e296713.png" alt="Inception">
+          </div>
+          <div class="stat-text">
+            <span class="num">1996</span>
+            <span class="label">Inception</span>
+          </div>
         </div>
+
+        <div class="stat">
+          <div class="icon-box">
+            <img src="http://localhost:9001/wp-content/uploads/2026/01/354c1fae77032bd2e350e4b4174002e0b196ffd9.png" alt="Schools">
+          </div>
+          <div class="stat-text">
+            <span class="num">18</span>
+            <span class="label">Schools</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="icon-box">
+            <img src="http://localhost:9001/wp-content/uploads/2026/01/14e31046e81bf014cbdb0a656722df8b4f38fd11.png" alt="Academic Staff">
+          </div>
+          <div class="stat-text">
+            <span class="num">250</span>
+            <span class="label">Academic Staff</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="icon-box">
+            <img src="http://localhost:9001/wp-content/uploads/2026/01/88a41134ddde9ebdc859a4f3be4b20c8b1b44446.png" alt="Satellite Campus">
+          </div>
+          <div class="stat-text">
+            <span class="num">1</span>
+            <span class="label">Satellite Campus</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="icon-box">
+            <img src="http://localhost:9001/wp-content/uploads/2026/01/e78a7f9ae922da18c03b23bad5d764518f1ef6b0.png" alt="Campus Area">
+          </div>
+          <div class="stat-text">
+            <span class="num">250+</span>
+            <span class="label">Campus Area (Acres)</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="icon-box">
+            <img src="http://localhost:9001/wp-content/uploads/2026/01/e8abab9f4bbf5eb2376936644a6ef5f7c48341f6-1.png" alt="Departments">
+          </div>
+          <div class="stat-text">
+            <span class="num">40+</span>
+            <span class="label">Departments</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="icon-box">
+            <img src="http://localhost:9001/wp-content/uploads/2026/01/5a8f8787d2d2b976acc6e5f4c9a088091094a208.png" alt="Programmes">
+          </div>
+          <div class="stat-text">
+            <span class="num">100+</span>
+            <span class="label">Programmes</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="icon-box">
+            <img src="http://localhost:9001/wp-content/uploads/2026/01/27f6c0b96d1ea7df53f6aa4ad47e6a8042e4da4e.png" alt="Students">
+          </div>
+          <div class="stat-text">
+            <span class="num">6000+</span>
+            <span class="label">Students</span>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </div>
 </section>
+
 
 
 <!-- ================= VICE CHANCELLOR DESK ================= -->
@@ -154,7 +172,7 @@ get_header();
             <div class="vc-slider" aria-roledescription="carousel">
                 <div class="vc-slider-track">
                     <div class="vc-slide"><img 
-                            src="/wp-content/uploads/2026/01/bd84e33f73912eca5938f36a7148b43ace88498f.png"
+                            src="http://172.35.2.130:9001/wp-content/uploads/2026/01/bd84e33f73912eca5938f36a7148b43ace88498f.png"
                             alt="Vice Chancellor"></div>
                     <div class="vc-slide"><img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/VC-SIR-4.png"
                             alt="Vice Chancellor"></div>
@@ -276,27 +294,27 @@ get_header();
         <div class="slider-track">
 
             <div class="slider-card">
-                <img src="/wp-content/uploads/2026/01/bv3-scaled.jpg">
+                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/bv3-scaled.jpg">
             </div>
 
             <div class="slider-card">
-                <img src="/wp-content/uploads/2026/01/IMG_8672-scaled.jpeg">
+                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/IMG_8672-scaled.jpeg">
             </div>
 
             <div class="slider-card">
-                <img src="/wp-content/uploads/2026/01/vc2-scaled.jpg">
+                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/vc2-scaled.jpg">
             </div>
 
             <div class="slider-card">
-                <img src="/wp-content/uploads/2026/01/vc1-scaled-1.jpg">
+                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/vc1-scaled-1.jpg">
             </div>
 
             <div class="slider-card">
-                <img src="/wp-content/uploads/2026/01/vc5.jpg">
+                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/vc5.jpg">
             </div>
 
             <div class="slider-card">
-                <img src="/wp-content/uploads/2026/01/vc4.jpg">
+                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/vc4.jpg">
             </div>
 
         </div>
@@ -381,5 +399,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.querySelector(".glance-stats");
+  if (!track) return;
+
+  // 🔒 MOBILE ONLY
+  if (window.innerWidth > 767) return;
+
+  // prevent multiple cloning
+  if (track.dataset.cloned) return;
+  track.dataset.cloned = "true";
+
+  // clone once for seamless loop
+  const clone = track.cloneNode(true);
+  clone.setAttribute("aria-hidden", "true");
+  track.appendChild(clone);
+
+  let pos = 0;
+  const speed = 0.35;
+
+  function autoScroll() {
+    pos += speed;
+    track.scrollLeft = pos;
+
+    if (pos >= track.scrollWidth / 2) {
+      pos = 0;
+    }
+
+    requestAnimationFrame(autoScroll);
+  }
+
+  autoScroll();
+});
+</script>
+
+
+
 
 <?php get_footer(); ?>
