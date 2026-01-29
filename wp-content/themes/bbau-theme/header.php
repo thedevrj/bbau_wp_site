@@ -118,29 +118,3 @@
 
         </div>
     </header>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-        if (window.innerWidth <= 991) {
-
-            document.querySelectorAll(".dropdown > a").forEach(link => {
-                link.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    const submenu = this.nextElementSibling;
-                    // Close other open menus
-                    document.querySelectorAll(".dropdown-menu, .mega-menu").forEach(menu => {
-                        if (menu !== submenu) {
-                            menu.style.display = "none";
-                        }
-                    });
-                    // Toggle current
-                    submenu.style.display =
-                        submenu.style.display === "block" ? "none" : "block";
-                });
-            });
-
-        }
-
-    });
-    </script>
