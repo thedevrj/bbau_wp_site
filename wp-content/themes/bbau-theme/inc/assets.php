@@ -32,9 +32,8 @@ function bbau_enqueue_assets() {
     wp_enqueue_script(
         'bbau-main',
         get_stylesheet_directory_uri() . '/assets/js/main.js',
-        ['swiper'],
-        filemtime(get_stylesheet_directory() . '/assets/js/main.js'),
-        true
+        [],
+        filemtime(get_stylesheet_directory() . '/assets/js/main.js')
     );
 }
 

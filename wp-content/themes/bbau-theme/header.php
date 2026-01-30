@@ -91,16 +91,6 @@
 
                 <!-- NAVIGATION (DESKTOP) -->
                 <nav class="header-nav d-none d-lg-flex">
-                    <ul class="menu">
-                        <li>
-                            <a href="/" class="nav-home" aria-label="Home">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/home.jpg"
-                                    alt="Home">
-                            </a>
-                        </li>
-                        <!-- ABOUT (MEGA MENU) -->
-
-                    </ul>
                     <?php
 					wp_nav_menu([
 						'theme_location' => 'primary_menu',
