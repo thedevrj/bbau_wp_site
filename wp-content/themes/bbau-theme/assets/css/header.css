@@ -120,8 +120,6 @@
   }
 }
 
-
-
 /* ================= HEADER ================= */
 /* ================= HEADER ================= */
 .main-header {
@@ -157,8 +155,6 @@
     --header-gap: 150px;
   }
 }
-
-
 
 /* ================= LEFT ================= */
 .header-left {
@@ -230,103 +226,6 @@
   height: 14px;
 }
 
-
-/* ================= MENU BASE ================= */
-.menu {
-  list-style: none;
-  display: flex;
-}
-
-.menu > li > a {
-	padding-top: 19px !important;
-  
-  display: block;
-  padding: 0px 15px;
-  color: #222;
-}
-
-.menu > li > a:hover {
-  background: #e6f0ff;
-}
-
-/* ================= DROPDOWN ================= */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 240px;
-  background: #fff;
-  display: none;
-  box-shadow: 0 6px 18px rgba(0,0,0,.15);
-  z-index: 999;
-}
-
-.dropdown:hover > .dropdown-menu {
-  display: block;
-}
-
-.dropdown-menu a {
-  padding: 10px 15px;
-  display: block;
-  color: #333;
-  text-decoration: none;
-}
-
-.dropdown-menu a:hover {
-  background: #f1f5ff;
-}
-
-/* ================= MEGA MENU ================= */
-.mega-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  z-index: 999;
-}
-
-.mega:hover > .mega-menu {
-  display: grid;
-}
-
-.mega-column h6 {
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #003366;
-}
-
-.mega-column a {
-  display: block;
-  padding: 6px 0;
-  color: #444;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.mega-column a:hover {
-  color: #003366;
-}
-
-/* ================= LONG MENU ================= */
-.dropdown-menu.long {
-  max-height: 420px;
-  overflow-y: auto;
-}
-
-/* ================= MOBILE FIX ================= */
-@media (max-width: 991px) {
-  .menu {
-    flex-direction: column;
-  }
-
-  .dropdown-menu,
-  .mega-menu {
-    position: static;
-    box-shadow: none;
-  }
-}
-
 /* ================= RIGHT IMAGE ================= */
 .header-photo img {
   width: 98px;
@@ -383,100 +282,11 @@
   }
 }
 
-/* ================= FIX MEGA & DROPDOWN POSITION ================= */
-
-/* Height of underline + spacing */
-:root {
-  --menu-underline-gap: 12px;
-}
-
-/* DROPDOWN */
-.dropdown-menu {
-  top: calc(100% + var(--menu-underline-gap));
-}
-
-/* MEGA MENU */
-.mega-menu {
-  top: calc(100% + var(--menu-underline-gap));
-}
-
-/* ================= MAIN TOP MENU HOVER ================= */
-
-/* ================= TOP LEVEL MENU ================= */
-.menu > li > a {
-  position: relative;
-  transition: transform 0.25s ease, color 0.25s ease;
-  transform-origin: center;
-}
-
-.menu > li > a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 2px;
-  background: #FF9933;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.25s ease;
-}
-
-.menu > li > a:hover {
-  color: #FF9933;
-  transform: scale(1.08);
-}
-
-.menu > li > a:hover::after {
-  transform: scaleX(1);
-}
-/* ================= DROPDOWN LINKS ================= */
-.dropdown-menu li a {
-  position: relative;
-  transition: transform 0.22s ease, color 0.22s ease, background 0.22s ease;
-  transform-origin: center;
-}
-
-.dropdown-menu li a:hover {
-  color: #FF9933;
-  background: rgba(255,153,51,0.08);
-  transform: scale(1.05);
-}
-
-/* ================= MEGA MENU LINKS ================= */
-.mega-menu a {
-  position: relative;
-  transition: transform 0.22s ease, color 0.22s ease;
-  transform-origin: center;
-}
-
-.mega-menu a:hover {
-  color: #FF9933;
-  transform: scale(1.05);
-}
-.mega-column h6 {
-  transition: transform 0.25s ease;
-}
-
-.mega-column h6:hover {
-  transform: translateY(-2px);
-}
-.mega-column h6 {
-  transition: transform 0.25s ease;
-}
-
-.mega-column h6:hover {
-  transform: translateY(-2px);
-}
-
-
 
 /* wordpress menu css */
 
 
-/* ======================================================
-   BASE MENU RESET
-   ====================================================== */
+/*    BASE MENU RESET    */
 
 .main-menu,
 .main-menu ul {
@@ -506,9 +316,7 @@
   font-size: 10px;
 }
 
-/* ======================================================
-   NORMAL DROPDOWN (ALL NON-MEGA MENUS)
-   ====================================================== */
+/*    NORMAL DROPDOWN (ALL NON-MEGA MENUS)    */
 
 .main-menu li > .sub-menu {
   display: none;
@@ -546,9 +354,7 @@
 .main-navigation {
   position: relative;
 }
-/* ======================================================
-   MEGA MENU (ONLY ABOUT)
-   ====================================================== */
+/*    MEGA MENU (ONLY ABOUT)    */
 
 .main-menu > li.mega-menu {
   position: relative; /* critical */
@@ -578,9 +384,7 @@
   display: grid;                 /* ✅ grid ONLY here */
 }
 
-/* ======================================================
-   MEGA MENU LEFT COLUMN (ABOUT UNIVERSITY)
-   ====================================================== */
+/*    MEGA MENU LEFT COLUMN (ABOUT UNIVERSITY)    */
 
 /* section heading */
 .main-menu > li.mega-menu > .sub-menu > li > a {
@@ -620,9 +424,7 @@
   border-right: 1px solid #e5e7eb;
 }
 
-/* ======================================================
-   MEGA MENU RIGHT COLUMN (GALLERY CARDS)
-   ====================================================== */
+/*    MEGA MENU RIGHT COLUMN (GALLERY CARDS)    */
 
 .main-menu > li.mega-menu > .sub-menu > li:last-child > .sub-menu {
   display: grid;
@@ -658,9 +460,7 @@
   background: #eef2ff;
 }
 
-/* ======================================================
-   SAFETY RESET (PREVENT LEAKAGE)
-   ====================================================== */
+/*    SAFETY RESET (PREVENT LEAKAGE)    */
 
 /* ensure normal menus never become grid */
 .main-menu li:not(.mega-menu) > .sub-menu {
