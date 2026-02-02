@@ -46,7 +46,7 @@ class BBAU_Nav_Walker extends Walker_Nav_Menu {
             $atts .= ' aria-haspopup="true" aria-expanded="false"';
         }
 
-        $title = esc_html(apply_filters('the_title', $item->title, $item->ID));
+        $title = apply_filters('the_title', $item->title, $item->ID);
 
         // Output link
         $output .= '<a' . $atts . '>';
@@ -54,7 +54,7 @@ class BBAU_Nav_Walker extends Walker_Nav_Menu {
 
         // Dropdown arrow
         if ($has_children) {
-            $output .= ' <span class="dropdown-icon">▾</span>';
+            $output .= ' <span class="dropdown-icon"><i class="icon-chevron-down1"></i></span>';
         }
 
         $output .= '</a>';
