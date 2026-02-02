@@ -33,7 +33,7 @@
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
         <div class="top-bar">
-            <div class="container-xxl d-flex justify-content-between align-items-center">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
 
                 <!-- LEFT LINKS -->
                 <div class="top-left d-flex gap-3 flex-wrap">
@@ -50,11 +50,11 @@
                ?>
                 </div>
                 <div class="top-right">
-                    <span class="font-big">A+</span>
-                    <span class="font-medium">A</span>
-                    <span class="font-small">A-</span>
+                     <button class="font-btn font-big"><span>A+</span></button>
+                     <button class="font-btn font-medium"><span>A</span></button>
+                     <button class="font-btn font-small"><span>A-</span></button>
 
-                    <img src="/wp-content/uploads/2026/01/H-E-converter.png" alt="Language Toggle" class="lang-img">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/language.png" alt="Language Toggle" class="lang-img">
 
                     <div class="search-box">
                         <input type="text" placeholder="Search" aria-label="Search">
@@ -66,7 +66,7 @@
         </div>
         <header class="main-header">
 
-            <div class="container-xxl d-flex align-items-center justify-content-between position-relative">
+            <div class="container-fluid d-flex align-items-center justify-content-between position-relative">
 
                 <!-- LEFT BRAND -->
                 <div class="d-flex align-items-center">
@@ -91,16 +91,6 @@
 
                 <!-- NAVIGATION (DESKTOP) -->
                 <nav class="header-nav d-none d-lg-flex">
-                    <ul class="menu">
-                        <li>
-                            <a href="/" class="nav-home" aria-label="Home">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/home.jpg"
-                                    alt="Home">
-                            </a>
-                        </li>
-                        <!-- ABOUT (MEGA MENU) -->
-
-                    </ul>
                     <?php
 					wp_nav_menu([
 						'theme_location' => 'primary_menu',
