@@ -54,7 +54,7 @@
                     <span class="font-medium">A</span>
                     <span class="font-small">A-</span>
 
-                    <img src="/wp-content/uploads/2026/01/H-E-converter.png" alt="Language Toggle" class="lang-img">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/language.png" alt="Language Toggle" class="lang-img">
 
                     <div class="search-box">
                         <input type="text" placeholder="Search" aria-label="Search">

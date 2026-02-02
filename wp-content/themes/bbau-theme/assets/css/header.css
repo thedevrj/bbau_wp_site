@@ -1,86 +1,166 @@
 /* =====================================================
-/* ================= TOP BAR ================= */
+   TOP BAR
+===================================================== */
 .top-bar {
   width: 100%;
   height: 45px;
-  background: #1f6f8b;
+  background-color: #1f6f8b;
 }
 
-/* ================= CONTAINER OVERRIDE ================= */
-.top-bar-container {
+/* =====================================================
+   OVERRIDE BOOTSTRAP container-fluid
+===================================================== */
+.top-bar > .container-fluid {
+  height: 45px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+
+  padding-left: 100px !important;
+  padding-right: 100px !important;
+
+  margin: 0 !important;
+}
+
+/* =====================================================
+   LEFT MENU (FIX DOUBLE .top-left ISSUE)
+===================================================== */
+
+/* outer wrapper */
+.top-bar .top-left {
+  display: flex;
+  align-items: center;
+}
+
+/* ul from wp_nav_menu */
+.top-bar .top-left ul {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* li reset */
+.top-bar .top-left ul li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+/* anchor */
+.top-bar .top-left ul li a {
   height: 45px;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
-  padding-left: 100px !important;
-  padding-right: 100px !important;
-}
+  padding: 0 4px;
 
-/* ================= LEFT ================= */
-.top-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.top-left a {
-  color: #ffffff;
   font-size: 12px;
   text-decoration: none;
   white-space: nowrap;
-}
 
-.top-left a:hover {
-  color: #ff9933;
-}
-
-/* ================= RIGHT ================= */
-.top-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  white-space: nowrap;
-}
-
-/* FORCE WHITE COLOR */
-.top-right span {
   color: #ffffff !important;
-  cursor: pointer;
-}
+}/* wrap text animation */
+.top-bar .top-left ul li a span {
+  display: inline-block;
+  transform-origin: center center;
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
 
-/* FONT SIZE CONTROL */
-.font-big {
-  font-size: 15px;
-  font-weight: 600;
 }
-
-.font-medium {
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.font-small {
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.top-right span:hover {
+/* hover zoom */
+.top-bar .top-left ul li a:hover span {
+  transform: scale(1.15);
   color: #ff9933 !important;
 }
 
-/* ================= LANGUAGE ================= */
-.lang-img {
-  height: 22px;
-  margin-left: 8px;
+
+/* =====================================================
+   RIGHT SECTION
+===================================================== */
+.top-bar .top-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* =====================================================
+   FONT BUTTONS (A+, A, A-)
+===================================================== */
+.font-btn {
+  width: 8px;          /* FIXED SPACE → NO SHIFT */
+  height:8px;
+
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+
+  position: relative;
   cursor: pointer;
 }
 
-/* ================= SEARCH ================= */
+/* center text absolutely */
+.font-btn span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%) scale(1);
+  transform-origin: center center;
+
+  color: #ffffff !important;
+  font-weight: 600;
+
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* hover zoom from CENTER */
+.font-btn:hover span {
+  transform: translate(-50%, -50%) scale(1.35);
+  color: #ff9933 !important;
+}
+
+/* font sizes */
+.font-big span {
+  font-size: 15px;
+}
+
+.font-medium span {
+  font-size: 13px;
+}
+
+.font-small span {
+  font-size: 11px;
+}
+
+/* =====================================================
+   LANGUAGE ICON
+===================================================== */
+.lang-img {
+  height: 22px;
+  margin-left: 6px;
+  cursor: pointer;
+}/* LANGUAGE ICON HOVER */
+.lang-img {
+  transition: transform 0.25s ease;
+  transform-origin: center center;
+}
+
+.lang-img:hover {
+  transform: scale(1.15);
+}
+
+
+/* =====================================================
+   SEARCH BOX
+===================================================== */
 .search-box {
-  width: 90px;
   height: 26px;
+  width: 90px;
 
   background: #ffffff;
   border-radius: 20px;
@@ -101,26 +181,64 @@
   font-size: 12px;
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 1199px) {
-  .top-bar-container {
-    padding-left: 32px !important;
-    padding-right: 32px !important;
+/* ================= RESPONSIVE: BELOW 1160px ================= */
+@media (max-width: 1160px) {
+
+  /* container padding */
+  .top-bar > .container-fluid {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* reduce left menu spacing */
+  .top-bar .top-left ul {
+    gap: 14px;
+  }
+
+  /* slightly smaller menu text */
+  .top-bar .top-left ul li a {
+    font-size: 11.5px;
+  }
+
+  /* softer hover zoom (prevents overlap) */
+  .top-bar .top-left ul li a:hover span {
+    transform: scale(1.1);
+  }
+
+  /* font control buttons */
+  .font-btn {
+    width: 8px;
+    height: 8px;
+  }
+
+  .font-big span {
+    font-size: 14px;
+  }
+
+  .font-medium span {
+    font-size: 12px;
+  }
+
+  .font-small span {
+    font-size: 10px;
+  }
+
+  /* language icon */
+  .lang-img {
+    height: 20px;
+  }
+
+  /* search box */
+  .search-box {
+    width: 80px;
+    height: 24px;
+  }
+
+  .search-box input {
+    font-size: 10px;
   }
 }
 
-@media (max-width: 767px) {
-  .top-bar-container {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  .top-left {
-    display: none;
-  }
-}
-
-/* ================= HEADER ================= */
 /* ================= HEADER ================= */
 .main-header {
   width: 100%;
