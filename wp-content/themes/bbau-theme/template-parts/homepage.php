@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
 <!-- ================= HERO SECTION ================= -->
 <section class="hero">
     <video class="hero-video" autoplay muted loop playsinline>
-        <source src="http://172.35.2.130:9001/wp-content/uploads/2026/01/BBAU-home-video-HD-1080p.mp4" type="video/mp4">
+        <source src="/wp-content/uploads/2026/01/BBAU-home-video-HD-1080p.mp4" type="video/mp4">
     </video>
 
     <div class="hero-overlay"></div>
@@ -29,9 +29,16 @@ defined( 'ABSPATH' ) || exit;
 <div class="announce-bar">
     <div class="announce-container">
         <div class="announce-track">
-            <span>Admission in UG & Diploma Courses for the Academic Session 2025–26</span>
+            <?php   if(have_rows('notice_file')):
+                    while(have_rows('notice_file')): the_row(); ?>
+                <span><a target="_blank"
+                    href="<?php echo get_sub_field('files_upload'); ?>"><?php echo get_sub_field('file_text'); ?></a></span>
+            <?php 
+                    endwhile; 
+                endif; ?>
+            <!-- <span>Admission in UG & Diploma Courses for the Academic Session 2025–26</span>
             <span>Admission in B.Tech Programme 2025–26 through JEE (Main) Score</span>
-            <span>Admissions Open for PG Programmes for the Academic Session 2025–26</span>
+            <span>Admissions Open for PG Programmes for the Academic Session 2025–26</span> --> 
         </div>
     </div>
 </div>
@@ -41,28 +48,30 @@ defined( 'ABSPATH' ) || exit;
 <section class="glance-section">
     <div class="glance-overlay container-fluid">
         <div class="glance-container">
-
+            <?php if( get_field('glance_heading') ): ?>
             <h2 class="glance-title"><?php echo get_field('glance_heading');?></h2>
+            <?php endif; ?>
+
+            <?php if(get_field('glance_description')): ?>
             <p class="glance-desc">
                 <?php echo get_field('glance_description');?>
             </p>
-
-
+            <?php endif; ?>
             <div class="glance-stats">
                 <?php
                     if( have_rows('glance_stats') ):
                         while ( have_rows('glance_stats') ) : the_row(); ?>
-                            <div class="stat">
-                                <div class="icon-box">
-                                    <img src="<?php echo get_sub_field('stats_icon');?>"
-                                        alt="<?php echo get_sub_field('stats_label');?>">
-                                </div>
-                                <div class="stat-text">
-                                    <span class="num"><?php echo get_sub_field('stats_number');?></span>
-                                    <span class="label"><?php echo get_sub_field('stats_label');?></span>
-                                </div>
-                            </div>
-                            <?php endwhile;
+                <div class="stat">
+                    <div class="icon-box">
+                        <img src="<?php echo get_sub_field('stats_icon');?>"
+                            alt="<?php echo get_sub_field('stats_label');?>">
+                    </div>
+                    <div class="stat-text">
+                        <span class="num"><?php echo get_sub_field('stats_number');?></span>
+                        <span class="label"><?php echo get_sub_field('stats_label');?></span>
+                    </div>
+                </div>
+                <?php endwhile;
                     endif;
                 ?>
             </div>
@@ -76,12 +85,7 @@ defined( 'ABSPATH' ) || exit;
 
         <style>
         .vc-slider {
-            Babasaheb Bhimrao Ambedkar University,
-            a premier Central University located in the historic capital city of Lucknow,
-            Uttar Pradesh,
-            stands as a beacon of academic excellence and social empowerment. The University equips students with knowledge,
-            professional skills,
-            and deep-rooted values to contribute responsibly to society. width: 100%;
+            width: 100%;
             overflow: hidden
         }
 
@@ -107,41 +111,34 @@ defined( 'ABSPATH' ) || exit;
         <div class="vc-image">
             <div class="vc-slider" aria-roledescription="carousel">
                 <div class="vc-slider-track">
-                    <div class="vc-slide"><img
-                            src="http://172.35.2.130:9001/wp-content/uploads/2026/01/bd84e33f73912eca5938f36a7148b43ace88498f.png"
-                            alt="Vice Chancellor"></div>
-                    <div class="vc-slide"><img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/VC-SIR-4.png"
-                            alt="Vice Chancellor"></div>
-                    <div class="vc-slide"><img
-                            src="http://172.35.2.130:9001/wp-content/uploads/2026/01/PXL_20250925_055605975.MP_-scaled.jpg"
-                            alt="Vice Chancellor"></div>
-                    <div class="vc-slide"><img
-                            src="http://172.35.2.130:9001/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-23-at-11.36.45-AM.jpeg"
-                            alt="Vice Chancellor"></div>
-                    <div class="vc-slide"><img
-                            src="http://172.35.2.130:9001/wp-content/uploads/2026/01/PXL_20250925_101748138-scaled.jpg"
-                            alt="Vice Chancellor"></div>
+                    <?php if(have_rows('vc_slider_image')): 
+                        while(have_rows('vc_slider_image')): the_row();?>
+                    <div class="vc-slide">
+                        <img src="<?php echo get_sub_field('vc_images'); ?>" alt="Vice Chancellor">
+                    </div>
+                    <?php endwhile; endif; ?>
                 </div>
             </div>
         </div>
 
         <!-- RIGHT CONTENT -->
         <div class="vc-content">
-            <h3>Vice Chancellor Desk</h3>
+            <h3><?php echo get_field('vc_desk_heading'); ?></h3>
 
+            <?php if(get_field('vc_desk_content')): ?>
             <p class="vc-text">
-                <span class="vc-greeting">Greetings…</span>
-                Welcome to Babasaheb Bhimrao Ambedkar University, a premier institution
-                of higher learning dedicated to shaping the minds of future leaders.
-                As we strive for excellence in education, research and innovations,
-                we remain focused on fostering a culture of innovation, inclusivity,
-                and social responsibility essential to navigate the complexities of
-                the 21st century and provide the opportunity to everyone to realize
-                one’s full potential.
+                <?php echo get_field('vc_desk_content');?>
             </p>
+            <?php endif; ?>
 
             <div class="vc-btn-wrap">
-                <a href="#" class="vc-btn">Read More</a>
+                <?php $link = get_field('vc_button_text'); 
+                if( $link ): ?>
+                <a href="<?php echo esc_url($link['url']); ?>"
+                    target="<?php echo esc_attr($link['target'] ?: '_self'); ?>" class="vc-btn">
+                    <?php echo esc_html($link['title']); ?>
+                </a>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -228,31 +225,14 @@ defined( 'ABSPATH' ) || exit;
         <div class="slider-gap"></div>
 
         <div class="slider-track">
+            <?php if( have_rows('slider_image_section') ):
+                while ( have_rows('slider_image_section') ) : the_row(); ?>
 
             <div class="slider-card">
-                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/bv3-scaled.jpg">
+                <img src="<?php echo get_sub_field('slider_images'); ?>">
             </div>
-
-            <div class="slider-card">
-                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/IMG_8672-scaled.jpeg">
-            </div>
-
-            <div class="slider-card">
-                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/vc2-scaled.jpg">
-            </div>
-
-            <div class="slider-card">
-                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/vc1-scaled-1.jpg">
-            </div>
-
-            <div class="slider-card">
-                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/vc5.jpg">
-            </div>
-
-            <div class="slider-card">
-                <img src="http://172.35.2.130:9001/wp-content/uploads/2026/01/vc4.jpg">
-            </div>
-
+            <?php endwhile;
+            endif; ?>
         </div>
 
         <!-- end gap -->
