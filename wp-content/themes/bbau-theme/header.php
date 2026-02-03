@@ -40,7 +40,7 @@
                     <?php
                wp_nav_menu(array(
                    'theme_location' => 'announcement_bar',
-                   'menu_class'     => 'top-left d-flex flex-wrap p-0 m-0 list-unstyled hide-list',
+                   'menu_class'     => 'top-left d-flex flex-wrap list-unstyled hide-list',
                    'container'      => false,
                    'link_before'    => '',
                    'link_after'     => '',
@@ -50,9 +50,10 @@
                ?>
                 </div>
                 <div class="top-right">
-                    <span class="font-big">A+</span>
-                    <span class="font-medium">A</span>
-                    <span class="font-small">A-</span>
+                    <button class="font-btn font-big"><span>A+</span></button>
+                    <button class="font-btn font-medium"><span>A</span></button>
+                    <button class="font-btn font-small"><span>A-</span></button>
+
 
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/language.png" alt="Language Toggle" class="lang-img">
 

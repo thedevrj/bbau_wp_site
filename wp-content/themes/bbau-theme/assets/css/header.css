@@ -1,14 +1,24 @@
 /* =====================================================
-   TOP BAR
+   TOP BAR – FORCE INTERACTION
 ===================================================== */
 .top-bar {
   width: 100%;
   height: 45px;
   background-color: #1f6f8b;
+
+  position: relative;
+  z-index: 99999;              /* 🔥 ABOVE EVERYTHING */
+  pointer-events: auto;
+}
+
+/* allow interaction for all children */
+.top-bar,
+.top-bar * {
+  pointer-events: auto !important;
 }
 
 /* =====================================================
-   OVERRIDE BOOTSTRAP container-fluid
+   CONTAINER OVERRIDE
 ===================================================== */
 .top-bar > .container-fluid {
   height: 45px !important;
@@ -21,70 +31,73 @@
   padding-right: 100px !important;
 
   margin: 0 !important;
+  overflow: visible !important;
 }
 
 /* =====================================================
-   LEFT MENU (FIX DOUBLE .top-left ISSUE)
+   LEFT MENU
 ===================================================== */
-
-/* outer wrapper */
 .top-bar .top-left {
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
+  overflow: visible !important;
 }
 
-/* ul from wp_nav_menu */
 .top-bar .top-left ul {
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
   gap: 18px;
 
   margin: 0 !important;
   padding: 0 !important;
+  list-style: none !important;
+
+  overflow: visible !important;
 }
 
-/* li reset */
 .top-bar .top-left ul li {
-  list-style: none;
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
+  overflow: visible !important;
 }
 
-/* anchor */
+/* =====================================================
+   MENU LINKS — HOVER + ZOOM (FORCED)
+===================================================== */
 .top-bar .top-left ul li a {
   height: 45px;
+  padding: 0 6px;
 
-  display: flex;
+  display: inline-flex !important;     /* 🔥 REQUIRED */
   align-items: center;
   justify-content: center;
 
-  padding: 0 4px;
-
   font-size: 12px;
-  text-decoration: none;
+  font-weight: 400;
   white-space: nowrap;
+  text-decoration: none !important;
 
   color: #ffffff !important;
-}/* wrap text animation */
-.top-bar .top-left ul li a span {
-  display: inline-block;
-  transform-origin: center center;
-  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
 
+  transform: translateZ(0);            /* 🔥 GPU FIX */
+  transition: transform 0.25s ease, color 0.25s ease !important;
+
+  position: relative;
+  z-index: 1;
 }
-/* hover zoom */
-.top-bar .top-left ul li a:hover span {
-  transform: scale(1.15);
+
+/* HOVER */
+.top-bar .top-left ul li a:hover {
   color: #ff9933 !important;
+  transform: scale(1.15);
 }
-
 
 /* =====================================================
    RIGHT SECTION
 ===================================================== */
 .top-bar .top-right {
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
   gap: 12px;
 }
 
@@ -92,49 +105,50 @@
    FONT BUTTONS (A+, A, A-)
 ===================================================== */
 .font-btn {
-  width: 8px;          /* FIXED SPACE → NO SHIFT */
-  height:8px;
+  width: 12px;
+  height: 12px;
 
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
 
-  position: relative;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
-}
-
-/* center text absolutely */
-.font-btn span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  transform: translate(-50%, -50%) scale(1);
-  transform-origin: center center;
 
   color: #ffffff !important;
+  line-height: 1;
+
+  position: relative;
+}
+
+.font-btn span {
+  color: #ffffff !important;
   font-weight: 600;
+  display: inline-block;
 
   transition: transform 0.25s ease, color 0.25s ease;
 }
 
-/* hover zoom from CENTER */
+/* hover zoom */
 .font-btn:hover span {
-  transform: translate(-50%, -50%) scale(1.35);
+  transform: scale(1.35);
   color: #ff9933 !important;
 }
 
 /* font sizes */
 .font-big span {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .font-medium span {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .font-small span {
-  font-size: 11px;
+  font-size: 12px;
 }
 
 /* =====================================================
@@ -144,16 +158,13 @@
   height: 22px;
   margin-left: 6px;
   cursor: pointer;
-}/* LANGUAGE ICON HOVER */
-.lang-img {
+
   transition: transform 0.25s ease;
-  transform-origin: center center;
 }
 
 .lang-img:hover {
   transform: scale(1.15);
 }
-
 
 /* =====================================================
    SEARCH BOX
@@ -168,6 +179,7 @@
   display: flex;
   align-items: center;
   padding: 0 8px;
+  transition: transform 0.25s ease;
 }
 
 .search-box input {
@@ -180,55 +192,40 @@
 .search-icon {
   font-size: 12px;
 }
+.search-box:hover {
+  transform: scale(1.15);
+}
 
-/* ================= RESPONSIVE: BELOW 1160px ================= */
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 @media (max-width: 1160px) {
 
-  /* container padding */
   .top-bar > .container-fluid {
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
 
-  /* reduce left menu spacing */
   .top-bar .top-left ul {
     gap: 14px;
   }
 
-  /* slightly smaller menu text */
   .top-bar .top-left ul li a {
     font-size: 11.5px;
   }
 
-  /* softer hover zoom (prevents overlap) */
-  .top-bar .top-left ul li a:hover span {
+  .top-bar .top-left ul li a:hover {
     transform: scale(1.1);
   }
 
-  /* font control buttons */
-  .font-btn {
-    width: 8px;
-    height: 8px;
-  }
+  .font-big span { font-size: 14px; }
+  .font-medium span { font-size: 12px; }
+  .font-small span { font-size: 10px; }
 
-  .font-big span {
-    font-size: 14px;
-  }
-
-  .font-medium span {
-    font-size: 12px;
-  }
-
-  .font-small span {
-    font-size: 10px;
-  }
-
-  /* language icon */
   .lang-img {
     height: 20px;
   }
 
-  /* search box */
   .search-box {
     width: 80px;
     height: 24px;
@@ -239,12 +236,18 @@
   }
 }
 
+
 /* ================= HEADER ================= */
+/* =====================================================
+   HEADER
+===================================================== */
 .main-header {
   width: 100%;
   height: 94px;
   background: #ffffff;
   border-bottom: 1px solid #e5e5e5;
+  position: relative;
+  z-index: 100;
 }
 
 /* DEFAULT VALUE */
@@ -252,26 +255,21 @@
   --header-gap: 100px;
 }
 
-/* HEADER */
+/* HEADER INNER */
 .header-inner {
   width: 100%;
   height: 94px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding-left: var(--header-gap);
   padding-right: var(--header-gap);
-
   box-sizing: border-box;
 }
 
 /* LARGE DESKTOP */
 @media (min-width: 1600px) {
-  :root {
-    --header-gap: 150px;
-  }
+  :root { --header-gap: 150px; }
 }
 
 /* ================= LEFT ================= */
@@ -280,14 +278,12 @@
   align-items: center;
 }
 
-/* LOGO */
 .logo {
   width: 29px;
   height: 51px;
   flex-shrink: 0;
 }
 
-/* UNIVERSITY NAME */
 .univ-name {
   display: flex;
   flex-direction: column;
@@ -336,76 +332,54 @@
   font-family: "Poppins", sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: #000;
+  color: #140b02;
   text-decoration: none;
 }
 
-.nav-home img {
-  height: 14px;
+/* =====================================================
+   GLOBAL HOVER EFFECT (ALL LINKS)
+===================================================== */
+.header-nav a,
+.menu-link,
+.main-menu a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  transition: color .3s ease, transform .3s ease;
 }
 
-/* ================= RIGHT IMAGE ================= */
-.header-photo img {
-  width: 98px;
-  height: 94px;
-  object-fit: cover;
-  display: block;
+.header-nav a:hover,
+.menu-link:hover,
+.main-menu a:hover {
+  transform: translateY(-3px) scale(1.08);
+  color: #f69402fa;
 }
 
-
-/* ================= TABLET ================= */
-@media (max-width: 1199px) {
-  .header-inner {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-  .header-nav {
-    gap: 16px;
-  }
+/* FULL UNDERLINE */
+.header-nav a::after,
+.menu-link::after,
+.main-menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
 }
 
-/* ================= MOBILE ================= */
-@media (max-width: 767px) {
-  .main-header {
-    height: auto;
-    padding: 10px 0;
-  }
-
-  .header-inner {
-    flex-direction: column;
-    text-align: center;
-    height: auto;
-    gap: 6px;
-  }
-
-  .header-left {
-    flex-direction: column;
-  }
-
-  .univ-name {
-    align-items: center;
-  }
-
-  .univ-hindi {
-    font-size: 14px;
-  }
-
-  .univ-english {
-    font-size: 13px;
-  }
-
-  .univ-subtitle {
-    font-size: 11px;
-  }
+.header-nav a:hover::after,
+.menu-link:hover::after,
+.main-menu a:hover::after {
+  transform: scaleX(1);
 }
 
-
-/* wordpress menu css */
-
-
-/*    BASE MENU RESET    */
-
+/* =====================================================
+   WORDPRESS MENU BASE
+===================================================== */
 .main-menu,
 .main-menu ul {
   list-style: none;
@@ -414,28 +388,39 @@
 }
 
 .main-menu > li {
-  align-items: center;
   position: relative;
   display: inline-block;
 }
+.nav-home img 
+{ height: 16px; }
 
 .menu-link {
-  display: flex;
-  align-items: center;
   gap: 6px;
-  padding: 14px 18px;
-  text-decoration: none;
+  padding: 14px 14px;
   font-weight: 500;
-  color: #111;
+  color: #170e01;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .dropdown-icon {
   font-size: 10px;
 }
+/* =====================================================
+   KEEP MENU IN ONE LINE
+===================================================== */
+.header-nav,
+.main-navigation,
+.main-menu {
+  display: flex;
+  flex-wrap: nowrap;        /* ✅ NO WRAPPING */
+  white-space: nowrap;     /* ✅ FORCE SINGLE LINE */
+}
 
-/*    NORMAL DROPDOWN (ALL NON-MEGA MENUS)    */
 
+/* =====================================================
+   NORMAL DROPDOWN
+===================================================== */
 .main-menu li > .sub-menu {
   display: none;
   position: absolute;
@@ -451,141 +436,306 @@
   display: block;
 }
 
-/* second level normal dropdown */
 .main-menu .sub-menu .sub-menu {
   top: 0;
   left: 100%;
 }
 
-/* normal dropdown links */
 .main-menu .sub-menu li a {
   padding: 10px 16px;
   display: block;
   font-weight: 400;
-  color: #111;
+  color: #111111;
+  transition: color .3s ease, transform .3s ease;
 }
 
 .main-menu .sub-menu li a:hover {
-  background: #f3f4f6;
+  transform: translateX(6px) scale(1.03);
+  background: #f5f4f3;
+}
+/* ======================================
+   UNDERLINE ANIMATION (MAIN LINKS)
+====================================== */
+.main-menu > li > .menu-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
 
-.main-navigation {
+/* underline */
+.main-menu > li > .menu-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;              /* underline just below text */
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+/* show underline on hover */
+.main-menu > li:hover > .menu-link::after {
+  transform: scaleX(1);
+}
+
+/* ======================================
+   DROPDOWN STAY-OPEN FIX
+====================================== */
+
+/* parent relative */
+.main-menu > li {
   position: relative;
 }
-/*    MEGA MENU (ONLY ABOUT)    */
 
-.main-menu > li.mega-menu {
-  position: relative; /* critical */
+/* submenu hidden */
+.main-menu > li > .sub-menu {
+  position: absolute;
+  top: calc(100% + 6px);     /* dropdown opens AFTER underline */
+  left: 0;
+  border-radius: 14px;
+
+  min-width: 220px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+
+  display: none;
+  z-index: 9999;
 }
 
-/* mega menu container */
+/* open + stay open */
+.main-menu > li:hover > .sub-menu,
+.main-menu > li > .sub-menu:hover {
+  display: block;
+}
+
+/* 🔥 invisible hover bridge (MOST IMPORTANT) */
+.main-menu > li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 20px;             /* prevents submenu disappearing */
+}
+
+/* =====================================================
+   MEGA MENU
+===================================================== */
+.main-menu > li.mega-menu {
+  position: relative;
+}
+
 .main-menu > li.mega-menu > .sub-menu {
-  display: none;                 /* ✅ hidden */
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
   width: 1000px;
   max-width: 95vw;
-
   padding: 32px 36px;
   background: #ffffff;
   border-radius: 14px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.18);
   z-index: 9999;
-
+  display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 40px;
 }
 
-/* show mega menu ONLY on hover */
 .main-menu > li.mega-menu:hover > .sub-menu {
-  display: grid;                 /* ✅ grid ONLY here */
+  display: grid;
 }
 
-/*    MEGA MENU LEFT COLUMN (ABOUT UNIVERSITY)    */
-
-/* section heading */
+/* Mega headings */
 .main-menu > li.mega-menu > .sub-menu > li > a {
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   margin-bottom: 14px;
   display: block;
-  color: #111;
-  pointer-events: none; /* heading only */
+  color: #100b03;
+  pointer-events: none;
 }
 
-/* inner list */
+/* Mega inner list */
 .main-menu > li.mega-menu > .sub-menu > li > .sub-menu {
   position: static;
   display: block;
   background: transparent;
   box-shadow: none;
-  min-width: auto;
 }
 
-/* links */
-.main-menu > li.mega-menu .sub-menu li a {
-  padding: 6px 0;
-  font-weight: 400;
-  color: #111;
-}
-
-.main-menu > li.mega-menu .sub-menu li a:hover {
-  color: #2563eb;
-  background: none;
-}
-
-/* divider between columns */
+/* Divider */
 .main-menu > li.mega-menu > .sub-menu > li:first-child {
   padding-right: 32px;
   border-right: 1px solid #e5e7eb;
 }
 
-/*    MEGA MENU RIGHT COLUMN (GALLERY CARDS)    */
-
-.main-menu > li.mega-menu > .sub-menu > li:last-child > .sub-menu {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+/* =====================================================
+   MEGA MENU (ABOUT) — SMART POSITION
+===================================================== */
+/* =====================================================
+   MEGA MENU (ABOUT) — SMART POSITION (FIXED)
+===================================================== */
+.main-menu > li.mega-menu {
+  position: relative;
 }
 
-/* card style */
-.main-menu > li.mega-menu > .sub-menu > li:last-child > .sub-menu li a {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  background: #f9fafb;
-  border-radius: 10px;
-  font-weight: 500;
+/* hidden by default */
+.main-menu > li.mega-menu > .sub-menu {
+  display: none;                       /* ✅ hidden */
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+
+  width: 550px;
+  max-width: calc(100vw - 40px);
+
+  padding: 28px 30px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+  z-index: 9999;
+
+  grid-template-columns: 1.3fr 1fr;
+  gap: 32px;
 }
 
-/* icon circle */
-.main-menu > li.mega-menu > .sub-menu > li:last-child > .sub-menu li a i {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+/* open ONLY on hover */
+.main-menu > li.mega-menu:hover > .sub-menu {
+  display: grid;                      /* ✅ open on hover */
+}
+
+
+
+
+/* =========================================
+   SECOND-LEVEL SUBMENU
+   EXACT SAME LINE AS PARENT (TOP-ALIGNED)
+========================================= */
+
+.main-menu .sub-menu > li {
+  position: relative;   /* anchor for child submenu */
+}
+
+.main-menu .sub-menu > li > .sub-menu {
+  top: 0 !important;          /* 🔥 SAME LINE (TOP EDGE) */
+  left: 100% !important;      /* open to right */
+  right: auto !important;
+
+  transform: none !important; /* remove centering */
+}
+
+
+/* =========================================
+   CHEVRON (DROPDOWN ICON) UP & DOWN
+========================================= */
+
+/* default: arrow down */
+.dropdown-icon {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #eef2ff;
-  color: #1d4ed8;
+  margin-left: 6px;
+  font-size: 10px;
+  transition: transform 0.25s ease;
+  transform: rotate(0deg);   /* ⬇️ down */
 }
 
-/* hover */
-.main-menu > li.mega-menu > .sub-menu > li:last-child > .sub-menu li a:hover {
-  background: #eef2ff;
+/* when submenu is open */
+.main-menu > li:hover > .menu-link .dropdown-icon,
+.main-menu .sub-menu > li:hover > .menu-link .dropdown-icon {
+  transform: rotate(180deg); /* ⬆️ up */
+}
+.main-menu > li > .sub-menu li:hover > a {
+  color: #e67e00;
 }
 
-/*    SAFETY RESET (PREVENT LEAKAGE)    */
 
-/* ensure normal menus never become grid */
-.main-menu li:not(.mega-menu) > .sub-menu {
-  display: none;
+/* =====================================================
+   RESPONSIVE HEADER & MENU
+===================================================== */
+
+/* ================= DESKTOP → TABLET (≤1199px) ================= */
+@media (max-width: 1199px) {
+
+  .header-inner {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .header-nav {
+    gap: 16px;
+  }
 }
 
-/* normal hover restored */
-.main-menu li:not(.mega-menu):hover > .sub-menu {
-  display: block;
+
+/* ================= KEEP MEGA MENU SAME TILL 1024px ================= */
+@media (max-width: 1024px) {
+
+  /* keep parent positioning SAME as desktop */
+  .main-menu > li.mega-menu {
+    position: relative;
+  }
+
+  /* mega menu container – SAME layout, reduced spacing */
+  .main-menu > li.mega-menu > .sub-menu {
+    left: 0;
+    transform: none;
+
+    width: 550px;                      /* SAME as desktop */
+    max-width: calc(100vw - 40px);
+
+    grid-template-columns: 1.3fr 1fr;  /* SAME columns */
+    gap: 20px;                         /* slightly reduced */
+
+    padding: 22px 24px;                /* reduced padding */
+    border-radius: 14px;
+  }
+
+  /* divider adjustment */
+  .main-menu > li.mega-menu > .sub-menu > li:first-child {
+    padding-right: 20px;
+  }
+
+  /* slightly tighter menu links */
+  .menu-link {
+    padding: 8px 8px;
+    gap: 4px;
+    font-size: 12.5px;
+  }
 }
+
+
+/* ================= MOBILE (≤767px) ================= */
+@media (max-width: 767px) {
+
+  .main-header {
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    height: auto;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .header-left {
+    flex-direction: column;
+  }
+
+  .univ-name {
+    align-items: center;
+  }
+
+  /* disable hover mega menu on mobile */
+  .main-menu > li.mega-menu > .sub-menu {
+    display: none !important;
+  }
+}
+
