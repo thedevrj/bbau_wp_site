@@ -33,7 +33,7 @@
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
         <div class="top-bar">
-            <div class="container-xxl d-flex justify-content-between align-items-center">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
 
                 <!-- LEFT LINKS -->
                 <div class="top-left d-flex gap-3 flex-wrap">
@@ -67,7 +67,7 @@
         </div>
         <header class="main-header">
 
-            <div class="container-xxl d-flex align-items-center justify-content-between position-relative">
+            <div class="container-fluid d-flex align-items-center justify-content-between position-relative">
 
                 <!-- LEFT BRAND -->
                 <div class="d-flex align-items-center">
