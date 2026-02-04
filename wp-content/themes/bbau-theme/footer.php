@@ -97,7 +97,7 @@ defined( 'ABSPATH' ) || exit;
     <div class="pb-4 footer-bottom">
 		<span>
 		<i class="icon-copyright2"></i> <?php echo date("Y"); ?> Computer Centre,<a href="/copyright-policy">Babasaheb Bhimrao Ambedkar University</a></span> |
-		<a href="/disclainer">Disclaimer</a> |
+		<a href="/disclaimer">Disclaimer</a> |
         <a href="/help">Help</a>
     </div>
 
