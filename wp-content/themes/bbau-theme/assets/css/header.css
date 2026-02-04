@@ -47,7 +47,7 @@
 .top-bar .top-left ul {
   display: flex !important;
   align-items: center !important;
-  gap: 18px;
+  gap: 12px;
 
   margin: 0 !important;
   padding: 0 !important;
@@ -249,12 +249,29 @@
 }
 
 
-/* ================= HEADER ================= */
 /* =====================================================
-   HEADER
+   HEADER – FINAL FIX (FOR YOUR HTML)
 ===================================================== */
+
+/* CSS VARIABLE */
+:root {
+  --header-gap: 100px;
+}
+
+/* REMOVE BOOTSTRAP PADDING */
+.main-header > .container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* APPLY CUSTOM GAP */
+.main-header > .container-fluid {
+  padding-left: var(--header-gap) !important;
+  padding-right: var(--header-gap) !important;
+}
+
+/* HEADER HEIGHT (OPTIONAL, SAFE) */
 .main-header {
-  width: 100%;
   height: 94px;
   background: #ffffff;
   border-bottom: 1px solid #e5e5e5;
@@ -262,29 +279,23 @@
   z-index: 100;
 }
 
-/* DEFAULT VALUE */
-:root {
-  --header-gap: 100px;
+/* ================= RESPONSIVE ================= */
+
+/* Tablet */
+@media (max-width: 1199px) {
+  :root {
+    --header-gap: 24px;
+  }
 }
 
-/* HEADER INNER */
-.header-inner {
-  width: 100%;
-  height: 94px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: var(--header-gap);
-  padding-right: var(--header-gap);
-  box-sizing: border-box;
-}
-
-/* LARGE DESKTOP */
+/* Large desktop */
 @media (min-width: 1600px) {
   :root {
     --header-gap: 150px;
   }
 }
+
+
 
 /* ================= LEFT ================= */
 .header-left {
@@ -390,7 +401,6 @@
 .main-menu a:hover::after {
   transform: scaleX(1);
 }
-
 /* =====================================================
    WORDPRESS MENU BASE
 ===================================================== */
@@ -435,8 +445,6 @@
   white-space: nowrap;
   /* ✅ FORCE SINGLE LINE */
 }
-
-
 /* =====================================================
    NORMAL DROPDOWN
 ===================================================== */
@@ -486,7 +494,6 @@
   align-items: center;
   text-decoration: none;
 }
-
 /* underline */
 .main-menu>li>.menu-link::after {
   content: "";
@@ -502,21 +509,17 @@
   transform-origin: left;
   transition: transform 0.25s ease;
 }
-
 /* show underline on hover */
 .main-menu>li:hover>.menu-link::after {
   transform: scaleX(1);
 }
-
 /* ======================================
    DROPDOWN STAY-OPEN FIX
 ====================================== */
-
 /* parent relative */
 .main-menu>li {
   position: relative;
 }
-
 /* submenu hidden */
 .main-menu>li>.sub-menu {
   position: absolute;
@@ -532,13 +535,11 @@
   display: none;
   z-index: 9999;
 }
-
 /* open + stay open */
 .main-menu>li:hover>.sub-menu,
 .main-menu>li>.sub-menu:hover {
   display: block;
 }
-
 /* 🔥 invisible hover bridge (MOST IMPORTANT) */
 .main-menu>li::after {
   content: "";
@@ -549,7 +550,6 @@
   height: 20px;
   /* prevents submenu disappearing */
 }
-
 /* =====================================================
    MEGA MENU
 ===================================================== */
@@ -573,11 +573,9 @@
   grid-template-columns: 1.4fr 1fr;
   gap: 40px;
 }
-
-.main-menu>li.mega-menu:hover>.sub-menu {
+.main-menu > li.mega-menu:hover > .sub-menu {
   display: grid;
 }
-
 /* Mega headings */
 .main-menu>li.mega-menu>.sub-menu>li>a {
   font-size: 14px;
@@ -588,7 +586,6 @@
   color: #100b03;
   pointer-events: none;
 }
-
 /* Mega inner list */
 .main-menu>li.mega-menu>.sub-menu>li>.sub-menu {
   position: static;
@@ -596,13 +593,11 @@
   background: transparent;
   box-shadow: none;
 }
-
 /* Divider */
 .main-menu>li.mega-menu>.sub-menu>li:first-child {
   padding-right: 32px;
   border-right: 3px solid #e5e7eb;
 }
-
 /* =====================================================
    MEGA MENU (ABOUT) — SMART POSITION
 ===================================================== */
@@ -612,7 +607,6 @@
 .main-menu>li.mega-menu {
   position: relative;
 }
-
 /* hidden by default */
 .main-menu>li.mega-menu>.sub-menu {
   display: none;
@@ -631,16 +625,11 @@
   grid-template-columns: 1.3fr 1fr;
   gap: 32px;
 }
-
 /* open ONLY on hover */
 .main-menu>li.mega-menu:hover>.sub-menu {
   display: grid;
   /* ✅ open on hover */
 }
-
-
-
-
 /* =========================================
    SECOND-LEVEL SUBMENU
    EXACT SAME LINE AS PARENT (TOP-ALIGNED)
@@ -661,8 +650,6 @@
   transform: none !important;
   /* remove centering */
 }
-
-
 /* =========================================
    CHEVRON (DROPDOWN ICON) UP & DOWN
 ========================================= */
@@ -688,10 +675,6 @@
   color: #e67e00;
 }
 
-.main-menu>li.mega-menu>.sub-menu>.menu-item .dropdown-icon {
-  display: none;
-  /* ➡️ right */
-}
 
 /* =====================================================
    RESPONSIVE HEADER & MENU
@@ -709,8 +692,6 @@
     gap: 16px;
   }
 }
-
-
 /* ================= KEEP MEGA MENU SAME TILL 1024px ================= */
 @media (max-width: 1024px) {
 
@@ -750,8 +731,6 @@
     font-size: 12.5px;
   }
 }
-
-
 /* ================= MOBILE (≤767px) ================= */
 @media (max-width: 767px) {
 
@@ -759,22 +738,18 @@
     height: auto;
     padding: 10px 0;
   }
-
   .header-inner {
     flex-direction: column;
     height: auto;
     gap: 6px;
     text-align: center;
   }
-
   .header-left {
     flex-direction: column;
   }
-
   .univ-name {
     align-items: center;
   }
-
   /* disable hover mega menu on mobile */
   .main-menu>li.mega-menu>.sub-menu {
     display: none !important;

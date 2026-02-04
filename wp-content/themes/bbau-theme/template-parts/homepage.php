@@ -35,10 +35,7 @@ defined( 'ABSPATH' ) || exit;
                     href="<?php echo get_sub_field('files_upload'); ?>"><?php echo get_sub_field('file_text'); ?></a></span>
             <?php 
                     endwhile; 
-                endif; ?>
-            <!-- <span>Admission in UG & Diploma Courses for the Academic Session 2025–26</span>
-            <span>Admission in B.Tech Programme 2025–26 through JEE (Main) Score</span>
-            <span>Admissions Open for PG Programmes for the Academic Session 2025–26</span> --> 
+                endif; ?> 
         </div>
     </div>
 </div>
@@ -67,7 +64,12 @@ defined( 'ABSPATH' ) || exit;
                             alt="<?php echo get_sub_field('stats_label');?>">
                     </div>
                     <div class="stat-text">
-                        <span class="num"><?php echo get_sub_field('stats_number');?></span>
+                        <span class="num count"
+                         data-target="<?php echo preg_replace('/[^0-9]/', '', get_sub_field('stats_number')); ?>"
+                         data-suffix="<?php echo strpos(get_sub_field('stats_number'), '+') !== false ? '+' : ''; ?>">
+                         0
+                        </span>
+
                         <span class="label"><?php echo get_sub_field('stats_label');?></span>
                     </div>
                 </div>
