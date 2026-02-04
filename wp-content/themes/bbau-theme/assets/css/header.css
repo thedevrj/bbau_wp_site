@@ -248,27 +248,48 @@
   }
 }
 
-
 /* =====================================================
-   HEADER – FINAL FIX (FOR YOUR HTML)
+   HEADER GAP SYSTEM (CLEAN & RESPONSIVE)
 ===================================================== */
 
-/* CSS VARIABLE */
-:root {
-  --header-gap: 100px;
+/* ================= DEFAULT (LARGE DESKTOP) ================= */
+.main-header {
+  --header-gap: 100px; /* default desktop gap */
 }
 
-/* REMOVE BOOTSTRAP PADDING */
-.main-header > .container-fluid {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-/* APPLY CUSTOM GAP */
+/* ================= APPLY GAP (ONLY ONCE) ================= */
 .main-header > .container-fluid {
   padding-left: var(--header-gap) !important;
   padding-right: var(--header-gap) !important;
 }
+
+/* =====================================================
+   DESKTOP → LARGE TABLET (1025px – 1419px)
+===================================================== */
+@media (min-width: 1025px) and (max-width: 1419px) {
+  .main-header {
+    --header-gap: 16px;
+  }
+}
+
+/* =====================================================
+   TABLET (≤1024px)
+===================================================== */
+@media (max-width: 1024px) {
+  .main-header {
+    --header-gap: 12px;
+  }
+}
+
+/* =====================================================
+   MOBILE (≤767px)
+===================================================== */
+@media (max-width: 767px) {
+  .main-header {
+    --header-gap: 10px;
+  }
+}
+
 
 /* HEADER HEIGHT (OPTIONAL, SAFE) */
 .main-header {
@@ -278,24 +299,6 @@
   position: relative;
   z-index: 100;
 }
-
-/* ================= RESPONSIVE ================= */
-
-/* Tablet */
-@media (max-width: 1199px) {
-  :root {
-    --header-gap: 24px;
-  }
-}
-
-/* Large desktop */
-@media (min-width: 1600px) {
-  :root {
-    --header-gap: 150px;
-  }
-}
-
-
 
 /* ================= LEFT ================= */
 .header-left {
@@ -594,9 +597,6 @@
   border-right: 1px solid #e5e7eb;
 }
 /* =====================================================
-   MEGA MENU (ABOUT) — SMART POSITION
-===================================================== */
-/* =====================================================
    MEGA MENU (ABOUT) — SMART POSITION (FIXED)
 ===================================================== */
 .main-menu>li.mega-menu {
@@ -672,81 +672,133 @@
 
 
 /* =====================================================
-   RESPONSIVE HEADER & MENU
+   RESPONSIVE HEADER & MENU (DESKTOP-FIRST)
+===================================================== */
+/* =====================================================
+   RESPONSIVE HEADER & MENU (CLEAN & FIXED)
 ===================================================== */
 
-/* ================= DESKTOP → TABLET (≤1199px) ================= */
-@media (max-width: 1199px) {
+/* =====================================================
+   DESKTOP → LARGE TABLET (1025px – 1419px)
+   Compact layout – forced override
+===================================================== */
+@media (min-width: 1025px) and (max-width: 1419px) {
+
+  .main-header {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 
   .header-inner {
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 
   .header-nav {
-    gap: 16px;
+    gap: 6px !important;
+  }
+
+  .menu-link {
+    padding: 6px !important;
+    font-size: 13px;
+  }
+
+  .menu-link i,
+  .menu-link svg {
+    font-size: 14px;
+  }
+
+  .univ-name h1 {
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .univ-name span {
+    font-size: 12px;
   }
 }
-/* ================= KEEP MEGA MENU SAME TILL 1024px ================= */
+
+/* =====================================================
+   TABLET (≤1024px)
+   KEEP MEGA MENU SAME, TIGHTEN SPACING
+===================================================== */
 @media (max-width: 1024px) {
 
-  /* keep parent positioning SAME as desktop */
-  .main-menu>li.mega-menu {
+  .header-inner {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .main-menu > li.mega-menu {
     position: relative;
   }
 
-  /* mega menu container – SAME layout, reduced spacing */
-  .main-menu>li.mega-menu>.sub-menu {
+  .main-menu > li.mega-menu > .sub-menu {
     left: 0;
     transform: none;
 
-    width: 550px;
-    /* SAME as desktop */
-    max-width: calc(100vw - 40px);
+    width: 520px;
+    max-width: calc(100vw - 32px);
 
+    display: grid;
     grid-template-columns: 1.3fr 1fr;
-    /* SAME columns */
-    gap: 20px;
-    /* slightly reduced */
+    gap: 8px;
 
-    padding: 22px 24px;
-    /* reduced padding */
-    border-radius: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
   }
 
-  /* divider adjustment */
-  .main-menu>li.mega-menu>.sub-menu>li:first-child {
-    padding-right: 20px;
+  .main-menu > li.mega-menu > .sub-menu > li:first-child {
+    padding-right: 18px;
   }
 
-  /* slightly tighter menu links */
   .menu-link {
-    padding: 8px 8px;
-    gap: 4px;
+    padding: 4px !important;
     font-size: 12.5px;
+    gap: 2px;
   }
 }
-/* ================= MOBILE (≤767px) ================= */
+
+/* =====================================================
+   MOBILE (≤767px)
+   Stack header & disable hover mega menu
+===================================================== */
 @media (max-width: 767px) {
 
   .main-header {
     height: auto;
     padding: 10px 0;
   }
+
   .header-inner {
     flex-direction: column;
     height: auto;
     gap: 6px;
     text-align: center;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
+
   .header-left {
     flex-direction: column;
-  }
-  .univ-name {
     align-items: center;
   }
-  /* disable hover mega menu on mobile */
-  .main-menu>li.mega-menu>.sub-menu {
+
+  .univ-name {
+    align-items: center;
+    text-align: center;
+  }
+
+  .univ-name h1 {
+    font-size: 16px;
+  }
+
+  .univ-name span {
+    font-size: 11px;
+  }
+
+  .main-menu > li.mega-menu > .sub-menu {
     display: none !important;
   }
 }
+
