@@ -33,6 +33,47 @@ document.addEventListener("DOMContentLoaded", () => {
   autoScroll();
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const counters = document.querySelectorAll(".count");
+  let started = false;
+
+  const animateCounters = () => {
+    counters.forEach(counter => {
+      const target = parseInt(counter.dataset.target, 10);
+      const suffix = counter.dataset.suffix || "";
+      let current = 0;
+
+      const duration = 1600; // ms (professional speed)
+      const startTime = performance.now();
+
+      const update = (now) => {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const value = Math.floor(progress * target);
+
+        counter.textContent = value.toLocaleString() + suffix;
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          counter.textContent = target.toLocaleString() + suffix;
+        }
+      };
+
+      requestAnimationFrame(update);
+    });
+  };
+
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !started) {
+      started = true;
+      animateCounters();
+    }
+  }, { threshold: 0.4 });
+
+  observer.observe(document.querySelector(".glance-section"));
+});
+
+
 //homepage vc section js
 
 document.addEventListener('DOMContentLoaded', () => {

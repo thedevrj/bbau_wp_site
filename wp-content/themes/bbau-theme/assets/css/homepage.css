@@ -95,7 +95,6 @@
     font-size: 12px;
   }
 }
-
 /* ================= ANNOUNCEMENT BAR ================= */
 .announce-bar {
   width: 100%;
@@ -106,25 +105,54 @@
   overflow: hidden;
 }
 
-/* 🔥 FLUID CONTAINER */
+/* ================= CONTAINER (FULL WIDTH) ================= */
 .announce-container {
   width: 100%;
-  max-width: 1440px;      /* keeps 1440 design */
   height: 53px;
-  margin: 0 auto;
+  margin: 0;
   display: flex;
   align-items: center;
-  padding: 0 16px;        /* prevents edge cut */
+  position: relative;
+  overflow: hidden;
   box-sizing: border-box;
+
+  /* reserve space for icon */
+  padding-left: 56px;
 }
 
+/* ================= LEFT ICON BOX (PERFECT COVER) ================= */
+.announce-container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 4px;
+  width: 66px;
+  height: 53px; /* 🔥 MUST MATCH BAR HEIGHT */
+
+  /* solid background to remove gaps */
+  background-color: #005C83;
+
+  /* icon image */
+  background-image: url('../img/anouncebar/megaphone.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  z-index: 2;
+}
+
+/* ================= TRACK ================= */
 .announce-track {
   display: flex;
   align-items: center;
   white-space: nowrap;
   animation: announce-slide 30s linear infinite;
+  padding: 0;
+  will-change: transform;
 }
 
+/* ================= ITEM ================= */
 .announce-track span {
   padding: 0 24px;
   font-family: "Poppins", sans-serif;
@@ -135,84 +163,104 @@
   align-items: center;
 }
 
-.announce-track span:nth-child(1) { color: #000; }
-.announce-track span:nth-child(2) { color: #1f4fb2; }
-.announce-track span:nth-child(3) { color: #A41F7F; }
+/* ================= LINK ================= */
+.announce-track a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+}
 
+.announce-track a:hover {
+  text-decoration: underline;
+}
+
+/* ================= DIVIDER ================= */
 .announce-track span:not(:last-child) {
   border-right: 1px solid #A41F7F;
 }
 
-@keyframes announce-slide {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+/* ================= ALTERNATE TEXT COLORS (STABLE LOOP) ================= */
+/* 1st, 4th, 7th... */
+.announce-track span:nth-child(3n + 1) {
+  color: #0f172a; /* dark navy */
 }
 
-/* ================= TABLET ================= */
+/* 2nd, 5th, 8th... */
+.announce-track span:nth-child(3n + 2) {
+  color: #1d4ed8; /* blue */
+}
 
+/* 3rd, 6th, 9th... */
+.announce-track span:nth-child(3n) {
+  color: #A41F7F; /* magenta */
+}
+
+/* ================= NEW BADGE ================= */
+.announce-track span::after {
+  content: " NEW";
+  font-size: 10px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #ff6a00;
+  padding: 2px 6px;
+  border-radius: 999px;
+  margin-left: 8px;
+  animation: newPulse 1.6s ease-in-out infinite;
+}
+@keyframes newPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 106, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 6px rgba(255, 106, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 106, 0, 0);
+  }}
+
+/* ================= CONTINUOUS LOOP ================= */
+/* works because notices are duplicated in PHP */
+@keyframes announce-slide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+/* ================= PAUSE SCROLL ON HOVER ================= */
+/* Pause when hovering anywhere on the announcement bar */
+.announce-bar:hover .announce-track {
+  animation-play-state: paused;
+}
+/* Extra safety: pause when hovering individual notice */
+.announce-track span:hover {
+  animation-play-state: paused;
+}
+/* Pause when hovering the link itself */
+.announce-track a:hover {
+  animation-play-state: paused;
+}
+/* ================= TABLET ================= */
 @media (max-width: 1199px) {
   .announce-track span {
     font-size: 16px;
     padding: 0 20px;
   }
-
   .announce-track {
-    animation-duration: 26s; /* smoother */
+    animation-duration: 26s;
   }
 }
+
 /* ================= MOBILE ================= */
-
 @media (max-width: 767px) {
-
-  .announce-container {
-    padding: 0 12px;
-  }
-
   .announce-track span {
     font-size: 14px;
     padding: 0 16px;
   }
-
   .announce-track {
-    animation-duration: 30s; /* readable speed */
+    animation-duration: 30s;
   }
-}
-
-/* =====================================================
-   GLOBAL RESET (SAFE FOR ALL DEVICES)
-===================================================== */
-html, body {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-img {
-  display: block;
-}
-
-
-/* =====================================================
-   GLOBAL RESET university at a glance section
-===================================================== */
-html, body {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-img {
-  display: block;
 }
 
 /* =====================================================
@@ -289,7 +337,7 @@ img {
 }
 
 .icon-box img {
-  height: 5em; /* scales with number */
+  height: 4em; /* scales with number */
   width: auto;
   object-fit: contain;
   filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(20deg);
@@ -307,16 +355,30 @@ img {
 .stat-text .num {
   font-family: "Poppins", sans-serif;
   font-size: 2.8rem;
-  font-weight: 700;
+  font-weight: 900;
   line-height: 1;
+  
 }
 
 .stat-text .label {
-  font-size: 0.8rem;
-  margin-top: 0.3rem;
+  font-size: 1.0rem;
+  margin-top: 0.25rem;
   opacity: 0.9;
-  color: #E0E0E0 ;
+  font-weight: bold;
+  color: #ffffff ;
 }
+
+.count {
+  font-size: 48px;
+  font-weight: 700;
+  color: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.count.animate {
+  transform: scale(1.05);
+}
+
 /* ================= TABLET ONLY (iPad Air FIX) ================= */
 
 @media (min-width: 768px) and (max-width: 1024px) {
