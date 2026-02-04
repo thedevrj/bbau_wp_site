@@ -7,7 +7,8 @@
   background-color: #1f6f8b;
 
   position: relative;
-  z-index: 99999;              /* 🔥 ABOVE EVERYTHING */
+  z-index: 99999;
+  /* 🔥 ABOVE EVERYTHING */
   pointer-events: auto;
 }
 
@@ -20,7 +21,7 @@
 /* =====================================================
    CONTAINER OVERRIDE
 ===================================================== */
-.top-bar > .container-fluid {
+.top-bar>.container-fluid {
   height: 45px !important;
 
   display: flex !important;
@@ -68,7 +69,8 @@
   height: 45px;
   padding: 0 6px;
 
-  display: inline-flex !important;     /* 🔥 REQUIRED */
+  display: inline-flex !important;
+  /* 🔥 REQUIRED */
   align-items: center;
   justify-content: center;
 
@@ -79,7 +81,8 @@
 
   color: #ffffff !important;
 
-  transform: translateZ(0);            /* 🔥 GPU FIX */
+  transform: translateZ(0);
+  /* 🔥 GPU FIX */
   transition: transform 0.25s ease, color 0.25s ease !important;
 
   position: relative;
@@ -192,6 +195,7 @@
 .search-icon {
   font-size: 12px;
 }
+
 .search-box:hover {
   transform: scale(1.15);
 }
@@ -201,7 +205,7 @@
 ===================================================== */
 @media (max-width: 1160px) {
 
-  .top-bar > .container-fluid {
+  .top-bar>.container-fluid {
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
@@ -218,9 +222,17 @@
     transform: scale(1.1);
   }
 
-  .font-big span { font-size: 14px; }
-  .font-medium span { font-size: 12px; }
-  .font-small span { font-size: 10px; }
+  .font-big span {
+    font-size: 14px;
+  }
+
+  .font-medium span {
+    font-size: 12px;
+  }
+
+  .font-small span {
+    font-size: 10px;
+  }
 
   .lang-img {
     height: 20px;
@@ -399,12 +411,14 @@
   padding: 0;
 }
 
-.main-menu > li {
+.main-menu>li {
   position: relative;
   display: inline-block;
 }
-.nav-home img 
-{ height: 16px; }
+
+.nav-home img {
+  height: 16px;
+}
 
 .menu-link {
   gap: 6px;
@@ -418,6 +432,7 @@
 .dropdown-icon {
   font-size: 10px;
 }
+
 /* =====================================================
    KEEP MENU IN ONE LINE
 ===================================================== */
@@ -425,27 +440,28 @@
 .main-navigation,
 .main-menu {
   display: flex;
-  flex-wrap: nowrap;        /* ✅ NO WRAPPING */
-  white-space: nowrap;     /* ✅ FORCE SINGLE LINE */
+  flex-wrap: nowrap;
+  /* ✅ NO WRAPPING */
+  white-space: nowrap;
+  /* ✅ FORCE SINGLE LINE */
 }
 /* =====================================================
    NORMAL DROPDOWN
 ===================================================== */
-.main-menu li > .sub-menu {
+.main-menu li>.sub-menu {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
   min-width: 220px;
   background: #ffffff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   z-index: 999;
 }
 
-.main-menu li:hover > .sub-menu {
+.main-menu li:hover>.sub-menu {
   display: block;
 }
-
 .main-menu .sub-menu .sub-menu {
   top: 0;
   left: 100%;
@@ -463,21 +479,23 @@
   transform: translateX(6px) scale(1.03);
   background: #f5f4f3;
 }
+
 /* ======================================
    UNDERLINE ANIMATION (MAIN LINKS)
 ====================================== */
-.main-menu > li > .menu-link {
+.main-menu>li>.menu-link {
   position: relative;
   display: inline-flex;
   align-items: center;
   text-decoration: none;
 }
 /* underline */
-.main-menu > li > .menu-link::after {
+.main-menu>li>.menu-link::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -6px;              /* underline just below text */
+  bottom: -6px;
+  /* underline just below text */
   width: 100%;
   height: 2px;
   background: currentColor;
@@ -487,52 +505,54 @@
   transition: transform 0.25s ease;
 }
 /* show underline on hover */
-.main-menu > li:hover > .menu-link::after {
+.main-menu>li:hover>.menu-link::after {
   transform: scaleX(1);
 }
 /* ======================================
    DROPDOWN STAY-OPEN FIX
 ====================================== */
 /* parent relative */
-.main-menu > li {
+.main-menu>li {
   position: relative;
 }
 /* submenu hidden */
-.main-menu > li > .sub-menu {
+.main-menu>li>.sub-menu {
   position: absolute;
-  top: calc(100% + 6px);     /* dropdown opens AFTER underline */
+  top: calc(100% + 6px);
+  /* dropdown opens AFTER underline */
   left: 0;
   border-radius: 14px;
 
   min-width: 220px;
   background: #ffffff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 
   display: none;
   z-index: 9999;
 }
 /* open + stay open */
-.main-menu > li:hover > .sub-menu,
-.main-menu > li > .sub-menu:hover {
+.main-menu>li:hover>.sub-menu,
+.main-menu>li>.sub-menu:hover {
   display: block;
 }
 /* 🔥 invisible hover bridge (MOST IMPORTANT) */
-.main-menu > li::after {
+.main-menu>li::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
   top: 100%;
-  height: 20px;             /* prevents submenu disappearing */
+  height: 20px;
+  /* prevents submenu disappearing */
 }
 /* =====================================================
    MEGA MENU
 ===================================================== */
-.main-menu > li.mega-menu {
+.main-menu>li.mega-menu {
   position: relative;
 }
 
-.main-menu > li.mega-menu > .sub-menu {
+.main-menu>li.mega-menu>.sub-menu {
   display: none;
   position: absolute;
   top: 100%;
@@ -542,7 +562,7 @@
   padding: 32px 36px;
   background: #ffffff;
   border-radius: 14px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
   z-index: 9999;
   display: grid;
   grid-template-columns: 1.4fr 1fr;
@@ -552,7 +572,7 @@
   display: grid;
 }
 /* Mega headings */
-.main-menu > li.mega-menu > .sub-menu > li > a {
+.main-menu>li.mega-menu>.sub-menu>li>a {
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
@@ -562,14 +582,14 @@
   pointer-events: none;
 }
 /* Mega inner list */
-.main-menu > li.mega-menu > .sub-menu > li > .sub-menu {
+.main-menu>li.mega-menu>.sub-menu>li>.sub-menu {
   position: static;
   display: block;
   background: transparent;
   box-shadow: none;
 }
 /* Divider */
-.main-menu > li.mega-menu > .sub-menu > li:first-child {
+.main-menu>li.mega-menu>.sub-menu>li:first-child {
   padding-right: 32px;
   border-right: 1px solid #e5e7eb;
 }
@@ -579,47 +599,51 @@
 /* =====================================================
    MEGA MENU (ABOUT) — SMART POSITION (FIXED)
 ===================================================== */
-.main-menu > li.mega-menu {
+.main-menu>li.mega-menu {
   position: relative;
 }
 /* hidden by default */
-.main-menu > li.mega-menu > .sub-menu {
-  display: none;                       /* ✅ hidden */
+.main-menu>li.mega-menu>.sub-menu {
+  display: none;
+  /* ✅ hidden */
   position: absolute;
   top: calc(100% + 12px);
   left: 0;
-
   width: 550px;
   max-width: calc(100vw - 40px);
-
-  padding: 28px 30px;
+  padding: 18px 26px;
   background: #ffffff;
   border-radius: 14px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
   z-index: 9999;
 
   grid-template-columns: 1.3fr 1fr;
   gap: 32px;
 }
 /* open ONLY on hover */
-.main-menu > li.mega-menu:hover > .sub-menu {
-  display: grid;                      /* ✅ open on hover */
+.main-menu>li.mega-menu:hover>.sub-menu {
+  display: grid;
+  /* ✅ open on hover */
 }
 /* =========================================
    SECOND-LEVEL SUBMENU
    EXACT SAME LINE AS PARENT (TOP-ALIGNED)
 ========================================= */
 
-.main-menu .sub-menu > li {
-  position: relative;   /* anchor for child submenu */
+.main-menu .sub-menu>li {
+  position: relative;
+  /* anchor for child submenu */
 }
 
-.main-menu .sub-menu > li > .sub-menu {
-  top: 0 !important;          /* 🔥 SAME LINE (TOP EDGE) */
-  left: 100% !important;      /* open to right */
+.main-menu .sub-menu>li>.sub-menu {
+  top: 0 !important;
+  /* 🔥 SAME LINE (TOP EDGE) */
+  left: 100% !important;
+  /* open to right */
   right: auto !important;
-
-  transform: none !important; /* remove centering */
+  border-radius: 14px;
+  transform: none !important;
+  /* remove centering */
 }
 /* =========================================
    CHEVRON (DROPDOWN ICON) UP & DOWN
@@ -628,20 +652,25 @@
 /* default: arrow down */
 .dropdown-icon {
   display: inline-flex;
-  margin-left: 6px;
+  margin-left: 1px;
   font-size: 10px;
   transition: transform 0.25s ease;
-  transform: rotate(0deg);   /* ⬇️ down */
+  transform: rotate(0deg);
+  /* ⬇️ down */
 }
 
 /* when submenu is open */
-.main-menu > li:hover > .menu-link .dropdown-icon,
-.main-menu .sub-menu > li:hover > .menu-link .dropdown-icon {
-  transform: rotate(180deg); /* ⬆️ up */
+.main-menu>li:hover>.menu-link .dropdown-icon,
+.main-menu>li:hover>.menu-link .dropdown-icon {
+  transform: rotate(180deg);
+  /* ⬆️ up */
 }
-.main-menu > li > .sub-menu li:hover > a {
+
+.main-menu>li>.sub-menu li:hover>a {
   color: #e67e00;
 }
+
+
 /* =====================================================
    RESPONSIVE HEADER & MENU
 ===================================================== */
@@ -662,27 +691,31 @@
 @media (max-width: 1024px) {
 
   /* keep parent positioning SAME as desktop */
-  .main-menu > li.mega-menu {
+  .main-menu>li.mega-menu {
     position: relative;
   }
 
   /* mega menu container – SAME layout, reduced spacing */
-  .main-menu > li.mega-menu > .sub-menu {
+  .main-menu>li.mega-menu>.sub-menu {
     left: 0;
     transform: none;
 
-    width: 550px;                      /* SAME as desktop */
+    width: 550px;
+    /* SAME as desktop */
     max-width: calc(100vw - 40px);
 
-    grid-template-columns: 1.3fr 1fr;  /* SAME columns */
-    gap: 20px;                         /* slightly reduced */
+    grid-template-columns: 1.3fr 1fr;
+    /* SAME columns */
+    gap: 20px;
+    /* slightly reduced */
 
-    padding: 22px 24px;                /* reduced padding */
+    padding: 22px 24px;
+    /* reduced padding */
     border-radius: 14px;
   }
 
   /* divider adjustment */
-  .main-menu > li.mega-menu > .sub-menu > li:first-child {
+  .main-menu>li.mega-menu>.sub-menu>li:first-child {
     padding-right: 20px;
   }
 
@@ -713,7 +746,7 @@
     align-items: center;
   }
   /* disable hover mega menu on mobile */
-  .main-menu > li.mega-menu > .sub-menu {
+  .main-menu>li.mega-menu>.sub-menu {
     display: none !important;
   }
 }

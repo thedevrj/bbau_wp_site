@@ -54,7 +54,14 @@ class BBAU_Nav_Walker extends Walker_Nav_Menu {
 
         // Dropdown arrow
         if ($has_children) {
-            $output .= ' <span class="dropdown-icon"><i class="icon-chevron-down1"></i></span>';
+            
+            if ($depth === 0) {
+                $output .= ' <span class="dropdown-icon"><i class="icon-chevron-down1"></i></span>';
+            } 
+            // Sub-menu items → right arrow
+            else {
+                $output .= ' <span class="dropdown-icon"><i class="icon-chevron-right1"></i></span>';
+            }
         }
 
         $output .= '</a>';

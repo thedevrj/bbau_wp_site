@@ -83,9 +83,9 @@ defined( 'ABSPATH' ) || exit;
                     Fire Station: <a href="tel:+919454418642">(+91) 9454418642</a>
                 </p>
                 <div class="footer-social">
-                    <a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/social-media/facebook.png" alt="facebook"></a>
-                    <a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/social-media/youtube.png" alt="youtube"></a>
-                    <a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/social-media/instagram.png" alt="instagram"></a>
+                    <a target="_blank" href="https://www.facebook.com/bbauSocmedia/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/social-media/facebook.png" alt="facebook"></a>
+                    <a target="_blank" href="https://www.youtube.com/@bbaulucknow1866"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/social-media/youtube.png" alt="youtube"></a>
+                    <a target="_blank" href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/social-media/instagram.png" alt="instagram"></a>
                 </div>
             </div>
         </div>
@@ -96,9 +96,9 @@ defined( 'ABSPATH' ) || exit;
     <!-- BOTTOM BAR -->
     <div class="pb-4 footer-bottom">
 		<span>
-		<i class="icon-copyright2"></i> <?php echo date("Y"); ?> Computer Centre,<a href="#">Babasaheb Bhimrao Ambedkar University</a></span> |
-		<a href="#">Disclaimer</a> |
-        <a href="#">Help</a>
+		<i class="icon-copyright2"></i> <?php echo date("Y"); ?> Computer Centre,<a href="/copyright-policy">Babasaheb Bhimrao Ambedkar University</a></span> |
+		<a href="/disclainer">Disclaimer</a> |
+        <a href="/help">Help</a>
     </div>
 
 </footer>
