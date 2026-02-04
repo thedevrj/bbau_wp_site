@@ -1,15 +1,21 @@
 /* ==================================================
    FOOTER WRAPPER
 ================================================== */
+.home .footer,
+.home .site-footer {
+  border-top: 6px solid #FF9933;
+}
 .site-footer {
   width: 100%;
   background: radial-gradient(circle at center, #111 0%, #000 70%);
   color: #eaeaea;
-  border-top: 2px solid #FF9933;
   overflow: hidden;
   font-family: "Poppins", sans-serif;
 }
-
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
 /* ==================================================
    FOOTER MAIN LAYOUT
 ================================================== */
@@ -101,7 +107,7 @@
    FOOTER BOTTOM BAR
 ================================================== */
 .footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.15);
+  border-top: 2px solid rgba(255,255,255,0.15);
   padding: 16px 20px;
   text-align: center;
   font-size: 13px;
