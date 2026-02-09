@@ -22,7 +22,7 @@ $query = new WP_Query($args);
 <?php get_template_part( 'banners/about-banner' ); ?>
 <!-- End Banner -->
 <?php if ($query->have_posts()) : ?>
-<div class="container-fluid page-bg page-template-about-bg overflow-hidden">
+<div class="container-fluid page-bg page-template-about-bg py-lg-5 overflow-hidden">
     <?php get_template_part('template-parts/breadcrumb'); ?>
     <div class="container py-5">
         <h2 class="text-center mb-4">Former Vice Chancellors</h2>
@@ -58,17 +58,18 @@ $query = new WP_Query($args);
             <?php endwhile; ?>
 
         </div>
-    </div>
-</div>
-
-<!-- Pagination -->
-<div class="vc-pagination">
-    <?php
+        <!-- Pagination -->
+        <div class="vc-pagination">
+            <?php
         echo paginate_links(array(
             'total' => $query->max_num_pages,
         ));
         ?>
+        </div>
+
+    </div>
 </div>
+
 
 <?php endif; wp_reset_postdata(); ?>
 <?php
