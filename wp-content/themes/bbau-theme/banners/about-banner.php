@@ -2,12 +2,12 @@
 <div class="container-fluid position-relative px-0 overflow-hidden">
     <img src="<?php echo get_field('desktop_1x', $page_id); ?>"
         srcset="<?php echo get_field('desktop_1x', $page_id); ?>"
-        class="img-fluid d-lg-block d-none h_xl_250 object-fit-cover" alt="about-us-banner" width="100%" height="250">
+        class="img-fluid d-lg-block d-none h_xl_250 object-fit-cover" alt="<?php the_title();?> Banner" width="100%" height="250">
 
     <!-- Mobile Image (only show if mobile_1x exists) -->
     <?php if(get_field('mobile_1x', $page_id)) : ?>
     <img src="<?php echo get_field('mobile_1x', $page_id); ?>" srcset="<?php echo get_field('mobile_1x', $page_id); ?> "
-        class="img-fluid d-lg-none h_sm_204" alt="about-us-banner" width="100%" height="204">
+        class="img-fluid d-lg-none h_sm_204" alt="<?php the_title();?> Banner" width="100%" height="204">
     <?php endif; ?>
     <div class="container">
         <div class="row">
