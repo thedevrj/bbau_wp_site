@@ -3,3 +3,63 @@
 @import url("header.css");
 @import url("homepage.css");
 @import url("child-theme.css");
+
+
+
+/* Visitor Section */
+.visitor-hero {
+    background: #f5f7fa;
+    padding: 60px 20px;
+}
+
+.visitor-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.visitor-card {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.visitor-image img {
+    width: 350px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.visitor-content h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #002855;
+}
+
+.visitor-designation {
+   font-weight: 600;
+}
+
+.visitor-role {
+    font-size: 16px;
+    color: #777;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .visitor-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .visitor-content h2 {
+        font-size: 25px;
+    }
+
+    .visitor-image img {
+        width: 240px;
+    }
+}
