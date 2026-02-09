@@ -1,18 +1,48 @@
-.page-bg {
-  border-bottom: 12px solid transparent;
-  -o-border-image: linear-gradient(90deg, #005754 0%, #E4F8F8 100%);
-  border-image: linear-gradient(90deg, #005754 0%, #E4F8F8 100%);
-  border-image-slice: 1;
-  width: 100%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0) 100%);
+/* =====================================================
+   GLOBAL RESET
+===================================================== */
+* {
+  box-sizing: border-box;
 }
 
-@media screen and (max-width: 767px) {
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* =====================================================
+   GLOBAL HEADING STYLES
+===================================================== */
+h1
+ {
+  font-weight: 700 !important;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* =====================================================
+   PAGE BACKGROUND STRIP
+===================================================== */
+.page-bg {
+  position: relative;
+  width: 100%;
+  border-bottom: 12px solid transparent;
+  border-image: linear-gradient(90deg, #005754 0%, #E4F8F8 100%);
+  border-image-slice: 1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f2 100%);
+}
+
+@media (max-width: 767px) {
   .page-bg {
-    border-bottom: 6px solid transparent;
+    border-bottom-width: 6px;
   }
 }
 
+/* =====================================================
+   BACKGROUND IMAGE UTILITIES
+===================================================== */
 .bg-image,
 .faq-bg-image,
 .error404-bg,
@@ -35,48 +65,71 @@
   background-position: center center !important;
 }
 
+/* =====================================================
+   ABOUT PAGE BACKGROUND
+===================================================== */
 .page-template-about-bg {
+  position: relative;
   background-image: url(../img/about-us/about-us-page-bg.png);
 }
 
-@media screen and (max-width: 1200px) {
+@media (max-width: 1200px) {
   .page-template-about-bg {
     background-image: url(../img/about-us/m-about-us-page-bg.png);
   }
 }
 
-.img-fluid {
-  max-width: 100%;
-  height: auto;
+/* =====================================================
+   DISCLAIMER TEXT OVERLAY
+===================================================== */
+.disclaimer-text {
+  position: absolute;
+  top: 50%;
+  left: 6%;
+  transform: translateY(-50%);
+  font-size: 36px;
+  font-weight: 1000;
+  color: #e3d133;
+  text-decoration: underline;
+  text-underline-offset: 6px;
 }
 
-.h_xl_250 {
-  height: 250px !important;
+@media (max-width: 767px) {
+  .disclaimer-text {
+    left: 5%;
+    font-size: 26px;
+  }
+}
+
+/* =====================================================
+   HERO BANNER
+===================================================== */
+.hero-banner {
+  position: relative;
+}
+
+/* =====================================================
+   IMAGE UTILITIES
+===================================================== */
+.img-fluid {
+  
+  max-width: 100%;
+  height: auto;;
 }
 
 .object-fit-cover {
-  -o-object-fit: cover;
   object-fit: cover;
+}
+
+/* =====================================================
+   HEIGHT & WIDTH UTILITIES
+===================================================== */
+.h_xl_250 {
+  height: 210px !important;
 }
 
 .h_sm_204 {
   height: 204px !important;
-}
-
-.max_xl_w_498 {
-  max-width: 498px !important;
-}
-
-.sm_text_32 {
-  font-size: 32px !important;
-}
-
-.sm_line_height_38 {
-  line-height: 38px !important;
-}
-
-.line_height_48 {
-  line-height: 48px !important;
 }
 
 .min_xl_h_1172 {
@@ -87,86 +140,365 @@
   min-height: 1469px !important;
 }
 
+.max_xl_w_498 {
+  max-width: 498px !important;
+}
+
 .max_xl_w_1280 {
   max-width: 1280px !important;
 }
 
-.color_white,
-.color_white--imp {
-  color: #ffffff;
-}
-
-.sm_line_height_48 {
-  line-height: 48px !important;
+/* =====================================================
+   TYPOGRAPHY UTILITIES
+===================================================== */
+.sm_text_32 {
+  font-size: 45px !important;
 }
 
 .sm_text_40 {
   font-size: 40px !important;
 }
 
-.color_white--imp {
-  color: #ffffff !important;
+.line_height_48 {
+  line-height: 48px !important;
+}
+
+.sm_line_height_38 {
+  line-height: 100px !important;
+}
+
+.sm_line_height_48 {
+  line-height: 48px !important;
 }
 
 .font_alt_1 {
-  font-family: "FormaDJRDeckMedium";
+  font-family: "FormaDJRDeckMedium", sans-serif;
 }
 
+/* =====================================================
+   COLOR UTILITIES
+===================================================== */
+.color_white {
+  color: #f80597;
+}
+
+.color_white--imp {
+  color: #f80597 !important;
+}
+
+/* =====================================================
+   SUBPAGE HERO TEXT POSITIONING
+===================================================== */
 .subpage-hero-text {
+  position: absolute;
   top: 17%;
+  left: 5%;
 }
 
-@media screen and (min-width: 992px) {
+/* Mobile - max 767px */
+@media (max-width: 767px) {
   .subpage-hero-text {
-    left: 15%;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .subpage-hero-text {
+    top: 13%;
     left: 5%;
   }
 }
 
+/* Tablet landscape - 834px+ */
 @media only screen and (min-width: 834px) and (orientation: landscape) {
   .subpage-hero-text {
     left: 10%;
   }
 }
 
-@media screen and (min-width: 1200px) {
+/* Medium devices - 992px+ */
+@media (min-width: 992px) {
+  .subpage-hero-text {
+    left: 15%;
+  }
+}
+
+/* Tablet portrait override - 1024px+ */
+@media (min-width: 1024px) {
+  .subpage-hero-text {
+    left: 5%;
+  }
+}
+
+/* Large desktop - 1200px+ */
+@media (min-width: 1200px) {
   .subpage-hero-text {
     top: 26%;
     left: 12%;
   }
 }
 
-@media screen and (min-width: 1536px) {
+/* XL desktop - 1536px+ */
+@media (min-width: 1536px) {
   .subpage-hero-text {
     left: 15%;
   }
 }
 
-@media screen and (min-width: 1680px) {
+/* XXL desktop - 1680px+ */
+@media (min-width: 1680px) {
   .subpage-hero-text {
     left: 18%;
   }
 }
 
-@media screen and (min-width: 1920px) {
+/* Full HD - 1920px+ */
+@media (min-width: 1920px) {
   .subpage-hero-text {
     left: 22%;
   }
 }
 
-@media screen and (min-width: 256subpage-hero-text0px) {
+/* 2K & above - 2560px+ */
+@media (min-width: 2560px) {
   .subpage-hero-text {
     left: 29%;
   }
 }
 
-@media screen and (max-width: 767px) {
-  .subpage-hero-text {
-    top: 13%;
-  }
+/* =====================================================
+   BREADCRUMB SECTION
+===================================================== */
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    overflow-x: auto;
+    padding: 0;
+    margin: 0;
+} 
+
+/* =====================================================
+   BREADCRUMB ITEM
+===================================================== */
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-right: -43px;
+}
+
+.breadcrumb-item:last-child {
+    margin-right: 0;
+}
+
+/* =====================================================
+   BREADCRUMB LINK
+===================================================== */
+.breadcrumb-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 22px 8px 24px;
+    text-decoration: none;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 500;
+    background: linear-gradient(135deg, #4a9fb8 0%, #3b8ca3 100%);
+    position: relative;
+    clip-path: polygon(
+        0 0,
+        calc(100% - 22px) 0,
+        100% 50%,
+        calc(100% - 22px) 100%,
+        0 100%,
+        22px 50%
+    );
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    z-index: 1;
+}
+/* Code-style symbol before breadcrumb text */
+.breadcrumb-code {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 1px 7px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+
+/* =====================================================
+   FIRST ITEM (NO LEFT CHEVRON)
+===================================================== */
+.breadcrumb-item:first-child .breadcrumb-link {
+    padding-left: 8px;
+    clip-path: polygon(
+        0 0,
+        calc(100% - 22px) 0,
+        100% 50%,
+        calc(100% - 22px) 100%,
+        0 100%
+    );
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+/* =====================================================
+   LAST ITEM (NO RIGHT CHEVRON + ACTIVE)
+===================================================== */
+.breadcrumb-item:last-child .breadcrumb-link {
+    padding-right: 8px;
+    font-weight: 600;
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 100%,
+        0 100%,
+        22px 50%
+    );
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background: linear-gradient(135deg, #5eb3cc 0%, #4a9fb8 100%);
+}
+
+/* =====================================================
+   HOVER EFFECT
+===================================================== */
+.breadcrumb-link:hover {
+    background: linear-gradient(135deg, #5eb3cc 0%, #4a9fb8 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 159, 184, 0.3);
+}
+
+/* =====================================================
+   ICON
+===================================================== */
+.breadcrumb-icon {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.breadcrumb-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN
+===================================================== */
+@media (max-width: 768px) {
+    .breadcrumb-link {
+        font-size: 13px;
+        padding: 10px 35px 10px 20px;
+    }
+
+    .breadcrumb-item:first-child .breadcrumb-link {
+        padding-left: 15px;
+    }
+
+    .breadcrumb-item:last-child .breadcrumb-link {
+        padding-right: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .breadcrumb {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .breadcrumb-link {
+        font-size: 12px;
+    }
+
+    .breadcrumb-wrapper {
+        padding: 10px 0;
+    }
+}
+/* =====================================================
+   ABOUT PAGE – FINAL MAGAZINE WRAP (FIXED)
+===================================================== */
+/* ================= ABOUT MAGAZINE LAYOUT ================= */
+
+.about-section {
+    width: 100%;
+}
+
+/* Images */
+.about-img {
+    width: 33%;
+    max-width: 420px;
+    height: auto;
+    float: right;
+    margin: 10px 0 20px 30px;
+    border-radius: 30px;
+    border: 6px solid #fff;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+/* Left image */
+.about-img.left {
+    float: left;
+    margin: 10px 30px 20px 0;
+}
+
+/* Content */
+.about-content h1,
+.about-content h2,
+.about-content h3,
+.about-content h4,
+.about-content p {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 17px;
+    line-height: 1.9;
+    text-align: justify;
+    color: #2f2f2f;
+}
+
+/* Clear floats */
+.clearfix {
+    clear: both;
+}
+/* ================= FORCE TEXT WRAP FIX ================= */
+
+.page-template-about-bg h1,
+.page-template-about-bg h2,
+.page-template-about-bg h3,
+.page-template-about-bg h4,
+.page-template-about-bg p {
+    clear: none !important;
+}
+/* ================= ABOUT PAGE – H3 HEADING STYLE ================= */
+
+.page-template-about-bg h3 {
+    font-size: 30px;       /* size change (aap 26–32 try kar sakte ho) */
+    font-weight: 700;      /* bold */
+    margin: 20px 0 12px;   /* spacing clean */
+}
+.page-template-about-bg h3 ~ ol,
+.page-template-about-bg h3 ~ ul {
+    padding-left: 35px !important;
+}
+
+/* ================= GLOBAL LIST RESET ================= */
+
+.page-template-about-bg ol,
+.page-template-about-bg ul {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .about-img {
+        float: none !important;
+        width: 100% !important;
+        margin: 0 0 20px 0 !important;
+    }
+
+    .about-content p {
+        text-align: left;
+    }
 }
