@@ -275,7 +275,7 @@ h1
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 22px 8px 24px;
+    padding: 7px 22px 8px 26px;
     text-decoration: none;
     color: #ffffff !important;
     font-size: 14px;
@@ -300,7 +300,7 @@ h1
   font-size: 13px;
   font-weight: 600;
   color: #ffffff;
-  padding: 1px 7px;
+  padding: 1px 0px;
   border-radius: 4px;
   line-height: 1;
 }
@@ -401,13 +401,27 @@ h1
 /* =====================================================
    ABOUT PAGE – FINAL MAGAZINE WRAP (FIXED)
 ===================================================== */
-/* ================= ABOUT MAGAZINE LAYOUT ================= */
+/* =====================================================
+   ABOUT MAGAZINE LAYOUT
+===================================================== */
 
 .about-section {
     width: 100%;
 }
+/* ================= HEADING COLOR (EXCEPT H1) ================= */
 
-/* Images */
+.page-template-about-bg h2,
+.page-template-about-bg h3,
+.page-template-about-bg h4,
+.page-template-about-bg h5,
+.page-template-about-bg h6 {
+    color: #003366;
+}
+
+/* =====================================================
+   IMAGES
+===================================================== */
+
 .about-img {
     width: 33%;
     max-width: 420px;
@@ -415,34 +429,63 @@ h1
     float: right;
     margin: 10px 0 20px 30px;
     border-radius: 30px;
-    border: 6px solid #fff;
+    border: 6px solid #ffffff;
     box-shadow: 0 12px 30px rgba(0,0,0,0.12);
 }
 
-/* Left image */
 .about-img.left {
     float: left;
     margin: 10px 30px 20px 0;
 }
 
-/* Content */
-.about-content h1,
-.about-content h2,
-.about-content h3,
-.about-content h4,
-.about-content p {
+/* =====================================================
+   HEADINGS – VISION / MISSION / OBJECTIVE
+===================================================== */
+
+.page-template-about-bg h3,
+.page-template-about-bg h4 {
     font-family: "Times New Roman", Times, serif;
-    font-size: 17px;
-    line-height: 1.9;
-    text-align: justify;
-    color: #2f2f2f;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 20px 0 8px;
 }
 
-/* Clear floats */
-.clearfix {
-    clear: both;
+/* =====================================================
+   PARAGRAPH & LIST – SAME STYLE (MAIN REQUIREMENT)
+===================================================== */
+
+.page-template-about-bg p,
+.page-template-about-bg ol li,
+.page-template-about-bg ul li {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 17px;
+    line-height: 1.4;
+    color: #2f2f2f;
+    text-align: justify;
+    margin-bottom: 10px;
 }
-/* ================= FORCE TEXT WRAP FIX ================= */
+
+/* =====================================================
+   LIST RESET + OBJECTIVE INDENT
+===================================================== */
+
+/* Remove browser default padding */
+.page-template-about-bg ol,
+.page-template-about-bg ul {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+/* Objective list only */
+.page-template-about-bg h3 ~ ol,
+.page-template-about-bg h3 ~ ul {
+    padding-left: 35px !important;
+}
+
+/* =====================================================
+   FLOAT / WRAP SAFETY
+===================================================== */
 
 .page-template-about-bg h1,
 .page-template-about-bg h2,
@@ -451,27 +494,15 @@ h1
 .page-template-about-bg p {
     clear: none !important;
 }
-/* ================= ABOUT PAGE – H3 HEADING STYLE ================= */
 
-.page-template-about-bg h3 {
-    font-size: 30px;       /* size change (aap 26–32 try kar sakte ho) */
-    font-weight: 700;      /* bold */
-    margin: 20px 0 12px;   /* spacing clean */
-}
-.page-template-about-bg h3 ~ ol,
-.page-template-about-bg h3 ~ ul {
-    padding-left: 35px !important;
+.clearfix {
+    clear: both;
 }
 
-/* ================= GLOBAL LIST RESET ================= */
+/* =====================================================
+   MOBILE
+===================================================== */
 
-.page-template-about-bg ol,
-.page-template-about-bg ul {
-    padding-left: 0 !important;
-    margin-left: 0 !important;
-}
-
-/* Mobile */
 @media (max-width: 768px) {
     .about-img {
         float: none !important;
@@ -479,7 +510,9 @@ h1
         margin: 0 0 20px 0 !important;
     }
 
-    .about-content p {
+    .page-template-about-bg p,
+    .page-template-about-bg ol li,
+    .page-template-about-bg ul li {
         text-align: left;
     }
 }

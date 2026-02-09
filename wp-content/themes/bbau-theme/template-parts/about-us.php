@@ -14,9 +14,9 @@ get_header();
     <!-- End Banner -->
 
     <div class="container-fluid py-lg-5 page-bg page-template-about-bg">
-        <?php get_template_part('template-parts/breadcrum'); ?>
+        <?php get_template_part('template-parts/breadcrumb'); ?>
 
-        <div class="container px-lg-3 px-0 py-4 max_xl_w_1280">
+        <div class="container px-lg-3 px-0 py-1 max_xl_w_1280">
 
             <!-- ================= ABOUT SECTION ================= -->
             <div class="about-section">
