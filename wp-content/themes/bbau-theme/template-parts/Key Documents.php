@@ -43,10 +43,10 @@
                                 <td><?php echo esc_html( $year ); ?></td>
                                 <td><a target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
                                         href="<?php echo esc_url( $english_reports ); ?>">
-                                        <span class="fa fa-file-pdf-o"></span><?php echo $report_title; ?></a></td>
+                                        <i class="icon-file-pdf1"></i>&nbsp;<?php echo $report_title; ?> (English)</a></td>
                                 <td><a target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
                                         href="<?php echo esc_url( $hindi_reports ); ?>">
-                                        <span class="fa fa-file-pdf-o"></span><?php echo $report_title; ?></a></td>
+                                        <i class="icon-file-pdf1"></i>&nbsp;<?php echo $report_title; ?> (Hindi)</a></td>
                             </tr>
                             <?php
                         endwhile;
@@ -61,7 +61,7 @@
                             <tr>
                                 <th>S. No </th>
                                 <th>Year</th>
-                                <th>Newsletters Links</th>
+                                <th>Newsletter Links</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,7 +77,7 @@
                                 <td><?php echo esc_html( $year ); ?></td>
                                 <td><a target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
                                         href="<?php echo esc_url( $newsletter_link ); ?>">
-                                        <span class="fa fa-file-pdf-o"></span><?php echo $newsletter_title; ?></a></td>
+                                        <i class="icon-file-pdf1"></i>&nbsp;<?php echo $newsletter_title; ?></a></td>
                             </tr>
                             <?php
                         endwhile;
@@ -108,7 +108,7 @@
                                 <td><?php echo esc_html( $year ); ?></td>
                                 <td><a target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
                                         href="<?php echo esc_url( $journal_link ); ?>">
-                                        <span class="fa fa-file-pdf-o"></span><?php echo $report_title; ?></a></td>
+                                        <i class="icon-file-pdf1"></i>&nbsp;<?php echo $report_title; ?></a></td>
 
                             </tr>
                             <?php
