@@ -1,6 +1,6 @@
 <?php
    /**
-    * Template Name: Default Fullwidth Template
+    * Template Name: Fullwidth Template
     */
    
    // Exit if accessed directly.
@@ -11,9 +11,8 @@
     <!-- Banner -->
     <?php get_template_part( 'banners/about-banner' ); ?>
     <!-- End Banner -->
-     
-    <div class="container-fluid py-lg-5 page-bg overflow-hidden">
-        <?php  get_template_part( 'template-parts/breadcrum' ); ?>
+    <div class="container-fluid py-lg-5 page-bg page-template-about-bg overflow-hidden">
+        <?php get_template_part('template-parts/breadcrumb'); ?>
         <div class="container px-lg-3 px-0 py-4 max_xl_w_1280 position-relative">
             <div class="row py-lg-2 py-3">
                 <div class="col-lg-12">

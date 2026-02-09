@@ -194,3 +194,47 @@ function theme_register_custom_menus() {
 	));
 }
 add_action('after_setup_theme', 'theme_register_custom_menus');
+
+// Register Old Vice Chancellor Post Type
+function register_old_vice_chancellor_cpt() {
+
+    $labels = array(
+        'name'                  => 'Old Vice Chancellors',
+        'singular_name'         => 'Old Vice Chancellor',
+        'menu_name'             => 'Old Vice Chancellors',
+        'name_admin_bar'        => 'Old Vice Chancellor',
+        'add_new'               => 'Add New',
+        'add_new_item'          => 'Add New Old Vice Chancellor',
+        'new_item'              => 'New Old Vice Chancellor',
+        'edit_item'             => 'Edit Old Vice Chancellor',
+        'view_item'             => 'View Old Vice Chancellor',
+        'all_items'             => 'All Old Vice Chancellors',
+        'search_items'          => 'Search Old Vice Chancellors',
+        'not_found'             => 'No Old Vice Chancellors found',
+        'not_found_in_trash'    => 'No Old Vice Chancellors found in Trash',
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array('slug' => 'old_vice_chancellor'),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 20,
+        'menu_icon'          => 'dashicons-businessperson',
+        'supports'           => array(
+            'title',
+            'editor',
+            'thumbnail'
+        ),
+        'show_in_rest'       => true, // Gutenberg support
+    );
+
+    register_post_type('old_vice_chancellor', $args);
+}
+add_action('init', 'register_old_vice_chancellor_cpt');

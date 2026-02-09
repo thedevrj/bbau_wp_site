@@ -40,26 +40,7 @@ h1
   }
 }
 
-/* =====================================================
-   BACKGROUND IMAGE UTILITIES
-===================================================== */
-.bg-image,
-.faq-bg-image,
-.error404-bg,
-.page-template-patient-information-bg,
-.page-template-thank-you-bg,
-.dental-insurance-bg,
-.page-template-about-bg,
-.page-template-preventative-care-bg,
-.page-template-contact-bg,
-.page-template-team-bg,
-.page-template-reviews-bg,
-.single-bg,
-.blog-bg,
-.page-template-preventative-dentistry-page-bg,
-.page-template-dental-payment-plans-page-bg,
-.home-bg,
-.about-valueprop-bg {
+.page-template-about-bg{
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center center !important;
