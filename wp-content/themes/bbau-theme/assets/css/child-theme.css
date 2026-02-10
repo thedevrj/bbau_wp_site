@@ -367,37 +367,109 @@ h1
 }
 
 /* =====================================================
-   RESPONSIVE DESIGN
+   BREADCRUMB – UNIVERSAL RESPONSIVE FIX
 ===================================================== */
-@media (max-width: 768px) {
+
+/* ---------- Small mobiles (≤ 360px) ---------- */
+@media (max-width: 360px) {
     .breadcrumb-link {
-        font-size: 13px;
-        padding: 10px 35px 10px 20px;
+        font-size: 11px;
+        padding: 8px 26px 8px 18px;
     }
 
-    .breadcrumb-item:first-child .breadcrumb-link {
-        padding-left: 15px;
-    }
-
-    .breadcrumb-item:last-child .breadcrumb-link {
-        padding-right: 20px;
+    .breadcrumb-item {
+        margin-right: -30px;
     }
 }
 
+/* ---------- Mobile phones (≤ 480px) ---------- */
 @media (max-width: 480px) {
     .breadcrumb {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        gap: 6px;
+        padding-bottom: 4px;
     }
 
     .breadcrumb-link {
         font-size: 12px;
-    }
-
-    .breadcrumb-wrapper {
-        padding: 10px 0;
+        padding: 9px 28px 9px 20px;
     }
 }
+
+/* ---------- Tablets portrait (481px – 768px) ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+    .breadcrumb-link {
+        font-size: 13px;
+        padding: 9px 30px 9px 22px;
+    }
+
+    .breadcrumb-item {
+        margin-right: -36px;
+    }
+}
+
+/* ---------- Tablets landscape (769px – 1024px) ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .breadcrumb-link {
+        font-size: 14px;
+        padding: 7px 26px 8px 24px;
+    }
+}
+
+/* ---------- Large desktops (≥ 1440px) ---------- */
+@media (min-width: 1440px) {
+    .breadcrumb-link {
+        font-size: 15px;
+        padding: 8px 30px 9px 28px;
+    }
+}
+
+/* ---------- Touch improvement ---------- */
+@media (hover: none) {
+    .breadcrumb-link:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+/* ================= MOBILE BREADCRUMB – SIMPLE LINE ================= */
+
+@media (max-width: 576px) {
+
+    .breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .breadcrumb-item {
+        margin: 0 !important;
+    }
+
+    .breadcrumb-link {
+        clip-path: none !important;     /* remove zig-zag */
+        background: none !important;    /* remove pill bg */
+        color: #003366 !important;
+        padding: 0 !important;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    /* > separator */
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: ">";
+        margin: 0 2px;
+        color: #555;
+        font-weight: 600;
+    }
+
+    /* hide icons & code on mobile */
+    .breadcrumb-icon,
+    .breadcrumb-code {
+        display: none;
+    }
+}
+
 /* =====================================================
    ABOUT PAGE – FINAL MAGAZINE WRAP (FIXED)
 ===================================================== */
@@ -462,7 +534,6 @@ h1
     font-size: 17px;
     line-height: 1.4;
     color: #2f2f2f;
-    text-align: justify;
     margin-bottom: 10px;
 }
 
@@ -514,5 +585,164 @@ h1
     .page-template-about-bg ol li,
     .page-template-about-bg ul li {
         text-align: left;
+    }
+}
+
+/* ===== ACT & ORDINANCES – FORCE OVERRIDE ===== */
+
+.max_xl_w_1280 .col-lg-12 ul li a {
+    color: #800000 !important;
+    text-decoration: none !important;
+    font-weight: 400;
+}
+
+.max_xl_w_1280 .col-lg-12 ul li a:hover {
+    color: rgb(249, 159, 25) !important;
+    text-decoration: underline !important;
+    text-underline-offset: 4px;
+    font-weight: 600;
+}
+
+/* former vc */
+
+/* ================= FORMER VC – GRID (IMAGE TOP) ================= */
+/* =====================================================
+   FORMER VICE CHANCELLOR – FINAL 3x3 GRID
+===================================================== */
+
+/* ================= GRID ================= */
+
+.former-vc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    width: 100%;
+}
+
+/* ================= CARD ================= */
+
+.former-vc-card {
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden; /* REQUIRED */
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.former-vc-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+}
+
+/* kill inherited flex */
+.former-vc-inner {
+    display: block !important;
+}
+
+/* ================= IMAGE SECTION ================= */
+
+.former-vc-image {
+    background: #eaeaea;
+    border-radius: 18px 18px 0 0;
+    overflow: hidden;
+}
+
+/* HARD FIX for WordPress image wrappers */
+.former-vc-image figure,
+.former-vc-image img,
+.former-vc-image .wp-post-image {
+    width: 100%;
+    height: 360px;
+    object-fit: contain;     /* no face cut */
+    display: block;
+    padding: 16px;
+    background: #f1f4f4;
+    border-radius: 18px 18px 0 0 !important;
+}
+
+/* ================= TEXT SECTION ================= */
+
+.former-vc-content {
+    background: #1f6f8b;
+    padding: 20px 16px 22px;
+    text-align: center;
+}
+
+/* Name */
+.former-vc-title {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 6px;
+}
+
+/* Tenure */
+.former-vc-duration {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 15px;
+    color: #eaf4f8;
+    margin: 0;
+}
+
+/* ================= PAGINATION ================= */
+
+.former-vc-pagination {
+    position: relative;
+    text-align: center;
+    padding-bottom: 22px;
+    margin: 40px 0 0;
+}
+
+.former-vc-pagination a,
+.former-vc-pagination span {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 0 4px;
+    border: 1px solid #cbd5dc;
+    color: #003366;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.former-vc-pagination .current {
+    background: #003366;
+    color: #ffffff;
+    border-color: #003366;
+}
+
+
+
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablet – 2 cards */
+@media (max-width: 992px) {
+    .former-vc-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .former-vc-image img {
+        height: 260px;
+    }
+}
+
+/* Mobile – 1 card */
+@media (max-width: 576px) {
+    .former-vc-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .former-vc-image img {
+        height: 220px;
+    }
+
+    .former-vc-title {
+        font-size: 17px;
+    }
+
+    .former-vc-duration {
+        font-size: 14px;
     }
 }
