@@ -9,8 +9,8 @@ get_header();
 
     <!-- Hero -->
     <section class="kulgeet-hero text-center">
-        <h1><?php the_title(); ?></h1>
-        <p class="kulgeet-subtitle">The Soul of Our University</p>
+        <h1 class="mb-4"><?php the_title(); ?></h1>
+        <span class="kulgeet-subtitle">The Soul of Our University</span>
         <?php get_template_part('template-parts/breadcrumb'); ?>
     </section>
 
