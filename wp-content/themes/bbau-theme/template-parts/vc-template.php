@@ -18,7 +18,7 @@ get_header();
                 <!-- Left Image -->
                 <div class="vc-hero-image">
                     <div class="vc-image-wrapper">
-                        <img src="http://localhost:8080/wp-content/uploads/2026/02/Image-Vice-Chancellor.png"
+                        <img src="/wp-content/uploads/2026/02/Image-Vice-Chancellor.png"
                             alt="Vice Chancellor">
                     </div>
                 </div>
@@ -154,7 +154,7 @@ get_header();
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
-                    <div class="swiper-slide">
+                    <div class="swiper-slide">hancellor/
                         <iframe width="560" height="315"
                             src="https://www.youtube.com/embed/qYwO4PLd7jw?si=NpaGRBqWGbMRQeOF"
                             title="YouTube video player" frameborder="0"
@@ -172,19 +172,19 @@ get_header();
             <div class="swiper vcSwiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <img src="http://localhost:8080/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="">
+                        <img src="/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="">
                     </div>
                     <div class="swiper-slide">
-                        <img src="http://localhost:8080/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="">
+                        <img src="/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="">
                     </div>
                     <div class="swiper-slide">
-                        <img src="http://localhost:8080/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="">
+                        <img src="/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="">
                     </div>
                     <div class="swiper-slide">
-                        <img src="http://localhost:8080/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="">
+                        <img src="/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="">
                     </div>
                     <div class="swiper-slide">
-                        <img src="http://localhost:8080/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="">
+                        <img src="/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="">
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -263,7 +263,6 @@ var swiper = new Swiper(".vcSwiper", {
 
 .vc-hero-modern {
     padding: 60px 20px;
-    background: #f4f6f9;
 }
 
 .vc-hero-container {
