@@ -7,7 +7,7 @@
    defined( 'ABSPATH' ) || exit;
    get_header();
    ?>
-<main>
+<main class="key-documents-page">
     <!-- Banner -->
     <?php get_template_part( 'banners/about-banner' ); ?>
     <!-- End Banner -->
@@ -41,10 +41,10 @@
                             <tr>
                                 <td><?php echo $i++; ?></td>
                                 <td><?php echo esc_html( $year ); ?></td>
-                                <td><a target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
+                                <td><a class="link-new" target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
                                         href="<?php echo esc_url( $english_reports ); ?>">
                                         <i class="icon-file-pdf1"></i>&nbsp;<?php echo $report_title; ?> (English)</a></td>
-                                <td><a target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
+                                <td><a class="link-new" target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
                                         href="<?php echo esc_url( $hindi_reports ); ?>">
                                         <i class="icon-file-pdf1"></i>&nbsp;<?php echo $report_title; ?> (Hindi)</a></td>
                             </tr>
@@ -75,7 +75,7 @@
                             <tr>
                                 <td><?php echo $i++; ?></td>
                                 <td><?php echo esc_html( $year ); ?></td>
-                                <td><a target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
+                                <td><a class="link-new" target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
                                         href="<?php echo esc_url( $newsletter_link ); ?>">
                                         <i class="icon-file-pdf1"></i>&nbsp;<?php echo $newsletter_title; ?></a></td>
                             </tr>
@@ -106,7 +106,7 @@
                             <tr>
                                 <td><?php echo $i++; ?></td>
                                 <td><?php echo esc_html( $year ); ?></td>
-                                <td><a target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
+                                <td><a class="link-new" target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
                                         href="<?php echo esc_url( $journal_link ); ?>">
                                         <i class="icon-file-pdf1"></i>&nbsp;<?php echo $report_title; ?></a></td>
 
