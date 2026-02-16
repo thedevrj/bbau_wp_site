@@ -14,8 +14,7 @@ img {
 /* =====================================================
    GLOBAL HEADING STYLES
 ===================================================== */
-h1
- {
+h1 {
   font-weight: 700 !important;
   text-decoration: underline;
   text-underline-offset: 6px;
@@ -40,7 +39,7 @@ h1
   }
 }
 
-.page-template-about-bg{
+.page-template-about-bg {
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center center !important;
@@ -93,9 +92,10 @@ h1
    IMAGE UTILITIES
 ===================================================== */
 .img-fluid {
-  
+
   max-width: 100%;
-  height: auto;;
+  height: auto;
+  ;
 }
 
 .object-fit-cover {
@@ -246,54 +246,53 @@ h1
 ===================================================== */
 
 .breadcrumb {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    overflow-x: auto;
-    padding: 0;
-    margin: 0;
-} 
+  display: flex;
+  align-items: center;
+  list-style: none;
+  overflow-x: auto;
+  padding: 0;
+  margin: 0;
+}
 
 /* =====================================================
    BREADCRUMB ITEM
 ===================================================== */
 .breadcrumb-item {
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin-right: -43px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-right: -43px;
 }
 
 .breadcrumb-item:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 /* =====================================================
    BREADCRUMB LINK
 ===================================================== */
 .breadcrumb-link {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 22px 8px 26px;
-    text-decoration: none;
-    color: #ffffff !important;
-    font-size: 14px;
-    font-weight: 500;
-    background: linear-gradient(135deg, #4a9fb8 0%, #3b8ca3 100%);
-    position: relative;
-    clip-path: polygon(
-        0 0,
-        calc(100% - 22px) 0,
-        100% 50%,
-        calc(100% - 22px) 100%,
-        0 100%,
-        22px 50%
-    );
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 22px 8px 26px;
+  text-decoration: none;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #4a9fb8 0%, #3b8ca3 100%);
+  position: relative;
+  clip-path: polygon(0 0,
+      calc(100% - 22px) 0,
+      100% 50%,
+      calc(100% - 22px) 100%,
+      0 100%,
+      22px 50%);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  z-index: 1;
 }
+
 /* Code-style symbol before breadcrumb text */
 .breadcrumb-code {
   font-family: monospace;
@@ -310,60 +309,56 @@ h1
    FIRST ITEM (NO LEFT CHEVRON)
 ===================================================== */
 .breadcrumb-item:first-child .breadcrumb-link {
-    padding-left: 8px;
-    clip-path: polygon(
-        0 0,
-        calc(100% - 22px) 0,
-        100% 50%,
-        calc(100% - 22px) 100%,
-        0 100%
-    );
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
+  padding-left: 8px;
+  clip-path: polygon(0 0,
+      calc(100% - 22px) 0,
+      100% 50%,
+      calc(100% - 22px) 100%,
+      0 100%);
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
 }
 
 /* =====================================================
    LAST ITEM (NO RIGHT CHEVRON + ACTIVE)
 ===================================================== */
 .breadcrumb-item:last-child .breadcrumb-link {
-    padding-right: 8px;
-    font-weight: 600;
-    clip-path: polygon(
-        0 0,
-        100% 0,
-        100% 100%,
-        0 100%,
-        22px 50%
-    );
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-    background: linear-gradient(135deg, #5eb3cc 0%, #4a9fb8 100%);
+  padding-right: 8px;
+  font-weight: 600;
+  clip-path: polygon(0 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      22px 50%);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background: linear-gradient(135deg, #5eb3cc 0%, #4a9fb8 100%);
 }
 
 /* =====================================================
    HOVER EFFECT
 ===================================================== */
 .breadcrumb-link:hover {
-    background: linear-gradient(135deg, #5eb3cc 0%, #4a9fb8 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(74, 159, 184, 0.3);
+  background: linear-gradient(135deg, #5eb3cc 0%, #4a9fb8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 159, 184, 0.3);
 }
 
 /* =====================================================
    ICON
 ===================================================== */
 .breadcrumb-icon {
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .breadcrumb-icon svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
 }
 
 /* =====================================================
@@ -372,102 +367,105 @@ h1
 
 /* ---------- Small mobiles (≤ 360px) ---------- */
 @media (max-width: 360px) {
-    .breadcrumb-link {
-        font-size: 11px;
-        padding: 8px 26px 8px 18px;
-    }
+  .breadcrumb-link {
+    font-size: 11px;
+    padding: 8px 26px 8px 18px;
+  }
 
-    .breadcrumb-item {
-        margin-right: -30px;
-    }
+  .breadcrumb-item {
+    margin-right: -30px;
+  }
 }
 
 /* ---------- Mobile phones (≤ 480px) ---------- */
 @media (max-width: 480px) {
-    .breadcrumb {
-        gap: 6px;
-        padding-bottom: 4px;
-    }
+  .breadcrumb {
+    gap: 6px;
+    padding-bottom: 4px;
+  }
 
-    .breadcrumb-link {
-        font-size: 12px;
-        padding: 9px 28px 9px 20px;
-    }
+  .breadcrumb-link {
+    font-size: 12px;
+    padding: 9px 28px 9px 20px;
+  }
 }
 
 /* ---------- Tablets portrait (481px – 768px) ---------- */
 @media (min-width: 481px) and (max-width: 768px) {
-    .breadcrumb-link {
-        font-size: 13px;
-        padding: 9px 30px 9px 22px;
-    }
+  .breadcrumb-link {
+    font-size: 13px;
+    padding: 9px 30px 9px 22px;
+  }
 
-    .breadcrumb-item {
-        margin-right: -36px;
-    }
+  .breadcrumb-item {
+    margin-right: -36px;
+  }
 }
 
 /* ---------- Tablets landscape (769px – 1024px) ---------- */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .breadcrumb-link {
-        font-size: 14px;
-        padding: 7px 26px 8px 24px;
-    }
+  .breadcrumb-link {
+    font-size: 14px;
+    padding: 7px 26px 8px 24px;
+  }
 }
 
 /* ---------- Large desktops (≥ 1440px) ---------- */
 @media (min-width: 1440px) {
-    .breadcrumb-link {
-        font-size: 15px;
-        padding: 8px 30px 9px 28px;
-    }
+  .breadcrumb-link {
+    font-size: 15px;
+    padding: 8px 30px 9px 28px;
+  }
 }
 
 /* ---------- Touch improvement ---------- */
 @media (hover: none) {
-    .breadcrumb-link:hover {
-        transform: none;
-        box-shadow: none;
-    }
+  .breadcrumb-link:hover {
+    transform: none;
+    box-shadow: none;
+  }
 }
+
 /* ================= MOBILE BREADCRUMB – SIMPLE LINE ================= */
 
 @media (max-width: 576px) {
 
-    .breadcrumb {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 2px;
-    }
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+  }
 
-    .breadcrumb-item {
-        margin: 0 !important;
-    }
+  .breadcrumb-item {
+    margin: 0 !important;
+  }
 
-    .breadcrumb-link {
-        clip-path: none !important;     /* remove zig-zag */
-        background: none !important;    /* remove pill bg */
-        color: #003366 !important;
-        padding: 0 !important;
-        font-size: 13px;
-        font-weight: 600;
-        text-decoration: none;
-    }
+  .breadcrumb-link {
+    clip-path: none !important;
+    /* remove zig-zag */
+    background: none !important;
+    /* remove pill bg */
+    color: #003366 !important;
+    padding: 0 !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+  }
 
-    /* > separator */
-    .breadcrumb-item + .breadcrumb-item::before {
-        content: ">";
-        margin: 0 2px;
-        color: #555;
-        font-weight: 600;
-    }
+  /* > separator */
+  .breadcrumb-item+.breadcrumb-item::before {
+    content: ">";
+    margin: 0 2px;
+    color: #555;
+    font-weight: 600;
+  }
 
-    /* hide icons & code on mobile */
-    .breadcrumb-icon,
-    .breadcrumb-code {
-        display: none;
-    }
+  /* hide icons & code on mobile */
+  .breadcrumb-icon,
+  .breadcrumb-code {
+    display: none;
+  }
 }
 
 /* =====================================================
@@ -478,8 +476,9 @@ h1
 ===================================================== */
 
 .about-section {
-    width: 100%;
+  width: 100%;
 }
+
 /* ================= HEADING COLOR (EXCEPT H1) ================= */
 
 .page-template-about-bg h2,
@@ -487,7 +486,7 @@ h1
 .page-template-about-bg h4,
 .page-template-about-bg h5,
 .page-template-about-bg h6 {
-    color: #003366;
+  color: #003366;
 }
 
 /* =====================================================
@@ -495,19 +494,19 @@ h1
 ===================================================== */
 
 .about-img {
-    width: 33%;
-    max-width: 420px;
-    height: auto;
-    float: right;
-    margin: 10px 0 20px 30px;
-    border-radius: 30px;
-    border: 6px solid #ffffff;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  width: 33%;
+  max-width: 420px;
+  height: auto;
+  float: right;
+  margin: 10px 0 20px 30px;
+  border-radius: 30px;
+  border: 6px solid #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
 .about-img.left {
-    float: left;
-    margin: 10px 30px 20px 0;
+  float: left;
+  margin: 10px 30px 20px 0;
 }
 
 /* =====================================================
@@ -516,11 +515,11 @@ h1
 
 .page-template-about-bg h3,
 .page-template-about-bg h4 {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 1.4;
-    margin: 20px 0 8px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 20px 0 8px;
 }
 
 /* =====================================================
@@ -530,11 +529,11 @@ h1
 .page-template-about-bg p,
 .page-template-about-bg ol li,
 .page-template-about-bg ul li {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 19px;
-    line-height: 1.4;
-    color: #2f2f2f;
-    margin-bottom: 10px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 19px;
+  line-height: 1.4;
+  color: #2f2f2f;
+  margin-bottom: 10px;
 }
 
 /* =====================================================
@@ -544,14 +543,14 @@ h1
 /* Remove browser default padding */
 .page-template-about-bg ol,
 .page-template-about-bg ul {
-    padding-left: 0 !important;
-    margin-left: 0 !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
 }
 
 /* Objective list only */
-.page-template-about-bg h3 ~ ol,
-.page-template-about-bg h3 ~ ul {
-    padding-left: 35px !important;
+.page-template-about-bg h3~ol,
+.page-template-about-bg h3~ul {
+  padding-left: 35px !important;
 }
 
 /* =====================================================
@@ -563,11 +562,11 @@ h1
 .page-template-about-bg h3,
 .page-template-about-bg h4,
 .page-template-about-bg p {
-    clear: none !important;
+  clear: none !important;
 }
 
 .clearfix {
-    clear: both;
+  clear: both;
 }
 
 /* =====================================================
@@ -575,32 +574,32 @@ h1
 ===================================================== */
 
 @media (max-width: 768px) {
-    .about-img {
-        float: none !important;
-        width: 100% !important;
-        margin: 0 0 20px 0 !important;
-    }
+  .about-img {
+    float: none !important;
+    width: 100% !important;
+    margin: 0 0 20px 0 !important;
+  }
 
-    .page-template-about-bg p,
-    .page-template-about-bg ol li,
-    .page-template-about-bg ul li {
-        text-align: center;
-    }
+  .page-template-about-bg p,
+  .page-template-about-bg ol li,
+  .page-template-about-bg ul li {
+    text-align: center;
+  }
 }
 
 /* ===== ACT & ORDINANCES – FORCE OVERRIDE ===== */
 
 .max_xl_w_1280 .col-lg-12 ul li a {
-    color: #800000 !important;
-    text-decoration: none !important;
-    font-weight: 400;
+  color: #800000 !important;
+  text-decoration: none !important;
+  font-weight: 400;
 }
 
 .max_xl_w_1280 .col-lg-12 ul li a:hover {
-    color: rgb(249, 159, 25) !important;
-    text-decoration: underline !important;
-    text-underline-offset: 4px;
-    font-weight: 600;
+  color: rgb(249, 159, 25) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+  font-weight: 600;
 }
 
 /* former vc */
@@ -613,103 +612,105 @@ h1
 /* ================= GRID ================= */
 
 .former-vc-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  width: 100%;
 }
 
 /* ================= CARD ================= */
 
 .former-vc-card {
-    background: #ffffff;
-    border-radius: 18px;
-    overflow: hidden; /* REQUIRED */
-    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  /* REQUIRED */
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .former-vc-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
 }
 
 /* kill inherited flex */
 .former-vc-inner {
-    display: block !important;
+  display: block !important;
 }
 
 /* ================= IMAGE SECTION ================= */
 
 .former-vc-image {
-    background: #eaeaea;
-    /* border-radius: 18px 18px 0 0; */
-    overflow: hidden;
+  background: #eaeaea;
+  /* border-radius: 18px 18px 0 0; */
+  overflow: hidden;
 }
 
 /* HARD FIX for WordPress image wrappers */
 .former-vc-image figure,
 .former-vc-image img,
 .former-vc-image .wp-post-image {
-    width: 100%;
-    height: 330px;
-    object-fit: contain;     /* no face cut */
-    display: block;
-    padding: 5px;
-    background: #f1f4f4;
-    border-radius: 18px 18px 0 0 !important;
+  width: 100%;
+  height: 330px;
+  object-fit: contain;
+  /* no face cut */
+  display: block;
+  padding: 5px;
+  background: #f1f4f4;
+  border-radius: 18px 18px 0 0 !important;
 }
 
 /* ================= TEXT SECTION ================= */
 
 .former-vc-content {
-    background: #1f6f8b45;
-    padding: 20px 16px 22px;
-    text-align: center;
+  background: #1f6f8b45;
+  padding: 20px 16px 22px;
+  text-align: center;
 }
 
 /* Name */
 .former-vc-title {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: #ffffff;
-    margin: 0 0 6px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px;
 }
 
 /* Tenure */
 .former-vc-duration {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 15px;
-    color: #eaf4f8;
-    margin: 0;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 15px;
+  color: #eaf4f8;
+  margin: 0;
 }
 
 /* ================= PAGINATION ================= */
 
 .former-vc-pagination {
-    position: relative;
-    text-align: center;
-    padding-bottom: 22px;
-    margin: 40px 0 0;
+  position: relative;
+  text-align: center;
+  padding-bottom: 22px;
+  margin: 40px 0 0;
 }
 
 .former-vc-pagination a,
 .former-vc-pagination span {
-    display: inline-block;
-    padding: 8px 14px;
-    margin: 0 4px;
-    border: 1px solid #cbd5dc;
-    color: #003366;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: 600;
+  display: inline-block;
+  padding: 8px 14px;
+  margin: 0 4px;
+  border: 1px solid #cbd5dc;
+  color: #003366;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
 }
 
 .former-vc-pagination .current {
-    background: #1f6f8b45;
-    color: #ffffff;
-    border-color: #1f6f8b45;
+  background: #1f6f8b45;
+  color: #ffffff;
+  border-color: #1f6f8b45;
 }
 
 /* =====================================================
@@ -719,59 +720,72 @@ h1
 /* ================= TABLET (≤ 992px) ================= */
 @media (max-width: 992px) {
 
-    /* Grid stays 2 columns */
-    .former-vc-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-    /* Card becomes slightly smaller */
-    .former-vc-card {
-        border-radius: 14px;
-    }
-    /* Image size reduced */
-    .former-vc-image img {
-        height: 240px;
-        padding: 12px;
-    }
-    /* Text scale down */
-    .former-vc-title {
-        font-size: 16px;
-    }
-    .former-vc-duration {
-        font-size: 13px;
-    }
-    .former-vc-content {
-        padding: 8px 5px 5px;
-    }
+  /* Grid stays 2 columns */
+  .former-vc-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  /* Card becomes slightly smaller */
+  .former-vc-card {
+    border-radius: 14px;
+  }
+
+  /* Image size reduced */
+  .former-vc-image img {
+    height: 240px;
+    padding: 12px;
+  }
+
+  /* Text scale down */
+  .former-vc-title {
+    font-size: 16px;
+  }
+
+  .former-vc-duration {
+    font-size: 13px;
+  }
+
+  .former-vc-content {
+    padding: 8px 5px 5px;
+  }
 }
+
 /* ================= MOBILE (≤ 576px) ================= */
 @media (max-width: 576px) {
-    /* Single column */
-    .former-vc-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-    /* Card more compact */
-    .former-vc-card {
-        border-radius: 12px;
-    }
-    /* Smaller image */
-    .former-vc-image img {
-        height: 200px;
-        padding: 10px;
-    }
-    /* Smaller fonts */
-    .former-vc-title {
-        font-size: 14px;
-        line-height: 1.3;
-    }
-    .former-vc-duration {
-        font-size: 8px;
-    }
-    .former-vc-content {
-        padding: 1px 7px 7px;
-    }
+
+  /* Single column */
+  .former-vc-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* Card more compact */
+  .former-vc-card {
+    border-radius: 12px;
+  }
+
+  /* Smaller image */
+  .former-vc-image img {
+    height: 200px;
+    padding: 10px;
+  }
+
+  /* Smaller fonts */
+  .former-vc-title {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .former-vc-duration {
+    font-size: 8px;
+  }
+
+  .former-vc-content {
+    padding: 1px 7px 7px;
+  }
 }
+
 /*ancor tag properties*/
 /* New anchor class - independent styling */
 a.link-new {
@@ -779,17 +793,20 @@ a.link-new {
   text-decoration: none;
   font-weight: 600;
 }
+
 /* Hover effect */
 a.link-new:hover {
   text-decoration: underline;
   color: #003f7d;
 }
+
 /* Optional states */
 a.link-new:visited,
 a.link-new:active,
 a.link-new:focus {
   color: #00509e;
 }
+
 /* =====================================
    KEY DOCUMENTS PAGE – COMPLETE CSS
 ===================================== */
@@ -797,6 +814,7 @@ a.link-new:focus {
 .key-documents-page {
   background: linear-gradient(180deg, #eef3f7 0%, #dde7ee 100%);
 }
+
 /* =====================================
    SECTION HEADINGS
 ===================================== */
@@ -809,6 +827,7 @@ a.link-new:focus {
   padding-left: 15px;
   position: relative;
 }
+
 .key-documents-page h3::before {
   content: "";
   position: absolute;
@@ -819,26 +838,30 @@ a.link-new:focus {
   background: linear-gradient(#00509e, #0b3d6d);
   border-radius: 4px;
 }
+
 /* =====================================
    TABLE CARD DESIGN
 ===================================== */
 .key-documents-page .table {
   width: 100%;
-  table-layout: fixed; /* CRITICAL for alignment */
+  table-layout: fixed;
+  /* CRITICAL for alignment */
   background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
   border: none;
   margin-bottom: 40px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   animation: fadeInUp 0.4s ease;
 }
+
 /* =====================================
    TABLE HEADER
 ===================================== */
 .key-documents-page .table thead {
   background: linear-gradient(90deg, #00509e, #0b3d6d);
 }
+
 .key-documents-page .table thead th {
 
   font-size: 15px;
@@ -846,6 +869,7 @@ a.link-new:focus {
   text-align: left;
   vertical-align: middle;
 }
+
 /* =====================================
    TABLE BODY
 ===================================== */
@@ -857,19 +881,23 @@ a.link-new:focus {
   vertical-align: middle;
   word-wrap: break-word;
 }
+
 /* Zebra striping */
 .key-documents-page .table-striped tbody tr:nth-child(odd) {
   background-color: #f8fbff;
 }
+
 /* Hover effect */
 .key-documents-page .table tbody tr {
   transition: all 0.25s ease;
 }
+
 .key-documents-page .table tbody tr:hover {
   background: #eef5ff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+
 /* Serial number column */
 .key-documents-page .table th:nth-child(1),
 .key-documents-page .table td:nth-child(1) {
@@ -877,21 +905,25 @@ a.link-new:focus {
   font-weight: 600;
   color: #2d3748;
 }
+
 /* Year column */
 .key-documents-page .table th:nth-child(2),
 .key-documents-page .table td:nth-child(2) {
   width: 18%;
 }
+
 /* English Report column */
 .key-documents-page .table th:nth-child(3),
 .key-documents-page .table td:nth-child(3) {
   width: 37%;
 }
+
 /* Hindi Report column */
 .key-documents-page .table th:nth-child(4),
 .key-documents-page .table td:nth-child(4) {
   width: 37%;
 }
+
 /* =====================================
    PDF LINK ICON
 ===================================== */
@@ -900,6 +932,7 @@ a.link-new:focus {
   color: #d32f2f;
   font-size: 16px;
 }
+
 /* FIX HEADER ALIGNMENT EXACTLY WITH COLUMNS */
 
 .key-documents-page .table {
@@ -940,11 +973,13 @@ a.link-new:focus {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 /* =====================================
    MOBILE RESPONSIVE FIX
 ===================================== */
@@ -952,18 +987,83 @@ a.link-new:focus {
   .key-documents-page .table {
     overflow: visible !important;
     border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
   }
+
   .key-documents-page .table tbody tr:hover {
     transform: none;
     box-shadow: none;
   }
+
   .key-documents-page .table th,
   .key-documents-page .table td {
     padding: 12px;
     font-size: 14px;
   }
+
   .key-documents-page h3 {
     font-size: 24px;
+  }
+}
+
+/*bbau Seal*/
+/* =====================================
+   BBAU SEAL FULL CARD DESIGN
+===================================== */
+/* Main full card */
+.bbau-seal-main-card {
+  max-width: 600px;
+  margin: 30px auto;
+  background: #f9f8f9db;
+  border-radius: 60px;
+  padding: 30px;
+  box-shadow:
+    0 10px 30px rgba(0, 80, 158, 0.15);
+  text-align: center;
+}
+
+/* Paragraph inside main card */
+.bbau-seal-description {
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* Inner card for image */
+.bbau-seal-inner-card {
+  display: inline-block;
+  padding: 20px;
+  background: #cddcf0;
+  border-radius: 16px;
+  box-shadow:
+    inset 0 0 10px rgba(0, 80, 158, 0.08),
+    0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+/* Image */
+.bbau-seal-img {
+  max-width: 220px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+/* Hover effect */
+.bbau-seal-inner-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    inset 0 0 12px rgba(0, 80, 158, 0.12),
+    0 10px 25px rgba(0, 80, 158, 0.20);
+}
+
+.bbau-seal-inner-card:hover .bbau-seal-img {
+  transform: scale(1.05);
+}
+/* Mobile */
+@media (max-width: 768px) {
+  .bbau-seal-main-card {
+    margin: 20px;
+    padding: 20px;
+  }
+  .bbau-seal-img {
+    max-width: 180px;
   }
 }
