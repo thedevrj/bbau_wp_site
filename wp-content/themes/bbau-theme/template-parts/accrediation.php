@@ -6,14 +6,15 @@ defined('ABSPATH') || exit;
 get_header();
 ?>
 <?php   get_template_part('banners/about-banner');?>
-<?php get_template_part('template-parts/breadcrumb'); ?>
+
 <section class=" container-fluid page-bg page-template-about-bg py-lg-5 overflow-hidden">
+    <?php get_template_part('template-parts/breadcrumb'); ?>
     <div class="container">
         <h2 class="mb-4 text-center ">Accreditation & Rankings</h2>
         <p class="accreditation-subtitle text-center">
             National Rankings & Quality Assurance
         </p>
-        <div class="accreditation-grid">
+        <div class="accreditation-grid mb-4">
             <!-- NIRF -->
             <div class="accreditation-card">
                 <div class="accreditation-logo">
@@ -22,13 +23,14 @@ get_header();
                 </div>
                 <p class="accreditation-desc text-center text-uppercase">
                     National Institutional Ranking Framework
-                </p>
-                <ul class="accreditation-details">
+                
+                <ul class="accreditation-details text-start">
                     <li><strong>Year:</strong> 2025</li>
                     <li><strong>Rank:</strong> 69 (University Category)</li>
                 </ul>
+                </p>
                 <div class="accreditation-links">
-                    <a href="/nirf" target="_blank">View Reports (PDF)</a>
+                    <a href="/nirf">View Reports (PDF)</a>
                     <a href="https://www.nirfindia.org" target="_blank">Official Website</a>
                 </div>
             </div>
@@ -40,12 +42,12 @@ get_header();
                      <h2 class="accreditation-name">NAAC</h2>
                 <p class="accreditation-desc text-center text-uppercase">
                     National Assessment and Accreditation Council
-                </p>
-                </div>
-                <ul class="accreditation-details">
+                
+                <ul class="accreditation-details text-start">
                     <li><strong>Grade:</strong> A++</li>
                     <li><strong>CGPA:</strong> 3.72</li>
-                </ul>
+                </ul></p>
+                </div>
                 <div class="accreditation-links">
                     <a href="http://172.35.2.130:9001/wp-content/uploads/2026/02/naaccertificate23.pdf" target="_blank">View Report (PDF)</a>
                     <a href="https://www.naac.gov.in" target="_blank">Official Website</a>
