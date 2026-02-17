@@ -1183,9 +1183,9 @@ color:#ffffff!important;
 
 /* DESIGNATION */
 .vc-designation{
-font-size:24px;
+
 font-weight:600;
-margin-bottom:22px;
+
 letter-spacing:0.3px;
 text-shadow:
 0 2px 4px rgba(0,0,0,0.25),
@@ -1195,10 +1195,7 @@ color:#ffffff!important;
 
 /* DESCRIPTION */
 .vc-description{
-font-size:18px;
-line-height:1.8;
-letter-spacing:0.2px;
-margin-bottom:30px;
+
 max-width:650px;
 text-shadow:
 0 2px 4px rgba(0,0,0,0.25),
