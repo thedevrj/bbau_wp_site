@@ -41,12 +41,20 @@
                             <tr>
                                 <td><?php echo $i++; ?></td>
                                 <td><?php echo esc_html( $year ); ?></td>
-                                <td><a class="link-new" target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
+                                <td>
+                                    <?php  if($english_reports) : ?>
+                                    <a class="link-new" target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
                                         href="<?php echo esc_url( $english_reports ); ?>">
                                         <i class="icon-file-pdf1"></i>&nbsp;<?php echo $report_title; ?> (English)</a></td>
-                                <td><a class="link-new" target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
+                                        <?php endif; ?>
+                                <td>
+                                    <?php if($hindi_reports) : ?>
+                                     <a class="link-new" target="<?php echo $new_tab ? '_blank' : '_self'; ?>"
                                         href="<?php echo esc_url( $hindi_reports ); ?>">
-                                        <i class="icon-file-pdf1"></i>&nbsp;<?php echo $report_title; ?> (Hindi)</a></td>
+                                        <i class="icon-file-pdf1"></i>&nbsp;<?php echo $report_title; ?> (Hindi)</a>
+                                        <? endif; ?>
+                                    
+                                    </td>
                             </tr>
                             <?php
                         endwhile;

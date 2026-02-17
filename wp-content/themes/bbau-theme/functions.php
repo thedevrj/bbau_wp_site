@@ -238,3 +238,48 @@ function register_old_vice_chancellor_cpt() {
     register_post_type('old_vice_chancellor', $args);
 }
 add_action('init', 'register_old_vice_chancellor_cpt');
+
+
+// Register Eminent Lecture Series Post Type
+function register_eminent_lecture_series_cpt() {
+
+	$labels = array(
+		'name'                  => 'Eminent Lecture Series',
+		'singular_name'         => 'Eminent Lecture',
+		'menu_name'             => 'Eminent Lecture Series',
+		'name_admin_bar'        => 'Eminent Lecture',
+		'add_new'               => 'Add New',
+		'add_new_item'          => 'Add New Eminent Lecture',
+		'new_item'              => 'New Eminent Lecture',
+		'edit_item'             => 'Edit Eminent Lecture',
+		'view_item'             => 'View Eminent Lecture',
+		'all_items'             => 'All Eminent Lectures',
+		'search_items'          => 'Search Eminent Lectures',
+		'not_found'             => 'No Eminent Lectures found',
+		'not_found_in_trash'    => 'No Eminent Lectures found in Trash',
+	);
+
+	$args = array(
+		'labels'             => $labels,
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array('slug' => 'eminent_lecture_series'),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => 21,
+		'menu_icon'          => 'dashicons-microphone',
+		'supports'           => array(
+			'title',
+			'editor',
+			'thumbnail'
+		),
+		'show_in_rest'       => true
+	);
+
+	register_post_type('eminent_lecture', $args);
+}
+add_action('init', 'register_eminent_lecture_series_cpt');
