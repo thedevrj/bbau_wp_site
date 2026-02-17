@@ -19,13 +19,14 @@ $page_Id = get_the_ID();
                 <!-- Left Image -->
                 <div class="vc-hero-image">
                     <div class="vc-image-wrapper">
-                        <img src="/wp-content/uploads/2026/02/Image-Vice-Chancellor.png" alt="Vice Chancellor">
+                        <img src="http://localhost:9001/wp-content/uploads/2026/02/bbauvcss.jpg"
+                            alt="Vice Chancellor">
                     </div>
                 </div>
 
                 <!-- Right Content -->
                 <div class="vc-hero-content">
-                    <h1>Prof. Raj Kumar Mittal</h1>
+                    <h2>Prof. Raj Kumar Mittal</h2>
                     <p class="vc-designation">Vice-Chancellor</p>
 
                     <p class="vc-description">
@@ -219,161 +220,3 @@ var swiper = new Swiper(".vcSwiper", {
     }
 });
 </script>
-<style>
-/* ===== VC MODERN HERO ===== */
-.vc-container1 {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px;
-}
-
-.vc-hero-modern {
-    padding: 60px 20px;
-}
-
-.vc-hero-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.vc-hero-card {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 60px;
-    padding: 60px;
-    border-radius: 30px;
-    background: linear-gradient(135deg, #2ca7c9, #1f7fa5);
-    color: #ffffff;
-    overflow: hidden;
-}
-
-/* Diagonal Accent Overlay */
-.vc-hero-card::before {
-    content: "";
-    position: absolute;
-    left: -150px;
-    top: 0;
-    width: 400px;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.08);
-    transform: skewX(-20deg);
-}
-
-/* Image */
-.vc-hero-image {
-    flex: 0 0 280px;
-    position: relative;
-    z-index: 2;
-}
-
-.vc-image-wrapper {
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    padding: 10px;
-    background: #ffffff;
-}
-
-.vc-image-wrapper img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-/* Content */
-.vc-hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 600px;
-}
-
-.vc-hero-content h1 {
-    font-size: 32px;
-    margin-bottom: 6px;
-}
-
-.vc-designation {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 18px;
-}
-
-.vc-description {
-    font-size: 16px;
-    line-height: 1.7;
-    margin-bottom: 20px;
-    opacity: 0.95;
-}
-
-.vc-contact p {
-    margin: 6px 0;
-    font-size: 15px;
-}
-
-/* Responsive */
-@media (max-width: 992px) {
-    .vc-hero-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 40px 20px;
-    }
-
-    .vc-hero-card::before {
-        display: none;
-    }
-
-    .vc-hero-image {
-        margin-bottom: 20px;
-    }
-}
-
-
-.vc-message-box {
-    background: #f4f6f9;
-    padding: 30px;
-    border-left: 4px solid #002855;
-    border-radius: 8px;
-    line-height: 1.8;
-}
-
-/* Video */
-.video-wrapper iframe {
-    width: 100%;
-    aspect-ratio: 16/9;
-    border-radius: 12px;
-}
-
-/* Swiper */
-.swiper-slide img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-/* Lecture Cards */
-.lecture-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-}
-
-.lecture-card {
-    background: #fff;
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .vc-profile {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .lecture-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
