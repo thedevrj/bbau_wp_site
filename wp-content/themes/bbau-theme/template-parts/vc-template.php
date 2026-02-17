@@ -19,26 +19,21 @@ $page_Id = get_the_ID();
                 <!-- Left Image -->
                 <div class="vc-hero-image">
                     <div class="vc-image-wrapper">
-                        <img src="http://localhost:9001/wp-content/uploads/2026/02/bbauvcss.jpg"
-                            alt="Vice Chancellor">
+                        <img src="<?php echo get_field('vc_image'); ?>" alt="Vice Chancellor">
                     </div>
                 </div>
 
                 <!-- Right Content -->
                 <div class="vc-hero-content">
-                    <h2>Prof. Raj Kumar Mittal</h2>
-                    <p class="vc-designation">Vice-Chancellor</p>
+                    <h2><?php echo get_field('vc_name'); ?></h2>
+                    <p class="vc-designation"><?php echo get_field('vc_designation'); ?></p>
 
                     <p class="vc-description">
-                        Distinguished academician and visionary leader with over 30 years of
-                        experience in higher education, research, and institutional development.
-                        Committed to excellence, innovation, and holistic growth of students and faculty.
+                       <?php echo get_field('about_vc'); ?>
                     </p>
 
                     <div class="vc-contact">
-                        <p>📧 vc@bbau.ac.in</p>
-                        <p>📞 +91-522-2440621</p>
-                        <p>📍 Vidya Vihar, Rae Bareli Road, Lucknow - 226025</p>
+                        <?php echo get_field('vc_contact'); ?>
                     </div>
 
                 </div>
@@ -69,7 +64,7 @@ $page_Id = get_the_ID();
                     <?php if( have_rows('slider_image_section') ):
                      while ( have_rows('slider_image_section') ) : the_row(); ?>
                     <div class="swiper-slide">
-                        <img src="<?php echo get_sub_field('slider_images');?>" alt="">
+                        <img src="<?php echo get_sub_field('slider_images');?>" alt="Photo Gallery">
                     </div>
                     <?php endwhile; endif; ?>
                 </div>
@@ -78,40 +73,6 @@ $page_Id = get_the_ID();
             </div>
         </div>
     </section>
-    <!-- <section class="vc-lecture">
-        <div class="vc-container1">
-            <h2>Eminent Lecture Series</h2>
-            <div class="swiper vcSwiper">
-                <div class="swiper-wrapper">
-                    <?php 
-                    $args = array(
-                        'post_type' => 'eminent_lecture',
-                        'posts_per_page' => -1
-                    );
-                    $lectures = new WP_Query( $args );
-                    
-                    if ( $lectures->have_posts() ) :
-                        while ( $lectures->have_posts() ) : $lectures->the_post();
-                        $video_url = trim(get_the_content());
-                    ?>
-                    <div class="swiper-slide">
-                        <div class="lecture-card">
-                            <h4><?php the_title(); ?></h4>
-                            <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>">
-                            <p>Speaker: <?php echo get_field('speaker_name'); ?></p>
-                            <p>Designation: <?php echo get_field('speaker_designation'); ?></p>
-                            <p>Date: <?php echo get_field('lecture_date'); ?></p>
-                        </div>
-                    </div>
-                    <?php 
-                        endwhile;
-                        wp_reset_postdata();
-                    endif; 
-                    ?>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-    </section> -->
 
     <section class="">
         <div class="vc-container1">
