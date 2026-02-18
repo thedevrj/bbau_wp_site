@@ -25,21 +25,21 @@ $page_Id = get_the_ID();
 
                 <!-- Right Content -->
                 <div class="vc-hero-content">
-                    <h2><?php echo get_field('vc_name'); ?></h2>
+                    <h3><?php echo get_field('vc_name'); ?></h3>
                     <p class="vc-designation"><?php echo get_field('vc_designation'); ?></p>
 
                     <p class="vc-description">
-                       <?php echo get_field('about_vc'); ?>
+                        <?php echo get_field('about_vc'); ?>
                     </p>
 
                     <div class="vc-contact">
                         <?php echo get_field('vc_contact'); ?>
                     </div>
-
+                    <div class="row pt-2">
+                        <?php echo get_field('vc_extra_link'); ?>
+                    </div>
                 </div>
-
             </div>
-
         </div>
     </section>
 
@@ -83,7 +83,7 @@ $page_Id = get_the_ID();
                 <?php if(have_rows('resource_section')): 
                     while(have_rows('resource_section')): the_row();
                     $link = get_sub_field('button_link');?>
-                    
+
                 <div class="vc-resource-card">
                     <h3><?php echo get_sub_field('card_heading'); ?></h3>
                     <p><?php echo get_sub_field('card_description'); ?></p>
@@ -158,18 +158,23 @@ $page_Id = get_the_ID();
 </style>
 <script>
 var swiper = new Swiper(".vcSwiper", {
-    spaceBetween: 20,
+
     loop: true,
+    speed: 1200,
+    autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+    },
     pagination: {
         el: ".swiper-pagination",
         clickable: true,
     },
-    navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
+    spaceBetween: 30,
     breakpoints: {
-        1020: {
+        1400: {
+            slidesPerView: 4
+        },
+        1024: {
             slidesPerView: 3
         },
         768: {
@@ -178,6 +183,8 @@ var swiper = new Swiper(".vcSwiper", {
         480: {
             slidesPerView: 1
         }
+
     }
+
 });
 </script>

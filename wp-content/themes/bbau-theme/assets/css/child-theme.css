@@ -1195,14 +1195,12 @@ color:#ffffff!important;
 
 /* DESCRIPTION */
 .vc-description{
-
 max-width:650px;
 text-shadow:
 0 2px 4px rgba(0,0,0,0.25),
 0 0 6px rgba(255,255,255,0.08);
 color:#ffffff!important;
 }
-
 /* CONTACT */
 .vc-contact p{
 font-size:17px;
@@ -1213,6 +1211,59 @@ text-shadow:
 0 0 6px rgba(255,255,255,0.08);
 color:#ffffff!important;
 }
+/* vc button ===============================
+VC SECTION CUSTOM BTN DESIGN
+Only affects VC section
+=============================== */
+
+.vc-hero-modern .btn{
+background:linear-gradient(135deg,#00509e,#003f7d) !important;
+color:#ffffff !important;
+border-radius:30px !important;
+padding:10px 26px !important;
+font-size:15px !important;
+font-weight: bold !important;
+letter-spacing:0.3px !important;
+text-decoration:none !important;
+box-shadow:0 6px 18px rgba(0,80,158,0.25) !important;
+transition:all 0.3s ease !important;
+}
+
+/* hover */
+.vc-hero-modern .btn:hover{
+background:linear-gradient(135deg,#0072ce,#00509e) !important;
+color:#ffffff !important;
+transform:translateY(-3px);
+box-shadow:0 12px 25px rgba(0,80,158,0.35);
+}
+
+/* active */
+.vc-hero-modern .btn:active{
+transform:translateY(0px);
+box-shadow:0 4px 12px rgba(0,80,158,0.25);
+}
+
+/* remove bootstrap focus */
+.vc-hero-modern .btn:focus{
+outline:none !important;
+box-shadow:0 6px 18px rgba(0,80,158,0.25) !important;
+}
+
+/* spacing */
+.vc-hero-modern .col-auto{
+margin-right:10px;
+margin-top:10px;
+}
+
+/* mobile */
+@media(max-width:768px){
+.vc-hero-modern .btn{
+width:100%;
+text-align:center;
+}
+}
+
+
 
 /* =========================================
 RESPONSIVE
@@ -1230,4 +1281,283 @@ RESPONSIVE
 .vc-image-wrapper{width:180px;height:180px;}
 .vc-hero-content h2{font-size:26px;}
 .vc-description{font-size:16px;}
+}
+/* ================================
+VC MESSAGE SECTION – PREMIUM LEFT ACCENT DESIGN
+================================ */
+
+.vc-message{
+padding:14px 20px;
+background:linear-gradient(180deg,#f5f9fc 0%,#e6f1f7 100%);
+}
+
+.vc-container1{
+max-width:1400px;
+margin:0 auto;
+}
+
+/* ================================
+HEADING
+================================ */
+
+.vc-message h2{
+font-size:34px;
+font-weight:700;
+color:#0b3d4a;
+margin-bottom:30px;
+position:relative;
+letter-spacing:0.3px;
+}
+
+/* ================================
+MESSAGE CARD
+================================ */
+
+.vc-message-box{
+position:relative;
+background:linear-gradient(135deg,#ffffff 0%,#eef6fb 40%,#cfe6f2 100%);
+padding:50px 55px 50px 70px;
+border-radius:60px;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,0.12),
+inset 0 1px 0 rgba(255,255,255,0.6);
+
+overflow:hidden;
+transition:all 0.4s ease;
+}
+
+/* BEAUTIFUL LEFT ACCENT LINE */
+.vc-message-box::before{
+content:"";
+position:absolute;
+left:0;
+top:30px;
+bottom:30px;
+width:6px;
+border-radius:6px;
+
+background:linear-gradient(
+180deg,
+#00c6ff 0%,
+#0072ff 50%,
+#003f7d 100%
+);
+
+box-shadow:
+0 0 12px rgba(0,198,255,0.6),
+0 0 25px rgba(0,114,255,0.4);
+}
+
+/* subtle glow overlay */
+.vc-message-box::after{
+content:"";
+position:absolute;
+top:-60px;
+right:-60px;
+width:220px;
+height:220px;
+background:radial-gradient(circle,rgba(0,198,255,0.18),transparent);
+}
+
+/* hover lift */
+.vc-message-box:hover{
+transform:translateY(-6px);
+box-shadow:
+0 30px 70px rgba(0,0,0,0.18),
+inset 0 1px 0 rgba(255,255,255,0.7);
+}
+/* ================================
+PARAGRAPH STYLE
+================================ */
+
+.vc-message-box p{
+
+color:#1c2f3a;
+text-align:justify;
+letter-spacing:0.2px;
+}
+
+/* highlight last line */
+.vc-message-box p:last-child{
+text-align:center;
+font-weight:600;
+font-size:19px;
+color:#003f7d;
+}
+
+
+/* ================================
+RESPONSIVE
+================================ */
+
+@media(max-width:992px){
+
+.vc-message{
+padding:50px 15px;
+}
+
+.vc-message-box{
+padding:35px 25px 35px 55px;
+border-radius:20px;
+}
+
+.vc-message h2{
+font-size:26px;
+}
+
+.vc-message-box::before{
+top:20px;
+bottom:20px;
+}
+}
+/* =========================================
+VC GALLERY SECTION
+========================================= */
+
+.vc-gallery{
+padding:70px 20px;
+background:linear-gradient(180deg,#f5f9fc 0%,#eaf3f8 100%);
+}
+
+.vc-gallery .vc-container1{
+max-width:1400px;
+margin:0 auto;
+}
+
+/* heading */
+ h2{
+font-size:32px !important;
+font-weight:600 !important;
+margin-bottom:35px !important;
+font-family: 'Times New Roman', Times, serif !important;
+position:relative;
+display:inline-block;
+}
+
+/* accent line */
+ h2::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-8px;
+width:60%;
+height:4px;
+border-radius:4px;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+}
+
+/* swiper spacing */
+.vcSwiper{
+padding-top:20px;
+padding-bottom:50px;
+}
+
+/* slide card */
+.vcSwiper .swiper-slide{
+border-radius:20px;
+overflow:hidden;
+background:#ffffff;
+box-shadow:
+0 15px 35px rgba(0,0,0,0.12);
+transition:all 0.4s ease;
+}
+
+/* image */
+.vcSwiper .swiper-slide img{
+width:100%;
+height:260px;
+object-fit:cover;
+transition:transform 0.6s ease;
+}
+
+/* hover effect */
+.vcSwiper .swiper-slide:hover img{
+transform:scale(1.08);
+}
+
+.vcSwiper .swiper-slide:hover{
+transform:translateY(-8px);
+box-shadow:
+0 25px 55px rgba(0,0,0,0.18);
+}
+
+/* pagination bullets */
+.swiper-pagination-bullet{
+background:#0072ff;
+opacity:0.5;
+}
+
+.swiper-pagination-bullet-active{
+opacity:1;
+background:#003f7d;
+}
+
+/* responsive */
+@media(max-width:768px){
+
+.vcSwiper .swiper-slide img{
+height:200px;
+}
+
+.vc-gallery h2{
+font-size:26px;
+}
+
+}
+
+.vc-section-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 50px;
+    color: #002855;
+}
+
+.vc-resource-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.vc-resource-card {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+    transition: all 0.3s ease;
+}
+
+.vc-resource-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+}
+
+.vc-resource-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #002855;
+}
+
+.vc-resource-card p {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.vc-btn {
+    text-decoration: none;
+    font-weight: 600;
+    color: #00509e;
+}
+
+.vc-btn:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .vc-resource-grid {
+        grid-template-columns: 1fr;
+    }
 }
