@@ -24,7 +24,7 @@ $query = new WP_Query($args);
 <?php if ($query->have_posts()) : ?>
 <div class="container-fluid page-bg page-template-about-bg py-lg-5 overflow-hidden">
     <?php get_template_part('template-parts/breadcrumb'); ?>
-    <div class="container py-5">
+    <div class="container py-4">
         <h2 class="text-center mb-4">Former Vice Chancellors</h2>
 
         <div class="former-vc-grid">

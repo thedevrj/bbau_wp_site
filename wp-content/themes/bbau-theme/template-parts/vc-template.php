@@ -98,64 +98,6 @@ $page_Id = get_the_ID();
 
 </div>
 <?php get_footer(); ?>
-
-<style>
-.vc-section-title {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 50px;
-    color: #002855;
-}
-
-.vc-resource-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-}
-
-.vc-resource-card {
-    background: #ffffff;
-    padding: 40px 30px;
-    border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
-    transition: all 0.3s ease;
-}
-
-.vc-resource-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
-}
-
-.vc-resource-card h3 {
-    font-size: 20px;
-    margin-bottom: 12px;
-    color: #002855;
-}
-
-.vc-resource-card p {
-    font-size: 15px;
-    color: #555;
-    margin-bottom: 20px;
-    line-height: 1.6;
-}
-
-.vc-btn {
-    text-decoration: none;
-    font-weight: 600;
-    color: #00509e;
-}
-
-.vc-btn:hover {
-    text-decoration: underline;
-}
-
-/* Responsive */
-@media (max-width: 992px) {
-    .vc-resource-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
 <script>
 var swiper = new Swiper(".vcSwiper", {
 

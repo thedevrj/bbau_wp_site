@@ -298,6 +298,10 @@
   margin-bottom: 0.75rem;
   color: #f5de10;
   text-decoration: underline;
+  display: block;
+}
+.glance-title::after {
+  content: none !important;
 }
 
 .glance-desc {

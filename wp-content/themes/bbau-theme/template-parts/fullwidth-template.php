@@ -16,7 +16,7 @@
         <div class="container px-lg-3 px-0 max_xl_w_1280 position-relative">
             <div class="row py-lg-2 py-3">
                 <div class="col-lg-12">
-                    <h3 class="mb-3"><?php the_title()?></h3>
+                    <h2 class="mb-5"><?php the_title()?></h2>
                     <?php 
                   if ( have_posts() ) : 
                      while ( have_posts() ) : the_post();
