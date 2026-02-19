@@ -9,7 +9,7 @@
 /* Visitor Section */
 .visitor-hero {
     background: #f5f7fa;
-    padding: 60px 20px;
+    padding: 40px 20px;
 }
 
 .visitor-container {
@@ -24,7 +24,7 @@
     background: #ffffff;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .visitor-image img {
@@ -34,14 +34,9 @@
     object-fit: cover;
 }
 
-.visitor-content h2 {
-    font-size: 28px;
-    margin-bottom: 8px;
-    color: #002855;
-}
 
 .visitor-designation {
-   font-weight: 600;
+    font-weight: 600;
 }
 
 .visitor-role {
@@ -55,6 +50,7 @@
         flex-direction: column;
         text-align: center;
     }
+
     .visitor-content h2 {
         font-size: 25px;
     }

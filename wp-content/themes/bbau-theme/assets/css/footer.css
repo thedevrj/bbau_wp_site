@@ -5,6 +5,7 @@
 .home .site-footer {
   border-top: 6px solid #FF9933;
 }
+
 .site-footer {
   width: 100%;
   background: radial-gradient(circle at center, #111 0%, #000 70%);
@@ -12,10 +13,12 @@
   overflow: hidden;
   font-family: "Poppins", sans-serif;
 }
+
 *:focus {
   outline: none !important;
   box-shadow: none !important;
 }
+
 /* ==================================================
    FOOTER MAIN LAYOUT
 ================================================== */
@@ -107,10 +110,10 @@
    FOOTER BOTTOM BAR
 ================================================== */
 .footer-bottom {
-  border-top: 2px solid rgba(255,255,255,0.15);
+  border-top: 2px solid rgba(255, 255, 255, 0.15);
   padding: 16px 20px;
   text-align: center;
-  font-size: 13px;
+  font-size: 15px;
   color: #cccccc;
 }
 
@@ -157,24 +160,28 @@
 
 /* Large tablets / small laptops */
 @media (max-width: 1199px) {
-  .footer-main{
-    gap: 0 !important; 
+  .footer-main {
+    gap: 0 !important;
   }
 }
+
 @media (min-width: 1200px) {
   .footer-col a {
     white-space: nowrap;
   }
+
   .col-xl-6 {
-        flex: 0 0 auto;
-        width: 35% !important;
-    }
+    flex: 0 0 auto;
+    width: 35% !important;
+  }
 }
+
 /* Tablets */
 @media (max-width: 991px) {
   .footer-main {
     padding: 55px 20px 40px;
   }
+
   .footer-col a {
     white-space: normal;
   }
@@ -186,12 +193,15 @@
     padding: 45px 20px 35px;
     text-align: left;
   }
+
   .footer-col h4 {
     font-size: 18px;
   }
+
   .footer-contact h4 {
     font-size: 18px;
   }
+
   .footer-social {
     margin-top: 14px;
   }
