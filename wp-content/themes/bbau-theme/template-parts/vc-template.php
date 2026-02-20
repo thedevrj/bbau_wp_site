@@ -74,7 +74,7 @@ $page_Id = get_the_ID();
         </div>
     </section>
 
-    <section class="">
+    <section class="vc-gallery">
         <div class="vc-container1">
 
             <h2 class="vc-section-title"><?php echo get_field('heading'); ?></h2>

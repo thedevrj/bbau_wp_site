@@ -99,5 +99,11 @@ get_header();
     border-left: 4px solid #00509e;
     font-size: 18px;
     line-height: 1.8;
+    border-radius: 25px;
+}
+.lyrics-box:hover {
+    transform: translateY(-6px) ;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 </style>
