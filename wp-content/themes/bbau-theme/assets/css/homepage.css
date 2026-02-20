@@ -1,4 +1,3 @@
-
 /* ================= HERO ================= */
 .hero {
   position: relative;
@@ -57,10 +56,12 @@
   background: rgba(0, 0, 0, 0.15);
   z-index: 1;
 }
+
 /* ================= TABLET VIEW ================= */
 @media (max-width: 1199px) {
   .hero {
-    height: calc(100vh - 139px); /* still first screen */
+    height: calc(100vh - 139px);
+    /* still first screen */
   }
 
   .hero-caption {
@@ -95,6 +96,7 @@
     font-size: 12px;
   }
 }
+
 /* ================= ANNOUNCEMENT BAR ================= */
 .announce-bar {
   width: 100%;
@@ -128,7 +130,8 @@
   top: 0;
   bottom: 4px;
   width: 66px;
-  height: 53px; /* 🔥 MUST MATCH BAR HEIGHT */
+  height: 53px;
+  /* 🔥 MUST MATCH BAR HEIGHT */
 
   /* solid background to remove gaps */
   background-color: #005C83;
@@ -183,17 +186,20 @@
 /* ================= ALTERNATE TEXT COLORS (STABLE LOOP) ================= */
 /* 1st, 4th, 7th... */
 .announce-track span:nth-child(3n + 1) {
-  color: #0f172a; /* dark navy */
+  color: #0f172a;
+  /* dark navy */
 }
 
 /* 2nd, 5th, 8th... */
 .announce-track span:nth-child(3n + 2) {
-  color: #1d4ed8; /* blue */
+  color: #1d4ed8;
+  /* blue */
 }
 
 /* 3rd, 6th, 9th... */
 .announce-track span:nth-child(3n) {
-  color: #A41F7F; /* magenta */
+  color: #A41F7F;
+  /* magenta */
 }
 
 /* ================= NEW BADGE ================= */
@@ -208,45 +214,59 @@
   margin-left: 8px;
   animation: newPulse 1.6s ease-in-out infinite;
 }
+
 @keyframes newPulse {
   0% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(255, 106, 0, 0.7);
   }
+
   70% {
     transform: scale(1.05);
     box-shadow: 0 0 0 6px rgba(255, 106, 0, 0);
   }
+
   100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(255, 106, 0, 0);
-  }}
+  }
+}
 
 /* ================= CONTINUOUS LOOP ================= */
 /* works because notices are duplicated in PHP */
 @keyframes announce-slide {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
+
 /* ================= PAUSE SCROLL ON HOVER ================= */
 /* Pause when hovering anywhere on the announcement bar */
 .announce-bar:hover .announce-track {
   animation-play-state: paused;
 }
+
 /* Extra safety: pause when hovering individual notice */
 .announce-track span:hover {
   animation-play-state: paused;
 }
+
 /* Pause when hovering the link itself */
 .announce-track a:hover {
   animation-play-state: paused;
 }
+
 /* ================= TABLET ================= */
 @media (max-width: 1199px) {
   .announce-track span {
     font-size: 16px;
     padding: 0 20px;
   }
+
   .announce-track {
     animation-duration: 26s;
   }
@@ -258,6 +278,7 @@
     font-size: 14px;
     padding: 0 16px;
   }
+
   .announce-track {
     animation-duration: 30s;
   }
@@ -268,8 +289,7 @@
 ===================================================== */
 .glance-section {
   width: 100%;
-  background: url("http://172.35.2.130:9001/wp-content/uploads/2026/01/DJI_0012-scaled.jpg")
-    no-repeat center center;
+  background: url("http://172.35.2.130:9001/wp-content/uploads/2026/01/DJI_0012-scaled.jpg") no-repeat center center;
   background-size: cover;
 }
 
@@ -300,6 +320,7 @@
   text-decoration: underline;
   display: block;
 }
+
 .glance-title::after {
   content: none !important;
 }
@@ -327,7 +348,8 @@
 .stat {
   display: flex;
   align-items: center;
-  gap: 0; /* no gap between icon & number */
+  gap: 0;
+  /* no gap between icon & number */
 }
 
 /* =====================================================
@@ -341,7 +363,8 @@
 }
 
 .icon-box img {
-  height: 4em; /* scales with number */
+  height: 4em;
+  /* scales with number */
   width: auto;
   object-fit: contain;
   filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(20deg);
@@ -361,7 +384,7 @@
   font-size: 2.8rem;
   font-weight: 900;
   line-height: 1;
-  
+
 }
 
 .stat-text .label {
@@ -369,7 +392,7 @@
   margin-top: 0.25rem;
   opacity: 0.9;
   font-weight: bold;
-  color: #ffffff ;
+  color: #ffffff;
 }
 
 .count {
@@ -389,32 +412,38 @@
 
   .glance-container {
     padding-left: 4vw;
-    padding-right: 6vw;   /*right gap */
+    padding-right: 6vw;
+    /*right gap */
   }
 }
 
 
-  .glance-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);  /* keep 4–4 like desktop */
-    gap: 2rem 1.5rem;        /* tighter spacing */
-  }
+.glance-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* keep 4–4 like desktop */
+  gap: 2rem 1.5rem;
+  /* tighter spacing */
+}
 
-  .stat {
-    gap: 0.5rem;             /* reduce crowding */
-  }
+.stat {
+  gap: 0.5rem;
+  /* reduce crowding */
+}
 
-  .icon-box img {
-    height: 4.6em;           /* slightly smaller icons */
-  }
+.icon-box img {
+  height: 4.6em;
+  /* slightly smaller icons */
+}
 
-  .stat-text .num {
-    font-size: 2.1rem;       /* scale down numbers */
-  }
+.stat-text .num {
+  font-size: 2.1rem;
+  /* scale down numbers */
+}
 
-  .stat-text .label {
-    font-size: 0.75rem;
-  }
+.stat-text .label {
+  font-size: 0.75rem;
+}
 
 
 /* ================= MOBILE ONLY ================= */
@@ -425,7 +454,8 @@
     flex-wrap: nowrap;
     gap: .5rem;
 
-    overflow-x: auto;          /* ✅ ALLOW HORIZONTAL SCROLL */
+    overflow-x: auto;
+    /* ✅ ALLOW HORIZONTAL SCROLL */
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
 
@@ -433,7 +463,8 @@
   }
 
   .stat {
-    flex: 0 0 auto;            /* ✅ prevent shrinking */
+    flex: 0 0 auto;
+    /* ✅ prevent shrinking */
     display: flex;
     align-items: center;
     gap: 0.6rem;
@@ -458,7 +489,8 @@
 
 .vc-section {
   width: 100%;
-  padding: 30px 0;              /* vertical spacing only */
+  padding: 30px 0;
+  /* vertical spacing only */
   background: transparent;
 }
 
@@ -468,11 +500,9 @@
   width: 100%;
   display: flex;
   gap: 22px;
-
-  padding: 0 40px;              /* side spacing */
+  padding: 0 40px;  /* side spacing */
   box-sizing: border-box;
-
-  align-items: stretch;         /* 🔥 image & content same height */
+  align-items: stretch;  /* 🔥 image & content same height */
 }
 
 /* ================= LEFT IMAGE ================= */
@@ -480,11 +510,17 @@
 .vc-image {
   width: 430px;
   flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+.vc-image:hover {
+  transform: translateY(-6px) scale(1.02) ;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
 }
 
 .vc-image img {
   width: 100%;
-  height: 100%;                 /* 🔥 matches content height */
+  height: 100%;
+  /* 🔥 matches content height */
   object-fit: cover;
   border-radius: 45px;
   display: block;
@@ -493,16 +529,23 @@
 /* ================= RIGHT CONTENT ================= */
 
 .vc-content {
-  flex: 1;                      /* 🔥 auto width */
+  flex: 1;
+  /* 🔥 auto width */
   background: #1f6f8b;
   border-radius: 45px;
-
   padding: 32px 40px 45px;
   box-sizing: border-box;
-
   color: #ffffffd4;
   display: flex;
-  flex-direction: column;       /* 🔥 button control */
+  flex-direction: column;
+  transition: all 0.3s ease;
+
+  /* 🔥 button control */
+}
+
+.vc-content:hover {
+  transform: translateY(-6px) ;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
 }
 
 /* ================= TITLE ================= */
@@ -522,7 +565,8 @@
   font-size: 20px;
   line-height: 1.6;
   margin: 0;
-  flex: 1;                      /* 🔥 fills available space */
+  flex: 1;
+  /* 🔥 fills available space */
 }
 
 /* GREETING */
@@ -531,9 +575,11 @@
   font-weight: 600;
   margin-bottom: 4px;
 }
+
 /* ================= BUTTON ================= */
 .vc-btn-wrap {
-  margin-top: auto;             /* 🔥 sticks button to bottom */
+  margin-top: auto;
+  /* 🔥 sticks button to bottom */
   display: flex;
   justify-content: flex-end;
 }
@@ -556,8 +602,8 @@
   text-decoration: none;
 
   transition: background-color 0.3s ease,
-              color 0.3s ease,
-              box-shadow 0.3s ease;
+    color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .vc-btn:hover {
@@ -578,6 +624,7 @@
     width: 100%;
   }
 }
+
 /* ================= MOBILE VIEW ================= */
 
 @media (max-width: 767px) {
@@ -632,14 +679,16 @@
 
 /* ================= CARD ================= */
 .info-card {
-  height: 420px;                    /* 🔥 FIXED HEIGHT (DESKTOP) */
+  height: 420px;
+  /* 🔥 FIXED HEIGHT (DESKTOP) */
   background: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
 
   display: flex;
   flex-direction: column;
-  overflow: hidden;               /* 🔥 prevents overflow bugs */
+  overflow: hidden;
+  /* 🔥 prevents overflow bugs */
 }
 
 /* TITLE */
@@ -658,9 +707,12 @@
 
 /* ================= SCROLL AREA ================= */
 .info-scroll {
-  flex: 1;                        /* 🔥 fills available height */
-  min-height: 0;                  /* 🔥 REQUIRED for scrolling */
-  overflow-y: auto;               /* 🔥 MANUAL SCROLL */
+  flex: 1;
+  /* 🔥 fills available height */
+  min-height: 0;
+  /* 🔥 REQUIRED for scrolling */
+  overflow-y: auto;
+  /* 🔥 MANUAL SCROLL */
 
   scrollbar-width: thin;
   scrollbar-color: #d94a2c #f1f1f1;
@@ -670,9 +722,11 @@
 .info-scroll::-webkit-scrollbar {
   width: 6px;
 }
+
 .info-scroll::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+
 .info-scroll::-webkit-scrollbar-thumb {
   background: #d94a2c;
   border-radius: 10px;
@@ -723,8 +777,13 @@
   flex-shrink: 0;
 }
 
-.info-btn.orange { background: #f28c28; }
-.info-btn.dark   { background: #1f1f1f; }
+.info-btn.orange {
+  background: #f28c28;
+}
+
+.info-btn.dark {
+  background: #1f1f1f;
+}
 
 /* ================= TABLET ================= */
 @media (max-width: 1199px) {
@@ -746,7 +805,8 @@
   }
 
   .info-card {
-    height: 360px;                /* 🔥 shorter for mobile */
+    height: 360px;
+    /* 🔥 shorter for mobile */
   }
 
   .info-title {
@@ -754,9 +814,11 @@
   }
 
   .info-item {
-    font-size: 15px;              /* better readability */
+    font-size: 15px;
+    /* better readability */
   }
 }
+
 /* ================= AUTO SLIDER ================= */
 /* ================= AUTO IMAGE SLIDER ================= */
 
@@ -791,7 +853,8 @@
 
 /* CARD */
 .slider-card {
-  flex: 0 0 calc(25% - 20px); /* 🔥 4 cards on desktop */
+  flex: 0 0 calc(25% - 20px);
+  /* 🔥 4 cards on desktop */
   height: 220px;
 
   border-radius: 22px;
@@ -820,7 +883,8 @@
 @media (max-width: 1199px) {
 
   .slider-card {
-    flex: 0 0 calc(50% - 18px); /* 🔥 2 cards */
+    flex: 0 0 calc(50% - 18px);
+    /* 🔥 2 cards */
     height: 200px;
   }
 
@@ -833,7 +897,8 @@
 @media (max-width: 767px) {
 
   .slider-card {
-    flex: 0 0 100%; /* 🔥 1 card */
+    flex: 0 0 100%;
+    /* 🔥 1 card */
     height: 180px;
   }
 
@@ -841,4 +906,3 @@
     flex: 0 0 30px;
   }
 }
-
