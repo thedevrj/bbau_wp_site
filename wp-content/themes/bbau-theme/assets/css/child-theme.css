@@ -590,7 +590,6 @@ h1 {
 /* ===== ACT & ORDINANCES – FORCE OVERRIDE ===== */
 
 .max_xl_w_1280 .col-lg-12 ul li a {
-  color: #800000 !important;
   text-decoration: none !important;
   font-weight: 400;
 }
@@ -1079,11 +1078,6 @@ VC HERO SECTION CONTAINER
   padding: 60px 20px;
 }
 
-.vc-hero-container {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
 /* =========================================
 MAIN HERO CARD (2 HALVES)
 ========================================= */
@@ -1333,10 +1327,15 @@ VC MESSAGE SECTION – PREMIUM LEFT ACCENT DESIGN
 }
 
 .vc-container1 {
-  max-width: 1400px;
+  max-width: 1400px ;
   margin: 0 auto;
 }
-
+@media(min-width:1600px) {
+  .vc-container1 {
+    max-width: 1500px !important;
+  }
+  
+}
 /* ================================
 HEADING
 ================================ */
@@ -1464,7 +1463,6 @@ VC GALLERY SECTION
 
 .vc-gallery .vc-container1 {
   max-width: 1400px;
-  margin: 0 auto;
 }
 
 /* heading */

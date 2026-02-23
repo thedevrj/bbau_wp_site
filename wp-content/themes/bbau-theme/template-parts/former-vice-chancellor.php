@@ -9,7 +9,7 @@ $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 
 $args = array(
     'post_type'      => 'old_vice_chancellor',
-    'posts_per_page' => 9,
+    'posts_per_page' => 12,
     'paged'          => $paged,
     'meta_key'       => 'start_date',
     'orderby'        => 'meta_value',
@@ -17,7 +17,7 @@ $args = array(
 );
 
 $query = new WP_Query($args);
-?> 
+?>
 <!-- Banner -->
 <?php get_template_part( 'banners/about-banner' ); ?>
 <!-- End Banner -->
@@ -61,13 +61,13 @@ $query = new WP_Query($args);
         </div>
     </div>
     <!-- Pagination -->
-<div class="former-vc-pagination">
-    <?php
+    <div class="former-vc-pagination">
+        <?php
         echo paginate_links(array(
             'total' => $query->max_num_pages,
         ));
         ?>
-</div>
+    </div>
 </div>
 
 
