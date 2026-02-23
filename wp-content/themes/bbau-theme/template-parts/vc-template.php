@@ -12,7 +12,7 @@ $page_Id = get_the_ID();
 <div class="container-fluid page-bg page-template-about-bg py-lg-5 overflow-hidden">
     <?php get_template_part('template-parts/breadcrumb'); ?>
     <section class="vc-hero-modern">
-        <div class="vc-hero-container">
+        <div class="vc-container1">
 
             <div class="vc-hero-card">
 

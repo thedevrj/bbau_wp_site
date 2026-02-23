@@ -1,6 +1,6 @@
     <!-- Breadcrumb Section -->
     <div class="breadcrumb-wrapper">
-        <div class="container max_xl_w_1280">
+        <div class="container ">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="<?php echo home_url('/'); ?>" class="breadcrumb-link">
