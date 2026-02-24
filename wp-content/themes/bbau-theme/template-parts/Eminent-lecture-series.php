@@ -22,7 +22,7 @@ $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 
 <div class="container-fluid page-bg page-template-about-bg pt-lg-4 overflow-hidden">
     <?php get_template_part('template-parts/breadcrumb'); ?>
-    <div class="container py-5">
+    <div class="container-fluid py-5">
         <div class="row">
             <?php            
             if ( $query->have_posts() ) {
