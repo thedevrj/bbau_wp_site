@@ -50,7 +50,7 @@ get_header();
                     </p>
                 </div>
                 <div class="accreditation-links">
-                    <a href="http://172.35.2.130:9001/wp-content/uploads/2026/02/naaccertificate23.pdf"
+                    <a href="/wp-content/uploads/2026/02/naaccertificate23.pdf"
                         target="_blank">View Report (PDF)</a>
                     <a href="https://www.naac.gov.in" target="_blank">Official Website</a>
                 </div>
@@ -69,7 +69,7 @@ get_header();
                     <li><strong>Year:</strong> 2021</li>
                 </ul>
                 <div class="accreditation-links">
-                    <a href="http://172.35.2.130:9001/wp-content/uploads/2026/02/ARIIA2021Report.pdf"
+                    <a href="/wp-content/uploads/2026/02/ARIIA2021Report.pdf"
                         target="_blank">View Report (PDF)</a>
                     <a href="#" target="_blank">Official Website</a>
                 </div>

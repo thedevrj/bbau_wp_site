@@ -23,35 +23,38 @@ $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 <div class="container-fluid page-bg page-template-about-bg pt-lg-4 overflow-hidden">
     <?php get_template_part('template-parts/breadcrumb'); ?>
     <div class="container-fluid py-5">
-        <div class="row">
-            <?php            
+        <div class="container">
+            <div class="row">
+                <?php            
             if ( $query->have_posts() ) {
                 while ( $query->have_posts() ) {
                     $query->the_post();
                     ?>
-            <div class="col-lg-6 mb-4">
-                <div class="card h-100">
-                    <?php if ( has_post_thumbnail() ) : ?>
-                    <div class="card-img-top">
-                        <?php the_post_thumbnail( 'medium', array( 'class' => 'img-fluid' ) ); ?>
-                    </div>
-                    <?php endif; ?>
-                    <div class="card-body">
-                        <h5 class="card-title"><?php the_title(); ?></h5>
-                        <p class="card-text">Speaker: <?php echo get_field('speaker_name'); ?></p>
-                        <p class="card-text">Designation: <?php echo get_field('speaker_designation'); ?></p>
-                        <p class="card-text">Date: <?php echo get_field('lecture_date'); ?></p>
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <?php if ( has_post_thumbnail() ) : ?>
+                        <div class="card-img-top">
+                            <?php the_post_thumbnail( 'medium', array( 'class' => 'img-fluid' ) ); ?>
+                        </div>
+                        <?php endif; ?>
+                        <div class="card-body">
+                            <h5 class="card-title"><?php the_title(); ?></h5>
+                            <p class="card-text">Speaker: <?php echo get_field('speaker_name'); ?></p>
+                            <p class="card-text">Designation: <?php echo get_field('speaker_designation'); ?></p>
+                            <p class="card-text">Date: <?php echo get_field('lecture_date'); ?></p>
+                        </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
-            <?php } ?>
-        </div>
-        <div class="former-vc-pagination">
-            <?php
+            <div class="former-vc-pagination">
+                <?php
                     echo paginate_links(array(
                         'total' => $query->max_num_pages,
                     ));
                 ?>
+
+            </div>
         </div>
         <?php
                 wp_reset_postdata();

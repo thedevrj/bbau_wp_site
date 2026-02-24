@@ -805,168 +805,210 @@ a.link-new:active,
 a.link-new:focus {
   color: #00509e;
 }
-
 /* =====================================
-   KEY DOCUMENTS PAGE – COMPLETE CSS
+   UNIVERSAL DOCUMENT TABLE DESIGN
+   (Exact Key Document Style - Generalized)
 ===================================== */
 
-/* Page background */
-.key-documents-page{
-background:linear-gradient(180deg,#eef3f7 0%,#dde7ee 100%);
-}
 
 /* =====================================
    SECTION HEADINGS
 ===================================== */
-.key-documents-page h3{
-font-size:30px;
-font-weight:700;
-color:#0b3d6d;
-margin-top:35px;
-padding-left:15px;
-position:relative;
+
+.section-heading{
+  font-size:30px;
+  font-weight:700;
+  color:#0b3d6d;
+  margin-top:35px;
+  margin-bottom:20px;
+  padding-left:15px;
+  position:relative;
 }
 
-.key-documents-page h3::before{
-content:"";
-position:absolute;
-left:0;
-top:5px;
-width:6px;
-height:80%;
-background:linear-gradient(#00509e,#0b3d6d);
-border-radius:4px;
+.section-heading::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:5px;
+  width:6px;
+  height:80%;
+  background:linear-gradient(#00509e,#0b3d6d);
+  border-radius:4px;
 }
+
 
 /* =====================================
    TABLE CARD DESIGN
 ===================================== */
-.key-documents-page .table{
-width:100%;
-table-layout:fixed;
-border-collapse:collapse;
-background:#ffffff;
-border-radius:12px;
-overflow:hidden;
-border:none;
-margin-bottom:40px;
-box-shadow:0 6px 20px rgba(0,0,0,0.08);
-animation:fadeInUp 0.4s ease;
+
+.doc-table{
+  width:100%;
+  table-layout:fixed;
+  border-collapse:collapse;
+  background:#ffffff;
+  border-radius:12px;
+  overflow:hidden;
+  border:none;
+  margin-bottom:40px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+  animation:fadeInUp 0.4s ease;
 }
+
 
 /* =====================================
    TABLE HEADER
 ===================================== */
-.key-documents-page .table thead{
-background:linear-gradient(90deg,#00509e,#0b3d6d);
+
+.doc-table thead{
+  background:linear-gradient(90deg,#00509e,#0b3d6d);
 }
 
-.key-documents-page .table thead th{
-font-size:18px;
-border:none;
-text-align:left;
-vertical-align:middle;
-padding:16px;
-box-sizing:border-box;
-
+.doc-table thead th{
+  font-size:18px;
+  border:none;
+  text-align:left;
+  vertical-align:middle;
+  padding:16px;
+  box-sizing:border-box;
 }
+
 
 /* =====================================
    TABLE BODY
 ===================================== */
-.key-documents-page .table tbody td{
-padding:16px;
-border-bottom:1px solid #edf2f7;
-font-size:17px;
-text-align:left;
-vertical-align:middle;
-word-wrap:break-word;
+
+.doc-table tbody td{
+  padding:16px;
+  border-bottom:1px solid #edf2f7;
+  font-size:17px;
+  text-align:left;
+  vertical-align:middle;
+  word-wrap:break-word;
 }
 
-/* Zebra striping */
-.key-documents-page .table-striped tbody tr:nth-child(odd){
-background-color:#f8fbff;
+
+/* =====================================
+   ALTERNATE ROW COLORS (ZEBRA FIXED)
+===================================== */
+
+.doc-table tbody tr:nth-child(odd) td{
+  background-color:#cdcdce;
 }
 
-/* Hover effect */
-.key-documents-page .table tbody tr{
-transition:all 0.25s ease;
+.doc-table tbody tr:nth-child(even) td{
+  background-color:#ffffff;
 }
 
-.key-documents-page .table tbody tr:hover{
-background:#eef5ff;
-transform:translateY(-2px);
-box-shadow:0 4px 12px rgba(0,0,0,0.05);
+
+/* =====================================
+   HOVER EFFECT (Lift + Highlight)
+===================================== */
+
+.doc-table tbody tr{
+  transition:all 0.25s ease;
 }
 
-/* Column widths */
-.key-documents-page .table th:nth-child(1),
-.key-documents-page .table td:nth-child(1){
-width:8%;
-font-weight:600;
-color:#2d3748;
+.doc-table tbody tr:hover td{
+  background:#eef5ff;
 }
 
-.key-documents-page .table th:nth-child(2),
-.key-documents-page .table td:nth-child(2){
-width:18%;
+.doc-table tbody tr:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
 
-.key-documents-page .table th:nth-child(3),
-.key-documents-page .table td:nth-child(3){
-width:37%;
+
+/* =====================================
+   COLUMN WIDTHS (FOR 4 COLUMN TABLES)
+===================================== */
+
+.doc-table th:nth-child(1),
+.doc-table td:nth-child(1){
+  width:8%;
+  font-weight:600;
+  color:#2d3748;
 }
 
-.key-documents-page .table th:nth-child(4),
-.key-documents-page .table td:nth-child(4){
-width:37%;
+.doc-table th:nth-child(2),
+.doc-table td:nth-child(2){
+  width:18%;
 }
+
+.doc-table th:nth-child(3),
+.doc-table td:nth-child(3){
+  width:37%;
+}
+
+.doc-table th:nth-child(4),
+.doc-table td:nth-child(4){
+  width:37%;
+}
+
 
 /* =====================================
    PDF LINK ICON
 ===================================== */
-.key-documents-page .link-new i{
-margin-right:6px;
-color:#d32f2f;
-font-size:16px;
+
+.doc-table .link-new{
+  text-decoration:none;
+  transition:0.2s ease;
 }
+
+.doc-table .link-new:hover{
+  text-decoration:underline;
+}
+
+.doc-table .link-new i{
+  margin-right:6px;
+  color:#d32f2f;
+  font-size:16px;
+}
+
 
 /* =====================================
    ANIMATION
 ===================================== */
+
 @keyframes fadeInUp{
-from{opacity:0;transform:translateY(10px);}
-to{opacity:1;transform:translateY(0);}
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
+
 
 /* =====================================
    MOBILE RESPONSIVE FIX
 ===================================== */
+
 @media(max-width:768px){
 
-.key-documents-page .table{
-overflow:visible !important;
-border-radius:8px;
-box-shadow:0 3px 10px rgba(0,0,0,0.06);
-}
+  .doc-table{
+    overflow:visible !important;
+    border-radius:8px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.06);
+  }
 
-.key-documents-page .table tbody tr:hover{
-transform:none;
-box-shadow:none;
-}
+  .doc-table tbody tr:hover{
+    transform:none;
+    box-shadow:none;
+  }
 
-.key-documents-page .table th,
-.key-documents-page .table td{
-padding:12px;
-font-size:14px;
-}
+  .doc-table th,
+  .doc-table td{
+    padding:12px;
+    font-size:14px;
+  }
 
-.key-documents-page h3{
-font-size:24px;
-}
+  .section-heading{
+    font-size:24px;
+  }
 
 }
-
 
 /*bbau Seal*/
 /* =====================================
