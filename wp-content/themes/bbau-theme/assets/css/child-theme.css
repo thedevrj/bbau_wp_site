@@ -842,14 +842,11 @@ a.link-new:focus {
 ===================================== */
 
 .doc-table{
-  width:100%;
-  table-layout:fixed;
   border-collapse:collapse;
   background:#ffffff;
   border-radius:12px;
   overflow:hidden;
   border:none;
-  margin-bottom:40px;
   box-shadow:0 6px 20px rgba(0,0,0,0.08);
   animation:fadeInUp 0.4s ease;
 }
@@ -892,7 +889,7 @@ a.link-new:focus {
 ===================================== */
 
 .doc-table tbody tr:nth-child(odd) td{
-  background-color:#cdcdce;
+  background-color:#e1e1e4;
 }
 
 .doc-table tbody tr:nth-child(even) td{
@@ -917,33 +914,16 @@ a.link-new:focus {
   box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
 
-
-/* =====================================
-   COLUMN WIDTHS (FOR 4 COLUMN TABLES)
-===================================== */
-
-.doc-table th:nth-child(1),
-.doc-table td:nth-child(1){
-  width:8%;
-  font-weight:600;
-  color:#2d3748;
+/*table*/
+.doc-table{
+  width:100%;
+  table-layout:auto;   /* This makes columns automatic */
 }
 
-.doc-table th:nth-child(2),
-.doc-table td:nth-child(2){
-  width:18%;
+.doc-table th,
+.doc-table td{
+  width:auto;
 }
-
-.doc-table th:nth-child(3),
-.doc-table td:nth-child(3){
-  width:37%;
-}
-
-.doc-table th:nth-child(4),
-.doc-table td:nth-child(4){
-  width:37%;
-}
-
 
 /* =====================================
    PDF LINK ICON
