@@ -1,292 +1,213 @@
 <?php 
 /*
-Template Name: aboutall 
+Template Name: Department Page
 */
-
-// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
 get_header();
+$page_Id = get_the_ID();
 ?>
 
 <?php get_template_part('banners/about-banner'); ?>
 
-<div class="container-fluid page-bg page-template-about-bg py-lg-5">
-
-    <?php get_template_part('template-parts/breadcrumb'); ?>
-
-    <!-- =====================================
-     finance officer SECTION
- ===================================== -->
-
-
-    <!-- TOP AREA WITH DIFFERENT BACKGROUND -->
-
+<div class="container-fluid page-bg py-lg-5">
     <div class="container">
 
-        <div class="uni-officer-card">
+        <?php get_template_part('template-parts/breadcrumb'); ?>
 
-            <div class="uni-officer-top">
 
-                <!-- LEFT IMAGE -->
-                <div class="uni-officer-left">
-                    <img src="http://localhost:9001/wp-content/uploads/2026/02/finamceofficer.jpg"
-                        alt="Finance Officer">
+        <!-- =============================
+            ASSISTANT DIRECTORS
+        ============================== -->
+
+        <section class="dept-assistant-section">
+
+            <div class="dept-grid">
+                <?php if(have_rows('Department Profile')): ?>
+                <?php while(have_rows('Department Profile')): the_row(); ?>
+                <div class="assistant-card">
+                    <div class="left">
+                        <img src="<?php echo esc_url(get_sub_field('profile_image')); ?>"
+                            alt="<?php echo esc_attr(get_sub_field('name')); ?>">
+                    </div>
+                    <div class="right">
+                        <h4><?php the_sub_field('name'); ?></h4>
+                        <p><?php the_sub_field('designation'); ?></p>
+                        <p> <?php the_sub_field('contact_details'); ?></p>
+                    </div>
                 </div>
+                <?php endwhile; ?>
+                <?php endif; ?>
 
-                <!-- RIGHT CONTENT -->
-                <div class="uni-officer-right">
-
-                    <h3 class="uni-officer-name">
-                        Dr. Ajay Kumar Mohanty
-                    </h3>
-
-                    <div class="uni-officer-designation">
-                        Finance Officer
-                    </div>
-
-                    <div class="uni-officer-contact">
-
-                        <p>📞
-                            <a class="link-new" href="tel:05222440823">
-                                0522-2440823
-                            </a>
-                        </p>
-
-                        <p>✉
-                            <a class="link-new" href="mailto:fo@bbau.ac.in">
-                                fo@bbau.ac.in
-                            </a>
-                        </p>
-
-                        <p>✉
-                            <a class="link-new" href="mailto:fobbau@yahoo.com">
-                                fobbau@yahoo.com
-                            </a>
-                        </p>
-                    </div>
-                    <div class="uni-officer-buttons">
-                        <a href="/wp-content/uploads/2026/02/Tenure_Finance_Officer.pdf" class="uni-btn"
-                            target="_blank">
-                            Tenure of Finance Officer
-                        </a>
-                    </div>
-                    
-                </div>
             </div>
-        </div>
+
+        </section>
 
 
-        <!-- ABOUT SECTION FULL WIDTH (OUTSIDE CARD) -->
-        <section class="uni-officer-about">
+        <!-- =============================
+            ABOUT DEPARTMENT
+        ============================== -->
 
-            <h4>About Finance Section</h4>
-            <p>
-                Finance Section is one of the main organs of the University and operates as a financial entity to carry
-                out financial activities, including proper monitoring and optimum utilization of available funds within
-                established financial rules and practices.
-            </p>
+        <section class="dept-about-section">
 
+            <?php if ( have_posts() ) : ?>
+              <?php while ( have_posts() ) : the_post(); ?>
+              <?php the_content(); ?>
+              <?php endwhile; ?>
+            <?php endif; ?>
         </section>
     </div>
 </div>
-    <style>
-    /* ROOT COLORS */
-:root{
-  --primary:#1a3a6b;
-  --primary-dark:#0f2347;
-  --accent:#8b1a1a;
-  --gold:#c9972a;
-  --bg:#ffffff;
-  --bg-soft:#f0f4fb;
-  --border:#d0daf0;
-  --text:#3a3a50;
+
+<?php get_footer(); ?>
+
+<style>
+/* =====================================
+   Department Page Styling
+===================================== */
+
+:root {
+    --primary: #1a3a6b;
+    --primary-dark: #0f2347;
+    --accent: #8b1a1a;
+    --border: #d8e0f2;
+    --text: #444;
+    --bg-soft: #f5f7fc;
 }
 
+/* =========================
+   Assistant Directors Section
+========================= */
 
-/* TOP WRAPPER */
-.uni-officer-top-wrapper{
-  background:linear-gradient(135deg,#eef2fb,#f5f7fd,#eef2fb);
-  padding:50px 0 60px;
-  border-bottom:1px solid var(--border);
-  position:relative;
+.dept-assistant-section {
+    margin-bottom: 60px;
 }
 
-.uni-officer-top-wrapper::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:5px;
-  background:linear-gradient(to right,var(--primary-dark),var(--primary),var(--gold),var(--accent));
+/* 2 Cards Per Row */
+.dept-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
 }
 
-
-/* CARD */
-.uni-officer-card{
-  background:var(--bg);
-  border:1px solid var(--border);
-  border-left:4px solid var(--primary);
-  border-radius:8px;
-  max-width:780px;
-  margin:auto;
-  box-shadow:0 4px 20px rgba(0,0,0,0.08);
+/* Horizontal Card */
+.assistant-card {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 6px;
+    transition: 0.3s ease;
 }
 
-
-/* FLEX TOP */
-.uni-officer-top{
-  display:flex;
-  align-items:center;
-  gap: 100px;
-  padding:35px 40px;
+.assistant-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
-
-/* IMAGE */
-.uni-officer-left{
-  position:relative;
+/* LEFT IMAGE */
+.assistant-card .left {
+    flex-shrink: 0;
 }
 
-.uni-officer-left::before{
-  content:"";
-  position:absolute;
-  inset:-5px;
-  border-radius:50%;
-  background:conic-gradient(var(--primary),var(--gold),var(--accent),var(--primary));
-  animation:rotate 8s linear infinite;
+.assistant-card .left img {
+    width: 110px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 4px;
 }
-
-.uni-officer-left::after{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:#fff;
-  border-radius:50%;
-}
-
-.uni-officer-left img{
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  object-fit:cover;
-  position:relative;
-  z-index:1;
-}
-
-
-/* ROTATE ANIMATION */
-@keyframes rotate{
-  to{transform:rotate(360deg);}
-}
-
 
 /* RIGHT CONTENT */
-.uni-officer-right{
-  flex:1;
+.assistant-card .right {
+    flex: 1;
 }
 
-.uni-officer-name{
-  font-size:24px;
-  font-weight:700;
-  color:var(--primary-dark);
-  margin-bottom:5px;
+/* Name */
+.assistant-card .right h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 5px;
 }
 
-.uni-officer-designation{
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:2px;
-  color:var(--accent);
-  margin-bottom:15px;
-  text-transform:uppercase;
+/* Designation */
+.assistant-card .right p:first-of-type {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
 }
 
-.uni-officer-divider-h{
-  width:40px;
-  height:2px;
-  background:var(--primary);
-  margin-bottom:15px;
+/* Contact Info */
+.assistant-card .right p {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 5px;
 }
 
-
-/* CONTACT */
-.uni-officer-contact{
-  margin-bottom:20px;
+/* Links */
+.link-new {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
 }
 
-.uni-officer-contact p{
-  font-size:14px;
-  margin-bottom:6px;
+.link-new:hover {
+    color: var(--accent);
 }
 
-.link-new{
-  color:var(--primary);
-  text-decoration:none;
+/* Tenure link spacing */
+.assistant-card .right a.link-new {
+    display: inline-block;
+    margin-top: 8px;
 }
 
-.link-new:hover{
-  color:var(--accent);
+/* =========================
+   About Department
+========================= */
+
+.section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 20px;
+    border-left: 4px solid var(--primary);
+    padding-left: 12px;
 }
 
-
-/* BUTTON */
-.uni-btn{
-  display:inline-block;
-  background:var(--primary);
-  color:#fff;
-  padding:9px 18px;
-  font-size:12px;
-  text-decoration:none;
-  border-radius:3px;
-  transition:.3s;
+.dept-about-section {
+    background: var(--bg-soft);
+    padding: 40px;
+    border-radius: 6px;
 }
 
-.uni-btn:hover{
-  background:var(--primary-dark);
+.dept-about-section p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text);
 }
 
+/* =========================
+   Responsive
+========================= */
 
-/* ABOUT SECTION */
-.uni-officer-about{
-  padding:50px 40px;
-  border-top:1px solid var(--border);
-  position:relative;
+@media (max-width: 992px) {
+    .dept-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-.uni-officer-about::after{
-  content:"";
-  position:absolute;
-  bottom:0;
-  left:0;
-  width:100%;
-  height:4px;
-  background:linear-gradient(to right,var(--primary-dark),var(--primary),var(--gold),var(--accent));
+@media (max-width: 576px) {
+    .assistant-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .assistant-card .left img {
+        width: 120px;
+        height: 140px;
+    }
 }
-
-.uni-officer-about h4{
-  font-size:26px;
-  color:var(--primary-dark);
-  margin-bottom:15px;
-}
-
-.uni-officer-about p{
-  font-size:15px;
-  line-height:1.8;
-  color:var(--text);
-}
-
-
-/* MOBILE */
-@media(max-width:600px){
-
-  .uni-officer-top{
-    flex-direction:column;
-    text-align:center;
-  }
-
-}
-    </style>
-
-    <?php get_footer(); ?>
+</style>
