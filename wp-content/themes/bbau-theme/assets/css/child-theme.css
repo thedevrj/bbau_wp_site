@@ -29,7 +29,6 @@ h1 {
   border-bottom: 12px solid transparent;
   border-image: linear-gradient(90deg, #005754 0%, #E4F8F8 100%);
   border-image-slice: 1;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0) 100%);
   background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f2 100%);
 }
 

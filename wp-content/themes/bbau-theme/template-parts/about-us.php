@@ -30,7 +30,7 @@ get_header();
                 <?php endif; ?>
 
                 <?php if (get_field('top_content')) : ?>
-                    <div class="about-content">
+                    <div class="about-content py-4">
                         <?php the_field('top_content'); ?>
                     </div>
                 <?php endif; ?>
@@ -46,7 +46,7 @@ get_header();
                 <?php endif; ?>
 
                 <?php if (get_field('bottom_content')) : ?>
-                    <div class="about-content">
+                    <div class="about-content py-4">
                         <?php the_field('bottom_content'); ?>
                     </div>
                 <?php endif; ?>
