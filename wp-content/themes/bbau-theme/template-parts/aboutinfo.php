@@ -62,7 +62,7 @@ $page_Id = get_the_ID();
 
 <style>
 /* =====================================
-   Department Page Styling
+   ROOT VARIABLES
 ===================================== */
 
 :root {
@@ -74,140 +74,248 @@ $page_Id = get_the_ID();
     --bg-soft: #f5f7fc;
 }
 
-/* =========================
-   Assistant Directors Section
-========================= */
+
+/* =====================================
+   ASSISTANT DIRECTORS SECTION
+===================================== */
 
 .dept-assistant-section {
     margin-bottom: 60px;
 }
 
-/* 2 Cards Per Row */
+
+/* GRID - 2 CARDS PER ROW */
 .dept-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
 }
 
-/* Horizontal Card */
+
+/* CARD */
 .assistant-card {
+
     display: flex;
-    gap: 20px;
-    align-items: flex-start;
+    align-items: center;
+
     background: #ffffff;
     border: 1px solid var(--border);
-    padding: 20px;
-    border-radius: 6px;
-    transition: 0.3s ease;
+    border-radius: 13px;
+
+    overflow: hidden;
+
+    transition: all 0.3s ease;
+
+    min-height: 220px;
 }
 
 .assistant-card:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
-/* LEFT IMAGE */
+
+/* =====================================
+   LEFT IMAGE 50%
+===================================== */
+
 .assistant-card .left {
-    flex-shrink: 0;
+
+    flex: 0 0 50%;
+    max-width: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--bg-soft);
+
+    padding: 25px;
 }
 
+
+/* CIRCULAR IMAGE */
 .assistant-card .left img {
-    width: 110px;
-    height: 130px;
+
+    width: 210px;
+    height: 210px;
+
+    border-radius: 50%;
+
     object-fit: cover;
-    border-radius: 4px;
+
+    border: 5px solid #ffffff;
+
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+
+    transition: 0.3s;
 }
 
-/* RIGHT CONTENT */
+.assistant-card:hover .left img {
+    transform: scale(1.05);
+}
+
+
+/* =====================================
+   RIGHT CONTENT 50%
+===================================== */
+
 .assistant-card .right {
-    flex: 1;
+
+    flex: 0 0 50%;
+    max-width: 50%;
+
+    padding: 25px;
 }
 
-/* Name */
+
+/* NAME */
 .assistant-card .right h4 {
-    font-size: 18px;
+
+    font-size: 19px;
     font-weight: 700;
+
     color: var(--primary-dark);
-    margin-bottom: 5px;
+
+    margin-bottom: 6px;
 }
 
-/* Designation */
+
+/* DESIGNATION */
 .assistant-card .right p:first-of-type {
+
     font-size: 13px;
     font-weight: 600;
+
     color: var(--accent);
+
     text-transform: uppercase;
+
     margin-bottom: 10px;
 }
 
-/* Contact Info */
+
+/* CONTACT TEXT */
 .assistant-card .right p {
+
     font-size: 14px;
+
     color: var(--text);
-    margin-bottom: 5px;
+
+    margin-bottom: 6px;
+
+    line-height: 1.5;
 }
 
-/* Links */
+
+/* LINKS */
 .link-new {
+
     color: var(--primary);
+
     text-decoration: none;
-    font-size: 14px;
+
+    font-weight: 500;
 }
 
 .link-new:hover {
+
     color: var(--accent);
+
+    text-decoration: underline;
 }
 
-/* Tenure link spacing */
-.assistant-card .right a.link-new {
-    display: inline-block;
-    margin-top: 8px;
-}
 
-/* =========================
-   About Department
-========================= */
 
-.section-title {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--primary-dark);
-    margin-bottom: 20px;
-    border-left: 4px solid var(--primary);
-    padding-left: 12px;
-}
+/* =====================================
+   ABOUT DEPARTMENT SECTION
+===================================== */
 
 .dept-about-section {
-    background: var(--bg-soft);
+
+    background: linear-gradient(180deg,#f5f7fc,#eef2fb);
+
     padding: 40px;
-    border-radius: 6px;
+
+    border-radius: 12px;
+
+    border-left: 5px solid var(--primary);
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+
+    margin-top: 40px;
 }
 
+
+/* ABOUT TITLE */
+.section-title {
+
+    font-size: 26px;
+
+    font-weight: 700;
+
+    color: var(--primary-dark);
+
+    margin-bottom: 15px;
+}
+
+
+/* ABOUT TEXT */
 .dept-about-section p {
+
     font-size: 15px;
+
     line-height: 1.8;
+
     color: var(--text);
+
+    max-width: 900px;
 }
 
-/* =========================
-   Responsive
-========================= */
+
+
+/* =====================================
+   RESPONSIVE DESIGN
+===================================== */
 
 @media (max-width: 992px) {
+
     .dept-grid {
         grid-template-columns: 1fr;
     }
-}
 
-@media (max-width: 576px) {
     .assistant-card {
+
         flex-direction: column;
-        align-items: center;
+
         text-align: center;
     }
 
-    .assistant-card .left img {
-        width: 120px;
-        height: 140px;
+    .assistant-card .left,
+    .assistant-card .right {
+
+        flex: 100%;
+        max-width: 100%;
     }
+
+    .assistant-card .right {
+        padding-top: 10px;
+    }
+}
+
+
+@media (max-width: 576px) {
+
+    .assistant-card .left img {
+
+        width: 120px;
+        height: 120px;
+    }
+
+    .section-title {
+
+        font-size: 22px;
+    }
+
 }
 </style>
