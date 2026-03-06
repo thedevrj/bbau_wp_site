@@ -148,3 +148,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
+//vc speech search js
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const search = document.getElementById("speechSearch");
+    const yearFilter = document.getElementById("yearFilter");
+    const cards = document.querySelectorAll(".speech-card");
+
+    function filterSpeeches() {
+
+        let searchValue = search.value.toLowerCase();
+        let yearValue = yearFilter.value;
+
+        cards.forEach(card => {
+
+            let title = card.querySelector("h3").textContent.toLowerCase();
+            let year = card.dataset.year;
+
+            let matchSearch = title.includes(searchValue);
+            let matchYear = yearValue === "" || year === yearValue;
+
+            if (matchSearch && matchYear) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+
+        });
+
+    }
+
+    search.addEventListener("keyup", filterSpeeches);
+    yearFilter.addEventListener("change", filterSpeeches);
+
+});
