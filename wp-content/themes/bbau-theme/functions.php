@@ -283,3 +283,20 @@ function register_eminent_lecture_series_cpt() {
 	register_post_type('eminent_lecture', $args);
 }
 add_action('init', 'register_eminent_lecture_series_cpt');
+
+//VC's speech post type
+function vc_speech_post_type() {
+	register_post_type('vc_speech',array(
+		'labels' => array(
+		'name' => 'VC Speeches',
+		'singular_name' => 'VC Speech'
+		),
+		'public' => true,
+		'menu_icon' => 'dashicons-media-document',
+		'supports' => array('title'),
+		'has_archive' => true,
+		'rewrite' => array('slug' => 'vc-speeches'),
+		'menu_position' => 22
+		));
+}
+add_action('init','vc_speech_post_type');
