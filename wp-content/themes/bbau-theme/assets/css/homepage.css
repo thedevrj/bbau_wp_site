@@ -1,0 +1,908 @@
+/* ================= HERO ================= */
+.hero {
+  position: relative;
+  width: 100%;
+
+  /* 🔥 FILL REMAINING FIRST SCREEN */
+  height: calc(100vh - 139px);
+
+  overflow: hidden;
+}
+
+/* ORIGINAL IMAGE SUPPORT (UPDATED) */
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* HERO CAPTION (UNCHANGED) */
+.hero-caption {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 4px;
+  max-width: 760px;
+  font-size: 14px;
+  line-height: 1.4;
+  z-index: 2;
+}
+
+.hero-caption .author {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ================= HERO BACKGROUND VIDEO ================= */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* SUBTLE OVERLAY (UNCHANGED LOOK) */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+}
+
+/* ================= TABLET VIEW ================= */
+@media (max-width: 1199px) {
+  .hero {
+    height: calc(100vh - 139px);
+    /* still first screen */
+  }
+
+  .hero-caption {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    max-width: 100%;
+    font-size: 13px;
+  }
+}
+
+/* ================= MOBILE VIEW ================= */
+@media (max-width: 767px) {
+
+  /* Fix mobile browser vh issue */
+  .hero {
+    height: calc(100svh - 139px);
+  }
+
+  /* Caption adapts to small screens */
+  .hero-caption {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .hero-caption .author {
+    font-size: 12px;
+  }
+}
+
+/* ================= ANNOUNCEMENT BAR ================= */
+.announce-bar {
+  width: 100%;
+  height: 53px;
+  background: #ffffff;
+  border-top: 3px solid #A41F7F;
+  border-bottom: 3px solid #A41F7F;
+  overflow: hidden;
+}
+
+/* ================= CONTAINER (FULL WIDTH) ================= */
+.announce-container {
+  width: 100%;
+  height: 53px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  /* reserve space for icon */
+  padding-left: 56px;
+}
+
+/* ================= LEFT ICON BOX (PERFECT COVER) ================= */
+.announce-container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 4px;
+  width: 66px;
+  height: 53px;
+  /* 🔥 MUST MATCH BAR HEIGHT */
+
+  /* solid background to remove gaps */
+  background-color: #005C83;
+
+  /* icon image */
+  background-image: url('../img/anouncebar/megaphone.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  z-index: 2;
+}
+
+/* ================= TRACK ================= */
+.announce-track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: announce-slide 30s linear infinite;
+  padding: 0;
+  will-change: transform;
+}
+
+/* ================= ITEM ================= */
+.announce-track span {
+  padding: 0 24px;
+  font-family: "Poppins", sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  height: 53px;
+  display: flex;
+  align-items: center;
+}
+
+/* ================= LINK ================= */
+.announce-track a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+}
+
+.announce-track a:hover {
+  text-decoration: underline;
+}
+
+/* ================= DIVIDER ================= */
+.announce-track span:not(:last-child) {
+  border-right: 1px solid #A41F7F;
+}
+
+/* ================= ALTERNATE TEXT COLORS (STABLE LOOP) ================= */
+/* 1st, 4th, 7th... */
+.announce-track span:nth-child(3n + 1) {
+  color: #0f172a;
+  /* dark navy */
+}
+
+/* 2nd, 5th, 8th... */
+.announce-track span:nth-child(3n + 2) {
+  color: #1d4ed8;
+  /* blue */
+}
+
+/* 3rd, 6th, 9th... */
+.announce-track span:nth-child(3n) {
+  color: #A41F7F;
+  /* magenta */
+}
+
+/* ================= NEW BADGE ================= */
+.announce-track span::after {
+  content: " NEW";
+  font-size: 10px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #ff6a00;
+  padding: 2px 6px;
+  border-radius: 999px;
+  margin-left: 8px;
+  animation: newPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes newPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 106, 0, 0.7);
+  }
+
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 6px rgba(255, 106, 0, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 106, 0, 0);
+  }
+}
+
+/* ================= CONTINUOUS LOOP ================= */
+/* works because notices are duplicated in PHP */
+@keyframes announce-slide {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ================= PAUSE SCROLL ON HOVER ================= */
+/* Pause when hovering anywhere on the announcement bar */
+.announce-bar:hover .announce-track {
+  animation-play-state: paused;
+}
+
+/* Extra safety: pause when hovering individual notice */
+.announce-track span:hover {
+  animation-play-state: paused;
+}
+
+/* Pause when hovering the link itself */
+.announce-track a:hover {
+  animation-play-state: paused;
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 1199px) {
+  .announce-track span {
+    font-size: 16px;
+    padding: 0 20px;
+  }
+
+  .announce-track {
+    animation-duration: 26s;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 767px) {
+  .announce-track span {
+    font-size: 14px;
+    padding: 0 16px;
+  }
+
+  .announce-track {
+    animation-duration: 30s;
+  }
+}
+
+/* =====================================================
+   UNIVERSITY AT A GLANCE – SECTION
+===================================================== */
+.glance-section {
+  width: 100%;
+  background: url("/wp-content/uploads/2026/01/DJI_0012-scaled.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+.glance-overlay {
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.glance-container {
+  width: 100%;
+  padding: 0 7vw;
+  color: #ffffff;
+}
+
+/* =====================================================
+   TITLE & DESCRIPTION
+===================================================== */
+.glance-title {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: #f5de10;
+  text-decoration: underline;
+  display: block;
+}
+
+.glance-title::after {
+  content: none !important;
+}
+
+.glance-desc {
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+/* =====================================================
+   STATS GRID – DESKTOP (UNCHANGED)
+===================================================== */
+.glance-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem;
+}
+
+/* =====================================================
+   SINGLE STAT
+===================================================== */
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  /* no gap between icon & number */
+}
+
+/* =====================================================
+   ICON
+===================================================== */
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-box img {
+  height: 4em;
+  /* scales with number */
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(20deg);
+}
+
+/* =====================================================
+   TEXT
+===================================================== */
+.stat-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stat-text .num {
+  font-family: "Poppins", sans-serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  line-height: 1;
+
+}
+
+.stat-text .label {
+  font-size: 1.0rem;
+  margin-top: 0.25rem;
+  opacity: 0.9;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.count {
+  font-size: 48px;
+  font-weight: 700;
+  color: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.count.animate {
+  transform: scale(1.05);
+}
+
+/* ================= TABLET ONLY (iPad Air FIX) ================= */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  .glance-container {
+    padding-left: 4vw;
+    padding-right: 6vw;
+    /*right gap */
+  }
+}
+
+
+.glance-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* keep 4–4 like desktop */
+  gap: 2rem 1.5rem;
+  /* tighter spacing */
+}
+
+.stat {
+  gap: 0.5rem;
+  /* reduce crowding */
+}
+
+.icon-box img {
+  height: 4.6em;
+  /* slightly smaller icons */
+}
+
+.stat-text .num {
+  font-size: 2.1rem;
+  /* scale down numbers */
+}
+
+.stat-text .label {
+  font-size: 0.75rem;
+}
+
+
+/* ================= MOBILE ONLY ================= */
+@media (max-width: 767px) {
+
+  .glance-stats {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: .5rem;
+
+    overflow-x: auto;
+    /* ✅ ALLOW HORIZONTAL SCROLL */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    white-space: nowrap;
+  }
+
+  .stat {
+    flex: 0 0 auto;
+    /* ✅ prevent shrinking */
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .icon-box img {
+    height: 4.4em;
+  }
+
+  .stat-text .num {
+    font-size: 1.8rem;
+  }
+
+  .stat-text .label {
+    font-size: 0.7rem;
+  }
+}
+
+
+
+/* ================= VICE CHANCELLOR SECTION ================= */
+
+.vc-section {
+  width: 100%;
+  padding: 30px 0;
+  /* vertical spacing only */
+  background: transparent;
+}
+
+/* ================= CONTAINER ================= */
+
+.vc-container {
+  width: 100%;
+  display: flex;
+  gap: 22px;
+  padding: 0 40px;  /* side spacing */
+  box-sizing: border-box;
+  align-items: stretch;  /* 🔥 image & content same height */
+}
+
+/* ================= LEFT IMAGE ================= */
+
+.vc-image {
+  width: 430px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+.vc-image:hover {
+  transform: translateY(-6px) scale(1.02) ;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+}
+
+.vc-image img {
+  width: 100%;
+  height: 100%;
+  /* 🔥 matches content height */
+  object-fit: cover;
+  border-radius: 45px;
+  display: block;
+}
+
+/* ================= RIGHT CONTENT ================= */
+
+.vc-content {
+  flex: 1;
+  /* 🔥 auto width */
+  background: #1f6f8b;
+  border-radius: 45px;
+  padding: 32px 40px 45px;
+  box-sizing: border-box;
+  color: #ffffffd4;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+
+  /* 🔥 button control */
+}
+
+.vc-content:hover {
+  transform: translateY(-6px) ;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* ================= TITLE ================= */
+
+.vc-content h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: #e3d133;
+}
+
+/* ================= TEXT ================= */
+
+.vc-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+  /* 🔥 fills available space */
+}
+
+/* GREETING */
+.vc-greeting {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* ================= BUTTON ================= */
+.vc-btn-wrap {
+  margin-top: auto;
+  /* 🔥 sticks button to bottom */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.vc-btn {
+  width: 118px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+
+  color: #ffffff;
+  background: #e4cf10;
+  border-radius: 17px;
+  text-decoration: none;
+
+  transition: background-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.vc-btn:hover {
+  background: #F88017;
+  color: #FDE0BC;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* ================= TABLET VIEW ================= */
+
+@media (max-width: 1199px) {
+
+  .vc-container {
+    flex-direction: column;
+  }
+
+  .vc-image {
+    width: 100%;
+  }
+}
+
+/* ================= MOBILE VIEW ================= */
+
+@media (max-width: 767px) {
+
+  .vc-container {
+    padding: 0 16px;
+  }
+
+  .vc-image img,
+  .vc-content {
+    border-radius: 32px;
+  }
+
+  .vc-content {
+    padding: 24px 20px 32px;
+  }
+
+  .vc-content h3 {
+    font-size: 24px;
+  }
+
+  .vc-text {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .vc-btn {
+    width: 110px;
+    height: 32px;
+    font-size: 13px;
+  }
+}
+
+/* ================= INFO / NOTICE SECTION ================= */
+/* ================= INFO SECTION ================= */
+.info-section {
+  width: 100%;
+  padding: 40px 0;
+  background: #ffffff;
+}
+
+/* GRID */
+.info-container {
+  width: 100%;
+  padding: 0 110px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+}
+
+/* ================= CARD ================= */
+.info-card {
+  height: 420px;
+  /* 🔥 FIXED HEIGHT (DESKTOP) */
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* 🔥 prevents overflow bugs */
+}
+
+/* TITLE */
+.info-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #d94a2c;
+  text-align: center;
+
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e5e5;
+
+  flex-shrink: 0;
+}
+
+/* ================= SCROLL AREA ================= */
+.info-scroll {
+  flex: 1;
+  /* 🔥 fills available height */
+  min-height: 0;
+  /* 🔥 REQUIRED for scrolling */
+  overflow-y: auto;
+  /* 🔥 MANUAL SCROLL */
+
+  scrollbar-width: thin;
+  scrollbar-color: #d94a2c #f1f1f1;
+}
+
+/* Chrome / Edge / Safari */
+.info-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.info-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.info-scroll::-webkit-scrollbar-thumb {
+  background: #d94a2c;
+  border-radius: 10px;
+}
+
+/* ITEM */
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 14px 16px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.info-item::before {
+  content: "•";
+  color: #d94a2c;
+  font-size: 18px;
+}
+
+.info-item:hover {
+  background: #f5f7fb;
+}
+
+/* ================= BUTTON ================= */
+.info-btn {
+  height: 40px;
+  margin: 12px;
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+
+  color: #ffffff;
+  text-decoration: none;
+
+  flex-shrink: 0;
+}
+
+.info-btn.orange {
+  background: #f28c28;
+}
+
+.info-btn.dark {
+  background: #1f1f1f;
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 1199px) {
+  .info-container {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 24px;
+  }
+
+  .info-card {
+    height: 380px;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 767px) {
+  .info-container {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .info-card {
+    height: 360px;
+    /* 🔥 shorter for mobile */
+  }
+
+  .info-title {
+    font-size: 18px;
+  }
+
+  .info-item {
+    font-size: 15px;
+    /* better readability */
+  }
+}
+
+/* ================= AUTO SLIDER ================= */
+/* ================= AUTO IMAGE SLIDER ================= */
+
+.auto-slider {
+  width: 100%;
+  background: #ffffff;
+  overflow: hidden;
+  padding: 30px 0;
+}
+
+/* MAIN CONTAINER */
+.auto-slider-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 50px SPACE AT START & END */
+.slider-gap {
+  flex: 0 0 50px;
+}
+
+/* SLIDER TRACK */
+.slider-track {
+  display: flex;
+  gap: 26px;
+  width: max-content;
+  will-change: transform;
+}
+
+/* CARD */
+.slider-card {
+  flex: 0 0 calc(25% - 20px);
+  /* 🔥 4 cards on desktop */
+  height: 220px;
+
+  border-radius: 22px;
+  overflow: hidden;
+  background: #ffffff;
+
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* IMAGE */
+.slider-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* HOVER EFFECT */
+.slider-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 1199px) {
+
+  .slider-card {
+    flex: 0 0 calc(50% - 18px);
+    /* 🔥 2 cards */
+    height: 200px;
+  }
+
+  .slider-gap {
+    flex: 0 0 40px;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 767px) {
+
+  .slider-card {
+    flex: 0 0 100%;
+    /* 🔥 1 card */
+    height: 180px;
+  }
+
+  .slider-gap {
+    flex: 0 0 30px;
+  }
+}

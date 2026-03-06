@@ -194,3 +194,109 @@ function theme_register_custom_menus() {
 	));
 }
 add_action('after_setup_theme', 'theme_register_custom_menus');
+
+// Register Old Vice Chancellor Post Type
+function register_old_vice_chancellor_cpt() {
+
+    $labels = array(
+        'name'                  => 'Old Vice Chancellors',
+        'singular_name'         => 'Old Vice Chancellor',
+        'menu_name'             => 'Old Vice Chancellors',
+        'name_admin_bar'        => 'Old Vice Chancellor',
+        'add_new'               => 'Add New',
+        'add_new_item'          => 'Add New Old Vice Chancellor',
+        'new_item'              => 'New Old Vice Chancellor',
+        'edit_item'             => 'Edit Old Vice Chancellor',
+        'view_item'             => 'View Old Vice Chancellor',
+        'all_items'             => 'All Old Vice Chancellors',
+        'search_items'          => 'Search Old Vice Chancellors',
+        'not_found'             => 'No Old Vice Chancellors found',
+        'not_found_in_trash'    => 'No Old Vice Chancellors found in Trash',
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array('slug' => 'old_vice_chancellor'),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 20,
+        'menu_icon'          => 'dashicons-businessperson',
+        'supports'           => array(
+            'title',
+            'editor',
+            'thumbnail'
+        ),
+        'show_in_rest'       => true, // Gutenberg support
+    );
+
+    register_post_type('old_vice_chancellor', $args);
+}
+add_action('init', 'register_old_vice_chancellor_cpt');
+
+
+// Register Eminent Lecture Series Post Type
+function register_eminent_lecture_series_cpt() {
+
+	$labels = array(
+		'name'                  => 'Eminent Lecture Series',
+		'singular_name'         => 'Eminent Lecture',
+		'menu_name'             => 'Eminent Lecture Series',
+		'name_admin_bar'        => 'Eminent Lecture',
+		'add_new'               => 'Add New',
+		'add_new_item'          => 'Add New Eminent Lecture',
+		'new_item'              => 'New Eminent Lecture',
+		'edit_item'             => 'Edit Eminent Lecture',
+		'view_item'             => 'View Eminent Lecture',
+		'all_items'             => 'All Eminent Lectures',
+		'search_items'          => 'Search Eminent Lectures',
+		'not_found'             => 'No Eminent Lectures found',
+		'not_found_in_trash'    => 'No Eminent Lectures found in Trash',
+	);
+
+	$args = array(
+		'labels'             => $labels,
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array('slug' => 'eminent_lecture_series'),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => 21,
+		'menu_icon'          => 'dashicons-microphone',
+		'supports'           => array(
+			'title',
+			'editor',
+			'thumbnail'
+		),
+		'show_in_rest'       => true
+	);
+
+	register_post_type('eminent_lecture', $args);
+}
+add_action('init', 'register_eminent_lecture_series_cpt');
+
+//VC's speech post type
+function vc_speech_post_type() {
+	register_post_type('vc_speech',array(
+		'labels' => array(
+		'name' => 'VC Speeches',
+		'singular_name' => 'VC Speech'
+		),
+		'public' => true,
+		'menu_icon' => 'dashicons-media-document',
+		'supports' => array('title'),
+		'has_archive' => true,
+		'rewrite' => array('slug' => 'vc-speeches'),
+		'menu_position' => 22
+		));
+}
+add_action('init','vc_speech_post_type');

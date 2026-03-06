@@ -1,0 +1,1715 @@
+/* =====================================================
+   GLOBAL RESET
+===================================================== */
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* =====================================================
+   GLOBAL HEADING STYLES
+===================================================== */
+h1 {
+  font-weight: 700 !important;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* =====================================================
+   PAGE BACKGROUND STRIP
+===================================================== */
+.page-bg {
+  position: relative;
+  width: 100%;
+  border-bottom: 12px solid transparent;
+  border-image: linear-gradient(90deg, #005754 0%, #E4F8F8 100%);
+  border-image-slice: 1;
+  background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f2 100%);
+}
+
+@media (max-width: 767px) {
+  .page-bg {
+    border-bottom-width: 6px;
+  }
+}
+
+.page-template-about-bg {
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+}
+
+/* =====================================================
+   ABOUT PAGE BACKGROUND
+===================================================== */
+.page-template-about-bg {
+  position: relative;
+  background-image: url(../img/about-us/about-us-page-bg.png);
+}
+
+@media (max-width: 1200px) {
+  .page-template-about-bg {
+    background-image: url(../img/about-us/m-about-us-page-bg.png);
+  }
+}
+
+/* =====================================================
+   DISCLAIMER TEXT OVERLAY
+===================================================== */
+.disclaimer-text {
+  position: absolute;
+  top: 50%;
+  left: 6%;
+  transform: translateY(-50%);
+  font-size: 36px;
+  font-weight: 1000;
+  color: #e3d133;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+@media (max-width: 767px) {
+  .disclaimer-text {
+    left: 5%;
+    font-size: 26px;
+  }
+}
+
+/* =====================================================
+   HERO BANNER
+===================================================== */
+.hero-banner {
+  position: relative;
+}
+
+/* =====================================================
+   IMAGE UTILITIES
+===================================================== */
+.img-fluid {
+
+  max-width: 100%;
+  height: auto;
+  ;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+/* =====================================================
+   HEIGHT & WIDTH UTILITIES
+===================================================== */
+.h_xl_250 {
+  height: 210px !important;
+}
+
+.h_sm_204 {
+  height: 204px !important;
+}
+
+.min_xl_h_1172 {
+  min-height: 1172px !important;
+}
+
+.min_sm_h_1469 {
+  min-height: 1469px !important;
+}
+
+.max_xl_w_498 {
+  max-width: 498px !important;
+}
+
+.max_xl_w_1280 {
+  max-width: 1280px !important;
+}
+
+/* =====================================================
+   TYPOGRAPHY UTILITIES
+===================================================== */
+.sm_text_32 {
+  font-size: 45px !important;
+}
+
+.sm_text_40 {
+  font-size: 40px !important;
+}
+
+.line_height_48 {
+  line-height: 48px !important;
+}
+
+.sm_line_height_38 {
+  line-height: 100px !important;
+}
+
+.sm_line_height_48 {
+  line-height: 48px !important;
+}
+
+.font_alt_1 {
+  font-family: "FormaDJRDeckMedium", sans-serif;
+}
+
+/* =====================================================
+   COLOR UTILITIES
+===================================================== */
+.color_white {
+  color: #6e231aa4;
+}
+
+.color_white--imp {
+  color: #6e231aa4 !important;
+}
+
+/* =====================================================
+   SUBPAGE HERO TEXT POSITIONING
+===================================================== */
+.subpage-hero-text {
+  position: absolute;
+  top: 17%;
+  left: 5%;
+}
+
+/* Mobile - max 767px */
+@media (max-width: 767px) {
+  .subpage-hero-text {
+    top: 13%;
+    left: 5%;
+  }
+}
+
+/* Tablet landscape - 834px+ */
+@media only screen and (min-width: 834px) and (orientation: landscape) {
+  .subpage-hero-text {
+    left: 10%;
+  }
+}
+
+/* Medium devices - 992px+ */
+@media (min-width: 992px) {
+  .subpage-hero-text {
+    left: 15%;
+  }
+}
+
+/* Tablet portrait override - 1024px+ */
+@media (min-width: 1024px) {
+  .subpage-hero-text {
+    left: 5%;
+  }
+}
+
+/* Large desktop - 1200px+ */
+@media (min-width: 1200px) {
+  .subpage-hero-text {
+    top: 26%;
+    left: 12%;
+  }
+}
+
+/* XL desktop - 1536px+ */
+@media (min-width: 1536px) {
+  .subpage-hero-text {
+    left: 15%;
+  }
+}
+
+/* XXL desktop - 1680px+ */
+@media (min-width: 1680px) {
+  .subpage-hero-text {
+    left: 18%;
+  }
+}
+
+/* Full HD - 1920px+ */
+@media (min-width: 1920px) {
+  .subpage-hero-text {
+    left: 22%;
+  }
+}
+
+/* 2K & above - 2560px+ */
+@media (min-width: 2560px) {
+  .subpage-hero-text {
+    left: 29%;
+  }
+}
+
+/* =====================================================
+   BREADCRUMB SECTION
+===================================================== */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  overflow-x: auto;
+  padding: 0;
+  margin: 0;
+}
+
+/* =====================================================
+   BREADCRUMB ITEM
+===================================================== */
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-right: -43px;
+}
+
+.breadcrumb-item:last-child {
+  margin-right: 0;
+}
+
+/* =====================================================
+   BREADCRUMB LINK
+===================================================== */
+.breadcrumb-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 22px 8px 26px;
+  text-decoration: none;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #4a9fb8 0%, #3b8ca3 100%);
+  position: relative;
+  clip-path: polygon(0 0,
+      calc(100% - 22px) 0,
+      100% 50%,
+      calc(100% - 22px) 100%,
+      0 100%,
+      22px 50%);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* Code-style symbol before breadcrumb text */
+.breadcrumb-code {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 1px 0px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+
+/* =====================================================
+   FIRST ITEM (NO LEFT CHEVRON)
+===================================================== */
+.breadcrumb-item:first-child .breadcrumb-link {
+  padding-left: 8px;
+  clip-path: polygon(0 0,
+      calc(100% - 22px) 0,
+      100% 50%,
+      calc(100% - 22px) 100%,
+      0 100%);
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+/* =====================================================
+   LAST ITEM (NO RIGHT CHEVRON + ACTIVE)
+===================================================== */
+.breadcrumb-item:last-child .breadcrumb-link {
+  padding-right: 8px;
+  font-weight: 600;
+  clip-path: polygon(0 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      22px 50%);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background: linear-gradient(135deg, #5eb3cc 0%, #4a9fb8 100%);
+}
+
+/* =====================================================
+   HOVER EFFECT
+===================================================== */
+.breadcrumb-link:hover {
+  background: linear-gradient(135deg, #5eb3cc 0%, #4a9fb8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 159, 184, 0.3);
+}
+
+/* =====================================================
+   ICON
+===================================================== */
+.breadcrumb-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breadcrumb-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* =====================================================
+   BREADCRUMB – UNIVERSAL RESPONSIVE FIX
+===================================================== */
+
+/* ---------- Small mobiles (≤ 360px) ---------- */
+@media (max-width: 360px) {
+  .breadcrumb-link {
+    font-size: 11px;
+    padding: 8px 26px 8px 18px;
+  }
+
+  .breadcrumb-item {
+    margin-right: -30px;
+  }
+}
+
+/* ---------- Mobile phones (≤ 480px) ---------- */
+@media (max-width: 480px) {
+  .breadcrumb {
+    gap: 6px;
+    padding-bottom: 4px;
+  }
+
+  .breadcrumb-link {
+    font-size: 12px;
+    padding: 9px 28px 9px 20px;
+  }
+}
+
+/* ---------- Tablets portrait (481px – 768px) ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .breadcrumb-link {
+    font-size: 13px;
+    padding: 9px 30px 9px 22px;
+  }
+
+  .breadcrumb-item {
+    margin-right: -36px;
+  }
+}
+
+/* ---------- Tablets landscape (769px – 1024px) ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .breadcrumb-link {
+    font-size: 14px;
+    padding: 7px 26px 8px 24px;
+  }
+}
+
+/* ---------- Large desktops (≥ 1440px) ---------- */
+@media (min-width: 1440px) {
+  .breadcrumb-link {
+    font-size: 15px;
+    padding: 8px 30px 9px 28px;
+  }
+}
+
+/* ---------- Touch improvement ---------- */
+@media (hover: none) {
+  .breadcrumb-link:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ================= MOBILE BREADCRUMB – SIMPLE LINE ================= */
+
+@media (max-width: 576px) {
+
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .breadcrumb-item {
+    margin: 0 !important;
+  }
+
+  .breadcrumb-link {
+    clip-path: none !important;
+    /* remove zig-zag */
+    background: none !important;
+    /* remove pill bg */
+    color: #003366 !important;
+    padding: 0 !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* > separator */
+  .breadcrumb-item+.breadcrumb-item::before {
+    content: ">";
+    margin: 0 2px;
+    color: #555;
+    font-weight: 600;
+  }
+
+  /* hide icons & code on mobile */
+  .breadcrumb-icon,
+  .breadcrumb-code {
+    display: none;
+  }
+}
+
+/* =====================================================
+   ABOUT PAGE – FINAL MAGAZINE WRAP (FIXED)
+===================================================== */
+/* =====================================================
+   ABOUT MAGAZINE LAYOUT
+===================================================== */
+
+.about-section {
+  width: 100%;
+}
+
+/* ================= HEADING COLOR (EXCEPT H1) ================= */
+
+.page-template-about-bg h2,
+.page-template-about-bg h3,
+.page-template-about-bg h4,
+.page-template-about-bg h5,
+.page-template-about-bg h6 {
+  color: #003366;
+}
+
+/* =====================================================
+   IMAGES
+===================================================== */
+
+.about-img {
+  width: 33%;
+  max-width: 420px;
+  height: auto;
+  float: right;
+  margin: 10px 0 20px 30px;
+  border-radius: 30px;
+  border: 6px solid #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.about-img.left {
+  float: left;
+  margin: 10px 30px 20px 0;
+}
+
+/* =====================================================
+   HEADINGS – VISION / MISSION / OBJECTIVE
+===================================================== */
+
+.page-template-about-bg h3,
+.page-template-about-bg h4 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 20px 0 8px;
+}
+
+/* =====================================================
+   PARAGRAPH & LIST – SAME STYLE (MAIN REQUIREMENT)
+===================================================== */
+
+.page-template-about-bg p,
+.page-template-about-bg ol li,
+.page-template-about-bg ul li {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 19px;
+  line-height: 1.4;
+  color: #2f2f2f;
+  margin-bottom: 10px;
+}
+
+/* =====================================================
+   LIST RESET + OBJECTIVE INDENT
+===================================================== */
+
+/* Remove browser default padding */
+.page-template-about-bg ol,
+.page-template-about-bg ul {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Objective list only */
+.page-template-about-bg h3~ol,
+.page-template-about-bg h3~ul {
+  padding-left: 35px !important;
+}
+
+/* =====================================================
+   FLOAT / WRAP SAFETY
+===================================================== */
+
+.page-template-about-bg h1,
+.page-template-about-bg h2,
+.page-template-about-bg h3,
+.page-template-about-bg h4,
+.page-template-about-bg p {
+  clear: none !important;
+}
+
+.clearfix {
+  clear: both;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+  .about-img {
+    float: none !important;
+    width: 100% !important;
+    margin: 0 0 20px 0 !important;
+  }
+
+  .page-template-about-bg p,
+  .page-template-about-bg ol li,
+  .page-template-about-bg ul li {
+    text-align: center;
+  }
+}
+
+/* ===== ACT & ORDINANCES – FORCE OVERRIDE ===== */
+
+.max_xl_w_1280 .col-lg-12 ul li a {
+  text-decoration: none !important;
+  font-weight: 400;
+}
+
+.max_xl_w_1280 .col-lg-12 ul li a:hover {
+  color: rgb(249, 159, 25) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+  font-weight: 600;
+}
+
+/* former vc */
+
+/* ================= FORMER VC – GRID (IMAGE TOP) ================= */
+/* =====================================================
+   FORMER VICE CHANCELLOR – FINAL 3x3 GRID
+===================================================== */
+
+/* ================= GRID ================= */
+
+.former-vc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  width: 100%;
+}
+
+/* ================= CARD ================= */
+
+.former-vc-card {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  /* REQUIRED */
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.former-vc-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* kill inherited flex */
+.former-vc-inner {
+  display: block !important;
+}
+
+/* ================= IMAGE SECTION ================= */
+
+.former-vc-image {
+  background: #eaeaea;
+  /* border-radius: 18px 18px 0 0; */
+  overflow: hidden;
+}
+
+/* HARD FIX for WordPress image wrappers */
+.former-vc-image figure,
+.former-vc-image img,
+.former-vc-image .wp-post-image {
+  width: 100%;
+  height: 330px;
+  object-fit: contain;
+  /* no face cut */
+  display: block;
+  padding: 5px;
+  background: #f1f4f4;
+  border-radius: 18px 18px 0 0 !important;
+}
+
+/* ================= TEXT SECTION ================= */
+
+.former-vc-content {
+  background: #1f6f8b45;
+  padding: 20px 16px 22px;
+  text-align: center;
+}
+
+/* Name */
+.former-vc-title {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px;
+}
+
+/* Tenure */
+.former-vc-duration {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 15px;
+  color: #eaf4f8;
+  margin: 0;
+}
+
+/* ================= PAGINATION ================= */
+
+.former-vc-pagination {
+  position: relative;
+  text-align: center;
+  padding-bottom: 22px;
+  margin: 40px 0 0;
+}
+
+.former-vc-pagination a,
+.former-vc-pagination span {
+  display: inline-block;
+  padding: 8px 14px;
+  margin: 0 4px;
+  border: 1px solid #cbd5dc;
+  color: #003366;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.former-vc-pagination .current {
+  background: #1f6f8b45;
+  color: #ffffff;
+  border-color: #1f6f8b45;
+}
+
+/* =====================================================
+   RESPONSIVE REFINEMENT – FONT & CARD SCALE DOWN
+===================================================== */
+
+/* ================= TABLET (≤ 992px) ================= */
+@media (max-width: 992px) {
+
+  /* Grid stays 2 columns */
+  .former-vc-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  /* Card becomes slightly smaller */
+  .former-vc-card {
+    border-radius: 14px;
+  }
+
+  /* Image size reduced */
+  .former-vc-image img {
+    height: 240px;
+    padding: 12px;
+  }
+
+  /* Text scale down */
+  .former-vc-title {
+    font-size: 16px;
+  }
+
+  .former-vc-duration {
+    font-size: 13px;
+  }
+
+  .former-vc-content {
+    padding: 8px 5px 5px;
+  }
+}
+
+/* ================= MOBILE (≤ 576px) ================= */
+@media (max-width: 576px) {
+
+  /* Single column */
+  .former-vc-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* Card more compact */
+  .former-vc-card {
+    border-radius: 12px;
+  }
+
+  /* Smaller image */
+  .former-vc-image img {
+    height: 200px;
+    padding: 10px;
+  }
+
+  /* Smaller fonts */
+  .former-vc-title {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .former-vc-duration {
+    font-size: 8px;
+  }
+
+  .former-vc-content {
+    padding: 1px 7px 7px;
+  }
+}
+
+/*ancor tag properties*/
+/* New anchor class - independent styling */
+a.link-new {
+  color: #00509e;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Hover effect */
+a.link-new:hover {
+  text-decoration: underline;
+  color: #003f7d;
+}
+
+/* Optional states */
+a.link-new:visited,
+a.link-new:active,
+a.link-new:focus {
+  color: #00509e;
+}
+/* =====================================
+   UNIVERSAL DOCUMENT TABLE DESIGN
+   (Exact Key Document Style - Generalized)
+===================================== */
+
+
+/* =====================================
+   SECTION HEADINGS
+===================================== */
+
+.section-heading{
+  font-size:30px;
+  font-weight:700;
+  color:#0b3d6d;
+  margin-top:35px;
+  margin-bottom:20px;
+  padding-left:15px;
+  position:relative;
+}
+
+.section-heading::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:5px;
+  width:6px;
+  height:80%;
+  background:linear-gradient(#00509e,#0b3d6d);
+  border-radius:4px;
+}
+
+
+/* =====================================
+   TABLE CARD DESIGN
+===================================== */
+
+.doc-table{
+  border-collapse:collapse;
+  background:#ffffff;
+  border-radius:12px;
+  overflow:hidden;
+  border:none;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+  animation:fadeInUp 0.4s ease;
+}
+
+
+/* =====================================
+   TABLE HEADER
+===================================== */
+
+.doc-table thead{
+  background:linear-gradient(90deg,#00509e,#0b3d6d);
+}
+
+.doc-table thead th{
+  font-size:18px;
+  border:none;
+  text-align:left;
+  vertical-align:middle;
+  padding:16px;
+  box-sizing:border-box;
+}
+
+
+/* =====================================
+   TABLE BODY
+===================================== */
+
+.doc-table tbody td{
+  padding:16px;
+  border-bottom:1px solid #edf2f7;
+  font-size:17px;
+  text-align:left;
+  vertical-align:middle;
+  word-wrap:break-word;
+}
+
+
+/* =====================================
+   ALTERNATE ROW COLORS (ZEBRA FIXED)
+===================================== */
+
+.doc-table tbody tr:nth-child(odd) td{
+  background-color:#e1e1e4;
+}
+
+.doc-table tbody tr:nth-child(even) td{
+  background-color:#ffffff;
+}
+
+
+/* =====================================
+   HOVER EFFECT (Lift + Highlight)
+===================================== */
+
+.doc-table tbody tr{
+  transition:all 0.25s ease;
+}
+
+.doc-table tbody tr:hover td{
+  background:#eef5ff;
+}
+
+.doc-table tbody tr:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+/*table*/
+.doc-table{
+  width:100%;
+  table-layout:auto;   /* This makes columns automatic */
+}
+
+.doc-table th,
+.doc-table td{
+  width:auto;
+}
+
+/* =====================================
+   PDF LINK ICON
+===================================== */
+
+.doc-table .link-new{
+  text-decoration:none;
+  transition:0.2s ease;
+}
+
+.doc-table .link-new:hover{
+  text-decoration:underline;
+}
+
+.doc-table .link-new i{
+  margin-right:6px;
+  color:#d32f2f;
+  font-size:16px;
+}
+
+
+/* =====================================
+   ANIMATION
+===================================== */
+
+@keyframes fadeInUp{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+
+/* =====================================
+   MOBILE RESPONSIVE FIX
+===================================== */
+
+@media(max-width:768px){
+
+  .doc-table{
+    overflow:visible !important;
+    border-radius:8px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.06);
+  }
+
+  .doc-table tbody tr:hover{
+    transform:none;
+    box-shadow:none;
+  }
+
+  .doc-table th,
+  .doc-table td{
+    padding:12px;
+    font-size:14px;
+  }
+
+  .section-heading{
+    font-size:24px;
+  }
+
+}
+
+/*bbau Seal*/
+/* =====================================
+   BBAU SEAL FULL CARD DESIGN
+===================================== */
+/* Main full card */
+.bbau-seal-main-card {
+  max-width: 600px;
+  margin: 30px auto;
+  background: #f9f8f943;
+  border-radius: 60px;
+  padding: 30px;
+  box-shadow:
+    0 10px 30px rgba(0, 80, 158, 0.15);
+  text-align: center;
+}
+
+/* Paragraph inside main card */
+.bbau-seal-description {
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* Inner card for image */
+.bbau-seal-inner-card {
+  display: inline-block;
+  padding: 20px;
+  background: #cddcf0;
+  border-radius: 16px;
+  box-shadow:
+    inset 0 0 10px rgba(0, 80, 158, 0.08),
+    0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+/* Image */
+.bbau-seal-img {
+  max-width: 220px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.bbau-seal-inner-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    inset 0 0 12px rgba(0, 80, 158, 0.12),
+    0 10px 25px rgba(0, 80, 158, 0.20);
+}
+
+.bbau-seal-inner-card:hover .bbau-seal-img {
+  transform: scale(1.05);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .bbau-seal-main-card {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .bbau-seal-img {
+    max-width: 180px;
+  }
+}
+
+/* VICE CHANCELLOR MESSAGE – FINAL DESIGN */
+/* =========================================
+/* =========================================
+VC HERO SECTION CONTAINER
+========================================= */
+.vc-hero-modern {
+  padding: 60px 20px;
+}
+
+/* =========================================
+MAIN HERO CARD (2 HALVES)
+========================================= */
+.vc-hero-card {
+  position: relative;
+  display: flex;
+  padding: 0;
+  border-radius: 30px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #59caec 0%, #093746 40%, #3b7f97 100%);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+  min-height: 420px;
+}
+
+/* FORCE ALL TEXT WHITE */
+.vc-hero-card,
+.vc-hero-card h1,
+.vc-hero-card h2,
+.vc-hero-card h3,
+.vc-hero-card h4,
+.vc-hero-card h5,
+.vc-hero-card h6,
+.vc-hero-card p,
+.vc-hero-card span,
+.vc-hero-card a,
+.vc-hero-card li {
+  color: #ffffff !important;
+}
+
+/* REMOVE OLD OVERLAY */
+.vc-hero-card::before,
+.vc-hero-card::after {
+  display: none;
+  content: none;
+}
+
+/* =========================================
+LEFT HALF IMAGE SIDE
+========================================= */
+.vc-hero-image {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 60px 20px;
+}
+
+/* DIAGONAL DESIGN */
+.vc-hero-image::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 320px;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.35), rgba(0, 170, 230, 0.18));
+  transform: skewX(20deg);
+}
+
+/* IMAGE CIRCLE */
+.vc-image-wrapper {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  padding: 8px;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.25),
+    0 12px 30px rgba(0, 0, 0, 0.30);
+  position: relative;
+  z-index: 2;
+}
+
+.vc-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* =========================================
+RIGHT HALF CONTENT SIDE
+========================================= */
+.vc-hero-content {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+}
+
+/* NAME — FIGMA MATCH */
+.vc-hero-content h2 {
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  text-decoration: none !important;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 0 12px rgba(255, 255, 255, 0.15);
+  color: #ffffff !important;
+}
+
+/* DESIGNATION */
+.vc-designation {
+
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 0 8px rgba(255, 255, 255, 0.12);
+  color: #ffffff !important;
+}
+
+/* DESCRIPTION */
+.vc-description {
+  max-width: 650px;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 0 6px rgba(255, 255, 255, 0.08);
+  color: #ffffff !important;
+}
+
+/* CONTACT */
+.vc-contact p {
+  font-size: 17px;
+  margin-bottom: 10px;
+  letter-spacing: 0.2px;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 0 6px rgba(255, 255, 255, 0.08);
+  color: #ffffff !important;
+}
+
+/* vc button ===============================
+VC SECTION CUSTOM BTN DESIGN
+Only affects VC section
+=============================== */
+
+.vc-hero-modern .btn {
+  background: linear-gradient(135deg, #00509e, #003f7d) !important;
+  color: #ffffff !important;
+  border-radius: 30px !important;
+  padding: 10px 26px !important;
+  font-size: 15px !important;
+  font-weight: bold !important;
+  letter-spacing: 0.3px !important;
+  text-decoration: none !important;
+  box-shadow: 0 6px 18px rgba(0, 80, 158, 0.25) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* hover */
+.vc-hero-modern .btn:hover {
+  background: linear-gradient(135deg, #0072ce, #00509e) !important;
+  color: #ffffff !important;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 80, 158, 0.35);
+}
+
+/* active */
+.vc-hero-modern .btn:active {
+  transform: translateY(0px);
+  box-shadow: 0 4px 12px rgba(0, 80, 158, 0.25);
+}
+
+/* remove bootstrap focus */
+.vc-hero-modern .btn:focus {
+  outline: none !important;
+  box-shadow: 0 6px 18px rgba(0, 80, 158, 0.25) !important;
+}
+
+/* spacing */
+.vc-hero-modern .col-auto {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+/* mobile */
+@media(max-width:768px) {
+  .vc-hero-modern .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+
+/* =========================================
+RESPONSIVE
+========================================= */
+@media(max-width:992px) {
+  .vc-hero-card {
+    flex-direction: column;
+  }
+
+  .vc-hero-image,
+  .vc-hero-content {
+    width: 100%;
+    text-align: center;
+    padding: 40px 25px;
+  }
+
+  .vc-hero-image::after {
+    display: none;
+  }
+
+  .vc-image-wrapper {
+    width: 220px;
+    height: 220px;
+  }
+
+  .vc-hero-content h2 {
+    font-size: 32px;
+  }
+}
+
+@media(max-width:576px) {
+  .vc-hero-modern {
+    padding: 40px 15px;
+  }
+
+  .vc-image-wrapper {
+    width: 180px;
+    height: 180px;
+  }
+
+  .vc-hero-content h2 {
+    font-size: 26px;
+  }
+
+  .vc-description {
+    font-size: 16px;
+  }
+}
+
+/* ================================
+VC MESSAGE SECTION – PREMIUM LEFT ACCENT DESIGN
+================================ */
+
+.vc-message {
+  padding: 14px 20px;
+  background: linear-gradient(180deg, #f5f9fc 0%, #e6f1f7 100%);
+}
+
+.vc-container1 {
+  max-width: 1400px ;
+  margin: 0 auto;
+}
+@media(min-width:1600px) {
+  .vc-container1 {
+    max-width: 1500px !important;
+  }
+  
+}
+/* ================================
+HEADING
+================================ */
+
+.vc-message h2 {
+  font-size: 34px;
+  font-weight: 700;
+  color: #0b3d4a;
+  margin-bottom: 30px;
+  position: relative;
+  letter-spacing: 0.3px;
+}
+
+/* ================================
+MESSAGE CARD
+================================ */
+
+.vc-message-box {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, #eef6fb 40%, #cfe6f2 100%);
+  padding: 50px 55px 50px 70px;
+  border-radius: 60px;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+/* BEAUTIFUL LEFT ACCENT LINE */
+.vc-message-box::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 30px;
+  bottom: 30px;
+  width: 6px;
+  border-radius: 6px;
+
+  background: linear-gradient(180deg,
+      #00c6ff 0%,
+      #0072ff 50%,
+      #003f7d 100%);
+
+  box-shadow:
+    0 0 12px rgba(0, 198, 255, 0.6),
+    0 0 25px rgba(0, 114, 255, 0.4);
+}
+
+/* subtle glow overlay */
+.vc-message-box::after {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(0, 198, 255, 0.18), transparent);
+}
+
+/* hover lift */
+.vc-message-box:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* ================================
+PARAGRAPH STYLE
+================================ */
+
+.vc-message-box p {
+
+  color: #1c2f3a;
+  text-align: justify;
+  letter-spacing: 0.2px;
+}
+
+/* highlight last line */
+.vc-message-box p:last-child {
+  text-align: center;
+  font-weight: 600;
+  font-size: 19px;
+  color: #003f7d;
+}
+
+
+/* ================================
+RESPONSIVE
+================================ */
+
+@media(max-width:992px) {
+
+  .vc-message {
+    padding: 30px 15px;
+    border-radius: 30px;
+  }
+
+  .vc-message-box {
+    padding: 35px 25px 35px 55px;
+    border-radius: 20px;
+  }
+
+  .vc-message h2 {
+    font-size: 26px;
+  }
+
+  .vc-message-box::before {
+    top: 20px;
+    bottom: 20px;
+  }
+}
+
+/* =========================================
+VC GALLERY SECTION
+========================================= */
+
+.vc-gallery {
+  padding: 40px 20px;
+  background: linear-gradient(180deg, #f5f9fc 0%, #eaf3f8 100%);
+}
+
+.vc-gallery .vc-container1 {
+  max-width: 1400px;
+}
+
+/* heading */
+h2 {
+  margin-top: 10px !important;
+  font-size: 32px !important;
+  font-weight: 600 !important;
+  margin-bottom: 35px !important;
+  font-family: 'Times New Roman', Times, serif !important;
+  position: relative;
+  display: inline-block;
+}
+
+/* accent line */
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 60%;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+}
+
+/* swiper spacing */
+.vcSwiper {
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+/* slide card */
+.vcSwiper .swiper-slide {
+  border-radius: 20px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.12);
+  transition: all 0.4s ease;
+}
+
+/* image */
+.vcSwiper .swiper-slide img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+/* hover effect */
+.vcSwiper .swiper-slide:hover img {
+  transform: scale(1.08);
+}
+
+.vcSwiper .swiper-slide:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 25px 55px rgba(0, 0, 0, 0.18);
+}
+
+/* pagination bullets */
+.swiper-pagination-bullet {
+  background: #0072ff;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background: #003f7d;
+}
+
+.swiper {
+  padding-bottom: 40px;
+}
+
+.swiper-pagination {
+  position: relative !important;
+  bottom: 0 !important;
+  margin-top: 20px;
+}
+
+/* responsive */
+@media(max-width:768px) {
+
+  .vcSwiper .swiper-slide img {
+    height: 200px;
+  }
+
+  .vc-gallery h2 {
+    font-size: 26px;
+  }
+
+}
+
+.vc-section-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 50px;
+  color: #002855;
+}
+
+.vc-resource-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.vc-resource-card {
+  background: #ffffff;
+  padding: 12px 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease;
+}
+
+.vc-resource-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+}
+
+.vc-resource-card h3 {
+  font-size: 26px;
+  margin-bottom: 13px;
+  color: #002855;
+}
+
+.vc-resource-card p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.vc-btn {
+  text-decoration: none;
+  font-weight: 600;
+  color: #00509e;
+}
+
+.vc-btn:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .vc-resource-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================
+   FIXED SPLIT CARD – IMAGE LEFT TEXT RIGHT
+===================================== */
+/* Card Layout */
+.card{
+display:flex !important;
+flex-direction:row !important;
+align-items:stretch;
+border:none;
+border-radius:18px;
+overflow:hidden;
+background:#ffffff;
+box-shadow:0 12px 28px rgba(0,0,0,0.08);
+transition:all 0.3s ease;
+height:100%;
+min-height:260px;
+}
+
+/* Hover */
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 20px 50px rgba(0,0,0,0.15);
+}
+
+/* LEFT IMAGE */
+.card-img-top{
+flex:0 0 40%;
+max-width:40%;
+height:auto !important;
+overflow:hidden;
+display:block;
+}
+
+.card-img-top img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+/* RIGHT CONTENT */
+.card-body{
+flex:0 0 60%;
+max-width:60%;
+padding:30px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+/* Title */
+.card-title{
+font-size:22px;
+font-weight:700;
+color:#0b3d6d;
+margin-bottom:15px;
+}
+
+/* Text */
+.card-text{
+font-size:15px;
+margin-bottom:8px;
+color:#444;
+}
+/* =====================================
+   MOBILE PERFECT FULL WIDTH FIX
+===================================== */
+@media(max-width:992px){
+
+/* Column full width */
+.col-lg-6{
+flex:0 0 100% !important;
+max-width:100% !important;
+padding-left:0 !important;
+padding-right:0 !important;
+}
+
+/* Remove row gutter */
+.row{
+margin-left:0 !important;
+margin-right:0 !important;
+}
+
+/* Stack card vertically */
+.card{
+display:flex !important;
+flex-direction:column !important;
+border-radius:0 !important;
+}
+
+/* REMOVE desktop flex sizing */
+.card-img-top,
+.card-body{
+flex:none !important;
+max-width:100% !important;
+width:100% !important;
+}
+
+/* Image full width */
+.card-img-top{
+height:260px;
+overflow:hidden;
+}
+
+.card-img-top img{
+width:100% !important;
+height:100% !important;
+object-fit:cover;
+display:block;
+}
+
+/* Text full width */
+.card-body{
+padding:25px;
+}
+
+}
