@@ -82,163 +82,181 @@ h1 {
 /* =====================================================
    HERO BANNER
 ===================================================== */
-.hero-banner {
-  position: relative;
+/* =====================================================
+   DESIGN TOKENS
+===================================================== */
+:root {
+  --navy:        #1a2e4a;
+  --navy-dark:   #0f1e33;
+  --white:       #ffffff;
+  --font-serif:  "Merriweather", "Georgia", serif;
+  --ease-expo:   cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 
 /* =====================================================
-   IMAGE UTILITIES
+   OUTER WRAPPER
 ===================================================== */
-.img-fluid {
-
-  max-width: 100%;
-  height: auto;
-  ;
+.container-fluid.position-relative.px-0.overflow-hidden {
+  background-color: var(--navy-dark);
+  isolation: isolate;
 }
 
-.object-fit-cover {
+.container-fluid.position-relative.px-0.overflow-hidden::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(15, 30, 51, 0.72) 0%,
+    rgba(15, 30, 51, 0.45) 40%,
+    rgba(15, 30, 51, 0.12) 100%
+  );
+}
+
+
+/* =====================================================
+   DESKTOP IMAGE
+===================================================== */
+.img-fluid.d-lg-block.h_xl_250.object-fit-cover {
+  display: block;
+  width: 100%;
+  height: 250px;
   object-fit: cover;
+  object-position: center 30%;
+  transition: transform 10s var(--ease-expo);
 }
+
+.container-fluid.position-relative.px-0.overflow-hidden:hover
+.img-fluid.d-lg-block.h_xl_250.object-fit-cover {
+  transform: scale(1.04);
+}
+
 
 /* =====================================================
-   HEIGHT & WIDTH UTILITIES
+   MOBILE IMAGE
 ===================================================== */
-.h_xl_250 {
-  height: 210px !important;
+.img-fluid.d-lg-none.h_sm_204 {
+  display: block;
+  width: 100%;
+  height: 204px;
+  object-fit: cover;
+  object-position: center 30%;
 }
 
-.h_sm_204 {
-  height: 204px !important;
-}
 
-.min_xl_h_1172 {
-  min-height: 1172px !important;
-}
+/* =====================================================
+   HEIGHT UTILITIES
+===================================================== */
+.h_xl_250 { height: 250px !important; }
+.h_sm_204 { height: 204px !important; }
 
-.min_sm_h_1469 {
-  min-height: 1469px !important;
+
+/* =====================================================
+   SUBPAGE HERO TEXT
+===================================================== */
+.subpage-hero-text {
+  position: absolute !important;
+  z-index: 10;
+  top: 50%;
+  left: clamp(1.5rem, 6vw, 5rem);
+  transform: translateY(-50%);
+  animation: slideReveal 0.9s var(--ease-expo) 0.1s both;
 }
 
 .max_xl_w_498 {
   max-width: 498px !important;
 }
 
-.max_xl_w_1280 {
-  max-width: 1280px !important;
-}
 
 /* =====================================================
-   TYPOGRAPHY UTILITIES
+   H1 TITLE
 ===================================================== */
-.sm_text_32 {
-  font-size: 45px !important;
+.subpage-hero-text h1 {
+  font-family: var(--font-serif);
+  position: relative;
+  text-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.50),
+    0 1px  4px rgba(0, 0, 0, 0.40);
 }
 
-.sm_text_40 {
-  font-size: 40px !important;
-}
+.color_white        { color: var(--white) !important; font-weight: 700 !important; }
+.text_medium        { font-weight: 600 !important; }
+.text_40            { font-size: 40px !important; }
+.line_height_48     { line-height: 48px !important; }
+.sm_text_32         { font-size: 32px !important; }
+.sm_line_height_38  { line-height: 38px !important; }
 
-.line_height_48 {
-  line-height: 48px !important;
-}
-
-.sm_line_height_38 {
-  line-height: 100px !important;
-}
-
-.sm_line_height_48 {
-  line-height: 48px !important;
-}
-
-.font_alt_1 {
-  font-family: "FormaDJRDeckMedium", sans-serif;
-}
 
 /* =====================================================
-   COLOR UTILITIES
+   ANIMATION
 ===================================================== */
-.color_white {
-  color: #6e231aa4;
+@keyframes slideReveal {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-50% + 18px));
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+    filter: blur(0);
+  }
 }
 
-.color_white--imp {
-  color: #6e231aa4 !important;
-}
 
 /* =====================================================
-   SUBPAGE HERO TEXT POSITIONING
+   RESPONSIVE
 ===================================================== */
-.subpage-hero-text {
-  position: absolute;
-  top: 17%;
-  left: 5%;
-}
-
-/* Mobile - max 767px */
 @media (max-width: 767px) {
   .subpage-hero-text {
     top: 13%;
-    left: 5%;
+    left: 1.25rem;
+    transform: none;
+    animation: none;
+    opacity: 1;
   }
 }
 
-/* Tablet landscape - 834px+ */
 @media only screen and (min-width: 834px) and (orientation: landscape) {
-  .subpage-hero-text {
-    left: 10%;
-  }
+  .subpage-hero-text { left: 10%; }
 }
 
-/* Medium devices - 992px+ */
 @media (min-width: 992px) {
-  .subpage-hero-text {
-    left: 15%;
-  }
+  .subpage-hero-text { left: 15%; }
 }
 
-/* Tablet portrait override - 1024px+ */
 @media (min-width: 1024px) {
-  .subpage-hero-text {
-    left: 5%;
-  }
+  .subpage-hero-text { left: 5%; }
 }
 
-/* Large desktop - 1200px+ */
 @media (min-width: 1200px) {
   .subpage-hero-text {
-    top: 26%;
+    top: 50%;
+    transform: translateY(-50%);
     left: 12%;
   }
 }
 
-/* XL desktop - 1536px+ */
-@media (min-width: 1536px) {
-  .subpage-hero-text {
-    left: 15%;
+@media (min-width: 1536px) { .subpage-hero-text { left: 15%; } }
+@media (min-width: 1680px) { .subpage-hero-text { left: 18%; } }
+@media (min-width: 1920px) { .subpage-hero-text { left: 22%; } }
+@media (min-width: 2560px) { .subpage-hero-text { left: 29%; } }
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .subpage-hero-text { animation: none; }
+
+  .container-fluid.position-relative.px-0.overflow-hidden:hover
+  .img-fluid.d-lg-block.h_xl_250.object-fit-cover {
+    transform: none;
   }
 }
-
-/* XXL desktop - 1680px+ */
-@media (min-width: 1680px) {
-  .subpage-hero-text {
-    left: 18%;
-  }
-}
-
-/* Full HD - 1920px+ */
-@media (min-width: 1920px) {
-  .subpage-hero-text {
-    left: 22%;
-  }
-}
-
-/* 2K & above - 2560px+ */
-@media (min-width: 2560px) {
-  .subpage-hero-text {
-    left: 29%;
-  }
-}
-
 /* =====================================================
    BREADCRUMB SECTION
 ===================================================== */
