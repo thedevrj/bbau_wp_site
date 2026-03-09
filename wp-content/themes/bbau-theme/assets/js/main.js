@@ -181,7 +181,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }
 
-    search.addEventListener("keyup", filterSpeeches);
-    yearFilter.addEventListener("change", filterSpeeches);
-
+    if (search) {
+      search.addEventListener("keyup", filterSpeeches);
+  }
+  
+  if (yearFilter) {
+      yearFilter.addEventListener("change", filterSpeeches);
+  }
 });
+
