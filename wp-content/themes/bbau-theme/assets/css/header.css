@@ -66,33 +66,24 @@
    MENU LINKS — HOVER + ZOOM (FORCED)
 ===================================================== */
 .top-bar .top-left ul li a {
-  height: 45px;
-  padding: 0 2px;
-
   display: inline-flex !important;
   /* 🔥 REQUIRED */
   align-items: center;
+  font-weight: bold !important;
   justify-content: center;
-
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
   text-decoration: none !important;
-
   color: #ffffff !important;
-
-  transform: translateZ(0);
   /* 🔥 GPU FIX */
   transition: transform 0.25s ease, color 0.25s ease !important;
-
-  position: relative;
   z-index: 1;
 }
 
 /* HOVER */
 .top-bar .top-left ul li a:hover {
   color: #ff9933 !important;
-  transform: scale(1.15);
+  transform: scale(1.15) !important;
+  font-weight: bold !important;
+  padding: 0 6px !important;
 }
 
 /* =====================================================
@@ -363,10 +354,10 @@
 }
 
 .header-nav a {
-  font-family: "Poppins", sans-serif;
-  font-size: clamp(12px, 1.1vw, 14px);
-  font-weight: 550;
-  color: #140b02;
+  font-family: "Poppins", sans-serif !important;
+  font-size: clamp(12px, 1.1vw, 14px) !important;
+  font-weight: 550 ;
+  color: #140b02 !important;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -412,8 +403,8 @@
   font-size: 10px;
   display: inline-flex;
   margin-left: 1px;
-  transition: transform 0.25s ease;
-  transform: rotate(0deg);
+  transition: transform 0.25s ease !important;
+  transform: rotate(0deg) !important;
 }
 
 /* =====================================================
@@ -422,14 +413,15 @@
 .header-nav a,
 .menu-link,
 .main-menu a {
-  transition: color .3s ease, transform .3s ease;
+  transition: color .3s ease, transform .3s ease !important;
 }
 
 .header-nav a:hover,
 .menu-link:hover,
 .main-menu a:hover {
-  transform: translateY(-3px) scale(1.08);
-  color: #f69402fa;
+  transform: translateY(-3px) scale(1.02) !important;
+  color: #f69402fa !important;
+  font-weight: 600 !important;
 }
 
 /* UNDERLINE ANIMATION */
@@ -706,4 +698,14 @@
   .menu-link {
     padding: clamp(6px, 0.8vw, 12px);
   }
+}
+
+#mega-menu-wrap-primary_menu ul.mega-sub-menu li.mega-menu-flyout > ul.mega-sub-menu{
+  left:100%;
+  right:auto;
+}
+
+#mega-menu-wrap-primary_menu ul.mega-sub-menu li.mega-menu-flyout.submenu-left > ul.mega-sub-menu{
+  left:auto;
+  right:100%;
 }
