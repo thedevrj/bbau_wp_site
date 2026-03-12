@@ -74,6 +74,28 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+//inner menu js
+
+jQuery(document).ready(function($) {
+
+    /* horizontal scroll for active item */
+
+    var activeItem = $('.common-menu-link.active');
+
+    if (activeItem.length) {
+
+        var container = $('.common-menu-nav');
+
+        container.animate({
+            scrollLeft: activeItem.position().left - 100
+        }, 300);
+
+    }
+
+});
+
+
+
 //homepage vc section js
 
 document.addEventListener('DOMContentLoaded', () => {
