@@ -28,7 +28,7 @@ get_header();
 
                         <!-- LEFT IMAGE -->
                         <div class="registrar-right">
-                            <img src="http://localhost:9001/wp-content/uploads/2026/02/registar.jpg" alt="Registrar">
+                            <img src="/wp-content/uploads/2026/02/registar.jpg" alt="Registrar">
                         </div>
 
                         <!-- RIGHT CONTENT -->
