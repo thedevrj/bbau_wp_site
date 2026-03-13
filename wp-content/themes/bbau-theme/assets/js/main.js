@@ -74,101 +74,95 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-//inner menu js
-
-jQuery(document).ready(function($) {
-
-    /* horizontal scroll for active item */
-
-    var activeItem = $('.common-menu-link.active');
-
-    if (activeItem.length) {
-
-        var container = $('.common-menu-nav');
-
-        container.animate({
-            scrollLeft: activeItem.position().left - 100
-        }, 300);
-
-    }
-
-});
-
-
-
-//homepage vc section js
-
+/* ================= VC SECTION SLIDER ================= */
 document.addEventListener('DOMContentLoaded', () => {
-    const vcTrack = document.querySelector('.vc-slider-track');
-    if (!vcTrack) return;
-    const slides = Array.from(vcTrack.children);
-    let idx = 0;
-    const total = slides.length;
-    let isPaused = false;
+  const vcTrack = document.querySelector('.vc-slider-track');
+  if (!vcTrack) return;
 
-    function goTo(i) {
-        vcTrack.style.transform = `translateX(${-i * 100}%)`;
+  const origSlides = Array.from(vcTrack.children);
+  if (origSlides.length < 2) return;
+
+  /* Clone all slides for seamless loop */
+  origSlides.forEach(slide => {
+    const clone = slide.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    vcTrack.appendChild(clone);
+  });
+
+  const total = origSlides.length;
+  let idx = 0;
+  let isAnimating = false;
+  const SPEED = 600;
+  const PAUSE = 3500;
+
+  function goTo(i, animate) {
+    vcTrack.style.transition = animate ? `transform ${SPEED}ms ease` : 'none';
+    vcTrack.style.transform = `translateX(${-i * 100}%)`;
+  }
+
+  vcTrack.addEventListener('transitionend', () => {
+    isAnimating = false;
+    /* Silently snap back when on cloned set */
+    if (idx >= total) {
+      idx = idx - total;
+      goTo(idx, false);
     }
+  });
 
-    const interval = 3500;
-    let timer = setInterval(() => {
-        if (!isPaused) {
-            idx = (idx + 1) % total;
-            goTo(idx);
-        }
-    }, interval);
+  function next() {
+    if (isAnimating) return;
+    isAnimating = true;
+    idx++;
+    goTo(idx, true);
+  }
 
-    const slider = vcTrack.closest('.vc-slider');
-    slider.addEventListener('mouseenter', () => {
-        isPaused = true
-    });
-    slider.addEventListener('mouseleave', () => {
-        isPaused = false
-    });
+  goTo(0, false);
+  let timer = setInterval(next, PAUSE);
+
+  const vcSlider = vcTrack.closest('.vc-slider');
+  vcSlider.addEventListener('mouseenter', () => clearInterval(timer));
+  vcSlider.addEventListener('mouseleave', () => { timer = setInterval(next, PAUSE); });
 });
 
-//homepage slider section js
-document.addEventListener("DOMContentLoaded", () => {
 
-    const track = document.querySelector(".slider-track");
-    let cards = Array.from(track.children);
+/* ================= HOMEPAGE SLIDER (MARQUEE) ================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.querySelector('.slider-track');
+  if (!track) return;
 
-    /* 🔁 Duplicate cards once for seamless loop */
-    cards.forEach(card => {
-        const clone = card.cloneNode(true);
-        track.appendChild(clone);
-    });
+  /* Clone once for seamless loop */
+  Array.from(track.children).forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
 
-    let position = 0;
-    let speed = 0.35; // 🔥 slow speed
-    let isPaused = false;
+  let pos = 0;
+  const speed = 0.35;
+  let paused = false;
+  let halfWidth = 0;
 
-    function animate() {
-        if (!isPaused) {
-            position -= speed;
+  function getHalf() {
+    /* Half of total scrollWidth = one full original set width */
+    halfWidth = track.scrollWidth / 2;
+  }
 
-            /* reset when half scrolled */
-            if (Math.abs(position) >= track.scrollWidth / 2) {
-                position = 0;
-            }
+  getHalf();
+  window.addEventListener('resize', getHalf);
 
-            track.style.transform = `translateX(${position}px)`;
-        }
-
-        requestAnimationFrame(animate);
+  function animate() {
+    if (!paused) {
+      pos -= speed;
+      if (pos <= -halfWidth) pos = 0; /* Snap back invisibly */
+      track.style.transform = `translateX(${pos}px)`;
     }
+    requestAnimationFrame(animate);
+  }
 
-    animate();
+  animate();
 
-    /* ⏸ PAUSE ON HOVER */
-    track.addEventListener("mouseenter", () => {
-        isPaused = true;
-    });
-
-    track.addEventListener("mouseleave", () => {
-        isPaused = false;
-    });
-
+  track.addEventListener('mouseenter', () => { paused = true; });
+  track.addEventListener('mouseleave', () => { paused = false; });
 });
 
 
@@ -203,12 +197,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }
 
-    if (search) {
-      search.addEventListener("keyup", filterSpeeches);
-  }
-  
-  if (yearFilter) {
-      yearFilter.addEventListener("change", filterSpeeches);
-  }
-});
+    search.addEventListener("keyup", filterSpeeches);
+    yearFilter.addEventListener("change", filterSpeeches);
 
+});
