@@ -5,7 +5,12 @@ Template Name: Schools Page
 defined('ABSPATH') || exit;
 get_header();
 
-$response = wp_remote_get('http://172.35.0.45:8001/api/v1/schools/');
+/* Get API base URL from environment */
+$api_base = getenv('DJANGO_API_URL');
+/* Build endpoint */
+$api_url = $api_base . '/api/v1/schools/';
+/* Call API */
+$response = wp_remote_get($api_url);
 $schools = json_decode(wp_remote_retrieve_body($response), true);
 ?>
 <?php   get_template_part('banners/about-banner');?>
