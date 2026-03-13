@@ -4,19 +4,21 @@ global $post;
 
 /* Find Parent Page */
 
-if ($post->post_parent) {
-    $parent_id = $post->post_parent;
-} else {
-    $parent_id = $post->ID;
+if ($post->post_parent) 
+{
+        $parent_id = $post->post_parent;
 }
+else {
+        $parent_id = $post->ID;
+    }
 
 /* Get Child Pages */
 
 $args = array(
-'post_type' => 'page',
-'post_parent' => $parent_id,
-'sort_column' => 'menu_order'
-);
+    'post_type' => 'page',
+    'post_parent' => $parent_id,
+    'sort_column' => 'menu_order'
+    );
 
 $pages = get_pages($args);
 

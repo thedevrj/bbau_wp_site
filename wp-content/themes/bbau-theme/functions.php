@@ -300,3 +300,20 @@ function vc_speech_post_type() {
 		));
 }
 add_action('init','vc_speech_post_type');
+
+// function school_rewrite_rule() {
+
+//     add_rewrite_rule(
+//         '^schools/([^/]*)/?',
+//         'index.php?pagename=school&school_slug=$matches[1]',
+//         'top'
+//     );
+
+// }
+// add_action('init', 'school_rewrite_rule');
+
+// function school_query_vars($vars) {
+//     $vars[] = 'school_slug';
+//     return $vars;
+// }
+// add_filter('query_vars', 'school_query_vars');
