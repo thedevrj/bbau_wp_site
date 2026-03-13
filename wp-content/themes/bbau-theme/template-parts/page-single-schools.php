@@ -4,8 +4,13 @@ Template Name: Schools Single Page
 */
 defined('ABSPATH') || exit;
 get_header();
+
+//base url from env 
+$api_base = getenv('DJANGO_API_URL');
+
 $slug = get_query_var('school_slug');
-$api = "http://172.35.0.45:8001/api/v1/schools/?slug=".$slug;
+$api = $api_base . "/api/v1/schools/?slug=" .$slug;
+
 $response = wp_remote_get($api);
 $data = json_decode(wp_remote_retrieve_body($response), true);
 $school = $data[0];
