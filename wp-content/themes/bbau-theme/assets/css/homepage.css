@@ -1,102 +1,257 @@
+/* ================= GOOGLE FONTS ================= */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;600&family=Cinzel:wght@400;600&display=swap');
+
+/* ================= CSS VARIABLES ================= */
+:root{
+  --gold:#B8963E;
+  --gold-light:#DDB96A;
+  --gold-shine:#F5E098;
+  --gold-glow:rgba(184,150,62,0.4);
+  --deep:rgba(6,4,18,0.88);
+  --cream:rgba(255,250,235,0.95);
+  --cream-dim:rgba(255,245,220,0.65);
+}
+
 /* ================= HERO ================= */
-.hero {
-  position: relative;
-  width: 100%;
-
-  /* 🔥 FILL REMAINING FIRST SCREEN */
-  height: calc(100vh - 139px);
-
-  overflow: hidden;
+.hero{
+  position:relative;
+  width:100%;
+  height:calc(100vh - 139px);
+  overflow:hidden;
 }
 
-/* ORIGINAL IMAGE SUPPORT (UPDATED) */
-.hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+/* ================= HERO VIDEO ================= */
+.hero-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
 }
 
-/* HERO CAPTION (UNCHANGED) */
-.hero-caption {
-  position: absolute;
-  left: 24px;
-  bottom: 24px;
-  background: rgba(0, 0, 0, 0.45);
-  color: #ffffff;
-  padding: 12px 16px;
-  border-radius: 4px;
-  max-width: 760px;
-  font-size: 14px;
-  line-height: 1.4;
-  z-index: 2;
+/* ================= CINEMATIC OVERLAY ================= */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 72% 62%,rgba(3,2,12,0.78) 0%,transparent 65%),
+    radial-gradient(ellipse 90% 80% at 50% 50%,transparent 25%,rgba(3,2,12,0.45) 100%),
+    linear-gradient(160deg,rgba(3,2,12,0.10) 0%,rgba(3,2,12,0.60) 100%);
+  z-index:1;
 }
 
-.hero-caption .author {
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 700;
+/* ================= POPUP CAPTION ================= */
+.hero-caption{
+  position:absolute;
+  right:52px;
+  bottom:60px;
+  z-index:10;
+
+  width:min(380px,86vw);
+
+  background:linear-gradient(
+    145deg,
+    rgba(18,12,40,0.92) 0%,
+    rgba(8,5,22,0.96) 100%
+  );
+
+  border-radius:1px;
+  outline:1px solid rgba(184,150,62,0.15);
+  border:1px solid rgba(184,150,62,0.38);
+
+  backdrop-filter:blur(24px) saturate(1.6) brightness(1.05);
+  -webkit-backdrop-filter:blur(24px) saturate(1.6) brightness(1.05);
+
+  overflow:hidden;
+  text-align:center;
+
+  box-shadow:
+    0 0 0 4px rgba(184,150,62,0.04),
+    0 40px 80px rgba(0,0,0,0.7),
+    0 8px 32px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(245,224,152,0.12),
+    inset 0 -1px 0 rgba(184,150,62,0.08);
+
+  animation:
+    popIn 1.1s cubic-bezier(0.16,1,0.3,1) 0.5s both,
+    popOut 0.9s cubic-bezier(0.55,0,1,0.45) 8.5s both;
 }
 
-/* ================= HERO BACKGROUND VIDEO ================= */
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
+/* ===== PROGRESS BAR ===== */
+.hero-caption::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  height:2px;
+  width:100%;
+  background:linear-gradient(
+    to right,
+    transparent 0%,
+    var(--gold) 20%,
+    var(--gold-shine) 50%,
+    var(--gold) 80%,
+    transparent 100%
+  );
+  transform-origin:left;
+  animation:drain 7.8s linear 1.2s both;
 }
 
-/* SUBTLE OVERLAY (UNCHANGED LOOK) */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.15);
-  z-index: 1;
+/* ===== QUOTE TEXT ===== */
+.hero-caption > p:not(.author){
+  display:block;
+  padding:32px 28px 8px;
+  margin:0;
+
+  font-family:'Cormorant Upright',serif;
+  font-size:clamp(0.95rem,1.25vw,1.12rem);
+  font-style:italic;
+  font-weight:300;
+  line-height:1.9;
+  color:var(--cream);
+  letter-spacing:0.03em;
+  text-shadow:0 2px 20px rgba(0,0,0,0.6);
+  position:relative;
+
+  opacity:0;
+  animation:
+    fadeUp 0.9s ease 1.2s forwards,
+    popOut 0.9s cubic-bezier(0.55,0,1,0.45) 8.5s both;
 }
 
-/* ================= TABLET VIEW ================= */
-@media (max-width: 1199px) {
-  .hero {
-    height: calc(100vh - 139px);
-    /* still first screen */
-  }
-
-  .hero-caption {
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-    max-width: 100%;
-    font-size: 13px;
-  }
+/* Watermark quote mark */
+.hero-caption > p:not(.author)::before{
+  content:"\201C";
+  position:absolute;
+  top:14px;
+  left:16px;
+  font-family:'Cormorant Upright',serif;
+  font-size:7rem;
+  line-height:1;
+  color:var(--gold);
+  opacity:0.1;
+  pointer-events:none;
 }
 
-/* ================= MOBILE VIEW ================= */
-@media (max-width: 767px) {
-
-  /* Fix mobile browser vh issue */
-  .hero {
-    height: calc(100svh - 139px);
-  }
-
-  /* Caption adapts to small screens */
-  .hero-caption {
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-
-    padding: 10px 12px;
-    font-size: 12px;
-    line-height: 1.4;
-  }
-
-  .hero-caption .author {
-    font-size: 12px;
-  }
+/* Divider */
+.hero-caption > p:not(.author)::after{
+  content:"";
+  display:block;
+  width:36px;
+  height:1px;
+  background:linear-gradient(to right,var(--gold-light),transparent);
+  margin:18px auto 0;
 }
 
+/* ===== AUTHOR ===== */
+.hero-caption .author{
+  display:block;
+  padding:14px 28px 26px;
+  margin:0;
+
+  font-family:'Cinzel',serif;
+  font-size:clamp(0.62rem,0.9vw,0.75rem);
+  font-weight:600;
+  color:var(--gold-shine);
+  letter-spacing:0.24em;
+  text-transform:uppercase;
+  text-align:center;
+
+  filter:
+    drop-shadow(0 0 10px var(--gold-glow))
+    drop-shadow(0 0 24px rgba(245,224,152,0.3));
+
+  opacity:0;
+  animation:
+    fadeUp 0.9s ease 1.5s forwards,
+    popOut 0.9s cubic-bezier(0.55,0,1,0.45) 8.5s both;
+}
+
+/* Subtitle */
+.hero-caption .author::after{
+  content:"Bharat Ratna";
+  display:block;
+  margin-top:5px;
+  font-size:0.52rem;
+  letter-spacing:0.18em;
+  color:var(--cream-dim);
+  font-weight:400;
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes popIn{
+  0%{opacity:0;transform:translateY(30px) translateX(20px) scale(0.93);}
+  100%{opacity:1;transform:translateY(0) translateX(0) scale(1);}
+}
+
+@keyframes popOut{
+  0%{opacity:1;transform:translateY(0) scale(1);}
+  100%{opacity:0;transform:translateY(16px) scale(0.95);}
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes drain{
+  from{transform:scaleX(1);opacity:1;}
+  to{transform:scaleX(0);opacity:0;}
+}
+
+/* ================= TABLET ================= */
+@media (max-width:1199px){
+
+.hero{height:calc(100vh - 139px);}
+
+.hero-caption{
+  right:28px;
+  bottom:36px;
+  width:min(340px,54vw);
+}
+
+.hero-caption > p:not(.author){
+  padding:24px 22px 8px;
+  font-size:0.92rem;
+}
+
+.hero-caption .author{
+  padding:10px 22px 20px;
+}
+
+}
+
+/* ================= MOBILE ================= */
+@media (max-width:767px){
+
+.hero{height:calc(100svh - 139px);}
+
+.hero-caption{
+  right:14px;
+  left:14px;
+  bottom:20px;
+  width:auto;
+}
+
+.hero-caption > p:not(.author){
+  padding:20px 18px 6px;
+  font-size:0.88rem;
+  line-height:1.8;
+}
+
+.hero-caption > p:not(.author)::before{
+  font-size:5rem;
+}
+
+.hero-caption .author{
+  padding:10px 18px 20px;
+  font-size:0.6rem;
+}
+
+}
 /* ================= ANNOUNCEMENT BAR ================= */
 .announce-bar {
   width: 100%;
@@ -525,6 +680,27 @@
   border-radius: 45px;
   display: block;
 }
+.vc-slider {
+            width: 100%;
+            overflow: hidden
+        }
+
+        .vc-slider-track {
+            display: flex;
+            transition: transform .6s ease
+        }
+
+        .vc-slide {
+            min-width: 100%;
+            box-sizing: border-box
+        }
+
+        .vc-slide img {
+            width: 100%;
+            height: 360px;
+            object-fit: cover;
+            display: block
+        }
 
 /* ================= RIGHT CONTENT ================= */
 

@@ -84,31 +84,6 @@ defined( 'ABSPATH' ) || exit;
 <!-- ================= VICE CHANCELLOR DESK ================= -->
 <section class="vc-section">
     <div class="vc-container">
-
-        <style>
-        .vc-slider {
-            width: 100%;
-            overflow: hidden
-        }
-
-        .vc-slider-track {
-            display: flex;
-            transition: transform .6s ease
-        }
-
-        .vc-slide {
-            min-width: 100%;
-            box-sizing: border-box
-        }
-
-        .vc-slide img {
-            width: 100%;
-            height: 360px;
-            object-fit: cover;
-            display: block
-        }
-        </style>
-
         <!-- LEFT IMAGE (Slider) -->
         <div class="vc-image">
             <div class="vc-slider" aria-roledescription="carousel">
