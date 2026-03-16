@@ -7,10 +7,17 @@ get_header();
 
 /* Get API base URL from environment */
 $api_base = getenv('DJANGO_API_URL');
+$media_base = getenv('DJANGO_MEDIA_URL');
 /* Build endpoint */
 $api_url = $api_base . '/api/v1/schools/';
 /* Call API */
-$response = wp_remote_get($api_url);
+$response = wp_remote_get($api_url, [
+    'headers' => [
+        'X-Forwarded-Host'  => $_SERVER['HTTP_HOST'],
+        'X-Forwarded-Proto' => is_ssl() ? 'https' : 'http',
+    ],
+    'timeout' => 10,
+]);
 $schools = json_decode(wp_remote_retrieve_body($response), true);
 ?>
 
@@ -64,7 +71,7 @@ $schools = json_decode(wp_remote_retrieve_body($response), true);
             data-name="<?php echo esc_attr(strtolower($name)); ?>">
 
             <?php if (!empty($img)): ?>
-            <img class="school-tile__img" src="<?php echo $api_base . $img; ?>" alt="<?php echo esc_attr($name); ?>"
+            <img class="school-tile__img" src="<?php echo $media_base . $img; ?>" alt="<?php echo esc_attr($name); ?>"
                 loading="lazy">
             <?php endif; ?>
 

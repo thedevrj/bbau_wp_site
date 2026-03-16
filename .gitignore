@@ -20,3 +20,12 @@ Thumbs.db
 
 # Database / volumes
 db_data/
+
+# database backups
+*.sql
+*.sql.gz
+*.dump
+
+# local backups
+backups/
+backup/
