@@ -22,7 +22,7 @@ $schools = json_decode(wp_remote_retrieve_body($response), true);
 ?>
 
 <?php get_template_part('banners/about-banner'); ?>
-<?php echo $api_url; ?>
+
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/schools.css">
 
 <div class="schools-section">
