@@ -5,12 +5,16 @@ Template Name: Schools Page
 defined('ABSPATH') || exit;
 get_header();
 
-/* Get API base URL from environment */
-$api_base = getenv('DJANGO_API_URL');
+/* ===============================
+   API CONFIG
+=============================== */
+$api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
-/* Build endpoint */
-$api_url = $api_base . '/api/v1/schools/';
-/* Call API */
+$api_url    = $api_base . '/api/v1/schools/';
+
+/* ===============================
+   API CALL (SAFE)
+=============================== */
 $response = wp_remote_get($api_url, [
     'headers' => [
         'X-Forwarded-Host'  => $_SERVER['HTTP_HOST'],
@@ -18,28 +22,28 @@ $response = wp_remote_get($api_url, [
     ],
     'timeout' => 10,
 ]);
-$schools = json_decode(wp_remote_retrieve_body($response), true);
+
+$schools  = json_decode(wp_remote_retrieve_body($response), true);
 ?>
 
 <?php get_template_part('banners/about-banner'); ?>
 
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/schools.css">
+<div class="schools-section page-bg">
 
-<div class="schools-section">
-
-    <div class="schools-breadcrumb-bar">
+    <!-- ================= BREADCRUMB ================= -->
+    <div class="schools-breadcrumb-bar py-4">
         <div class="bc-inner">
             <?php get_template_part('template-parts/breadcrumb'); ?>
-
         </div>
-
     </div>
 
+    <!-- ================= TITLE ================= -->
     <div class="schools-page-title">
         <div class="title-bar"></div>
-        <h2>Schools </h2>
+        <h2>Schools</h2>
     </div>
 
+    <!-- ================= SEARCH ================= -->
     <div class="schools-search-wrap">
         <div class="schools-search-box">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -52,27 +56,23 @@ $schools = json_decode(wp_remote_retrieve_body($response), true);
         <div id="schoolCount" class="schools-count"></div>
     </div>
 
+    <!-- ================= GRID ================= -->
     <div class="schools-masonry">
 
-        <?php
-        $pattern    = [1, 2, 0, 0, 2, 1, 0, 0, 2, 0, 1, 2, 0, 0, 2, 1, 0, 0, 2, 0];
-        $size_class = ['', 'tall', 'wide'];
+        <?php if (!empty($schools) && is_array($schools)): ?>
 
-        if (!empty($schools) && is_array($schools)):
-            foreach ($schools as $i => $school):
-                $idx  = $i % count($pattern);
-                $sz   = $size_class[$pattern[$idx]];
-                $name = $school['name']  ?? '';
-                $slug = $school['slug']  ?? '';
+        <?php foreach ($schools as $school): 
+                $name = $school['name'] ?? '';
+                $slug = $school['slug'] ?? '';
                 $img  = $school['image'] ?? '';
-        ?>
-        <a href="/schools/<?php echo esc_attr($slug); ?>"
-            class="school-tile <?php echo esc_attr($sz); ?> <?php echo empty($img) ? 'no-img' : ''; ?>"
+            ?>
+
+        <a href="/schools/<?php echo esc_attr($slug); ?>" class="school-tile <?php echo empty($img) ? 'no-img' : ''; ?>"
             data-name="<?php echo esc_attr(strtolower($name)); ?>">
 
             <?php if (!empty($img)): ?>
-            <img class="school-tile__img" src="<?php echo $media_base . $img; ?>" alt="<?php echo esc_attr($name); ?>"
-                loading="lazy">
+            <img class="school-tile__img" src="<?php echo esc_url($media_base . $img); ?>"
+                alt="<?php echo esc_attr($name); ?>" loading="lazy">
             <?php endif; ?>
 
             <div class="school-tile__overlay"></div>
@@ -83,11 +83,14 @@ $schools = json_decode(wp_remote_retrieve_body($response), true);
             </div>
 
         </a>
-        <?php
-            endforeach;
-        endif;
-        ?>
 
+        <?php endforeach; ?>
+
+        <?php else: ?>
+        <p style="text-align:center; padding:40px;">No schools available.</p>
+        <?php endif; ?>
+
+        <!-- NO RESULTS -->
         <div class="schools-no-results" id="schoolsNoResults">
             <svg viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8" />
@@ -100,6 +103,7 @@ $schools = json_decode(wp_remote_retrieve_body($response), true);
 
 </div>
 
+<!-- ================= SEARCH SCRIPT ================= -->
 <script>
 (function() {
     const input = document.getElementById('schoolSearch');
@@ -111,21 +115,18 @@ $schools = json_decode(wp_remote_retrieve_body($response), true);
 
     if (!input || !tiles.length) return;
 
-    /* ── update count label ── */
     function updateCount(visible) {
         countEl.textContent = input.value.trim() === '' ?
             total + ' schools' :
             visible + ' of ' + total + ' schools';
     }
 
-    /* ── core filter function ── */
     function filter(term) {
         const q = term.trim().toLowerCase();
         let visible = 0;
 
-        tiles.forEach(function(tile) {
-            /* use data-name attr for fast lookup — no DOM traversal */
-            var name = tile.getAttribute('data-name') || '';
+        tiles.forEach(tile => {
+            const name = tile.getAttribute('data-name') || '';
             if (q === '' || name.includes(q)) {
                 tile.classList.remove('hidden');
                 visible++;
@@ -134,7 +135,6 @@ $schools = json_decode(wp_remote_retrieve_body($response), true);
             }
         });
 
-        /* no results state */
         if (visible === 0 && q !== '') {
             noResults.style.display = 'block';
             document.getElementById('noResultsTerm').textContent = term;
@@ -142,26 +142,20 @@ $schools = json_decode(wp_remote_retrieve_body($response), true);
             noResults.style.display = 'none';
         }
 
-        /* clear button */
         clearBtn.style.display = q !== '' ? 'block' : 'none';
-
         updateCount(visible);
     }
 
-    /* ── events ── */
-    input.addEventListener('input', function() {
-        filter(input.value);
-    });
+    input.addEventListener('input', () => filter(input.value));
 
-    clearBtn.addEventListener('click', function() {
+    clearBtn.addEventListener('click', () => {
         input.value = '';
         input.focus();
         filter('');
     });
 
-    /* ── init ── */
     updateCount(total);
-
-}());
+})();
 </script>
+
 <?php get_footer(); ?>
