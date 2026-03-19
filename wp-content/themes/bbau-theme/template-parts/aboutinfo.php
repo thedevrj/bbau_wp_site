@@ -1,6 +1,6 @@
 <?php 
 /*
-Template Name: Department Page
+Template Name: Profile Page
 */
 defined( 'ABSPATH' ) || exit;
 get_header();
