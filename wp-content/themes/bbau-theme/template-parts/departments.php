@@ -5,7 +5,7 @@ Template Name: Departments Page
 defined('ABSPATH') || exit;
 get_header();
 
-$api_base = getenv('DJANGO_API_URL');
+$api_base = getenv('DJANGO_MEDIA_URL');
 $api_url = $api_base . '/api/v1/departments/';
 ?>
 
