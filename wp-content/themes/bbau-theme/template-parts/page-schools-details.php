@@ -20,30 +20,43 @@ if (!is_wp_error($response)) {
     $school = json_decode(wp_remote_retrieve_body($response), true);
 }
 
-/* ================= DATA ================= */
+/* ================= DATA (FIXED ACCORDING TO API) ================= */
 
 $name            = esc_html($school['name'] ?? '');
-$designation     = esc_html($school['dean']['designation'] ?? '');
+
+$designation     = esc_html($school['dean']['role'] ?? '');
 $dean_name       = esc_html($school['dean']['name'] ?? '');
-$dean_phone      = esc_html($school['dean']['phone'] ?? '');
-$dean_email      = esc_html($school['dean']['email'] ?? '');
-$dean_email_alt  = esc_html($school['dean']['institutional_email'] ?? '');
+
+$dean_phone      = esc_html($school['dean']['phone1'] ?? '');
+$dean_email      = esc_html($school['dean']['insti_email'] ?? '');
+$dean_email_alt  = esc_html($school['dean']['other_email'] ?? '');
+
 $dean_photo      = $school['dean']['photo'] ?? '';
-$dean_about      = wp_kses_post($school['dean']['about'] ?? '');
+$dean_about      = wp_kses_post($school['dean']['bio'] ?? '');
+
 $description     = $school['about_school'] ?? '';
-$board_url       = esc_url($school['dean']['board_url'] ?? '#');
-$minutes_url     = esc_url($school['dean']['minutes_url'] ?? '#');
-$dean_url        = esc_url($school['dean']['slug'] ?? '#');
-$specializations = esc_html($school['dean']['specializations'] ?? '');
+
+$board_url       = '#'; 
+$minutes_url     = '#';
+
+$dean_url        = esc_url('/faculty/' . ($school['dean']['slug'] ?? ''));
+
+$specializations = '';
+
 $departments     = $school['departments'] ?? [];
-$centers         = $school['centers'] ?? [];
+
+/* 🔥 FIXED KEY */
+$centers         = $school['centres'] ?? [];
 ?>
 
 <?php get_template_part('banners/about-banner'); ?>
 
+<!-- ✅ CHANGED container-fluid TO container -->
 <div class="container-fluid page-bg py-lg-5">
+
     <?php get_template_part('template-parts/breadcrumb'); ?>
 
+    <!-- HEADING -->
     <div class="row">
         <div class="col-12">
             <h3 class="section-heading mb-4"><?php echo $name; ?></h3>
@@ -61,7 +74,8 @@ $centers         = $school['centers'] ?? [];
                     <div class="s-prof-photo-wrap">
                         <div class="s-prof-photo-circle">
                             <?php if ($dean_photo) : ?>
-                                <img src="<?php echo esc_url($media_base . $dean_photo); ?>" alt="<?php echo esc_attr($dean_name); ?>">
+                                <img src="<?php echo esc_url($media_base . $dean_photo); ?>"
+                                     alt="<?php echo esc_attr($dean_name); ?>">
                             <?php else : ?>
                                 <div class="s-no-photo">No Image</div>
                             <?php endif; ?>
@@ -97,10 +111,6 @@ $centers         = $school['centers'] ?? [];
                             <div class="s-prof-designation"><?php echo $designation; ?></div>
                         <?php endif; ?>
 
-                        <?php if ($specializations) : ?>
-                            <div class="s-prof-specializations"><?php echo $specializations; ?></div>
-                        <?php endif; ?>
-
                         <?php if ($dean_about) : ?>
                             <div class="s-prof-about"><?php echo $dean_about; ?></div>
                         <?php endif; ?>
@@ -114,62 +124,69 @@ $centers         = $school['centers'] ?? [];
 
             <!-- DEPARTMENTS -->
             <?php if (!empty($departments)) : ?>
-            <div class="s-departments-section">
-                <h3 class="s-dept-heading"><?php echo $name; ?> comprises the following Departments</h3>
-                <div class="s-dept-pills">
-                    <?php foreach ($departments as $dept): ?>
-                        <div class="s-dept-pill">
-                            <a href="/departments/<?php echo esc_attr($dept['slug'] ?? '#'); ?>">
-                                <?php echo esc_html($dept['name'] ?? $dept); ?>
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
+                <div class="s-departments-section">
+                    <h3 class="s-dept-heading"><?php echo $name; ?> comprises the following Departments</h3>
+
+                    <div class="s-dept-pills">
+                        <?php foreach ($departments as $dept): ?>
+                            <div class="s-dept-pill">
+                                <a href="/departments/<?php echo esc_attr($dept['slug'] ?? '#'); ?>">
+                                    <?php echo esc_html($dept['name'] ?? $dept); ?>
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
             <?php endif; ?>
 
             <!-- CENTERS -->
-            <?php if (!empty($centers)) : ?>
-            <div class="s-departments-section">
-                <h3 class="s-dept-heading">All Centers</h3>
-                <div class="s-dept-pills">
-                    <?php foreach ($centers as $center): ?>
-                        <div class="s-dept-pill">
-                            <a href="/centers/<?php echo esc_attr($center['slug'] ?? '#'); ?>">
-                                <?php echo esc_html($center['name'] ?? $center); ?>
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
+            <?php if (!empty($centers) && is_array($centers)) : ?>
+                <div class="s-departments-section">
+                    <h3 class="s-dept-heading">All Centers</h3>
+
+                    <div class="s-dept-pills">
+                        <?php foreach ($centers as $center): ?>
+                            <div class="s-dept-pill">
+                                <a href="/centers/<?php echo esc_attr($center['slug'] ?? '#'); ?>">
+                                    <?php echo esc_html($center['name'] ?? 'Center'); ?>
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
             <?php endif; ?>
 
             <!-- ABOUT -->
             <?php if ($description) : ?>
-            <div class="s-about-card">
-                <div class="s-about-inner">
+                <div class="s-about-card">
+                    <div class="s-about-inner">
 
-                    <?php
-                    $desc = wp_kses_post($description);
-                    echo (strpos($desc, '<p>') === false)
-                        ? '<p>' . implode('</p><p>', array_filter(explode("\n\n", $desc))) . '</p>'
-                        : $desc;
-                    ?>
+                        <?php
+                        $desc = wp_kses_post($description);
+                        echo (strpos($desc, '<p>') === false)
+                            ? '<p>' . implode('</p><p>', array_filter(explode("\n\n", $desc))) . '</p>'
+                            : $desc;
+                        ?>
 
-                    <div class="s-school-board">
-                        <span class="s-school-board-label">School Board Committee</span>
+                        <!-- SCHOOL BOARD -->
+                        <div class="s-school-board">
 
-                        <div class="s-board-actions">
-                            <a href="<?php echo $board_url; ?>" class="s-school-board-link">View</a>
+                            <div class="s-board-row">
+                                <span class="s-school-board-label">School Board Committee</span>
+                                <a href="<?php echo $board_url; ?>" class="s-school-board-link">View</a>
+                            </div>
 
                             <?php if ($minutes_url && $minutes_url !== '#') : ?>
-                                <a href="<?php echo $minutes_url; ?>" class="s-school-board-link alt">Minutes</a>
+                                <div class="s-board-row">
+                                    <span class="s-school-board-label">Minutes</span>
+                                    <a href="<?php echo $minutes_url; ?>" class="s-school-board-link">View</a>
+                                </div>
                             <?php endif; ?>
-                        </div>
-                    </div>
 
+                        </div>
+
+                    </div>
                 </div>
-            </div>
             <?php endif; ?>
 
         </div>
@@ -178,7 +195,6 @@ $centers         = $school['centers'] ?? [];
 </div>
 
 <style>
-
 /* ============================================
    SCHOOLS SINGLE PAGE - FINAL CLEAN CSS
 ============================================ */
@@ -198,6 +214,7 @@ $centers         = $school['centers'] ?? [];
     font-family: 'Nunito', sans-serif;
     background: var(--s-bg);
     padding-bottom: 60px;
+    padding-top: 35px;
 }
 
 /* FULL WIDTH */
@@ -222,88 +239,58 @@ $centers         = $school['centers'] ?? [];
     margin-bottom: 50px;
 }
 
-/* CARD */
 .s-professor-card {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1050px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border-radius: 24px;
+    border-radius: 22px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
     animation: fadeUp 0.6s ease;
 }
 
-/* ============================================
-   LEFT SIDE (IMAGE)
-============================================ */
-
+/* LEFT */
 .s-prof-photo-wrap {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #3d2568, #6c3fc5);
-    padding: 40px;
+    background: linear-gradient(135deg, #2c1a4a, #6c3fc5);
+    padding: 35px;
 }
 
-/* REMOVE OLD IMAGE BEHAVIOR */
-.s-prof-photo-wrap img {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-}
-
-/* CIRCLE */
 .s-prof-photo-circle {
-    width: 240px;
-    height: 240px;
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
-    padding: 8px;
+    padding: 6px;
     background: linear-gradient(135deg, var(--s-saffron2), var(--s-vivid));
     position: relative;
     box-shadow:
-        0 15px 40px rgba(0,0,0,0.3),
-        0 0 0 6px rgba(255,255,255,0.15);
+        0 12px 30px rgba(0, 0, 0, 0.25),
+        0 0 0 4px rgba(255, 255, 255, 0.2);
 }
 
-/* IMAGE */
 .s-prof-photo-circle img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    object-fit: cover;
-    display: block;
+    
 }
 
-/* GLOW EFFECT */
 .s-prof-photo-circle::after {
     content: '';
     position: absolute;
-    inset: -12px;
+    inset: -10px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(245,160,48,0.3), transparent 70%);
+    background: radial-gradient(circle, rgba(245, 160, 48, 0.25), transparent 70%);
     z-index: -1;
 }
 
-/* FALLBACK */
-.s-no-photo {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: #eee;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
-/* ============================================
-   RIGHT SIDE CONTENT
-============================================ */
-
+/* RIGHT */
 .s-prof-info {
-    padding: 40px;
+    padding: 35px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -311,16 +298,14 @@ $centers         = $school['centers'] ?? [];
 
 .s-prof-info h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    margin-bottom: 12px;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
     color: var(--s-deep);
-    position: relative;
 }
 
-/* UNDERLINE */
 .s-prof-info h2::after {
     content: '';
-    width: 120px;
+    width: 90px;
     height: 3px;
     background: linear-gradient(90deg, var(--s-vivid), #00a8ff);
     display: block;
@@ -328,20 +313,19 @@ $centers         = $school['centers'] ?? [];
     border-radius: 2px;
 }
 
-/* CONTACT */
 .s-prof-contact-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 14px;
+    gap: 8px;
+    margin-bottom: 12px;
 }
 
 .s-prof-contact-chip {
-    background: #f4f1fb;
+    background: #f6f3fd;
     border: 1px solid var(--s-border);
     border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 13px;
+    padding: 5px 12px;
+    font-size: 12px;
 }
 
 .s-prof-contact-chip a {
@@ -350,15 +334,13 @@ $centers         = $school['centers'] ?? [];
     font-weight: 600;
 }
 
-/* DESIGNATION */
 .s-prof-designation {
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     color: var(--s-vivid);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
-/* SPECIALIZATION */
 .s-prof-specializations {
     font-size: 13px;
     margin-bottom: 10px;
@@ -366,29 +348,27 @@ $centers         = $school['centers'] ?? [];
     padding-left: 10px;
 }
 
-/* ABOUT */
 .s-prof-about {
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: 13.5px;
+    line-height: 1.6;
     color: #444;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
-/* BUTTON */
 .s-view-btn {
     align-self: flex-start;
     background: linear-gradient(135deg, var(--s-saffron), var(--s-saffron2));
     color: #fff;
-    padding: 10px 26px;
-    border-radius: 50px;
+    padding: 8px 22px;
+    border-radius: 40px;
     text-decoration: none;
     font-weight: 600;
-    transition: 0.3s;
+    font-size: 13px;
 }
 
 .s-view-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(224,123,24,0.3);
+    box-shadow: 0 8px 18px rgba(224, 123, 24, 0.25);
 }
 
 /* ============================================
@@ -447,7 +427,7 @@ $centers         = $school['centers'] ?? [];
 
 .s-dept-pill:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
 
 .s-dept-pill a {
@@ -456,47 +436,103 @@ $centers         = $school['centers'] ?? [];
 }
 
 /* ============================================
-   ABOUT CARD
+   ABOUT CARD (ONLY CURVED LINE)
 ============================================ */
 
 .s-about-card {
-    background: #fff;
-    border-radius: 24px;
-    padding: 30px;
+    position: relative;
+    background: #eeeeee;
+    border-radius: 20px;
+    padding: 30px 35px 30px 50px;
     border: 1px solid var(--s-border);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+/* CURVED LINE */
+.s-about-card::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 20px;
+    bottom: 20px;
+    width: 5px;
+    border-radius: 30px;
+    background: linear-gradient(180deg,
+            var(--s-vivid),
+            var(--s-deep),
+            var(--s-saffron));
 }
 
 /* ============================================
-   BOARD
+   SCHOOL BOARD (ROW BASED DESIGN)
 ============================================ */
 
+/* MAIN CONTAINER */
 .s-school-board {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    padding-top: 18px;
+    margin-top: 25px;
+    padding-top: 20px;
     border-top: 1px dashed var(--s-border);
-    flex-wrap: wrap;
+    width: 100%;
 }
 
-.s-board-actions {
+/* EACH ROW */
+.s-board-row {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    /* 🔥 pushes View to right corner */
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+    /* optional divider */
 }
 
+/* REMOVE BORDER FROM LAST ROW */
+.s-board-row:last-child {
+    border-bottom: none;
+}
+
+/* LABEL (LEFT SIDE TEXT) */
+.s-school-board-label {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--s-deep);
+    letter-spacing: 0.5px;
+}
+
+/* VIEW BUTTON (RIGHT SIDE) */
 .s-school-board-link {
     background: var(--s-deep);
     color: #fff;
-    padding: 9px 20px;
+    padding: 8px 22px;
     border-radius: 50px;
     text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    transition: 0.3s;
 }
 
-.s-school-board-link.alt {
-    background: #eee;
-    color: #333;
+/* HOVER EFFECT */
+.s-school-board-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(44, 26, 74, 0.25);
+}
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+
+@media (max-width: 768px) {
+
+    .s-board-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .s-school-board-link {
+        align-self: flex-start;
+    }
 }
 
 /* ============================================
@@ -508,6 +544,7 @@ $centers         = $school['centers'] ?? [];
         opacity: 0;
         transform: translateY(25px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -518,26 +555,31 @@ $centers         = $school['centers'] ?? [];
    RESPONSIVE
 ============================================ */
 
-@media(max-width:768px){
+@media(max-width:768px) {
 
-    .s-professor-card{
-        grid-template-columns:1fr;
+    .s-professor-card {
+        grid-template-columns: 1fr;
     }
 
-    .s-prof-photo-wrap{
-        padding:30px 0;
+    .s-prof-photo-wrap {
+        padding: 25px 0;
     }
 
-    .s-prof-photo-circle{
-        width:180px;
-        height:180px;
+    .s-prof-photo-circle {
+        width: 160px;
+        height: 160px;
     }
 
-    .s-prof-info{
-        padding:20px;
+    .s-prof-info {
+        padding: 20px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .s-view-btn {
+        align-self: center;
     }
 }
-
 </style>
 
 <?php get_footer(); ?>
