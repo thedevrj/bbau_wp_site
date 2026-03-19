@@ -9,89 +9,125 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 $api_url = $api_base . '/api/v1/departments/';
 ?>
 
-<?php get_template_part( 'banners/about-banner' ); ?>
-<div class="container-fluid page-bg py-lg-5 overflow-hidden">
+<?php get_template_part('banners/about-banner'); ?>
 
-    <div class="departments-section">
+<div class="page-bg">
 
-        <h2>Departments</h2>
+    <div class="container  py-lg-5">
+        <div class="departments-section">
 
-        <!-- Search -->
-        <input type="text" id="dept-search" placeholder="Search departments...">
+            <!-- HEADER -->
+            <div class="dept-header">
 
-        <!-- Filter -->
-        <select id="school-filter">
-            <option value="">Filter by Schools</option>
-        </select>
+                <h2>Departments</h2>
 
-        <!-- Grid -->
-        <div id="departments-container"></div>
+                <div class="dept-controls">
+                    <select id="school-filter">
+                        <option value="">Filter by School</option>
+                    </select>
+                    
+                    <input type="text" id="dept-search" placeholder="Search departments...">
 
+                   
+                </div>
+
+            </div>
+
+            <!-- GRID -->
+            <div id="departments-container"></div>
+
+        </div>
     </div>
 
-    <script>
-    const API_URL = "<?php echo $api_url; ?>";
+</div>
 
-    let allDepartments = [];
+<script>
+const API_URL = "<?php echo esc_js($api_url); ?>";
 
-    async function fetchDepartments() {
+let allDepartments = [];
+
+/* ================= FETCH ================= */
+async function fetchDepartments() {
+    const container = document.getElementById('departments-container');
+
+    try {
+        container.innerHTML = "<p class='dept-empty'>Loading departments...</p>";
+
         const res = await fetch(API_URL);
         const data = await res.json();
 
         allDepartments = data;
+
         renderDepartments(data);
         populateSchoolFilter(data);
+
+    } catch (err) {
+        container.innerHTML =
+            "<p class='dept-empty'>Failed to load departments. Please try again.</p>";
+    }
+}
+
+/* ================= RENDER ================= */
+function renderDepartments(data) {
+    const container = document.getElementById('departments-container');
+    container.innerHTML = '';
+
+    if (!data.length) {
+        container.innerHTML = "<p class='dept-empty'>No departments found.</p>";
+        return;
     }
 
-    function renderDepartments(data) {
-        const container = document.getElementById('departments-container');
-        container.innerHTML = '';
+    let html = '';
 
-        data.forEach(dept => {
-            container.innerHTML += `
-            <div class="dept-card">
-                 <h3>${dept.name}</h3>
-              
-                <a class="link-new" href="/department/${dept.slug}">View Department</a>
-            </div>
+    data.forEach((dept, i) => {
+        html += `
+        <div class="dept-card" style="animation-delay:${i * 0.05}s">
+            <h3>${dept.name}</h3>
+
+            <a class="link-new1" href="/department/${dept.slug}">
+                View Department
+            </a>
+        </div>
         `;
-        });
-    }
-
-    function populateSchoolFilter(data) {
-        const schools = [...new Set(data.map(d => d.school_name))];
-        const filter = document.getElementById('school-filter');
-
-        schools.forEach(school => {
-            filter.innerHTML += `<option value="${school}">${school}</option>`;
-        });
-    }
-
-    // 🔍 Search
-    document.getElementById('dept-search').addEventListener('input', function() {
-        const value = this.value.toLowerCase();
-
-        const filtered = allDepartments.filter(d =>
-            d.name.toLowerCase().includes(value)
-        );
-
-        renderDepartments(filtered);
     });
 
-    // 🎯 Filter
-    document.getElementById('school-filter').addEventListener('change', function() {
-        const value = this.value;
+    container.innerHTML = html;
+}
 
-        if (!value) return renderDepartments(allDepartments);
+/* ================= FILTER DROPDOWN ================= */
+function populateSchoolFilter(data) {
+    const schools = [...new Set(data.map(d => d.school_name))];
+    const filter = document.getElementById('school-filter');
 
-        const filtered = allDepartments.filter(d =>
-            d.school_name === value
-        );
+    filter.innerHTML = `<option value="">Filter by School</option>`;
 
-        renderDepartments(filtered);
+    schools.forEach(school => {
+        const opt = document.createElement('option');
+        opt.value = school;
+        opt.textContent = school;
+        filter.appendChild(opt);
     });
+}
 
-    fetchDepartments();
-    </script>
-</div>
-    <?php get_footer(); ?>
+/* ================= FILTER FUNCTION ================= */
+function applyFilters() {
+    const search = document.getElementById('dept-search').value.toLowerCase();
+    const school = document.getElementById('school-filter').value;
+
+    const filtered = allDepartments.filter(d =>
+        d.name.toLowerCase().includes(search) &&
+        (!school || d.school_name === school)
+    );
+
+    renderDepartments(filtered);
+}
+
+/* ================= EVENTS ================= */
+document.getElementById('dept-search').addEventListener('input', applyFilters);
+document.getElementById('school-filter').addEventListener('change', applyFilters);
+
+/* ================= INIT ================= */
+fetchDepartments();
+</script>
+
+<?php get_footer(); ?>
