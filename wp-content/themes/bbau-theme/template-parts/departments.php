@@ -5,7 +5,7 @@ Template Name: Departments Page
 defined('ABSPATH') || exit;
 get_header();
 
-$api_base = getenv('DJANGO_API_URL');
+$api_base = getenv('DJANGO_MEDIA_URL');
 $api_url = $api_base . '/api/v1/departments/';
 ?>
 
@@ -16,15 +16,15 @@ $api_url = $api_base . '/api/v1/departments/';
 
         <h2>Departments</h2>
 
-        <!-- 🔍 Search -->
+        <!-- Search -->
         <input type="text" id="dept-search" placeholder="Search departments...">
 
-        <!-- 🎯 Filter -->
+        <!-- Filter -->
         <select id="school-filter">
-            <option value="">All Schools</option>
+            <option value="">Filter by Schools</option>
         </select>
 
-        <!-- 🧱 Grid -->
+        <!-- Grid -->
         <div id="departments-container"></div>
 
     </div>
