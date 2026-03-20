@@ -811,7 +811,7 @@ a.link-new {
 /* Hover effect */
 a.link-new:hover {
   text-decoration: underline;
-  color: #003f7d;
+  color: #003f7d 
 }
 
 /* Optional states */

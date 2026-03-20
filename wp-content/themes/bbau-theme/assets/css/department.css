@@ -217,7 +217,7 @@
   position: relative;
   z-index: 1;
 }
-a:hover, a:focus {
+.link-new1:hover, .link-new1:focus {
     color: #fff !important;
 }
 /* ── BUTTON ── */
