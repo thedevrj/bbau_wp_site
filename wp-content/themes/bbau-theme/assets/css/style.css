@@ -7,6 +7,9 @@
 @import url("child-theme.css");
 
 
+p:empty {
+    display: none;
+}
 
 /* Visitor Section */
 .visitor-hero {
