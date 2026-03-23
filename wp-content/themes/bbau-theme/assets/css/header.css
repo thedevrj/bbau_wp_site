@@ -69,11 +69,10 @@
   display: inline-flex !important;
   /* 🔥 REQUIRED */
   align-items: center;
-  font-weight: bold !important;
+  font-weight: 600 !important;
   justify-content: center;
   text-decoration: none !important;
   color: #ffffff !important;
-  /* 🔥 GPU FIX */
   transition: transform 0.25s ease, color 0.25s ease !important;
   z-index: 1;
 }
