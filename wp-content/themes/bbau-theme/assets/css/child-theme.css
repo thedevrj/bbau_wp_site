@@ -618,8 +618,8 @@ h1 {
 
 @media screen and (max-width: 760px) {
 
-  ol,
-  ul {
+  .page-bg ol,
+  .page-bg ul {
     padding-left: 0.5rem !important;
   }
 
@@ -868,14 +868,13 @@ a.link-new {
 /* Hover effect */
 a.link-new:hover {
   text-decoration: underline;
-  color: #003f7d;
 }
 
 /* Optional states */
 a.link-new:visited,
 a.link-new:active,
 a.link-new:focus {
-  color: #00509e;
+  color: #00509e !important;
 }
 
 /* =====================================

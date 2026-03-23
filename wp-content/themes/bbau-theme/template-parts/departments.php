@@ -36,15 +36,55 @@ $api_url = $api_base . '/api/v1/departments/';
             <!-- GRID -->
             <div id="departments-container"></div>
 
+            <!-- PAGINATION -->
+            <div class="dept-pagination">
+                <button id="prev-page" class="pagination-btn">«</button>
+                <span id="page-info" class="page-info"></span>
+                <button id="next-page" class="pagination-btn">»</button>
+            </div>
+
         </div>
     </div>
 
+    
 </div>
+
+<style>
+.dept-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+    align-items: center;
+}
+
+.pagination-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.page-info {
+    font-weight: bold;
+    min-width: 120px;
+    text-align: center;
+}
+</style>
 
 <script>
 const API_URL = "<?php echo esc_js($api_url); ?>";
+const ITEMS_PER_PAGE = 16;
 
 let allDepartments = [];
+let currentPage = 1;
 
 /* ================= FETCH ================= */
 async function fetchDepartments() {
@@ -68,30 +108,79 @@ async function fetchDepartments() {
 }
 
 /* ================= RENDER ================= */
-function renderDepartments(data) {
+function renderDepartments(departments) {
     const container = document.getElementById('departments-container');
-    container.innerHTML = '';
+    currentPage = 1;
+    displayPage(departments);
+}
 
-    if (!data.length) {
+function displayPage(departments) {
+    const container = document.getElementById('departments-container');
+    const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIdx = startIdx + ITEMS_PER_PAGE;
+    const pageDepts = departments.slice(startIdx, endIdx);
+    
+    const totalPages = Math.ceil(departments.length / ITEMS_PER_PAGE);
+
+    if (pageDepts.length === 0) {
         container.innerHTML = "<p class='dept-empty'>No departments found.</p>";
-        return;
+    } else {
+        container.innerHTML = pageDepts.map(dept => `
+            <div class="dept-card">
+                <h3>${dept.name}</h3>
+                <p>${dept.description || ''}</p>
+            </div>
+        `).join('');
     }
 
-    let html = '';
+    updatePaginationControls(totalPages);
+}
 
-    data.forEach((dept, i) => {
-        html += `
-        <div class="dept-card" style="animation-delay:${i * 0.05}s">
-            <h3>${dept.name}</h3>
-
-            <a class="link-new1" href="/department/${dept.slug}">
-                View Department
-            </a>
-        </div>
+function updatePaginationControls(totalPages) {
+    const pageInfoContainer = document.getElementById('page-info');
+    let pageButtons = '';
+    
+    for (let i = 1; i <= totalPages; i++) {
+        pageButtons += `
+            <button class="page-num ${i === currentPage ? 'active' : ''}" data-page="${i}">
+                ${i}
+            </button>
         `;
+    }
+    
+    pageInfoContainer.innerHTML = pageButtons;
+    
+    // Add click listeners to page buttons
+    document.querySelectorAll('.page-num').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            currentPage = parseInt(e.target.dataset.page);
+            displayPage(getFilteredDepartments());
+        });
     });
+    
+    document.getElementById('prev-page').disabled = currentPage === 1;
+    document.getElementById('next-page').disabled = currentPage === totalPages;
+}
 
-    container.innerHTML = html;
+document.getElementById('prev-page').addEventListener('click', () => {
+    if (currentPage > 1) {
+        currentPage--;
+        displayPage(getFilteredDepartments());
+    }
+});
+
+document.getElementById('next-page').addEventListener('click', () => {
+    const filtered = getFilteredDepartments();
+    const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+    if (currentPage < totalPages) {
+        currentPage++;
+        displayPage(filtered);
+    }
+});
+
+function getFilteredDepartments() {
+    // Apply existing filters (school filter + search)
+    return allDepartments;
 }
 
 /* ================= FILTER DROPDOWN ================= */
