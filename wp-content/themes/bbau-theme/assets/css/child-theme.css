@@ -48,12 +48,12 @@ h1 {
 ===================================================== */
 .page-template-about-bg {
   position: relative;
-  background-image: url(../img/about-us/about-us-page-bg.png);
+  background-image: url(../img/about-us/about-us-page-bg.png) !important;
 }
 
 @media (max-width: 1200px) {
   .page-template-about-bg {
-    background-image: url(../img/about-us/m-about-us-page-bg.png);
+    background-image: url(../img/about-us/m-about-us-page-bg.png) !important;
   }
 }
 
@@ -1818,9 +1818,7 @@ h2::after {
   --bg-soft: #f5f7fc;
 }
 
-.page-bg {
-  background: linear-gradient(135deg, #1e1b4b, #312e81, #1e293b);
-}
+
 /* =====================================
    page  SECTION
 ===================================== */
