@@ -48,12 +48,12 @@ h1 {
 ===================================================== */
 .page-template-about-bg {
   position: relative;
-  background-image: url(../img/about-us/about-us-page-bg.png);
+  background-image: url(../img/about-us/about-us-page-bg.png) !important;
 }
 
 @media (max-width: 1200px) {
   .page-template-about-bg {
-    background-image: url(../img/about-us/m-about-us-page-bg.png);
+    background-image: url(../img/about-us/m-about-us-page-bg.png) !important;
   }
 }
 
@@ -1860,7 +1860,7 @@ h2::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-soft);
+  background: #c2a3ba;
   padding: 25px;
 }
 
@@ -1932,40 +1932,54 @@ h2::after {
   color: var(--primary-dark);
   margin-bottom: 15px;
 }
+/* =====================================
+   SINGLE CARD CENTER FIX
+===================================== */
+
+/* If only one card */
+.dept-grid:has(.assistant-card:only-child) {
+  grid-template-columns: 1fr;
+  justify-content: center;
+}
+
+/* Center the card and control width */
+.dept-grid:has(.assistant-card:only-child) .assistant-card {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+}
 
 /* ABOUT TEXT */
-/* =====================================
-   RESPONSIVE DESIGN
-===================================== */
 @media (max-width: 992px) {
-  .dept-grid {
-    grid-template-columns: 1fr;
-  }
 
   .assistant-card {
     flex-direction: column;
     text-align: center;
+    overflow: hidden;
   }
 
-  .assistant-card .left,
-  .assistant-card .right {
-    flex: 100%;
+  /* FULL WIDTH TOP BACKGROUND */
+  .assistant-card .left {
+    width: 100%;
     max-width: 100%;
+    flex: 100%;
+
+    padding: 40px 20px;
+
+    /* IMPORTANT */
+    border-radius: 0;
   }
 
-  .assistant-card .right {
-    padding-top: 10px;
-  }
-}
-
-@media (max-width: 576px) {
+  /* IMAGE CENTER */
   .assistant-card .left img {
-    width: 120px;
-    height: 120px;
+    margin: 0 auto;
   }
 
-  .section-title {
-    font-size: 22px;
+  /* CONTENT */
+  .assistant-card .right {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
   }
 }
 
