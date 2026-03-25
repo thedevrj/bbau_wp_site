@@ -129,6 +129,10 @@ function displayPage(departments) {
             <div class="dept-card">
                 <h3>${dept.name}</h3>
                 <p>${dept.description || ''}</p>
+
+                <a class="dept-btn" href="/department/${dept.slug}">
+                View Department<i class="fas fa-arrow-right"></i>
+            </a>
             </div>
         `).join('');
     }
