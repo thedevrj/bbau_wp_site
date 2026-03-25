@@ -23,7 +23,19 @@ defined( 'ABSPATH' ) || exit;
         <p class="author">Dr. B. R. Ambedkar, Bharat Ratna</p>
     </div>
 </section>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const video = document.querySelector(".hero-video");
 
+  if (video) {
+    video.muted = true;
+    video.play().catch(() => {
+      video.muted = true;
+      video.play();
+    });
+  }
+});
+</script>
 
 <!-- ================= ANNOUNCEMENT BAR ================= -->
 <div class="announce-bar">
