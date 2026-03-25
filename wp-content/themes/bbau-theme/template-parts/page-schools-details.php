@@ -74,10 +74,10 @@ $centers         = $school['centres'] ?? [];
                     <div class="s-prof-photo-wrap">
                         <div class="s-prof-photo-circle">
                             <?php if ($dean_photo) : ?>
-                                <img src="<?php echo esc_url($media_base . $dean_photo); ?>"
-                                     alt="<?php echo esc_attr($dean_name); ?>">
+                            <img src="<?php echo esc_url($media_base . $dean_photo); ?>"
+                                alt="<?php echo esc_attr($dean_name); ?>">
                             <?php else : ?>
-                                <div class="s-no-photo">No Image</div>
+                            <div class="s-no-photo">No Image</div>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -90,29 +90,29 @@ $centers         = $school['centres'] ?? [];
                         <div class="s-prof-contact-row">
 
                             <?php if ($dean_phone) : ?>
-                                <div class="s-prof-contact-chip">📞 <?php echo $dean_phone; ?></div>
+                            <div class="s-prof-contact-chip">📞 <?php echo $dean_phone; ?></div>
                             <?php endif; ?>
 
                             <?php if ($dean_email) : ?>
-                                <div class="s-prof-contact-chip">
-                                    <a href="mailto:<?php echo $dean_email; ?>">📧 <?php echo $dean_email; ?></a>
-                                </div>
+                            <div class="s-prof-contact-chip">
+                                <a href="mailto:<?php echo $dean_email; ?>">📧 <?php echo $dean_email; ?></a>
+                            </div>
                             <?php endif; ?>
 
                             <?php if ($dean_email_alt) : ?>
-                                <div class="s-prof-contact-chip">
-                                    <a href="mailto:<?php echo $dean_email_alt; ?>">🏫 <?php echo $dean_email_alt; ?></a>
-                                </div>
+                            <div class="s-prof-contact-chip">
+                                <a href="mailto:<?php echo $dean_email_alt; ?>">🏫 <?php echo $dean_email_alt; ?></a>
+                            </div>
                             <?php endif; ?>
 
                         </div>
 
                         <?php if ($designation) : ?>
-                            <div class="s-prof-designation"><?php echo $designation; ?></div>
+                        <div class="s-prof-designation"><?php echo $designation; ?></div>
                         <?php endif; ?>
 
                         <?php if ($dean_about) : ?>
-                            <div class="s-prof-about"><?php echo $dean_about; ?></div>
+                        <div class="s-prof-about"><?php echo $dean_about; ?></div>
                         <?php endif; ?>
 
                         <a href="<?php echo $dean_url; ?>" class="s-view-btn">View Profile</a>
@@ -124,69 +124,69 @@ $centers         = $school['centres'] ?? [];
 
             <!-- DEPARTMENTS -->
             <?php if (!empty($departments)) : ?>
-                <div class="s-departments-section">
-                    <h3 class="s-dept-heading"><?php echo $name; ?> comprises the following Departments</h3>
+            <div class="s-departments-section">
+                <h3 class="s-dept-heading"><?php echo $name; ?> comprises the following Departments</h3>
 
-                    <div class="s-dept-pills">
-                        <?php foreach ($departments as $dept): ?>
-                            <div class="s-dept-pill">
-                                <a href="/departments/<?php echo esc_attr($dept['slug'] ?? '#'); ?>">
-                                    <?php echo esc_html($dept['name'] ?? $dept); ?>
-                                </a>
-                            </div>
-                        <?php endforeach; ?>
+                <div class="s-dept-pills">
+                    <?php foreach ($departments as $dept): ?>
+                    <div class="s-dept-pill">
+                        <a href="/departments/<?php echo esc_attr($dept['slug'] ?? '#'); ?>">
+                            <?php echo esc_html($dept['name'] ?? $dept); ?>
+                        </a>
                     </div>
+                    <?php endforeach; ?>
                 </div>
+            </div>
             <?php endif; ?>
 
             <!-- CENTERS -->
             <?php if (!empty($centers) && is_array($centers)) : ?>
-                <div class="s-departments-section">
-                    <h3 class="s-dept-heading">All Centers</h3>
+            <div class="s-departments-section">
+                <h3 class="s-dept-heading">All Centers</h3>
 
-                    <div class="s-dept-pills">
-                        <?php foreach ($centers as $center): ?>
-                            <div class="s-dept-pill">
-                                <a href="/centers/<?php echo esc_attr($center['slug'] ?? '#'); ?>">
-                                    <?php echo esc_html($center['name'] ?? 'Center'); ?>
-                                </a>
-                            </div>
-                        <?php endforeach; ?>
+                <div class="s-dept-pills">
+                    <?php foreach ($centers as $center): ?>
+                    <div class="s-dept-pill">
+                        <a href="/centers/<?php echo esc_attr($center['slug'] ?? '#'); ?>">
+                            <?php echo esc_html($center['name'] ?? 'Center'); ?>
+                        </a>
                     </div>
+                    <?php endforeach; ?>
                 </div>
+            </div>
             <?php endif; ?>
 
             <!-- ABOUT -->
             <?php if ($description) : ?>
-                <div class="s-about-card">
-                    <div class="s-about-inner">
+            <div class="s-about-card">
+                <div class="s-about-inner">
 
-                        <?php
+                    <?php
                         $desc = wp_kses_post($description);
                         echo (strpos($desc, '<p>') === false)
                             ? '<p>' . implode('</p><p>', array_filter(explode("\n\n", $desc))) . '</p>'
                             : $desc;
                         ?>
 
-                        <!-- SCHOOL BOARD -->
-                        <div class="s-school-board">
+                    <!-- SCHOOL BOARD -->
+                    <div class="s-school-board">
 
-                            <div class="s-board-row">
-                                <span class="s-school-board-label">School Board Committee</span>
-                                <a href="<?php echo $board_url; ?>" class="s-school-board-link">View</a>
-                            </div>
-
-                            <?php if ($minutes_url && $minutes_url !== '#') : ?>
-                                <div class="s-board-row">
-                                    <span class="s-school-board-label">Minutes</span>
-                                    <a href="<?php echo $minutes_url; ?>" class="s-school-board-link">View</a>
-                                </div>
-                            <?php endif; ?>
-
+                        <div class="s-board-row">
+                            <span class="s-school-board-label">School Board Committee</span>
+                            <a href="<?php echo $board_url; ?>" class="s-school-board-link">View</a>
                         </div>
 
+                        <?php if ($minutes_url && $minutes_url !== '#') : ?>
+                        <div class="s-board-row">
+                            <span class="s-school-board-label">Minutes</span>
+                            <a href="<?php echo $minutes_url; ?>" class="s-school-board-link">View</a>
+                        </div>
+                        <?php endif; ?>
+
                     </div>
+
                 </div>
+            </div>
             <?php endif; ?>
 
         </div>
@@ -276,7 +276,7 @@ $centers         = $school['centres'] ?? [];
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    
+
 }
 
 .s-prof-photo-circle::after {
