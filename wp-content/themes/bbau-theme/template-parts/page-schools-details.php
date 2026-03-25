@@ -256,7 +256,7 @@ $centers         = $school['centres'] ?? [];
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #2c1a4a, #6c3fc5);
+    background: #b15d4c85;
     padding: 35px;
 }
 
