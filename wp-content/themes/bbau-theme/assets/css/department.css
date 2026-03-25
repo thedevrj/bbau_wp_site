@@ -281,9 +281,8 @@
   z-index: 1;
 }
 
-.dept-card a:hover,
-a:focus {
-  color: #fff !important;
+.dept-card a:hover {
+  color: #fff ;
 }
 
 /* ── BUTTON ── */
@@ -308,7 +307,6 @@ a:focus {
 }
 
 .dept-btn::after {
-  content: '→';
   font-size: 15px;
   display: inline-block;
   transition: transform .2s;

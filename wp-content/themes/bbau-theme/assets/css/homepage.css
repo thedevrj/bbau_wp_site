@@ -474,6 +474,7 @@
   color: #f5de10;
   text-decoration: underline;
   display: block;
+  width: auto;
 }
 
 .glance-title::after {
