@@ -301,6 +301,8 @@ function vc_speech_post_type() {
 }
 add_action('init','vc_speech_post_type');
 
+
+//rewrite rules for school detail page
 function add_custom_query_vars($vars) {
     $vars[] = 'school_slug';
     return $vars;
@@ -315,3 +317,30 @@ function add_school_rewrite_rule() {
     );
 }
 add_action('init', 'add_school_rewrite_rule');
+
+// ACF Options Page for Sidebar Menus
+if (function_exists('acf_add_options_page')) {
+
+    acf_add_options_page(array(
+        'page_title' => 'Sidebar Menus',
+        'menu_title' => 'Sidebar Menus',
+        'menu_slug'  => 'sidebar-menus',
+        'capability' => 'edit_posts',
+        'redirect'   => false
+    ));
+}
+
+function custom_menu_rewrite_rule() {
+    add_rewrite_rule(
+        '^(.+?)/menu/([^/]+)/?$',
+        'index.php?pagename=$matches[1]&menu=$matches[2]',
+        'top'
+    );
+}
+add_action('init', 'custom_menu_rewrite_rule');
+
+function custom_menu_query_var($vars) {
+    $vars[] = 'menu';
+    return $vars;
+}
+add_filter('query_vars', 'custom_menu_query_var');

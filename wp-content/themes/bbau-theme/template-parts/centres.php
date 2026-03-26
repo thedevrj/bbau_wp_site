@@ -12,6 +12,8 @@ $api_url = $api_base . '/api/v1/centres/';
     <div class="container-fluid">
         <div class="container">
 
+        <?php get_template_part('menu/menu'); ?>
+
             <div class="centres-section">
 
                 <!-- Controls -->
