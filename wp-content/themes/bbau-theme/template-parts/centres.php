@@ -11,7 +11,6 @@ $api_url = $api_base . '/api/v1/centres/';
 <div class="centres-page">
     <div class="container-fluid">
         <div class="container">
-
         <?php get_template_part('menu/menu'); ?>
 
             <div class="centres-section">
@@ -90,7 +89,7 @@ function renderCentres(centres) {
                         <div class="info-icon ii-dir">👤</div>
                         <div>
                             <span class="info-label">Director</span>
-                            <span class="info-val">${c.director?.name || "N/A"}</span>
+                            <span class="info-val">${c.director?.name}</span>
                         </div>
                     </div>
 
