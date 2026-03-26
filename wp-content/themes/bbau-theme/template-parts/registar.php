@@ -55,12 +55,12 @@ get_header();
 
                             <!-- Buttons -->
                             <div class="registrar-buttons">
-                                <a href="/wp-content/uploads/2026/02/BriefResume_page-0001.pdf" class="reg-btn"
+                                <a href="#" class="reg-btn"
                                     target="_blank">
                                     Profile
                                 </a>
 
-                                <a href="/wp-content/uploads/2026/02/Tenure_of_Registrar.pdf" class="reg-btn"
+                                <a href="/wp-content/uploads/2026/03/Registrar.pdf" class="reg-btn"
                                     target="_blank">
                                     Tenure of Registrar
                                 </a>
@@ -99,6 +99,7 @@ get_header();
                     <h3>General Administration</h3>
                     <p><strong>Mr. Atul Bajpai </strong>, (GAD) <br>
                     <a class="link-new" href="mailto:gad@bbau.ac.in"><strong>Email:</strong> gad@bbau.ac.in</a> </p>
+                    <a href= "#" class="vc-btn"s>Visit page</a>
                 </div>
 
                 <div class="vc-resource-card">
@@ -106,12 +107,14 @@ get_header();
                     <p><strong>Smt. Sudha Srivastava </strong>, Section Officer <br>
                     <strong>Shri. Somesh Chandra </strong>, Section Officer <br>
                     <strong> Shri. Pradeep Kumar </strong>, Stenographer </p>
+                    <a href= "#" class="vc-btn"s>Visit page</a>
                 </div>
 
                 <div class="vc-resource-card">
                     <h3>Academic Section</h3>
                     <p><strong>Dr. Ranjeev Kumar Sahu </strong>, Deputy Registrar <br>
                     <strong>Shri. Govind Bhushan Madhukar </strong>, (LDC) </p>
+                    <a href= "#" class="vc-btn"s>Visit page</a>
                 </div>
 
                 <div class="vc-resource-card">
@@ -119,50 +122,57 @@ get_header();
                     <p><strong>Dr. Subhash Kumar Yadav </strong>, Deputy In-charge <br>
                     <strong>Dr. Vinit Kumar </strong>, Deputy In-charge <br> </p>
                 
-                    <a href= "#" class="vc-btn" target="_blank">Visit page</a>
+                    <a href= "#" class="vc-btn"s>Visit page</a>
                 </div>
                 
 
                 <div class="vc-resource-card">
                     <h3>Vehicle Section</h3>
-                    <p><strong>Dr. Jay Shankar Singh </strong>, In-charge <br>
-                    <strong>Mr. S. K. Tripathi </strong>, Hindi Officer <br>
-                    <strong>Shri B.S. Saini </strong>, Section Officer </p>
+                    <p><strong>Shri Gokaran Prasad</strong>, Assistant Registrar </p>
+                    <a href= "#" class="vc-btn"s>Visit page</a>
                 </div>
 
                 <div class="vc-resource-card">
                     <h3>ST / SC Cell</h3>
                     <p><strong>Mr. Arvind Shukla </strong>, RSO (I/c) </p>
-                    <a href= "#" class="vc-btn" target="_blank">Visit page</a>
+                    <a href= "/scst-cell" class="vc-btn">Visit page</a>
                 </div>
 
                 <div class="vc-resource-card">
                     <h3>Legal / RTI Cell</h3>
-                    <p><strong>Shri B. K. Kashyap </strong>, Assistant Registrar <br>
-                    <strong>Shri Amit Upadhyay </strong>, LDC </p>
+                    <p><strong>Shri Ashish Rastogi </strong>, Deputy Registrar (I/C) <br>
+                    <strong>Shri B.S. Saini </strong>, SO </p>
+                    <a href= "#" class="vc-btn"s>Visit page</a>
                 </div>
 
                 <div class="vc-resource-card">
-                    <h3>Research-cum-Statistical Officer(RSO)</h3>
-                    <p><strong>Shri Arvind Shukla </strong> </p>
+                    <h3>Research-cum-Statistical Office</h3>
+                    <p><strong>Shri Arvind Shukla </strong>, RSO </p>
+                    <a href= "#" class="vc-btn" >Visit page</a>
                 </div>
 
                 <div class="vc-resource-card">
                     <h3>University Works Department</h3>
                     <p><strong>Er. Pratik Kumar </strong>, Executive Engineer </p>
-                    <a href= "#" class="vc-btn" target="_blank">Visit page</a>
+                    <a href= "/universityworks-department" class="vc-btn"s>Visit page</a>
                 </div>
 
                 <div class="vc-resource-card">
                     <h3>Hindi Cell</h3>
                     <p><strong>Mr. S. K. Tripathi </strong>, Hindi Officer </p>
-                    <a href= "#" class="vc-btn" target="_blank">Visit page</a>
+                    <a href= "/hindi-cell" class="vc-btn">Visit page</a>
                 </div>
 
                 <div class="vc-resource-card">
-                    <h3>UWD</h3>
-                    <p><strong>Dr. R. S. Verma </strong>, In-Charge </p>
-                    <a href= "#" class="vc-btn" target="_blank">Visit page</a>
+                    <h3>Estate office</h3>
+                    <p><strong> </strong> </p>
+                    <a href= "#" class="vc-btn"s>Visit page</a>
+                </div>
+
+                <div class="vc-resource-card">
+                    <h3>Sanitation Section</h3>
+                    <p><strong>Dr. Ravi Shankar Verma </strong>, In-Charge </p>
+                    <a href= "#" class="vc-btn"s>Visit page</a>
                 </div>
 
             </div>

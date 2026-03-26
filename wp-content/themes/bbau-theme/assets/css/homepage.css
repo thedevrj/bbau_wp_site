@@ -30,7 +30,7 @@
   z-index:0;
 
   /* BRIGHT + RICH LOOK */
-  filter: brightness(1.2) contrast(1.1) saturate(1.2);
+  filter: brightness(1.1) contrast(1.0) saturate(1.0);
 }
 
 /* ================= LIGHTER OVERLAY ================= */
@@ -71,8 +71,8 @@
 
   /* SHOW FOR 60 SECONDS */
   animation:
-    popIn 1s ease 0.5s both,
-    popOut 1s ease 60s both;
+    popIn 2s ease 0.5s both,
+    popOut 2s ease 30s both;
 }
 
 /* PROGRESS BAR */

@@ -20,6 +20,8 @@ get_header();
         <?php get_template_part('template-parts/breadcrumb'); ?>
 
         <div class="container px-lg-3 px-0 pb-4 max_xl_w_1280 position-relative">
+        <?php get_template_part('menu/menu'); ?>
+
             <div class="row py-lg-2 py-3">
                 <div class="col-lg-12">
 

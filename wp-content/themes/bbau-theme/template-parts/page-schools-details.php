@@ -45,13 +45,32 @@ $specializations = '';
 
 $departments     = $school['departments'] ?? [];
 
-/* 🔥 FIXED KEY */
-$centers         = $school['centres'] ?? [];
+$centers_api = $api_base . "/api/v1/centres/";
+$centers_response = wp_remote_get($centers_api);
+
+$matched_centres = []; // final array
+
+if (!is_wp_error($centers_response)) {
+    $centers_data = json_decode(wp_remote_retrieve_body($centers_response), true);
+
+    if (is_array($centers_data)) {
+        foreach ($centers_data as $center) {
+            if (
+                isset($center['school_name']) &&
+                $center['school_name'] === $name
+            ) {
+                $matched_centres[] = [
+                    'name' => $center['name'],
+                    'slug' => $center['slug']
+                ];
+            }
+        }
+    }
+}
 ?>
 
 <?php get_template_part('banners/about-banner'); ?>
 
-<!-- ✅ CHANGED container-fluid TO container -->
 <div class="container-fluid page-bg py-lg-5">
 
     <?php get_template_part('template-parts/breadcrumb'); ?>
@@ -140,12 +159,12 @@ $centers         = $school['centres'] ?? [];
             <?php endif; ?>
 
             <!-- CENTERS -->
-            <?php if (!empty($centers) && is_array($centers)) : ?>
+            <?php if (!empty($matched_centres) && is_array($matched_centres)) : ?>
             <div class="s-departments-section">
                 <h3 class="s-dept-heading">All Centers</h3>
 
                 <div class="s-dept-pills">
-                    <?php foreach ($centers as $center): ?>
+                    <?php foreach ($matched_centres as $center): ?>
                     <div class="s-dept-pill">
                         <a href="/centers/<?php echo esc_attr($center['slug'] ?? '#'); ?>">
                             <?php echo esc_html($center['name'] ?? 'Center'); ?>
