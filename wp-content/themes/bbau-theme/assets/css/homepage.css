@@ -357,6 +357,9 @@
 
 .glance-overlay {
   background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);          /* 🔥 blur effect */
+  -webkit-backdrop-filter: blur(6px);  /* Safari support */
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -366,7 +369,8 @@
 .glance-container {
   width: 100%;
   padding: 0 7vw;
-  color: #ffffff;
+  color: #eec45a;
+  font-weight: 700;
 }
 
 /* =====================================================
@@ -455,13 +459,13 @@
   margin-top: 0.25rem;
   opacity: 0.9;
   font-weight: bold;
-  color: #ffffff;
+  color: #f5de10;
 }
 
 .count {
   font-size: 48px;
   font-weight: 700;
-  color: #ffffff;
+  color: #ff9933;
   transition: transform 0.3s ease;
 }
 

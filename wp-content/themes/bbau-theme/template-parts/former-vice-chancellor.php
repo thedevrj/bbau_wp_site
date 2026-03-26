@@ -18,13 +18,18 @@ $args = array(
 
 $query = new WP_Query($args);
 ?>
-<!-- Banner -->
+
 <?php get_template_part( 'banners/about-banner' ); ?>
-<!-- End Banner -->
+
 <?php if ($query->have_posts()) : ?>
-<div class="container-fluid page-bg page-template-about-bg py-lg-5 overflow-hidden">
+
+<!-- ✅ MAIN WRAPPER -->
+<div class="former-vc-page container-fluid py-lg-5 overflow-hidden">
+
     <?php get_template_part('template-parts/breadcrumb'); ?>
+
     <div class="container py-4">
+
         <h2 class="text-center mb-4">Former Vice Chancellors</h2>
 
         <div class="former-vc-grid">
@@ -39,6 +44,7 @@ $query = new WP_Query($args);
             <div class="former-vc-card">
                 <div class="former-vc-inner">
 
+                    <span class="former-vc-accent"></span>
 
                     <div class="former-vc-image">
                         <?php if (has_post_thumbnail()) : ?>
@@ -47,19 +53,25 @@ $query = new WP_Query($args);
                     </div>
 
                     <div class="former-vc-content">
-                        <h3 class="former-vc-title"><?php the_title(); ?></h3>
+
+                        <h3 class="former-vc-title">
+                            <?php echo ucwords(strtolower(get_the_title())); ?>
+                        </h3>
 
                         <p class="former-vc-duration">
-                            <span><strong>Time Period:</strong></span>
-                            
-                            <p class= "text-center"><?php echo esc_html($start); ?> - <?php echo esc_html($end); ?>
+
+                            <span>
+                                <?php echo esc_html($start); ?> - <?php echo esc_html($end); ?>
+                            </span>
+
                             <?php if ($start2 && $end2) : ?>
-                                <br>
+                            <span>
                                 <?php echo esc_html($start2); ?> - <?php echo esc_html($end2); ?>
+                            </span>
                             <?php endif; ?>
-                            </p>
 
                         </p>
+
                     </div>
 
                 </div>
@@ -69,6 +81,7 @@ $query = new WP_Query($args);
 
         </div>
     </div>
+
     <!-- Pagination -->
     <div class="former-vc-pagination">
         <?php
@@ -77,11 +90,9 @@ $query = new WP_Query($args);
         ));
         ?>
     </div>
+
 </div>
 
-
-
 <?php endif; wp_reset_postdata(); ?>
-<?php
-get_footer();
-?>
+
+<?php get_footer(); ?>
