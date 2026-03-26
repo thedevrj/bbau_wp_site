@@ -17,7 +17,7 @@ get_header();
         <?php get_template_part('template-parts/breadcrumb'); ?>
 
         <div class="container px-lg-3 px-0 py-1 max_xl_w_1280">
-
+            <?php get_template_part('menu/menu'); ?>
             <!-- ================= ABOUT SECTION ================= -->
             <div class="about-section">
 

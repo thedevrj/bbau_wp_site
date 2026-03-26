@@ -32,6 +32,8 @@ $query = new WP_Query($args);
             <?php while ($query->have_posts()) : $query->the_post(); 
             $start = get_field('start_date');
             $end   = get_field('end_date');
+            $start2 = get_field('start_date2');
+            $end2   = get_field('end_date2');
         ?>
 
             <div class="former-vc-card">
@@ -48,8 +50,15 @@ $query = new WP_Query($args);
                         <h3 class="former-vc-title"><?php the_title(); ?></h3>
 
                         <p class="former-vc-duration">
-                            <strong>Tenure:</strong>
-                            <?php echo esc_html($start); ?> - <?php echo esc_html($end); ?>
+                            <span><strong>Time Period:</strong></span>
+                            
+                            <p class= "text-center"><?php echo esc_html($start); ?> - <?php echo esc_html($end); ?>
+                            <?php if ($start2 && $end2) : ?>
+                                <br>
+                                <?php echo esc_html($start2); ?> - <?php echo esc_html($end2); ?>
+                            <?php endif; ?>
+                            </p>
+
                         </p>
                     </div>
 
