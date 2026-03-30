@@ -15,13 +15,15 @@ get_header();
     <div class="container">
         <div class="dept-nav">
             <a href="#" class="active">About</a>
-            <a href="#">Programme</a>
-            <a href="#">Academic Audit</a>
-            <a href="#">Faculties</a>
+            <a href="#">Thrust Areas</a>
+            <a href="#">Programmes</a>
             <a href="#">Achievements</a>
-            <a href="#">Notice</a>
+            <a href="#">People</a>
+            <a href="#">Notices</a>
+            <a href="#">Research Activities</a>
+            <a href="#">Time Table</a>
             <a href="#">Gallery</a>
-            <a href="#">Teaching Material</a>
+            <a href="#">Committees</a>
         </div>
     </div>
 
