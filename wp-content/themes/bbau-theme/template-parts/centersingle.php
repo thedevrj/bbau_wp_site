@@ -11,132 +11,113 @@ get_header();
 
 <div class="ciie-page">
 
-  <!-- BODY -->
   <div class="page-body">
+    <div class="container"> <!-- ✅ container -->
 
-    <!-- TOP SECTION -->
-    <div class="top-section">
+      <div class="top-section">
 
-      <!-- LEFT: CARDS -->
-      <div class="cards-column">
+        <!-- LEFT: CARDS -->
+        <div class="cards-column">
 
-        <?php if (have_rows('members')): ?>
-          <?php while (have_rows('members')): the_row(); ?>
+          <?php if (have_rows('members')): ?>
+            <?php while (have_rows('members')): the_row(); ?>
 
-            <div class="profile-card">
+              <div class="profile-card">
 
-              <!-- IMAGE -->
-              <div class="profile-photo">
-                <img src="<?php echo get_sub_field('image')['url']; ?>" alt="">
-              </div>
+                <!-- IMAGE -->
+                <div class="profile-photo">
+                  <img src="<?php echo get_sub_field('image')['url']; ?>" alt="">
+                </div>
 
-              <!-- CONTENT -->
-              <div class="profile-content">
+                <!-- CONTENT -->
+                <div class="profile-content">
 
-                <h3 class="profile-name"><?php echo get_sub_field('name'); ?></h3>
-                <h6 class="profile-designation"><?php echo get_sub_field('designation'); ?></h6>
+                  <h3 class="profile-name"><?php echo get_sub_field('name'); ?></h3>
+                  <h6 class="profile-designation"><?php echo get_sub_field('designation'); ?></h6>
 
-                <div class="profile-contacts">
+                  <div class="profile-contacts">
 
-                  <div class="contact-item">
-                    <div class="contact-icon">📞</div>
-                    <div>
-                      <span class="contact-label">Phone:</span>
-                      <span class="contact-value"><?php echo get_sub_field('phone'); ?></span>
+                    <div class="contact-item">
+                      <div class="contact-icon">📞</div>
+                      <div>
+                        <span class="contact-label">Phone:</span>
+                        <span class="contact-value">
+                          <a href="tel:<?php echo get_sub_field('phone'); ?>">
+                            <?php echo get_sub_field('phone'); ?>
+                          </a>
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="contact-item">
-                    <div class="contact-icon">✉️</div>
-                    <div>
-                      <span class="contact-label">Email:</span>
-                      <span class="contact-value">
-                        <a href="mailto:<?php echo get_sub_field('email'); ?>">
-                          <?php echo get_sub_field('email'); ?>
-                        </a>
-                      </span>
+                    <div class="contact-item">
+                      <div class="contact-icon">✉️</div>
+                      <div>
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value">
+                          <a href="mailto:<?php echo get_sub_field('email'); ?>">
+                            <?php echo get_sub_field('email'); ?>
+                          </a>
+                        </span>
+                      </div>
                     </div>
+
                   </div>
 
                 </div>
 
               </div>
 
-            </div>
+            <?php endwhile; ?>
+          <?php endif; ?>
 
-          <?php endwhile; ?>
-        <?php endif; ?>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="side-text">
+          <h3 class="section-title">About CIIE</h3>
+          <?php echo get_field('about'); ?>
+        </div>
 
       </div>
 
-      <!-- RIGHT: ABOUT -->
-      <div class="side-text">
-        <h3 class="section-title">About CIIE</h3>
-
-        <?php echo get_field('about'); ?>
+      <div class="full-width-section">
+        <?php echo get_field('bottom_content'); ?>
       </div>
 
     </div>
-
-    <!-- FULL WIDTH -->
-    <div class="full-width-section">
-      <?php echo get_field('bottom_content'); ?>
-    </div>
-
   </div>
 
 </div>
 
 <style>
 
-/* ================= RESET ================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ================= PAGE ================= */
 .ciie-page {
   background: #fdf9f4;
   font-family: 'Source Serif 4', serif;
-  width: 100%;
 }
 
-/* ================= HEADER ================= */
-.site-header {
-  background: linear-gradient(135deg, #e8f4f8, #d0eaf5);
-  border-bottom: 3px solid #8B0000;
-  padding: 18px 40px;
-  gap: 15px;
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
 }
 
-.site-header .logo {
-  width: 65px;
-}
-
-.site-header h1 {
-  flex: 1;
-  text-align: center;
-  color: #8B0000;
-  font-size: 22px;
-  line-height: 1.3;
-}
-
-/* ================= MAIN CONTAINER ================= */
 .page-body {
-  width: 100%;
-  padding: 30px 40px; /* fluid spacing */
+  padding: 40px 0;
 }
 
-/* ================= TOP SECTION ================= */
 .top-section {
   display: flex;
-  gap: 30px;
+  gap: 40px;
   align-items: flex-start;
 }
 
-/* LEFT COLUMN */
 .cards-column {
   flex: 1;
   display: flex;
@@ -144,36 +125,32 @@ get_header();
   gap: 20px;
 }
 
-/* RIGHT COLUMN */
 .side-text {
   flex: 1;
+  padding-top: 10px;
 }
 
-/* SECTION TITLE */
 .section-title {
   color: #8B0000;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   font-size: 22px;
 }
 
-/* ================= CARD ================= */
 .profile-card {
   display: flex;
   gap: 15px;
   background: #ffffff;
-  padding: 15px;
+  padding: 20px;
   border-radius: 14px;
   border-left: 5px solid #8B0000;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   transition: 0.3s;
-  width: 100%;
 }
 
 .profile-card:hover {
   transform: translateY(-4px);
 }
 
-/* IMAGE */
 .profile-photo img {
   width: 170px;
   height: 180px;
@@ -181,23 +158,32 @@ get_header();
   object-fit: cover;
 }
 
-/* TEXT */
+.profile-content {
+  padding-top: 5px;
+}
+
 .profile-name {
-  font-size: 24px;
+  font-size: 22px;
   color: #8B0000;
   font-weight: 700;
+  margin-bottom: 6px;
 }
 
 .profile-designation {
   color: #c8a84b;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
+  font-size: 15px;
 }
 
-/* CONTACT */
+.profile-contacts {
+  margin-top: 10px;
+}
+
 .contact-item {
   display: flex;
   gap: 8px;
-  margin-top: 5px;
+  margin-top: 8px;
+  align-items: center;
 }
 
 .contact-icon {
@@ -210,32 +196,38 @@ get_header();
   justify-content: center;
 }
 
-/* ================= FULL WIDTH SECTION ================= */
-/* SAME BACKGROUND FLOW */
+.contact-label {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.contact-value a {
+  color: #333;
+  text-decoration: none;
+}
+
+.contact-value a:hover {
+  text-decoration: underline;
+}
+
 .full-width-section {
-  margin-top: 10px;
-  padding: 0;
-  background: transparent;
-  width: 100%;
+  margin-top: 30px;
+  padding-top: 10px;
   line-height: 1.7;
 }
 
-/* ================= LARGE SCREEN ================= */
-/* No extra padding for 1920 */
-@media (min-width:1400px) {
-  .page-body {
-    padding: 30px 80px;
+/* ===== Laptop ===== */
+@media (max-width: 1200px) {
+  .container {
+    padding: 0 15px;
   }
 }
 
-/* ================= TABLET ================= */
-@media (max-width:992px) {
+/* ===== Tablet ===== */
+@media (max-width: 992px) {
+
   .top-section {
     flex-direction: column;
-  }
-
-  .page-body {
-    padding: 25px 20px;
   }
 
   .cards-column,
@@ -244,14 +236,8 @@ get_header();
   }
 }
 
-/* ================= MOBILE ================= */
-@media (max-width:768px) {
-
-  .site-header {
-    flex-direction: column;
-    text-align: center;
-    padding: 15px 20px;
-  }
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
 
   .profile-card {
     flex-direction: column;
@@ -263,8 +249,28 @@ get_header();
     height: auto;
   }
 
-  .page-body {
-    padding: 20px 15px;
+  .profile-name {
+    font-size: 20px;
+  }
+}
+
+/* ===== Small Mobile ===== */
+@media (max-width: 480px) {
+
+  .container {
+    padding: 0 10px;
+  }
+
+  .profile-card {
+    padding: 15px;
+  }
+
+  .profile-name {
+    font-size: 18px;
+  }
+
+  .profile-designation {
+    font-size: 14px;
   }
 }
 </style>
