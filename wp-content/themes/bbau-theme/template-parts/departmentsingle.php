@@ -22,8 +22,8 @@ get_header();
             <a href="#">Notices</a>
             <a href="#">Research Activities</a>
             <a href="#">Time Table</a>
-            <a href="#">Gallery</a>
             <a href="#">Committees</a>
+            <a href="#">Gallery</a>
         </div>
     </div>
 
