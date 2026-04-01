@@ -41,7 +41,7 @@ get_header();
                   <div class="contact-item">
                     <div class="contact-icon">📞</div>
                     <div>
-                      <span class="contact-label">Phone</span>
+                      <span class="contact-label">Phone:</span>
                       <span class="contact-value"><?php echo get_sub_field('phone'); ?></span>
                     </div>
                   </div>
@@ -49,7 +49,7 @@ get_header();
                   <div class="contact-item">
                     <div class="contact-icon">✉️</div>
                     <div>
-                      <span class="contact-label">Email</span>
+                      <span class="contact-label">Email:</span>
                       <span class="contact-value">
                         <a href="mailto:<?php echo get_sub_field('email'); ?>">
                           <?php echo get_sub_field('email'); ?>
@@ -108,8 +108,6 @@ get_header();
   background: linear-gradient(135deg, #e8f4f8, #d0eaf5);
   border-bottom: 3px solid #8B0000;
   padding: 18px 40px;
-  display: flex;
-  align-items: center;
   gap: 15px;
 }
 

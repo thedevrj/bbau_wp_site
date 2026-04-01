@@ -97,7 +97,7 @@ function renderCentres(centres) {
 
                 <!-- Footer -->
                 <div class="card-footer">
-                    <a href="#" class="view-btn">View</a>
+                    <a href="${c.slug}" class="view-btn">View</a>
                 </div>
 
             </div>
