@@ -74,7 +74,7 @@ get_header();
 
         <!-- RIGHT -->
         <div class="side-text">
-          <h3 class="section-title">About CIIE</h3>
+          <h3 class="section-title">About</h3>
           <?php echo get_field('about'); ?>
         </div>
 
