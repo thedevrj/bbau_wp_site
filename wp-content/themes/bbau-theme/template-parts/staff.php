@@ -2,7 +2,7 @@
 /* Template Name: Staff Page */
 get_header();
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<?php get_template_part('banners/about-banner'); ?>
 <div class="staff-page">
     <div class="container">
 
@@ -89,7 +89,7 @@ get_header();
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: auto;
 }
 
@@ -191,31 +191,68 @@ get_header();
   color: #853030;
   font-size: 12px;
 }
-/* RESPONSIVE */
-@media(max-width:900px) {
-    .staff-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* ================= RESPONSIVE ================= */
+/* ================= LARGE SCREEN (≤1200px) ================= */
+@media (max-width: 1200px) {
+  .staff-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
 }
 
-@media(max-width:600px) {
-    .staff-grid {
-        grid-template-columns: 1fr;
-    }
+/* ================= LAPTOP / TABLET (≤1024px) ================= */
+@media (max-width: 1024px) {
+  .staff-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
 
-    .staff-card {
-        flex-direction: column;
-        height: auto;
-    }
+/* ================= TABLET SMALL (≤768px) ================= */
+@media (max-width: 768px) {
+  .staff-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    .staff-left {
-        width: 100%;
-        height: 200px;
-    }
+  .staff-card {
+    height: 160px; /* slightly compact */
+  }
+}
 
-    .staff-right {
-        width: 100%;
-    }
+/* ================= MOBILE (≤600px) ================= */
+@media (max-width: 600px) {
+  .staff-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-card {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .staff-left {
+    width: 100%;
+    height: 200px;
+  }
+
+  .staff-right {
+    width: 100%;
+  }
+}
+
+/* ================= SMALL MOBILE (≤400px) ================= */
+@media (max-width: 400px) {
+  .staff-title {
+    font-size: 26px;
+  }
+
+  .staff-name {
+    font-size: 13px;
+  }
+
+  .staff-info {
+    font-size: 10px;
+  }
 }
 </style>
 
