@@ -5,6 +5,7 @@ get_header();
 <?php get_template_part('banners/about-banner'); ?>
 <div class="staff-page">
     <div class="container">
+            <?php get_template_part('menu/menu.php'); ?>
 
         <h2 class="staff-title">
             <?php 
@@ -56,14 +57,16 @@ get_header();
                         <?php the_sub_field('designation'); ?>
                     </div>
 
-                    <div class="staff-info email">
+                    <div class="staff-info email pt-2">
                         <i class="fa-solid fa-envelope"></i>
-                        <?php the_sub_field('email'); ?>
+                        <a class="link-new"
+                            href="mailto:<?php the_sub_field('email'); ?>"><?php the_sub_field('email'); ?></a>
                     </div>
 
                     <div class="staff-info phone">
                         <i class="fa-solid fa-phone"></i>
-                        <?php the_sub_field('phone'); ?>
+                        <a class="link-new"
+                            href="tel:<?php the_sub_field('phone'); ?>"><?php the_sub_field('phone'); ?></a>
                     </div>
 
                 </div>
@@ -179,80 +182,75 @@ get_header();
     color: #555;
 }
 
-.staff-info.email {
-    color: #444;
+.staff-info i {
+    margin-right: 6px;
+    color: #853030;
+    font-size: 12px;
 }
 
-.staff-info.phone {
-    color: #666;
-}
-.staff-info i {
-  margin-right: 6px;
-  color: #853030;
-  font-size: 12px;
-}
 /* ================= RESPONSIVE ================= */
 /* ================= LARGE SCREEN (≤1200px) ================= */
 @media (max-width: 1200px) {
-  .staff-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
+    .staff-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
 }
 
 /* ================= LAPTOP / TABLET (≤1024px) ================= */
 @media (max-width: 1024px) {
-  .staff-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
+    .staff-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
 }
 
 /* ================= TABLET SMALL (≤768px) ================= */
 @media (max-width: 768px) {
-  .staff-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    .staff-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-  .staff-card {
-    height: 160px; /* slightly compact */
-  }
+    .staff-card {
+        height: 160px;
+        /* slightly compact */
+    }
 }
 
 /* ================= MOBILE (≤600px) ================= */
 @media (max-width: 600px) {
-  .staff-grid {
-    grid-template-columns: 1fr;
-  }
+    .staff-grid {
+        grid-template-columns: 1fr;
+    }
 
-  .staff-card {
-    flex-direction: column;
-    height: auto;
-  }
+    .staff-card {
+        flex-direction: column;
+        height: auto;
+    }
 
-  .staff-left {
-    width: 100%;
-    height: 200px;
-  }
+    .staff-left {
+        width: 100%;
+        height: 200px;
+    }
 
-  .staff-right {
-    width: 100%;
-  }
+    .staff-right {
+        width: 100%;
+    }
 }
 
 /* ================= SMALL MOBILE (≤400px) ================= */
 @media (max-width: 400px) {
-  .staff-title {
-    font-size: 26px;
-  }
+    .staff-title {
+        font-size: 26px;
+    }
 
-  .staff-name {
-    font-size: 13px;
-  }
+    .staff-name {
+        font-size: 13px;
+    }
 
-  .staff-info {
-    font-size: 10px;
-  }
+    .staff-info {
+        font-size: 10px;
+    }
 }
 </style>
 
