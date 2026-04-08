@@ -103,36 +103,52 @@ if (!is_wp_error($centers_response)) {
                     <!-- RIGHT -->
                     <div class="s-prof-info">
 
-                        <h2><?php echo $dean_name ?: 'Dean Name'; ?></h2>
+                        <!-- NAME -->
+                        <h3><?php echo $dean_name ?: 'Dean Name'; ?></h3>
 
+                        <!-- DESIGNATION (MOVED HERE) -->
+                        <?php if ($designation) : ?>
+                        <div class="s-prof-designation"><?php echo $designation; ?></div>
+                        <?php endif; ?>
+
+                        <!-- CONTACT -->
                         <div class="s-prof-contact-row">
 
                             <?php if ($dean_phone) : ?>
-                            <div class="s-prof-contact-chip">📞 <?php echo $dean_phone; ?></div>
+                            <div class="s-prof-contact-chip">
+                                <a href="tel:<?php echo esc_attr($dean_phone); ?>">
+                                    <i class="fa-solid fa-phone"></i>
+                                    <?php echo esc_html($dean_phone); ?>
+                                </a>
+                            </div>
                             <?php endif; ?>
 
                             <?php if ($dean_email) : ?>
                             <div class="s-prof-contact-chip">
-                                <a href="mailto:<?php echo $dean_email; ?>">📧 <?php echo $dean_email; ?></a>
+                                <a href="mailto:<?php echo esc_attr($dean_email); ?>">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <?php echo esc_html($dean_email); ?>
+                                </a>
                             </div>
                             <?php endif; ?>
 
                             <?php if ($dean_email_alt) : ?>
                             <div class="s-prof-contact-chip">
-                                <a href="mailto:<?php echo $dean_email_alt; ?>">🏫 <?php echo $dean_email_alt; ?></a>
+                                <a href="mailto:<?php echo esc_attr($dean_email_alt); ?>">
+                                    <i class="fa-solid fa-building"></i>
+                                    <?php echo esc_html($dean_email_alt); ?>
+                                </a>
                             </div>
                             <?php endif; ?>
 
                         </div>
 
-                        <?php if ($designation) : ?>
-                        <div class="s-prof-designation"><?php echo $designation; ?></div>
-                        <?php endif; ?>
-
+                        <!-- ABOUT -->
                         <?php if ($dean_about) : ?>
                         <div class="s-prof-about"><?php echo $dean_about; ?></div>
                         <?php endif; ?>
 
+                        <!-- BUTTON -->
                         <a href="<?php echo $dean_url; ?>" class="s-view-btn">View Profile</a>
 
                     </div>
@@ -194,24 +210,6 @@ if (!is_wp_error($centers_response)) {
                             ? '<p>' . implode('</p><p>', array_filter(explode("\n\n", $desc))) . '</p>'
                             : $desc;
                         ?>
-
-                    <!-- SCHOOL BOARD -->
-                    <div class="s-school-board">
-
-                        <div class="s-board-row">
-                            <span class="s-school-board-label">School Board Committee</span>
-                            <a href="<?php echo $board_url; ?>" class="s-school-board-link">View</a>
-                        </div>
-
-                        <?php if ($minutes_url && $minutes_url !== '#') : ?>
-                        <div class="s-board-row">
-                            <span class="s-school-board-label">Minutes</span>
-                            <a href="<?php echo $minutes_url; ?>" class="s-school-board-link">View</a>
-                        </div>
-                        <?php endif; ?>
-
-                    </div>
-
                 </div>
             </div>
             <?php endif; ?>
@@ -220,7 +218,6 @@ if (!is_wp_error($centers_response)) {
     </section>
 
 </div>
-
 <style>
 /* ============================================
    SCHOOLS SINGLE PAGE - FINAL CLEAN CSS
@@ -247,7 +244,7 @@ if (!is_wp_error($centers_response)) {
 /* FULL WIDTH */
 .full-width-wrap {
     width: 100%;
-    padding: 0 40px;
+    padding: 0 60px;
 }
 
 @media (max-width: 768px) {
@@ -321,81 +318,136 @@ if (!is_wp_error($centers_response)) {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 6px;
 }
 
+/* NAME */
 .s-prof-info h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    margin-bottom: 10px;
+    font-size: 1.7rem;
+    margin-bottom: 6px;
     color: var(--s-deep);
+    letter-spacing: 0.5px;
 }
 
+/* UNDERLINE */
 .s-prof-info h2::after {
     content: '';
-    width: 90px;
+    width: 80px;
     height: 3px;
     background: linear-gradient(90deg, var(--s-vivid), #00a8ff);
     display: block;
     margin-top: 6px;
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
+/* CONTACT ROW */
 .s-prof-contact-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 12px;
 }
 
+/* CONTACT CHIP */
 .s-prof-contact-chip {
     background: #f6f3fd;
     border: 1px solid var(--s-border);
-    border-radius: 20px;
-    padding: 5px 12px;
+    border-radius: 25px;
+    padding: 6px 14px;
     font-size: 12px;
+    transition: 0.3s ease;
 }
 
 .s-prof-contact-chip a {
     color: var(--s-vivid);
     text-decoration: none;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
+/* ICON */
+.s-prof-contact-chip i {
+    font-size: 12px;
+    color: var(--s-vivid);
+}
+
+/* HOVER EFFECT */
+.s-prof-contact-chip:hover {
+    background: var(--s-vivid);
+    border-color: var(--s-vivid);
+}
+
+.s-prof-contact-chip:hover a {
+    color: #fff;
+}
+
+.s-prof-contact-chip:hover i {
+    color: #fff;
+}
+
+/* DESIGNATION */
 .s-prof-designation {
-    font-size: 11px;
+    font-size: 18px;
+    font-weight: 600;
     text-transform: uppercase;
     color: var(--s-vivid);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    letter-spacing: 3.5px;
 }
 
+/* SPECIALIZATION */
 .s-prof-specializations {
     font-size: 13px;
     margin-bottom: 10px;
     border-left: 3px solid var(--s-saffron);
-    padding-left: 10px;
+    padding-left: 12px;
+    color: #444;
 }
 
+/* ABOUT */
 .s-prof-about {
     font-size: 13.5px;
     line-height: 1.6;
-    color: #444;
+    color: #555;
     margin-bottom: 16px;
 }
 
+/* BUTTON */
 .s-view-btn {
     align-self: flex-start;
     background: linear-gradient(135deg, var(--s-saffron), var(--s-saffron2));
     color: #fff;
-    padding: 8px 22px;
+    padding: 9px 24px;
     border-radius: 40px;
     text-decoration: none;
     font-weight: 600;
     font-size: 13px;
+    transition: 0.3s ease;
 }
 
+/* BUTTON HOVER */
 .s-view-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(224, 123, 24, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(224, 123, 24, 0.25);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .s-prof-info {
+        padding: 20px;
+    }
+
+    .s-prof-info h2 {
+        font-size: 1.4rem;
+    }
+
+    .s-prof-contact-chip {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
 }
 
 /* ============================================
@@ -404,7 +456,7 @@ if (!is_wp_error($centers_response)) {
 
 .s-dept-heading {
     font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     font-weight: 700;
     color: var(--s-deep);
     margin-bottom: 18px;
@@ -489,77 +541,6 @@ if (!is_wp_error($centers_response)) {
             var(--s-vivid),
             var(--s-deep),
             var(--s-saffron));
-}
-
-/* ============================================
-   SCHOOL BOARD (ROW BASED DESIGN)
-============================================ */
-
-/* MAIN CONTAINER */
-.s-school-board {
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px dashed var(--s-border);
-    width: 100%;
-}
-
-/* EACH ROW */
-.s-board-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* 🔥 pushes View to right corner */
-    padding: 14px 0;
-    border-bottom: 1px solid #eee;
-    /* optional divider */
-}
-
-/* REMOVE BORDER FROM LAST ROW */
-.s-board-row:last-child {
-    border-bottom: none;
-}
-
-/* LABEL (LEFT SIDE TEXT) */
-.s-school-board-label {
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--s-deep);
-    letter-spacing: 0.5px;
-}
-
-/* VIEW BUTTON (RIGHT SIDE) */
-.s-school-board-link {
-    background: var(--s-deep) !important;
-    color: #fff !important;
-    padding: 8px 22px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 13px;
-    transition: 0.3s;
-}
-
-/* HOVER EFFECT */
-.s-school-board-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(44, 26, 74, 0.25);
-}
-
-/* ============================================
-   RESPONSIVE
-============================================ */
-
-@media (max-width: 768px) {
-
-    .s-board-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .s-school-board-link {
-        align-self: flex-start;
-    }
 }
 
 /* ============================================
