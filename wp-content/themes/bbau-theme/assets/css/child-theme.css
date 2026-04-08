@@ -2183,7 +2183,7 @@ h2::after {
 
 .common-menu {
   width: 100%;
-  background: #ffffff;
+  background: #271818cb;
   border-radius: 12px;
   border: 1px solid #e0edf2;
   box-shadow: 0 6px 20px rgba(26, 46, 59, 0.08);
@@ -2208,10 +2208,10 @@ h2::after {
   padding: 14px 10px;
 
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 700;
   text-align: center;
 
-  color: #6b8ea0 !important;
+  color: #09222f !important;
   text-decoration: none;
 
   border-right: 1px solid #eef5f8;
@@ -2231,7 +2231,7 @@ h2::after {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #b0cfe0;
+  background: #79750a;
   transition: all .25s;
 }
 

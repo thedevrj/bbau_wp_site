@@ -103,8 +103,15 @@ if (!is_wp_error($centers_response)) {
                     <!-- RIGHT -->
                     <div class="s-prof-info">
 
+                        <!-- NAME -->
                         <h3><?php echo $dean_name ?: 'Dean Name'; ?></h3>
 
+                        <!-- DESIGNATION (MOVED HERE) -->
+                        <?php if ($designation) : ?>
+                        <div class="s-prof-designation"><?php echo $designation; ?></div>
+                        <?php endif; ?>
+
+                        <!-- CONTACT -->
                         <div class="s-prof-contact-row">
 
                             <?php if ($dean_phone) : ?>
@@ -136,14 +143,12 @@ if (!is_wp_error($centers_response)) {
 
                         </div>
 
-                        <?php if ($designation) : ?>
-                        <div class="s-prof-designation"><?php echo $designation; ?></div>
-                        <?php endif; ?>
-
+                        <!-- ABOUT -->
                         <?php if ($dean_about) : ?>
                         <div class="s-prof-about"><?php echo $dean_about; ?></div>
                         <?php endif; ?>
 
+                        <!-- BUTTON -->
                         <a href="<?php echo $dean_url; ?>" class="s-view-btn">View Profile</a>
 
                     </div>
@@ -205,24 +210,6 @@ if (!is_wp_error($centers_response)) {
                             ? '<p>' . implode('</p><p>', array_filter(explode("\n\n", $desc))) . '</p>'
                             : $desc;
                         ?>
-
-                    <!-- SCHOOL BOARD -->
-                    <div class="s-school-board">
-
-                        <div class="s-board-row">
-                            <span class="s-school-board-label">School Board Committee</span>
-                            <a href="<?php echo $board_url; ?>" class="s-school-board-link">View</a>
-                        </div>
-
-                        <?php if ($minutes_url && $minutes_url !== '#') : ?>
-                        <div class="s-board-row">
-                            <span class="s-school-board-label">Minutes</span>
-                            <a href="<?php echo $minutes_url; ?>" class="s-school-board-link">View</a>
-                        </div>
-                        <?php endif; ?>
-
-                    </div>
-
                 </div>
             </div>
             <?php endif; ?>
@@ -324,6 +311,7 @@ if (!is_wp_error($centers_response)) {
     background: radial-gradient(circle, rgba(245, 160, 48, 0.25), transparent 70%);
     z-index: -1;
 }
+
 /* RIGHT */
 .s-prof-info {
     padding: 35px 40px;
@@ -402,11 +390,12 @@ if (!is_wp_error($centers_response)) {
 
 /* DESIGNATION */
 .s-prof-designation {
-    font-size: 11px;
+    font-size: 18px;
+    font-weight: 600;
     text-transform: uppercase;
     color: var(--s-vivid);
     margin-bottom: 6px;
-    letter-spacing: 0.5px;
+    letter-spacing: 3.5px;
 }
 
 /* SPECIALIZATION */
@@ -467,7 +456,7 @@ if (!is_wp_error($centers_response)) {
 
 .s-dept-heading {
     font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     font-weight: 700;
     color: var(--s-deep);
     margin-bottom: 18px;
@@ -552,77 +541,6 @@ if (!is_wp_error($centers_response)) {
             var(--s-vivid),
             var(--s-deep),
             var(--s-saffron));
-}
-
-/* ============================================
-   SCHOOL BOARD (ROW BASED DESIGN)
-============================================ */
-
-/* MAIN CONTAINER */
-.s-school-board {
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px dashed var(--s-border);
-    width: 100%;
-}
-
-/* EACH ROW */
-.s-board-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* 🔥 pushes View to right corner */
-    padding: 14px 0;
-    border-bottom: 1px solid #eee;
-    /* optional divider */
-}
-
-/* REMOVE BORDER FROM LAST ROW */
-.s-board-row:last-child {
-    border-bottom: none;
-}
-
-/* LABEL (LEFT SIDE TEXT) */
-.s-school-board-label {
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--s-deep);
-    letter-spacing: 0.5px;
-}
-
-/* VIEW BUTTON (RIGHT SIDE) */
-.s-school-board-link {
-    background: var(--s-deep) !important;
-    color: #fff !important;
-    padding: 8px 22px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 13px;
-    transition: 0.3s;
-}
-
-/* HOVER EFFECT */
-.s-school-board-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(44, 26, 74, 0.25);
-}
-
-/* ============================================
-   RESPONSIVE
-============================================ */
-
-@media (max-width: 768px) {
-
-    .s-board-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .s-school-board-link {
-        align-self: flex-start;
-    }
 }
 
 /* ============================================
