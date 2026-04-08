@@ -24,7 +24,7 @@ if (!is_wp_error($response)) {
 
 $name            = esc_html($school['name'] ?? '');
 
-$designation     = esc_html($school['dean']['role'] ?? '');
+$designation     = esc_html( 'DEAN');
 $dean_name       = esc_html($school['dean']['name'] ?? '');
 
 $dean_phone      = esc_html($school['dean']['phone1'] ?? '');
@@ -33,8 +33,8 @@ $dean_email_alt  = esc_html($school['dean']['other_email'] ?? '');
 
 $dean_photo      = $school['dean']['photo'] ?? '';
 $dean_about      = wp_kses_post($school['dean']['bio'] ?? '');
-
-$description     = $school['about_school'] ?? '';
+$dean_message   = wp_kses_post($school['dean_message']?? '');
+$about_school     = $school['about_school'] ?? '';
 
 $board_url       = '#'; 
 $minutes_url     = '#';
@@ -93,8 +93,7 @@ if (!is_wp_error($centers_response)) {
                     <div class="s-prof-photo-wrap">
                         <div class="s-prof-photo-circle">
                             <?php if ($dean_photo) : ?>
-                            <img src="<?php echo esc_url($media_base . $dean_photo); ?>"
-                                alt="<?php echo esc_attr($dean_name); ?>">
+                            <img src="<?php echo esc_url($dean_photo); ?>" alt="<?php echo esc_attr($dean_name); ?>">
                             <?php else : ?>
                             <div class="s-no-photo">No Image</div>
                             <?php endif; ?>
@@ -161,7 +160,7 @@ if (!is_wp_error($centers_response)) {
             <!-- CENTERS -->
             <?php if (!empty($matched_centres) && is_array($matched_centres)) : ?>
             <div class="s-departments-section">
-                <h3 class="s-dept-heading">All Centers</h3>
+                <h3 class="s-dept-heading">Centers</h3>
 
                 <div class="s-dept-pills">
                     <?php foreach ($matched_centres as $center): ?>
@@ -176,12 +175,21 @@ if (!is_wp_error($centers_response)) {
             <?php endif; ?>
 
             <!-- ABOUT -->
-            <?php if ($description) : ?>
+            <?php if ($about_school) : ?>
             <div class="s-about-card">
                 <div class="s-about-inner">
+                    <h2>Message from the Dean</h2>
+                    <?php $dean = wp_kses_post($dean_message);
+                        echo (strpos($dean, '<p>') === false)
+                            ? '<p>' . implode('</p><p>', array_filter(explode("\n\n", $dean))) . '</p>'
+                            : $dean;
+                        ?>
+                </div>
+                <div class="s-about-card">
+                    <h2>About <?php echo $name; ?></h2>
 
                     <?php
-                        $desc = wp_kses_post($description);
+                        $desc = wp_kses_post($about_school);
                         echo (strpos($desc, '<p>') === false)
                             ? '<p>' . implode('</p><p>', array_filter(explode("\n\n", $desc))) . '</p>'
                             : $desc;
@@ -521,8 +529,8 @@ if (!is_wp_error($centers_response)) {
 
 /* VIEW BUTTON (RIGHT SIDE) */
 .s-school-board-link {
-    background: var(--s-deep);
-    color: #fff;
+    background: var(--s-deep) !important;
+    color: #fff !important;
     padding: 8px 22px;
     border-radius: 50px;
     text-decoration: none;
