@@ -6,36 +6,28 @@ defined('ABSPATH') || exit;
 
 get_header();
 ?>
-
-<?php get_template_part('banners/about-banner'); ?>
-
+<!-- ✅ TOP SECTION (Banner + Menu) -->
+<div class="container px-lg-3 px-0 max_xl_w_1280 position-relative">
+    <!-- Banner -->
+    <?php get_template_part('banners/about-banner'); ?>
+    <!-- Menu -->
+    <?php get_template_part('menu/menu'); ?>
+</div>
 <div class="ciie-page">
-
     <div class="page-body">
         <div class="container">
-            <!-- ✅ container -->
-
             <div class="top-section">
-
                 <!-- LEFT: CARDS -->
                 <div class="cards-column">
-
                     <?php if (have_rows('members')): ?>
                     <?php while (have_rows('members')): the_row(); ?>
-
                     <div class="profile-card">
-
-                        <!-- IMAGE -->
                         <div class="profile-photo">
                             <img src="<?php echo get_sub_field('image')['url']; ?>" alt="">
                         </div>
-
-                        <!-- CONTENT -->
                         <div class="profile-content">
-
                             <h3 class="profile-name"><?php echo get_sub_field('name'); ?></h3>
                             <h6 class="profile-designation"><?php echo get_sub_field('designation'); ?></h6>
-
                             <div class="profile-contacts">
                                 <div class="contact-item">
                                     <div class="contact-icon">
@@ -50,7 +42,6 @@ get_header();
                                         </span>
                                     </div>
                                 </div>
-
                                 <div class="contact-item">
                                     <div class="contact-icon">
                                         <i class="fa-solid fa-envelope"></i>
@@ -64,35 +55,25 @@ get_header();
                                         </span>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                     <?php endwhile; ?>
                     <?php endif; ?>
-
                 </div>
-
                 <!-- RIGHT -->
                 <div class="side-text">
                     <h3 class="section-title">About</h3>
                     <?php echo get_field('about'); ?>
                 </div>
-
             </div>
-
             <div class="full-width-section">
                 <?php echo get_field('bottom_content'); ?>
             </div>
-
         </div>
     </div>
-
 </div>
-
+<?php get_footer(); ?>
 <style>
 * {
     margin: 0;
