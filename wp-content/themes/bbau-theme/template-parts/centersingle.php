@@ -6,29 +6,50 @@ defined('ABSPATH') || exit;
 
 get_header();
 ?>
-<!-- ✅ TOP SECTION (Banner + Menu) -->
-<div class="container px-lg-3 px-0 max_xl_w_1280 position-relative">
-    <!-- Banner -->
+
+<!-- ================= FULL WIDTH BANNER ================= -->
+<div class="ciie-banner">
     <?php get_template_part('banners/about-banner'); ?>
-    <!-- Menu -->
-    <?php get_template_part('menu/menu'); ?>
 </div>
+
+<!-- ================= PAGE START ================= -->
 <div class="ciie-page">
+
+    <!-- ✅ MENU (NOW INSIDE PAGE - FIXED) -->
+    <div class="menu-wrapper">
+        <?php get_template_part('menu/menu'); ?>
+    </div>
+
     <div class="page-body">
         <div class="container">
+
             <div class="top-section">
-                <!-- LEFT: CARDS -->
+
+                <!-- ================= LEFT: CARDS ================= -->
                 <div class="cards-column">
+
                     <?php if (have_rows('members')): ?>
                     <?php while (have_rows('members')): the_row(); ?>
+
                     <div class="profile-card">
+
                         <div class="profile-photo">
                             <img src="<?php echo get_sub_field('image')['url']; ?>" alt="">
                         </div>
+
                         <div class="profile-content">
-                            <h3 class="profile-name"><?php echo get_sub_field('name'); ?></h3>
-                            <h6 class="profile-designation"><?php echo get_sub_field('designation'); ?></h6>
+
+                            <h3 class="profile-name">
+                                <?php echo get_sub_field('name'); ?>
+                            </h3>
+
+                            <h6 class="profile-designation">
+                                <?php echo get_sub_field('designation'); ?>
+                            </h6>
+
                             <div class="profile-contacts">
+
+                                <!-- PHONE -->
                                 <div class="contact-item">
                                     <div class="contact-icon">
                                         <i class="fa-solid fa-phone"></i>
@@ -42,6 +63,8 @@ get_header();
                                         </span>
                                     </div>
                                 </div>
+
+                                <!-- EMAIL -->
                                 <div class="contact-item">
                                     <div class="contact-icon">
                                         <i class="fa-solid fa-envelope"></i>
@@ -55,25 +78,36 @@ get_header();
                                         </span>
                                     </div>
                                 </div>
+
                             </div>
+
                         </div>
+
                     </div>
+
                     <?php endwhile; ?>
                     <?php endif; ?>
+
                 </div>
-                <!-- RIGHT -->
+
+                <!-- ================= RIGHT ================= -->
                 <div class="side-text">
                     <h3 class="section-title">About</h3>
                     <?php echo get_field('about'); ?>
                 </div>
+
             </div>
+
+            <!-- ================= BOTTOM CONTENT ================= -->
             <div class="full-width-section">
                 <?php echo get_field('bottom_content'); ?>
             </div>
+
         </div>
     </div>
+
 </div>
-<?php get_footer(); ?>
+
 <style>
 * {
     margin: 0;
