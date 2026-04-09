@@ -2180,31 +2180,35 @@ h2::after {
 /* =====================================
    DEPARTMENT PAGE MENU
 ===================================== */
-
+/* ================= MENU ================= */
 .common-menu {
-  display: inline-block;              /* ✅ fit to content */
+  display: inline-block;        /* ✅ auto width (key change) */
+  max-width: 100%;              /* safety (not forcing width) */
   background: #5A6A7A;
   border-radius: 12px;
   border: 1px solid #e0edf2;
   box-shadow: 0 6px 20px rgba(26, 46, 59, 0.08);
-  margin: 20px auto;                 /* ✅ center */
+  margin: 20px auto;
   overflow: hidden;
 }
 
-/* center wrapper */
 .menu-wrapper {
-  text-align: center;
+  text-align: center;           /* center the inline-block menu */
+  padding: 0 10px;
 }
 
+/* ================= NAV ================= */
 .common-menu-nav {
   display: flex;
-  flex-wrap: nowrap;                 /* ✅ single line */
+  flex-wrap: nowrap;
+  justify-content: center;      /* center when space available */
   align-items: stretch;
 }
 
+/* ================= LINKS ================= */
 .common-menu-link {
-  flex: 0 0 auto;                   /* ✅ no equal width */
-  min-width: 120px;                 /* optional uniform look */
+  flex: 0 0 auto;
+  min-width: 120px;
 
   display: flex;
   flex-direction: column;
@@ -2212,7 +2216,7 @@ h2::after {
   justify-content: center;
   gap: 6px;
 
-  padding: 14px 22px;
+  padding: 14px 20px;
 
   font-size: 13px;
   font-weight: 700;
@@ -2222,9 +2226,7 @@ h2::after {
   text-decoration: none;
 
   border-right: 1px solid #eef5f8;
-
   position: relative;
-
   transition: all .25s ease;
 }
 
@@ -2232,7 +2234,7 @@ h2::after {
   border-right: none;
 }
 
-/* dot */
+/* ================= DOT ================= */
 .common-menu-link .dot {
   width: 6px;
   height: 6px;
@@ -2241,7 +2243,7 @@ h2::after {
   transition: all .25s ease;
 }
 
-/* underline */
+/* ================= UNDERLINE ================= */
 .common-menu-link::after {
   content: '';
   position: absolute;
@@ -2249,16 +2251,12 @@ h2::after {
   right: 10%;
   bottom: 0;
   height: 3px;
-
   background: linear-gradient(90deg, #1a2e3b, #2196a6);
-
   transform: scaleX(0);
-  transform-origin: center;
   transition: transform .3s ease;
 }
 
-/* hover */
-
+/* ================= HOVER ================= */
 .common-menu-link:hover {
   background: #f5fafc;
   color: #1a2e3b !important;
@@ -2272,8 +2270,7 @@ h2::after {
   transform: scaleX(1);
 }
 
-/* active */
-
+/* ================= ACTIVE ================= */
 .common-menu-link.active {
   background: #eef6fa;
   color: #1a2e3b !important;
@@ -2282,32 +2279,53 @@ h2::after {
 
 .common-menu-link.active .dot {
   background: #1a2e3b !important;
-  box-shadow: 0 0 6px rgba(26, 46, 59, 0.25);
 }
 
 .common-menu-link.active::after {
   transform: scaleX(1);
 }
 
+/* ================= TABLET + MOBILE ================= */
+@media (max-width: 992px) {
 
-a,
-a:visited {
-  color: #1a2e3b;
-}
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media (max-width:768px) {
+  .common-menu {
+    display: block;               /* allow scrolling area */
+  }
 
   .common-menu-nav {
-    overflow-x: auto;
-    flex-wrap: nowrap;
+    justify-content: flex-start;  /* align left when overflow */
+    overflow-x: auto;             /* scroll only if needed */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
 
   .common-menu-link {
-    min-width: 120px;
+    min-width: 110px;
+    padding: 12px 16px;
+    font-size: 12px;
   }
 
+  /* scrollbar */
+  .common-menu-nav::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .common-menu-nav::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 10px;
+  }
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+  .common-menu-link {
+    min-width: 90px;
+    font-size: 11px;
+    padding: 10px 12px;
+  }
+
+  .common-menu-link .dot {
+    width: 5px;
+    height: 5px;
+  }
 }
