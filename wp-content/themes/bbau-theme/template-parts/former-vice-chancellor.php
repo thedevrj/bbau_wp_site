@@ -23,7 +23,7 @@ $query = new WP_Query($args);
 
 <?php if ($query->have_posts()) : ?>
 
-<!-- ✅ MAIN WRAPPER -->
+<!--  MAIN WRAPPER -->
 <div class="former-vc-page container-fluid py-lg-5 overflow-hidden">
 
     <?php get_template_part('template-parts/breadcrumb'); ?>

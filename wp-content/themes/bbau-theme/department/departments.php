@@ -130,7 +130,7 @@ function displayPage(departments) {
                 <h3>${dept.name}</h3>
                 <p>${dept.description || ''}</p>
 
-                <a class="dept-btn" href="/department/${dept.slug}">
+                <a class="dept-btn" href="/departments/${dept.slug}">
                 View Department<i class="fas fa-arrow-right"></i>
             </a>
             </div>
