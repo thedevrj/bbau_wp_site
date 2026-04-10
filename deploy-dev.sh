@@ -15,4 +15,4 @@ echo "→ Restarting containers"
 docker-compose down
 docker-compose up -d
 
-echo "✅ DEV deployment complete"
+echo " DEV deployment complete"

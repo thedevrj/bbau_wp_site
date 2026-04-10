@@ -12,7 +12,7 @@ get_header();
 <div class="ciie-page">
 
   <div class="page-body">
-    <div class="container"> <!-- ✅ container -->
+    <div class="container"> 
 
       <div class="top-section">
 
