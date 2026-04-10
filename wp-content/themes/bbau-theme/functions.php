@@ -305,14 +305,23 @@ add_action('init','vc_speech_post_type');
 //rewrite rules for school detail page
 function add_custom_query_vars($vars) {
     $vars[] = 'school_slug';
+    $vars[] = 'dept_slug';
     return $vars;
 }
 add_filter('query_vars', 'add_custom_query_vars');
 
 function add_school_rewrite_rule() {
+
+	//school rewrite rule
     add_rewrite_rule(
         '^schools/([^/]+)/?$',
         'index.php?pagename=school-detail&school_slug=$matches[1]',
+        'top'
+    );
+    // department rewrite rule
+    add_rewrite_rule(
+        '^departments/([^/]+)/?$',
+        'index.php?pagename=department&dept_slug=$matches[1]',
         'top'
     );
 }

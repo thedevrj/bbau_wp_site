@@ -93,7 +93,7 @@ if (!is_wp_error($centers_response)) {
                     <div class="s-prof-photo-wrap">
                         <div class="s-prof-photo-circle">
                             <?php if ($dean_photo) : ?>
-                            <img src="<?php echo esc_url($dean_photo); ?>" alt="<?php echo esc_attr($dean_name); ?>">
+                            <img src="<?php echo esc_url($media_base . $dean_photo); ?>" alt="<?php echo esc_attr($dean_name); ?>">
                             <?php else : ?>
                             <div class="s-no-photo">No Image</div>
                             <?php endif; ?>
