@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <!-- ================= ANNOUNCEMENT BAR ================= -->
-<div class="announce-bar">
+<div id="main-content" class="announce-bar">
     <div class="announce-container">
         <div class="announce-track">
             <?php if ( !empty($marquee_notices) ) : ?>
