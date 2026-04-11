@@ -65,7 +65,7 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
 .faculty-photo {
     width: 100%;
     height: 260px;
-    object-fit: cover;
+    object-fit: inherit;
     border-bottom: 4px solid #c9a84c;
 }
 

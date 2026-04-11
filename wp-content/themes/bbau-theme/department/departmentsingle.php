@@ -31,7 +31,28 @@ if (!in_array($tab, $allowed_tabs)) {
 get_header();
 ?>
 
-<?php get_template_part('banners/about-banner'); ?>
+<?php $page_id = get_the_Id(); ?>
+<div class="container-fluid position-relative px-0 overflow-hidden">
+    <img src="<?php echo get_field('desktop_1x', $page_id); ?>"
+        srcset="<?php echo get_field('desktop_1x', $page_id); ?>"
+        class="img-fluid d-lg-block d-none h_xl_250 object-fit-cover" alt="<?php the_title();?> Banner" width="100%" height="250">
+
+    <!-- Mobile Image (only show if mobile_1x exists) -->
+    <?php if(get_field('mobile_1x', $page_id)) : ?>
+    <img src="<?php echo get_field('mobile_1x', $page_id); ?>" srcset="<?php echo get_field('mobile_1x', $page_id); ?> "
+        class="img-fluid d-lg-none h_sm_204" alt="<?php the_title();?> Banner" width="100%" height="204">
+    <?php endif; ?>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mt-lg-0 mt-md-5 pe-md-0 pe-5 subpage-hero-text position-absolute max_xl_w_498">
+                <h1
+                    class="d-block mt-0 mb-0 color_white text_medium sm_text_32 sm_line_height_38 text_40 line_height_48 text-capitalize me-lg-0 me-5 pe-lg-0 pe-5">
+                    <?php echo esc_html($dept_data['name']);?></h1>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php if (empty($dept_data)): ?>
     <div class="container py-5" style="text-align:center; min-height: 50vh;">
@@ -66,11 +87,11 @@ get_header();
 
     <div class="container py-4">
 
-        <div class="page-title">
+        <!-- <div class="page-title">
             <h2 class="dept-title-gradient">
                 Department of <?php echo esc_html($dept_data['name'] ?? 'Department Overview'); ?>
             </h2>
-        </div>
+        </div> -->
 
         <?php 
         // DYNAMIC INCLUSION OF TAB FILE
@@ -89,7 +110,7 @@ get_header();
 <?php get_footer(); ?>
 
 
-<!--  SCOPED CSS (ONLY THIS PAGE) -->
+<!--  CSS -->
 <style>
 /* ================= PAGE BACKGROUND ================= */
 .dept-page-wrapper {
@@ -169,7 +190,7 @@ get_header();
   margin-bottom: 20px;
 }
 
-/* 🔥 UNDERLINE (MATCHING YOUR THEME) */
+/*  UNDERLINE */
 .dept-page-wrapper .dept-title-gradient::after {
   content: "";
   display: block;
@@ -186,7 +207,7 @@ get_header();
 .avatar img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: inherit;
 }
 
 .hod-card:hover {
@@ -195,7 +216,6 @@ get_header();
 }
 
 /* LEFT */
-/* ================= LEFT ================= */
 .hod-left {
     background: linear-gradient(160deg, #5c1010, #8B1A1A);
     width: 300px;
