@@ -14,8 +14,9 @@ $page_Id = get_the_ID();
 
         <?php get_template_part('template-parts/breadcrumb'); ?>
 
-        <?php get_template_part('menu/menu'); ?>
-
+       <div class="menu-wrapper">
+                <?php get_template_part('menu/menu'); ?>
+            </div>
 
         <!-- =============================
             ASSISTANT DIRECTORS
