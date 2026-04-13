@@ -17,7 +17,7 @@ $media_base = getenv('DJANGO_MEDIA_URL');
 
     <div class="hod-right">
         <div class="name"><?php echo esc_html($hod['name']); ?></div>
-        <div class="role"> <?php echo esc_html($hod['designation'] ); ?></div>
+        <div class="role"> HOD</div>
 
         <div class="contacts">
             <?php if(!empty($hod['phone1'])): ?>

@@ -136,7 +136,7 @@
   font-size: 16px;
 }
 
-.font-medium span {
+.font-normal span {
   font-size: 14px;
 }
 
@@ -216,7 +216,7 @@
     font-size: 14px;
   }
 
-  .font-medium span {
+  .font-normal span {
     font-size: 12px;
   }
 

@@ -113,7 +113,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 .leader-photo-wrap img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: inherit;
     transition: 0.5s;
 }
 
