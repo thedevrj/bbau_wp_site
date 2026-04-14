@@ -302,10 +302,11 @@ function vc_speech_post_type() {
 add_action('init','vc_speech_post_type');
 
 
-//rewrite rules for school detail page
+//rewrite rules for school detail page and faculty profile
 function add_custom_query_vars($vars) {
     $vars[] = 'school_slug';
     $vars[] = 'dept_slug';
+    $vars[] = 'faculty_slug';
     return $vars;
 }
 add_filter('query_vars', 'add_custom_query_vars');
@@ -322,6 +323,12 @@ function add_school_rewrite_rule() {
     add_rewrite_rule(
         '^departments/([^/]+)/?$',
         'index.php?pagename=department&dept_slug=$matches[1]',
+        'top'
+    );
+    // faculty profile rewrite rule
+    add_rewrite_rule(
+        '^faculty/([^/]+)/?$',
+        'index.php?pagename=faculty-single&faculty_slug=$matches[1]',
         'top'
     );
 }
