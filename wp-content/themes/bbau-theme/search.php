@@ -9,7 +9,7 @@
 get_header();
 
 $search_query = get_search_query(); // This reads the ?s= parameter
-$api_base   = getenv('DJANGO_API_URL');
+$api_base   = getenv('DJANGO_MEDIA_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 ?>
 
