@@ -2195,14 +2195,11 @@ h2::after {
   }
 }
 
-
-/* =====================================
-   DEPARTMENT PAGE MENU
-===================================== */
 /* ================= MENU ================= */
 .common-menu {
-  display: inline-block;        /* ✅ auto width (key change) */
-  max-width: 100%;              /* safety (not forcing width) */
+  display: block;                /* ✅ better than inline-block */
+  width: fit-content;            /* auto width */
+  max-width: 100%;
   background: #5A6A7A;
   border-radius: 12px;
   border: 1px solid #e0edf2;
@@ -2212,7 +2209,7 @@ h2::after {
 }
 
 .menu-wrapper {
-  text-align: center;           /* center the inline-block menu */
+  text-align: center;
   padding: 0 10px;
 }
 
@@ -2220,8 +2217,9 @@ h2::after {
 .common-menu-nav {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;      /* center when space available */
+  justify-content: center;
   align-items: stretch;
+  overflow: hidden;              /* default */
 }
 
 /* ================= LINKS ================= */
@@ -2304,16 +2302,23 @@ h2::after {
   transform: scaleX(1);
 }
 
-/* ================= TABLET + MOBILE ================= */
+/* ================= LARGE DESKTOP ================= */
+@media (min-width: 1200px) {
+  .common-menu-link {
+    min-width: 130px;
+  }
+}
+
+/* ================= TABLET ================= */
 @media (max-width: 992px) {
 
   .common-menu {
-    display: block;               /* allow scrolling area */
+    width: 100%;                 /* full width for better UX */
   }
 
   .common-menu-nav {
-    justify-content: flex-start;  /* align left when overflow */
-    overflow-x: auto;             /* scroll only if needed */
+    justify-content: flex-start;
+    overflow-x: auto;            /* ✅ scroll when needed */
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
   }
@@ -2335,10 +2340,21 @@ h2::after {
   }
 }
 
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  .common-menu-link {
+    min-width: 100px;
+    padding: 12px 14px;
+    font-size: 12px;
+  }
+}
+
 /* ================= SMALL MOBILE ================= */
 @media (max-width: 480px) {
+
   .common-menu-link {
-    min-width: 90px;
+    min-width: 85px;
     font-size: 11px;
     padding: 10px 12px;
   }
