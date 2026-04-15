@@ -162,19 +162,34 @@ get_header();
     background:#fff;
     color:#000;
 }
-
-/* YEAR COLORS */
+/* ================= YEAR COLORS FINAL FIX ================= */
 .eg-year-title {
-  display:inline-block;
-  padding:8px 14px;
-  border-radius:10px;
-  font-weight:600;
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
 }
-
-.eg-year-block:nth-child(1) .eg-year-title { background:#f5f0e8; color:#8B0000; }
-.eg-year-block:nth-child(2) .eg-year-title { background:#e8f5f2; color:#00695c; }
-.eg-year-block:nth-child(3) .eg-year-title { background:#f3e8f5; color:#6a1b9a; }
-
+/* target inside each event only */
+.eg-event-detail .eg-year-block:nth-of-type(1) .eg-year-title {
+  background: #f5f0e8;
+  color: #8B0000;
+}
+.eg-event-detail .eg-year-block:nth-of-type(2) .eg-year-title {
+  background: #e8f5f2;
+  color: #00695c;
+}
+.eg-event-detail .eg-year-block:nth-of-type(3) .eg-year-title {
+  background: #f3e8f5;
+  color: #6a1b9a;
+}
+.eg-event-detail .eg-year-block:nth-of-type(4) .eg-year-title {
+  background: #e8eef5;
+  color: #1a237e;
+}
+.eg-event-detail .eg-year-block:nth-of-type(5) .eg-year-title {
+  background: #fff3e0;
+  color: #e65100;
+}
 /* BACK BUTTON */
 .eg-back-btn {
   display:inline-flex; align-items:center; gap:8px;
@@ -211,16 +226,13 @@ function goBack(){
     document.getElementById("egCards").style.display="grid";
     document.getElementById("egDetails").style.display="none";
 }
-
 let currentImages=[],currentIndex=0,zoomed=false;
-
 function openImage(el){
     currentImages=Array.from(el.parentNode.querySelectorAll('img'));
     currentIndex=currentImages.indexOf(el);
     document.body.classList.add("lightbox-open");
     showImage();
 }
-
 function showImage(){
     const box=document.getElementById("egLightbox");
     const img=document.getElementById("egLightboxImg");

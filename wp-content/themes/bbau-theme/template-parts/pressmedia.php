@@ -155,6 +155,39 @@ box-shadow:0 8px 25px rgba(0,0,0,0.1); transition:.3s; }
     background:#fff;
     color:#000;
 }
+/* ================= YEAR COLORS (PRESS MEDIA FIX) ================= */
+.pm-year-title {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* IMPORTANT: use nth-of-type */
+.pm-year-block:nth-of-type(1) .pm-year-title {
+  background: #f5f0e8;
+  color: #8B0000;
+}
+
+.pm-year-block:nth-of-type(2) .pm-year-title {
+  background: #e8f5f2;
+  color: #00695c;
+}
+
+.pm-year-block:nth-of-type(3) .pm-year-title {
+  background: #f3e8f5;
+  color: #6a1b9a;
+}
+
+.pm-year-block:nth-of-type(4) .pm-year-title {
+  background: #e8eef5;
+  color: #1a237e;
+}
+
+.pm-year-block:nth-of-type(5) .pm-year-title {
+  background: #fff3e0;
+  color: #e65100;
+}
 
 /* RESPONSIVE */
 @media(max-width:992px){

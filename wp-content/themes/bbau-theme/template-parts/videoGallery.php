@@ -214,34 +214,34 @@ $thumb = "https://img.youtube.com/vi/".$videoId."/hqdefault.jpg";
     justify-content:center;
 }
 
-/* ===== YEAR COLORS (ONLY INNER PAGE) ===== */
+/* ================= YEAR COLORS FIX (VIDEO) ================= */
 #vgDetails .vg-year-title {
-  display:inline-block;
-  padding:8px 14px;
-  border-radius:10px;
-  font-weight:600;
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
 }
-
-#vgDetails .vg-year:nth-child(1) .vg-year-title {
-  background:#f5f0e8;
-  color:#8B0000;
+/* ✅ correct targeting */
+.vg-detail .vg-year:nth-of-type(1) .vg-year-title {
+  background: #f5f0e8;
+  color: #8B0000;
 }
-
-#vgDetails .vg-year:nth-child(2) .vg-year-title {
-  background:#e8f5f2;
-  color:#00695c;
+.vg-detail .vg-year:nth-of-type(2) .vg-year-title {
+  background: #e8f5f2;
+  color: #00695c;
 }
-
-#vgDetails .vg-year:nth-child(3) .vg-year-title {
-  background:#f3e8f5;
-  color:#6a1b9a;
+.vg-detail .vg-year:nth-of-type(3) .vg-year-title {
+  background: #f3e8f5;
+  color: #6a1b9a;
 }
-
-#vgDetails .vg-year:nth-child(4) .vg-year-title {
-  background:#e8eef5;
-  color:#1a237e;
+.vg-detail .vg-year:nth-of-type(4) .vg-year-title {
+  background: #e8eef5;
+  color: #1a237e;
 }
-
+.vg-detail .vg-year:nth-of-type(5) .vg-year-title {
+  background: #fff3e0;
+  color: #e65100;
+}
 /* ===== LIGHTBOX ===== */
 .vg-lightbox {
     display:none;
