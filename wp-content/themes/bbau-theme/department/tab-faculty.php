@@ -1,7 +1,7 @@
 <?php
 // Inherited variables: $api_base, $slug
 $api_base = getenv('DJANGO_API_URL');
-$fac_url = $api_base . '/api/v1/faculty/?department__slug=' . urlencode($slug);
+$fac_url = $api_base . '/api/v1/faculty/?department__slug=' . urlencode($slug) . '&page_size=500';
 $fac_res = wp_remote_get($fac_url, array('timeout' => 10));
 $faculty_list = array();
 
