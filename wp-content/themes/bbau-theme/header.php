@@ -52,38 +52,91 @@
 
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
-    <div class="top-bar">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
 
+    <!-- MOBILE DRAWER -->
+    <div class="mobile-drawer-overlay" id="drawer-overlay"></div>
+    <div class="mobile-drawer" id="mobile-drawer">
+        <div class="drawer-header">
+            <!-- <div class="drawer-logo">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/ambedkar.png"
+                alt="Dr. B. R. Ambedkar">
+            </div> -->
+            <button class="drawer-close" id="mobile-drawer-close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="drawer-content">
+            <?php
+            wp_nav_menu([
+                'theme_location' => 'primary_mobile_menu',
+                'container'      => 'nav',
+                'container_class'=> 'mobile-nav',
+                'menu_class'     => 'mobile-menu-inner',
+                'fallback_cb'    => false,
+                'depth'          => 3,
+            ]);
+            ?>
+        </div>
+    </div>
+    <div class="top-bar">
+        <!-- DESKTOP TOP BAR -->
+        <div class="container-fluid d-none d-mg-flex justify-content-between align-items-center">
             <!-- LEFT LINKS -->
             <div class="top-left d-flex gap-3 flex-wrap">
                 <?php
-               wp_nav_menu(array(
-                   'theme_location' => 'announcement_bar',
-                   'menu_class'     => 'top-left d-flex flex-wrap list-unstyled hide-list',
-                   'container'      => false,
-                   'link_before'    => '',
-                   'link_after'     => '',
-                   'fallback_cb'    => false,
-                   'depth'          => 1,
-               ));
-               ?>
+                wp_nav_menu(array(
+                    'theme_location' => 'announcement_bar',
+                    'menu_class'     => 'top-left d-flex flex-wrap list-unstyled hide-list',
+                    'container'      => false,
+                    'depth'          => 1,
+                    'fallback_cb'    => false,
+                ));
+                ?>
             </div>
             <div class="top-right">
                 <button class="font-btn font-big" onclick="setFontSize('big')"><span>A+</span></button>
                 <button class="font-btn font-normal" onclick="setFontSize('normal')"><span>A</span></button>
                 <button class="font-btn font-small" onclick="setFontSize('small')"><span>A-</span></button>
 
-
-                <!-- Google Translate (hidden widget, toggled by icon) -->
                 <div id="google_translate_element" style="display:none;"></div>
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/language.png"
-                    alt="Translate to Hindi" class="lang-img" id="translate-toggle" title="Click to translate">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/language.png" alt="Translate"
+                    class="lang-img" id="translate-toggle" title="Click to translate">
 
                 <div class="search-box">
                     <input type="text" id="global-search-input" placeholder="Search" aria-label="Search">
                     <span class="search-icon" style="cursor:pointer;" onclick="triggerGlobalSearch()"><i
                             class="fa-solid fa-magnifying-glass"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE TOP BAR: 2 rows - links row then controls row -->
+        <div class="d-flex d-lg-none flex-column top-bar-mobile">
+            <!-- ROW 1: Nav links - horizontally scrollable -->
+            <div class="tb-mobile-links">
+                <?php
+                wp_nav_menu(array(
+                    'theme_location' => 'announcement_bar_mobile',
+                    'menu_class'     => 'tb-links-inner ',
+                    'container'      => false,
+                    'depth'          => 1,
+                    'fallback_cb'    => false,
+                ));
+                ?>
+                <!-- ROW 2: Font + Language + Search -->
+                <div class="tb-mobile-controls d-flex align-items-center justify-content-between px-3 py-1">
+                    <div class="tb-mobile-font d-flex gap-2 align-items-center">
+                        <button class="font-btn-mobile" onclick="setFontSize('big')">A+</button>
+                        <button class="font-btn-mobile" onclick="setFontSize('normal')">A</button>
+                        <button class="font-btn-mobile" onclick="setFontSize('small')">A-</button>
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/language.png"
+                            alt="Translate" id="translate-toggle-mobile"
+                            style="height:18px; cursor:pointer; margin-left:4px;">
+                    </div>
+                    <div class="search-box-mobile">
+                        <input type="text" id="global-search-input-mobile" placeholder="Search..." aria-label="Search">
+                        <i class="fa-solid fa-magnifying-glass" onclick="triggerGlobalSearchMobile()"></i>
+                    </div>
                 </div>
             </div>
 
@@ -135,18 +188,34 @@
                     alt="Dr. B. R. Ambedkar">
             </div>
 
+            <!-- MOBILE TOGGLE -->
+            <div class="header-mobile-icons d-flex d-lg-none gap-2">
+                <button class="mobile-toggle-btn" id="mobile-drawer-open" aria-label="Open Menu">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+            </div>
+
         </div>
-        
+
         <script>
-        // Search
         function triggerGlobalSearch() {
             const query = document.getElementById('global-search-input').value.trim();
             if (query) {
                 window.location.href = '<?php echo home_url('/'); ?>?s=' + encodeURIComponent(query);
             }
         }
+
+        function triggerGlobalSearchMobile() {
+            const query = document.getElementById('global-search-input-mobile').value.trim();
+            if (query) {
+                window.location.href = '<?php echo home_url('/'); ?>?s=' + encodeURIComponent(query);
+            }
+        }
         document.getElementById('global-search-input')?.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') triggerGlobalSearch();
+        });
+        document.getElementById('global-search-input-mobile')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') triggerGlobalSearchMobile();
         });
 
         // Font size / zoom controls
@@ -251,19 +320,102 @@
             }
 
             const toggleBtn = document.getElementById('translate-toggle');
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', function() {
-                    if (!isHindi) {
-                        isHindi = true;
-                        toggleBtn.title = 'Click to restore English';
-                        loadTranslateAndRun('hi');
+            const toggleBtnMobile = document.getElementById('translate-toggle-mobile');
+
+            function handleTranslateClick() {
+                if (!isHindi) {
+                    isHindi = true;
+                    if (toggleBtn) toggleBtn.title = 'Click to restore English';
+                    loadTranslateAndRun('hi');
+                } else {
+                    isHindi = false;
+                    if (toggleBtn) toggleBtn.title = 'Click to translate to Hindi';
+                    doTranslate('en');
+                }
+            }
+
+            toggleBtn?.addEventListener('click', handleTranslateClick);
+            toggleBtnMobile?.addEventListener('click', handleTranslateClick);
+
+            // --- Mobile Drawer Implementation ---
+            const drawer = document.getElementById('mobile-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            const openBtn = document.getElementById('mobile-drawer-open');
+            const closeBtn = document.getElementById('mobile-drawer-close');
+
+            function toggleDrawer(open) {
+                if (open) {
+                    drawer.classList.add('active');
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    drawer.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+
+            openBtn?.addEventListener('click', () => toggleDrawer(true));
+            closeBtn?.addEventListener('click', () => toggleDrawer(false));
+            overlay?.addEventListener('click', () => toggleDrawer(false));
+
+            // --- Mobile Accordion Implementation (Exclusive) ---
+            const mobileMenuItems = document.querySelectorAll('.mobile-nav .menu-item-has-children > a');
+            mobileMenuItems.forEach(item => {
+                const arrow = document.createElement('span');
+                arrow.className = 'mobile-arrow';
+                arrow.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
+                item.appendChild(arrow);
+
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const parent = this.parentElement;
+                    const isOpen = parent.classList.contains('active');
+
+                    // EXCLUSIVE LOGIC: Close all other siblings
+                    const siblings = parent.parentElement.children;
+                    for (let sibling of siblings) {
+                        if (sibling !== parent) {
+                            sibling.classList.remove('active');
+                        }
+                    }
+
+                    if (isOpen) {
+                        parent.classList.remove('active');
                     } else {
-                        isHindi = false;
-                        toggleBtn.title = 'Click to translate to Hindi';
-                        doTranslate('en');
+                        parent.classList.add('active');
                     }
                 });
-            }
+            });
+            // --- Submenu overflow detection (flip 3rd-level to left when near right edge) ---
+            // NOTE: sub-menu is display:none on mouseenter so getBoundingClientRect() = {0,0,0,0}
+            // We use the PARENT li's right edge + expected sub-menu width to predict overflow.
+            document.querySelectorAll('.main-menu .sub-menu > li').forEach(function(li) {
+                li.addEventListener('mouseenter', function() {
+                    const sub = this.querySelector(':scope > .sub-menu');
+                    if (!sub) return;
+                    const parentRect = this.getBoundingClientRect();
+                    const estimatedWidth = 240; // conservative estimate for sub-menu width
+                    const wouldOverflow = (parentRect.right + estimatedWidth) > (window
+                        .innerWidth - 10);
+                    if (wouldOverflow) {
+                        sub.style.left = 'auto';
+                        sub.style.right = '100%';
+                        sub.style.marginLeft = '0';
+                        sub.style.marginRight = '4px';
+                    } else {
+                        sub.style.left = '';
+                        sub.style.right = '';
+                        sub.style.marginLeft = '';
+                        sub.style.marginRight = '';
+                    }
+                });
+            });
+
+            // --- Close drawer with ESC key ---
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') toggleDrawer(false);
+            });
         });
         </script>
     </header>

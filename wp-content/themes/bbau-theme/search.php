@@ -115,6 +115,18 @@ $media_base = getenv('DJANGO_MEDIA_URL');
                 <div class="row g-4" id="list-scholars"></div>
             </section>
 
+            <!-- PUBLICATIONS -->
+            <section id="sec-publications" class="result-section mb-5">
+                <h3 class="sec-title"><i class="fa-solid fa-book"></i> Research Publications</h3>
+                <div class="row g-4" id="list-publications"></div>
+            </section>
+
+            <!-- PATENTS -->
+            <section id="sec-patents" class="result-section mb-5">
+                <h3 class="sec-title"><i class="fa-solid fa-certificate"></i> Patents</h3>
+                <div class="row g-4" id="list-patents"></div>
+            </section>
+
             <!-- TIMETABLES -->
             <section id="sec-timetable" class="result-section mb-5">
                 <h3 class="sec-title"><i class="fa-solid fa-calendar-days"></i> Timetables</h3>
@@ -253,6 +265,8 @@ const TAB_META = {
     notices:   { label: 'Notices',        icon: 'fa-bullhorn' },
     research:  { label: 'Research',       icon: 'fa-flask' },
     scholars:  { label: 'Scholars',       icon: 'fa-user-graduate' },
+    publications: { label: 'Publications',icon: 'fa-book' },
+    patents:   { label: 'Patents',        icon: 'fa-certificate' },
     timetable: { label: 'Timetable',      icon: 'fa-calendar-days' },
     materials: { label: 'Study Materials',icon: 'fa-folder-open' },
 };
@@ -263,7 +277,7 @@ async function fetchSearchResults() {
     if (!query) return;
     const q = encodeURIComponent(query);
     try {
-        const [progRes, facultyRes, noticeRes, courseRes, cbcsRes, researchRes, scholarRes, ttRes, matRes] = await Promise.all([
+        const [progRes, facultyRes, noticeRes, courseRes, cbcsRes, researchRes, scholarRes, ttRes, matRes, pubRes, patRes] = await Promise.all([
             fetch(`${apiBase}/api/v1/programs/?search=${q}`).then(r => r.json()),
             fetch(`${apiBase}/api/v1/faculty/?search=${q}`).then(r => r.json()),
             fetch(`${apiBase}/api/v1/notices/?search=${q}`).then(r => r.json()),
@@ -273,6 +287,8 @@ async function fetchSearchResults() {
             fetch(`${apiBase}/api/v1/research-scholars/?search=${q}`).then(r => r.json()),
             fetch(`${apiBase}/api/v1/timetables/?search=${q}`).then(r => r.json()),
             fetch(`${apiBase}/api/v1/study-materials/?search=${q}`).then(r => r.json()),
+            fetch(`${apiBase}/api/v1/publications/?search=${q}`).then(r => r.json()),
+            fetch(`${apiBase}/api/v1/patents/?search=${q}`).then(r => r.json()),
         ]);
 
         const progs    = progRes.results    ?? progRes;
@@ -282,6 +298,8 @@ async function fetchSearchResults() {
         const cbcs     = cbcsRes.results    ?? cbcsRes;
         const research = researchRes.results ?? researchRes;
         const scholars = scholarRes.results  ?? scholarRes;
+        const pubs     = pubRes.results      ?? pubRes;
+        const patents  = patRes.results      ?? patRes;
         const tt       = ttRes.results       ?? ttRes;
         const mats     = matRes.results      ?? matRes;
 
@@ -292,6 +310,8 @@ async function fetchSearchResults() {
         renderCBCS(cbcs);
         renderResearch(research);
         renderScholars(scholars);
+        renderPublications(pubs);
+        renderPatents(patents);
         renderTimetable(tt);
         renderMaterials(mats);
 
@@ -303,7 +323,8 @@ async function fetchSearchResults() {
         document.getElementById('search-loading').style.display = 'none';
 
         const totalApi = progs.length + faculty.length + notices.length + courses.length +
-                         cbcs.length + research.length + scholars.length + tt.length + mats.length;
+                         cbcs.length + research.length + scholars.length + tt.length + mats.length +
+                         pubs.length + patents.length;
 
         if (totalApi === 0 && !hasWp) {
             document.getElementById('no-results').style.display = 'block';
@@ -436,6 +457,38 @@ function renderScholars(list) {
                     <h4 class="card-title">${s.scholar_name}</h4>
                     <p class="card-meta">${s.research_topic}</p>
                 </div>
+            </div>`;
+    });
+}
+
+function renderPublications(list) {
+    const wrap = document.getElementById('list-publications');
+    if (!list.length) { hide('sec-publications'); return; }
+    activeCats.push('publications');
+    list.forEach(p => {
+        wrap.innerHTML += `
+            <div class="col-md-6">
+                <a href="/research-hub/publications" class="search-card">
+                    <span class="card-label">${p.publication_type} &bull; ${p.publication_year}</span>
+                    <h4 class="card-title">${p.title}</h4>
+                    <p class="card-meta">${p.faculty_name ?? ''}</p>
+                </a>
+            </div>`;
+    });
+}
+
+function renderPatents(list) {
+    const wrap = document.getElementById('list-patents');
+    if (!list.length) { hide('sec-patents'); return; }
+    activeCats.push('patents');
+    list.forEach(p => {
+        wrap.innerHTML += `
+            <div class="col-md-6">
+                <a href="/research-hub/patents" class="search-card">
+                    <span class="card-label">${p.status} &bull; ${p.year}</span>
+                    <h4 class="card-title">${p.title}</h4>
+                    <p class="card-meta">Inventor: ${p.faculty_name ?? ''}</p>
+                </a>
             </div>`;
     });
 }

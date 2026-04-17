@@ -275,6 +275,7 @@ get_header();
     font-size: 15px;
     color: #8B1A1A;
     margin-bottom: 18px;
+    font-weight: 500;
 }
 
 /* ================= CONTACT ================= */

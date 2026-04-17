@@ -14,7 +14,6 @@ if (!empty($_GET['search']))          $query_params['search'] = sanitize_text_fi
 if (!empty($_GET['department']))      $query_params['department__slug'] = sanitize_text_field($_GET['department']);
 if (!empty($_GET['school']))          $query_params['school__slug'] = sanitize_text_field($_GET['school']);
 if (!empty($_GET['campus']))          $query_params['campus'] = sanitize_text_field($_GET['campus']);
-if (!empty($_GET['faculty_type']))    $query_params['faculty_type'] = sanitize_text_field($_GET['faculty_type']);
 if (!empty($_GET['page_num']))        $query_params['page'] = intval($_GET['page_num']);
 
 $api_url = $api_base . '/api/v1/faculty/?' . http_build_query($query_params);
@@ -93,13 +92,6 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
                             <option value="Satellite Campus Amethi"
                                 <?php selected($_GET['campus'] ?? '', 'Satellite Campus Amethi'); ?>>Satellite Campus
                                 Amethi</option>
-                        </select>
-                        <select name="faculty_type" onchange="this.form.submit()">
-                            <option value="">All Types</option>
-                            <option value="Teaching" <?php selected($_GET['faculty_type'] ?? '', 'Teaching'); ?>>
-                                Teaching</option>
-                            <option value="Non-Teaching"
-                                <?php selected($_GET['faculty_type'] ?? '', 'Non-Teaching'); ?>>Non-Teaching</option>
                         </select>
                     </div>
                 </div>
@@ -318,7 +310,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
 }
 
 .fdc-photo-wrap {
-    height: 280px;
+    height: 250px;
     overflow: hidden;
     background: #f1f5f9;
 }
@@ -410,7 +402,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
     padding: 10px 18px;
     border: 2px solid #e2d9cc;
     border-radius: 10px;
-    color: #5c1010;
+    color: #5c1010 !important;
     text-decoration: none;
     font-weight: 700;
     transition: 0.2s;
@@ -419,7 +411,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
 .page-btn:hover,
 .page-btn.active {
     background: #5c1010;
-    color: #fff;
+    color: #fff !important;
     border-color: #5c1010;
 }
 
@@ -447,9 +439,9 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
         text-align: center;
     }
 
-    .faculty-dir-grid {
+    /* .faculty-dir-grid {
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    }
+    } */
 }
 </style>
 

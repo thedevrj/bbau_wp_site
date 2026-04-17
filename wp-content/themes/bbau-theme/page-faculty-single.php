@@ -120,10 +120,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 
                 <!-- Meta Tags -->
                 <div class="fp-meta-bar">
-                    <?php if (!empty($fac['faculty_type'])): ?>
-                    <span class="fp-meta-chip"><i class="fa-solid fa-chalkboard-user"></i>
-                        <?php echo esc_html($fac['faculty_type']); ?></span>
-                    <?php endif; ?>
+                
                     <?php if (!empty($fac['campus'])): ?>
                     <span class="fp-meta-chip"><i class="fa-solid fa-location-dot"></i>
                         <?php echo esc_html($fac['campus']); ?></span>
@@ -184,8 +181,8 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 /* ── Layout ── */
 .fp-layout {
     display: grid;
-    grid-template-columns: 340px 1fr;
-    gap: 35px;
+    grid-template-columns: 380px 1fr;
+    gap: 45px;
     align-items: start;
 }
 
@@ -196,6 +193,8 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 }
 
 .fp-photo-card {
+    margin: 0 auto;
+    max-width: 320px;
     border-radius: 20px;
     overflow: hidden;
     border: 3px solid #c9a84c;
@@ -204,14 +203,14 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 
 .fp-photo {
     width: 100%;
-    height: 380px;
-    object-fit: cover;
+    height: 265px;
+    object-fit: inherit ;
     display: block;
 }
 
 .fp-no-photo {
     width: 100%;
-    height: 380px;
+    height: 265px;
     background: #f1f5f9;
     display: flex;
     align-items: center;
@@ -372,12 +371,15 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     font-family: 'Merriweather', serif !important;
     font-size: 1.2rem !important;
     color: #5c1010;
-    margin: 0 0 15px;
+    margin: 0 0 15px !important;
     padding-bottom: 12px;
-    border-bottom: 2px solid #f1f5f9;
+    border-bottom: 3px solid #f1f5f9;
     display: flex;
     align-items: center;
     gap: 10px;
+}
+.fp-section h2:after{
+    background: none;
 }
 
 .fp-section h2 i {
