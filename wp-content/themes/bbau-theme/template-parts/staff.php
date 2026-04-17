@@ -5,7 +5,7 @@ get_header();
 <?php get_template_part('banners/about-banner'); ?>
 <div class="staff-page">
     <div class="container">
-            <?php get_template_part('menu/menu.php'); ?>
+            <?php get_template_part('menu/menu'); ?>
 
         <h2 class="staff-title">
             <?php 

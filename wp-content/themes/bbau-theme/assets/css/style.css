@@ -147,3 +147,24 @@ p:empty {
         max-width: 1500px !important;
     }
 }
+
+/* Remove browser default padding */
+ol,
+ul {
+    margin-left: 0 !important;
+}
+
+/* Objective list only */
+ol,
+ul {
+    padding-left: 2.5rem !important;
+}
+
+@media screen and (max-width: 760px) {
+
+    ol,
+    ul {
+        padding-left: 0.5rem !important;
+    }
+
+}
