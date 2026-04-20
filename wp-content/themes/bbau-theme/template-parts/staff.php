@@ -6,6 +6,7 @@ get_header();
 <div class="staff-page">
     <div class="container">
             <?php get_template_part('menu/menu'); ?>
+        </div>
 
         <h2 class="staff-title">
             <?php 
