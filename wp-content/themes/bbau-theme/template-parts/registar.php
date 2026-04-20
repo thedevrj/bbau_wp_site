@@ -46,7 +46,7 @@ get_header();
                                 </p>
 
                                 <p>
-                                    📞
+                                <i class="fa fa-phone" aria-hidden="true"></i>
                                     <a class="link-new" href="tel:+915222440821">
                                         +91-522-2440821
                                     </a>

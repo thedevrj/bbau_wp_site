@@ -15,7 +15,9 @@ get_header();
 <!-- ================= PAGE START ================= -->
 <div class="ciie-page">
 
-    <!-- ✅ MENU (NOW INSIDE PAGE - FIXED) -->
+    <div class="menu-wrapper">
+        <?php get_template_part('menu/menu'); ?>
+    </div>
 
     <div class="page-body">
         <div class="container">

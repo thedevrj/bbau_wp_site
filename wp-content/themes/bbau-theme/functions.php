@@ -186,6 +186,7 @@ require_once get_template_directory() . '/inc/class-bbau-nav-walker.php';
 function theme_register_custom_menus() {
 	register_nav_menus(array(
 		'announcement_bar' => ('Announcement Bar Menu'),
+		'announcement_bar_mobile' => ('Announcement Bar Menu Mobile'),
 		'footer_university_menu' => ('Footer University Menu'),
 		'quick_links_1' => ('Footer Quick links Menu 1'),
 		'quick_links_2' => ('Footer Quick links Menu 2'),
