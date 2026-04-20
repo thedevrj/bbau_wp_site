@@ -15,6 +15,9 @@ get_header();
     <?php get_template_part('template-parts/breadcrumb'); ?>
 
     <div class="container">
+         <div class="menu-wrapper">
+            <?php get_template_part('menu/menu'); ?>
+        </div>
         <h2>Event Gallery</h2>
 
         <!-- EVENT CARDS -->

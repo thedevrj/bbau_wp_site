@@ -8,7 +8,6 @@ get_header();
         <div class="menu-wrapper">
             <?php get_template_part('menu/menu'); ?>
         </div>
-        <?php get_template_part('menu/menu.php'); ?>
 
         <h2 class="staff-title">
             <?php 
