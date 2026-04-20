@@ -15,6 +15,9 @@ get_header();
 
 <section class="vg-section">
 <div class="container">
+     <div class="menu-wrapper">
+            <?php get_template_part('menu/menu'); ?>
+        </div>
 
 <!-- ✅ CENTER MAIN HEADING -->
 <h2 class="vg-title">Video <span>Gallery</span></h2>
