@@ -359,21 +359,29 @@
             closeBtn?.addEventListener('click', () => toggleDrawer(false));
             overlay?.addEventListener('click', () => toggleDrawer(false));
 
-            // --- Mobile Accordion Implementation (Exclusive) ---
-            const mobileMenuItems = document.querySelectorAll('.mobile-nav .menu-item-has-children > a');
+            // --- Mobile Accordion Implementation (Exclusive, handles both WP & Mega Menu classes) ---
+            // Selects items with children from EITHER standard WP OR mega-menu plugin markup
+            const mobileMenuItems = document.querySelectorAll(
+                '.mobile-nav .menu-item-has-children > a, ' +
+                '.mobile-nav .mega-menu-item-has-children > a.mega-menu-link'
+            );
+
             mobileMenuItems.forEach(item => {
-                const arrow = document.createElement('span');
-                arrow.className = 'mobile-arrow';
-                arrow.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
-                item.appendChild(arrow);
+                // Add arrow if not already present
+                if (!item.querySelector('.mobile-arrow')) {
+                    const arrow = document.createElement('span');
+                    arrow.className = 'mobile-arrow';
+                    arrow.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
+                    item.appendChild(arrow);
+                }
 
                 item.addEventListener('click', function(e) {
                     e.preventDefault();
                     const parent = this.parentElement;
                     const isOpen = parent.classList.contains('active');
 
-                    // EXCLUSIVE LOGIC: Close all other siblings
-                    const siblings = parent.parentElement.children;
+                    // EXCLUSIVE: close all siblings at the same level
+                    const siblings = parent.parentElement ? parent.parentElement.children : [];
                     for (let sibling of siblings) {
                         if (sibling !== parent) {
                             sibling.classList.remove('active');
@@ -387,29 +395,23 @@
                     }
                 });
             });
-            // --- Submenu overflow detection (flip 3rd-level to left when near right edge) ---
-            // NOTE: sub-menu is display:none on mouseenter so getBoundingClientRect() = {0,0,0,0}
-            // We use the PARENT li's right edge + expected sub-menu width to predict overflow.
-            document.querySelectorAll('.main-menu .sub-menu > li').forEach(function(li) {
-                li.addEventListener('mouseenter', function() {
-                    const sub = this.querySelector(':scope > .sub-menu');
-                    if (!sub) return;
-                    const parentRect = this.getBoundingClientRect();
-                    const estimatedWidth = 240; // conservative estimate for sub-menu width
-                    const wouldOverflow = (parentRect.right + estimatedWidth) > (window
-                        .innerWidth - 10);
-                    if (wouldOverflow) {
-                        sub.style.left = 'auto';
-                        sub.style.right = '100%';
-                        sub.style.marginLeft = '0';
-                        sub.style.marginRight = '4px';
-                    } else {
-                        sub.style.left = '';
-                        sub.style.right = '';
-                        sub.style.marginLeft = '';
-                        sub.style.marginRight = '';
-                    }
-                });
+            // --- Flyout overflow fix: event delegation so it works with Mega Menu plugin ---
+            // mouseover bubbles (unlike mouseenter), so delegation on document always fires.
+            document.addEventListener('mouseover', function(e) {
+                const li = e.target.closest('li.mega-menu-flyout > ul.mega-sub-menu ');
+                if (!li) return;
+                const rect = li.getBoundingClientRect();
+                if ((rect.right + 260) > window.innerWidth) {
+                    li.classList.add('flip-parent');
+                } else {
+                    li.classList.remove('flip-parent');
+                }
+            });
+            document.addEventListener('mouseout', function(e) {
+                const li = e.target.closest('li.mega-menu-flyout > ul.mega-sub-menu ');
+                if (li && !li.contains(e.relatedTarget)) {
+                    li.classList.remove('flip-parent');
+                }
             });
 
             // --- Close drawer with ESC key ---
