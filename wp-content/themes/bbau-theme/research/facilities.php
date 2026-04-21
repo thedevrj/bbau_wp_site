@@ -21,11 +21,13 @@ if (!is_wp_error($facilities_res) && wp_remote_retrieve_response_code($facilitie
         <div class="container">
             <h1>Research Facilities</h1>
             <p>Advanced laboratories and instrumentation centers supporting multi-disciplinary research.</p>
-            <a href="/research-hub" class="back-link"><i class="fas fa-arrow-left"></i> Back to Research Hub</a>
+            <!-- <a href="/research-portal" class="back-link"><i class="fas fa-arrow-left"></i> Back to Research Hub</a> -->
         </div>
     </div>
 
     <div class="research-container container">
+        <?php get_template_part('template-parts/breadcrumb');?>
+
         <div class="facility-grid">
             <?php if(!empty($facilities)): ?>
                 <?php foreach($facilities as $facility): ?>
@@ -38,9 +40,8 @@ if (!is_wp_error($facilities_res) && wp_remote_retrieve_response_code($facilitie
                     <div class="facility-content">
                         <h3><?php echo esc_html($facility['name']); ?></h3>
                         <div class="facility-meta">
-                            <span><i class="fas fa-map-marker-alt"></i> <?php echo esc_html($facility['location']); ?></span>
                             <?php if(!empty($facility['incharge_name'])): ?>
-                                <span><i class="fas fa-user-tie"></i> In-charge: <?php echo esc_html($facility['incharge_name']); ?></span>
+                                <span><i class="fas fa-user-tie"></i> Director: <?php echo esc_html($facility['incharge_name']); ?></span>
                             <?php endif; ?>
                         </div>
                         <div class="facility-description">
@@ -58,7 +59,7 @@ if (!is_wp_error($facilities_res) && wp_remote_retrieve_response_code($facilitie
 
 <?php include_once(get_template_directory() . '/research/styles-research.php'); ?>
 <style>
-.back-link {
+/* .back-link {
     color: white;
     text-decoration: none;
     font-weight: 600;
@@ -72,7 +73,7 @@ if (!is_wp_error($facilities_res) && wp_remote_retrieve_response_code($facilitie
 .back-link:hover {
     background: white;
     color: #065f46;
-}
+} */
 
 .facility-grid {
     display: grid;
