@@ -5,7 +5,7 @@
 
 get_header();
 
-$api_base = getenv('DJANGO_API_URL');
+$api_base = getenv('DJANGO_MEDIA_URL');
 
 // Fetch Departments for Filters
 $depts_url = $api_base . '/api/v1/departments/?page_size=500';

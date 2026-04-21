@@ -5,7 +5,7 @@
 
 get_header();
 
-$api_base = getenv('DJANGO_API_URL');
+$api_base = getenv('DJANGO_MEDIA_URL');
 $facilities_url = $api_base . '/api/v1/research-facilities/';
 $facilities_res = wp_remote_get($facilities_url, array('timeout' => 10));
 $facilities = array();

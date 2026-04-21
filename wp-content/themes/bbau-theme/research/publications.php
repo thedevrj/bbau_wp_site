@@ -5,7 +5,7 @@
 
 get_header();
 
-$api_base = getenv('DJANGO_API_URL');
+$api_base = getenv('DJANGO_MEDIA_URL');
 // Fetch Depts for filter
 $depts_url = $api_base . '/api/v1/departments/?page_size=500';
 $depts_res = wp_remote_get($depts_url, array('timeout' => 10));

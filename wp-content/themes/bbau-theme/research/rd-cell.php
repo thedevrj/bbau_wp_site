@@ -5,7 +5,7 @@
 
 get_header();
 
-$api_base = getenv('DJANGO_API_URL');
+$api_base = getenv('DJANGO_MEDIA_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 
 // Fetch Team to find Director

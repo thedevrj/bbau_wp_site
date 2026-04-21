@@ -5,7 +5,7 @@
 
 get_header();
 
-$api_base = getenv('DJANGO_API_URL');
+$api_base = getenv('DJANGO_MEDIA_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 $team_url = $api_base . '/api/v1/rd-cell-team/';
 $team_res = wp_remote_get($team_url, array('timeout' => 10));
