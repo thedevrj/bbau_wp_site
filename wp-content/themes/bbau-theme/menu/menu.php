@@ -264,7 +264,7 @@ $menu_urls_json = htmlspecialchars(json_encode($menu_urls), ENT_QUOTES, 'UTF-8')
 }
 
 .common-menu-nav::-webkit-scrollbar-thumb {
-  background: #bbb;
+  background: #c90b38;
   border-radius: 10px;
 }
 
