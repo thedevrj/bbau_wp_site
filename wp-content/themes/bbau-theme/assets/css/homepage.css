@@ -724,6 +724,7 @@
   .vc-image img,
   .vc-content {
     border-radius: 32px;
+    height: 260px !important;
   }
 
   .vc-content {
