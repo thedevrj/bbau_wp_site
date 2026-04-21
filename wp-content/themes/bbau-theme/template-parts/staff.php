@@ -2,88 +2,92 @@
 /* Template Name: Staff Page */
 get_header();
 ?>
-<?php get_template_part('banners/about-banner'); ?>
-<div class="staff-page">
-    <div class="container">
-            <?php get_template_part('menu/menu'); ?>
-        </div>
 
+<?php get_template_part('banners/about-banner'); ?>
+
+<div class="staff-page">
+    <div class="container"> <!-- ✅ OPEN CONTAINER -->
+
+        <!-- MENU -->
+        <?php get_template_part('menu/menu'); ?>
+
+        <!-- TITLE -->
         <h2 class="staff-title">
             <?php 
-    if(get_field('heading')){
-      the_field('heading');
-    } else {
-      the_title(); // fallback
-    }
-  ?>
+                if(get_field('heading')){
+                    the_field('heading');
+                } else {
+                    the_title();
+                }
+            ?>
         </h2>
 
+        <!-- STAFF GRID -->
         <div class="staff-grid">
 
             <?php if(have_rows('staff_list')): ?>
-            <?php while(have_rows('staff_list')): the_row(); ?>
+                <?php while(have_rows('staff_list')): the_row(); ?>
 
-            <div class="staff-card">
+                    <div class="staff-card">
 
-                <div class="staff-left">
-                    <?php 
-  $photo = get_sub_field('image');
+                        <!-- LEFT IMAGE -->
+                        <div class="staff-left">
+                            <?php 
+                                $photo = get_sub_field('image');
 
-  if($photo): 
+                                if($photo): 
+                                    if(is_array($photo)){
+                                        $img_url = $photo['url'];
+                                    } else {
+                                        $img_url = $photo;
+                                    }
+                            ?>
+                                <img src="<?php echo esc_url($img_url); ?>" alt="">
+                            <?php else: ?>
+                                <div class="staff-avatar">
+                                    <?php echo strtoupper(substr(get_sub_field('name'),0,1)); ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
 
-    // If Image return format = ARRAY
-    if(is_array($photo)){
-      $img_url = $photo['url'];
-    } else {
-      // If return format = URL
-      $img_url = $photo;
-    }
-  ?>
-                    <img src="<?php echo esc_url($img_url); ?>" alt="">
-                    <?php else: ?>
-                    <div class="staff-avatar">
-                        <?php echo strtoupper(substr(get_sub_field('name'),0,1)); ?>
+                        <!-- RIGHT CONTENT -->
+                        <div class="staff-right">
+
+                            <div class="staff-name">
+                                <?php the_sub_field('name'); ?>
+                            </div>
+
+                            <div class="staff-designation">
+                                <?php the_sub_field('designation'); ?>
+                            </div>
+
+                            <div class="staff-info email pt-2">
+                                <i class="fa-solid fa-envelope"></i>
+                                <a class="link-new" href="mailto:<?php the_sub_field('email'); ?>">
+                                    <?php the_sub_field('email'); ?>
+                                </a>
+                            </div>
+
+                            <div class="staff-info phone">
+                                <i class="fa-solid fa-phone"></i>
+                                <a class="link-new" href="tel:<?php the_sub_field('phone'); ?>">
+                                    <?php the_sub_field('phone'); ?>
+                                </a>
+                            </div>
+
+                        </div>
+
                     </div>
-                    <?php endif; ?>
-                </div>
 
-                <!-- RIGHT CONTENT -->
-                <div class="staff-right">
-
-                    <div class="staff-name">
-                        <?php the_sub_field('name'); ?>
-                    </div>
-
-                    <div class="staff-designation">
-                        <?php the_sub_field('designation'); ?>
-                    </div>
-
-                    <div class="staff-info email pt-2">
-                        <i class="fa-solid fa-envelope"></i>
-                        <a class="link-new"
-                            href="mailto:<?php the_sub_field('email'); ?>"><?php the_sub_field('email'); ?></a>
-                    </div>
-
-                    <div class="staff-info phone">
-                        <i class="fa-solid fa-phone"></i>
-                        <a class="link-new"
-                            href="tel:<?php the_sub_field('phone'); ?>"><?php the_sub_field('phone'); ?></a>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <?php endwhile; ?>
+                <?php endwhile; ?>
             <?php else: ?>
-            <p style="text-align:center;">No staff added yet</p>
+                <p style="text-align:center;">No staff added yet</p>
             <?php endif; ?>
 
         </div>
 
-    </div>
+    </div> <!-- ✅ CLOSE CONTAINER -->
 </div>
-
 <style>
 /* ================= PAGE ================= */
 .staff-page {
