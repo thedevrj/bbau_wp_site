@@ -1,7 +1,8 @@
 <?php
 // Inherited variables: $api_base, $slug
 $api_base = getenv('DJANGO_API_URL');
-$fac_url = $api_base . '/api/v1/faculty/?department__slug=' . urlencode($slug) . '&page_size=500';
+$fac_campus = isset($dept_data['campus']) ? $dept_data['campus'] : 'BBAU';
+$fac_url = $api_base . '/api/v1/faculty/?department__slug=' . urlencode($slug) . '&campus=' . urlencode($fac_campus) . '&page_size=500';
 $fac_res = wp_remote_get($fac_url, array('timeout' => 10));
 $faculty_list = array();
 
@@ -23,7 +24,12 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
         <div class="faculty-card">
             <img src="<?php echo $media_base . esc_url($fac['photo'] ); ?>" alt="photo" class="faculty-photo">
             <div class="faculty-info">
-                <h4><?php echo esc_html($fac['name']); ?></h4>
+                <h4>
+                    <?php echo esc_html($fac['name']); ?>
+                    <?php if(($fac['campus'] ?? '') === 'Satellite Campus Amethi'): ?>
+                        <small style="color: #9d174d; font-size: 0.8rem; font-weight: 800;">(Amethi)</small>
+                    <?php endif; ?>
+                </h4>
                 <p><?php echo esc_html($fac['designation']); ?></p>
                 <?php if(!empty($fac['insti_email'])): ?>
                 <div class="faculty-sub">✉️ <?php echo esc_html($fac['insti_email']); ?></div>

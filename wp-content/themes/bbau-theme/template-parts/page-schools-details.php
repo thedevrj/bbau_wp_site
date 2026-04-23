@@ -156,16 +156,35 @@ if (!is_wp_error($centers_response)) {
                 </div>
             </div>
 
-            <!-- DEPARTMENTS -->
-            <?php if (!empty($departments)) : ?>
-            <div class="s-departments-section">
-                <h3 class="s-dept-heading"><?php echo $name; ?> comprises the following Departments</h3>
+            <!-- DEPARTMENTS (Multi-Campus Aware) -->
+            <?php 
+            $bbau_depts = array_filter($departments, function($d) { return ($d['campus'] ?? 'BBAU') === 'BBAU'; });
+            $amethi_depts = array_filter($departments, function($d) { return ($d['campus'] ?? '') === 'Satellite Campus Amethi'; });
+            ?>
 
+            <?php if (!empty($bbau_depts)) : ?>
+            <div class="s-departments-section">
+                <h3 class="s-dept-heading">BBAU Main Campus Departments</h3>
                 <div class="s-dept-pills">
-                    <?php foreach ($departments as $dept): ?>
+                    <?php foreach ($bbau_depts as $dept): ?>
                     <div class="s-dept-pill">
                         <a href="/departments/<?php echo esc_attr($dept['slug'] ?? '#'); ?>">
-                            <?php echo esc_html($dept['name'] ?? $dept); ?>
+                            <?php echo esc_html(get_dept_display_name($dept)); ?>
+                        </a>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <?php if (!empty($amethi_depts)) : ?>
+            <div class="s-departments-section">
+                <h3 class="s-dept-heading">Satellite Campus Amethi Departments</h3>
+                <div class="s-dept-pills">
+                    <?php foreach ($amethi_depts as $dept): ?>
+                    <div class="s-dept-pill">
+                        <a href="/departments/<?php echo esc_attr($dept['slug'] ?? '#'); ?>">
+                            <?php echo esc_html(get_dept_display_name($dept)); ?>
                         </a>
                     </div>
                     <?php endforeach; ?>
