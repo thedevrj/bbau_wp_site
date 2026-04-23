@@ -169,8 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // Fetch both endpoints
             const [globalRes, deptRes] = await Promise.all([
-                fetch(`${apiBase}/global-notices/`),
-                fetch(`${apiBase}/notices/`)
+                fetch(`${apiBase}/global-notices/?page_size=500`),
+                fetch(`${apiBase}/notices/?page_size=500`)
             ]);
 
             const globalData = await globalRes.json();

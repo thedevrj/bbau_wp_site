@@ -167,6 +167,7 @@
 /* ROW 1: Nav links — wrap into 2 compact lines */
 .tb-mobile-links {
   padding: 0;
+  width: 100%;
 }
 
 .tb-mobile-links .tb-links-inner {

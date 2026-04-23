@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 
 // === Fetch Global Notices ===
 $api_base   = getenv('DJANGO_API_URL');
-$api_url = $api_base . "/api/v1/global-notices/";
+$api_url = $api_base . "/api/v1/global-notices/?page_size=100";
 $response = wp_remote_get($api_url, array('timeout' => 10));
 $notices_data = array();
 

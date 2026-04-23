@@ -169,7 +169,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
     background: linear-gradient(160deg, #5c1010, #8B1A1A);
     color: white;
     padding: 15px;
-    text-align: left;
+    text-align: center;
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
 }

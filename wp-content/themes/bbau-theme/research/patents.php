@@ -37,9 +37,22 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 <option value="Published">Published</option>
                 <option value="Granted">Granted</option>
             </select>
+
+            <select id="year-filter" class="custom-select">
+                <option value="">Year of Filing</option>
+                <?php 
+                    $current_year = date("Y");
+                    for($y = $current_year; $y >= 2010; $y--) {
+                        echo "<option value=\"$y\">$y</option>";
+                    }
+                ?>
+            </select>
         </div>
 
         <div class="table-card">
+            <div class="table-header-info d-flex justify-content-between align-items-center p-3 border-bottom">
+                <span class="text-muted small" id="record-count">Showing 0 records</span>
+            </div>
             <div class="table-responsive">
                 <table class="prog-table w-100" id="patents-table">
                     <thead>
@@ -60,6 +73,9 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div id="pagination-controls" class="pagination-wrapper p-3 border-top d-flex justify-content-center gap-3">
+                <!-- Pagination buttons will be injected here -->
             </div>
         </div>
     </div>
@@ -83,7 +99,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    
+
     // --- DYNAMICALLY LOAD FILTERS VIA JS TO PREVENT PHP LAG ---
     async function loadDynamicFilters() {
         try {
@@ -97,7 +113,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     const depts = await dRes.json();
                     const dData = depts.results || depts;
                     dData.forEach(d => {
-                        deptFilter.innerHTML += `<option value="${d.slug}">${d.name}</option>`;
+                        let displayName = d.name;
+                        if (d.campus === 'Satellite Campus Amethi') {
+                            displayName += ' (Amethi)';
+                        }
+                        deptFilter.innerHTML += `<option value="${d.slug}">${displayName}</option>`;
                     });
                 }
             }
@@ -112,17 +132,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
             }
-        } catch(e) {
+        } catch (e) {
             console.error("Filter Load Error:", e);
         }
     }
     loadDynamicFilters();
-    
+
     const searchInput = document.getElementById('patent-search');
     const deptFilter = document.getElementById('dept-filter');
     const facultyFilter = document.getElementById('faculty-filter');
     const statusFilter = document.getElementById('status-filter');
+    const yearFilter = document.getElementById('year-filter');
     const tbody = document.getElementById('patents-tbody');
+    const recordCount = document.getElementById('record-count');
+    const paginationControls = document.getElementById('pagination-controls');
     const apiBase = "<?php echo esc_js($api_base); ?>";
 
     // Modal Elements
@@ -132,17 +155,21 @@ document.addEventListener('DOMContentLoaded', function() {
     let patentsData = []; // Store fetched patents locally
     let debounceTimer;
 
-    function fetchPatents() {
-        const query = searchInput.value.toLowerCase().trim();
-        const dept = deptFilter.value;
-        const fac = facultyFilter.value;
-        const status = statusFilter.value;
+    function fetchPatents(url = null) {
+        if (!url) {
+            const query = searchInput.value.toLowerCase().trim();
+            const dept = deptFilter.value;
+            const fac = facultyFilter.value;
+            const status = statusFilter.value;
+            const year = yearFilter.value;
 
-        let url = `${apiBase}/api/v1/patents/?page_size=500&`;
-        if (query) url += `search=${encodeURIComponent(query)}&`;
-        if (dept) url += `department__slug=${encodeURIComponent(dept)}&`;
-        if (fac) url += `faculty__slug=${encodeURIComponent(fac)}&`;
-        if (status) url += `status=${encodeURIComponent(status)}&`;
+            url = `${apiBase}/api/v1/patents/?`;
+            if (query) url += `search=${encodeURIComponent(query)}&`;
+            if (dept) url += `department__slug=${encodeURIComponent(dept)}&`;
+            if (fac) url += `faculty__slug=${encodeURIComponent(fac)}&`;
+            if (status) url += `status=${encodeURIComponent(status)}&`;
+            if (year) url += `date_of_filing__year=${encodeURIComponent(year)}&`;
+        }
 
         tbody.innerHTML =
             `<tr><td colspan="6" class="text-center py-5 text-muted"><i class="fas fa-spinner fa-spin fa-2x mb-3 d-block"></i> Fetching records...</td></tr>`;
@@ -150,14 +177,40 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                patentsData = data.results || data; // Handle paginated vs non-paginated
+                patentsData = data.results || [];
                 renderTable(patentsData);
+                renderPagination(data);
+
+                const total = data.count || patentsData.length;
+                const shown = patentsData.length;
+                recordCount.textContent = `Showing ${shown} of ${total} records`;
             })
             .catch(err => {
                 console.error('Error fetching patents:', err);
                 tbody.innerHTML =
                     `<tr><td colspan="6" class="text-danger text-center py-4">Failed to load patents. Please try again later.</td></tr>`;
             });
+    }
+
+    function renderPagination(data) {
+        paginationControls.innerHTML = '';
+        if (!data.next && !data.previous) return;
+
+        if (data.previous) {
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'pagination-btn';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i> Previous';
+            prevBtn.onclick = () => fetchPatents(data.previous);
+            paginationControls.appendChild(prevBtn);
+        }
+
+        if (data.next) {
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'pagination-btn';
+            nextBtn.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
+            nextBtn.onclick = () => fetchPatents(data.next);
+            paginationControls.appendChild(nextBtn);
+        }
     }
 
     function renderTable(patents) {
@@ -227,12 +280,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners for Filters
     searchInput.addEventListener('input', () => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(fetchPatents, 400);
+        debounceTimer = setTimeout(() => fetchPatents(), 400);
     });
 
-    deptFilter.addEventListener('change', fetchPatents);
-    facultyFilter.addEventListener('change', fetchPatents);
-    statusFilter.addEventListener('change', fetchPatents);
+    deptFilter.addEventListener('change', () => fetchPatents());
+    facultyFilter.addEventListener('change', () => fetchPatents());
+    statusFilter.addEventListener('change', () => fetchPatents());
+    yearFilter.addEventListener('change', () => fetchPatents());
 
     // Initial Fetch
     fetchPatents();
@@ -253,25 +307,40 @@ document.addEventListener('DOMContentLoaded', function() {
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 15px;
-    flex-wrap: nowrap;
     align-items: center;
     border: 1px solid #f1f5f9;
 }
 
-.w-30 { width: 30%; }
-.w-20 { width: 20%; }
-.w-15 { width: 15%; }
-.w-10 { width: 10%; }
-.fw-blue { color: var(--theme-blue); }
+.w-30 {
+    width: 30%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-15 {
+    width: 15%;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.fw-blue {
+    color: var(--theme-blue);
+}
 
 .modal-title-blue {
     color: var(--theme-blue);
     font-size: 1.5rem !important;
     font-weight: 700 !important;
 }
-.modal-title-blue::after{
+
+.modal-title-blue::after {
     background: none;
 }
 
@@ -353,7 +422,7 @@ document.addEventListener('DOMContentLoaded', function() {
     font-weight: 700;
     letter-spacing: 0.05em;
     padding: 18px 20px;
-    text-align: left;
+    text-align: center;
     border-bottom: 2px solid #e2e8f0;
 }
 

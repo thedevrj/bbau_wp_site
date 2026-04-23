@@ -36,9 +36,22 @@ $api_base = getenv('DJANGO_MEDIA_URL');
             <select id="pub-faculty-filter" class="custom-select">
                 <option value="">All Faculty</option>
             </select>
+
+            <select id="year-filter" class="custom-select">
+                <option value="">Publication Year</option>
+                <?php 
+                    $current_year = date("Y");
+                    for($y = $current_year; $y >= 2010; $y--) {
+                        echo "<option value=\"$y\">$y</option>";
+                    }
+                ?>
+            </select>
         </div>
 
         <div class="table-card">
+            <div class="table-header-info d-flex justify-content-between align-items-center p-3 border-bottom">
+                <span class="text-muted small" id="record-count">Showing 0 records</span>
+            </div>
             <div class="table-responsive">
                 <table class="prog-table w-100" id="pubs-table">
                     <thead>
@@ -47,6 +60,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                             <th class="w-20">Author/Faculty</th>
                             <th class="w-20">Name of Journal / Publisher </th>
                             <th class="w-10">Type</th>
+                            <th class="w-10">Indexing</th>
                             <th class="w-15">Date</th>
                             <th class="w-5">Details</th>
                         </tr>
@@ -60,6 +74,9 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     </tbody>
                 </table>
             </div>
+            <div id="pagination-controls" class="pagination-wrapper p-3 border-top d-flex justify-content-center gap-3">
+                <!-- Pagination buttons will be injected here -->
+            </div>
         </div>
     </div>
 
@@ -72,7 +89,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
             <div class="modal-tags mb-3">
                 <span id="modal-type" class="status-badge badge-light">Type</span>
-                <span id="modal-indexing-badge" class="status-badge badge-indexing" style="display: none;">Indexing</span>
+                <span id="modal-indexing-badge" class="status-badge badge-indexing"
+                    style="display: none;">Indexing</span>
             </div>
 
             <div class="modal-meta mb-4 modal-meta-custom">
@@ -87,7 +105,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
             </div>
 
             <div id="modal-link-container" class="modal-link-container" style="display: none;">
-                <a href="#" id="modal-link" target="_blank" class="btn-primary modal-link-btn">View DOI <i class="fas fa-external-link-alt ms-2"></i></a>
+                <a href="#" id="modal-link" target="_blank" class="btn-primary modal-link-btn">View DOI <i
+                        class="fas fa-external-link-alt ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -95,7 +114,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    
+
     // --- DYNAMICALLY LOAD FILTERS VIA JS TO PREVENT PHP LAG ---
     async function loadDynamicFilters() {
         try {
@@ -109,7 +128,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     const depts = await dRes.json();
                     const dData = depts.results || depts;
                     dData.forEach(d => {
-                        deptFilter.innerHTML += `<option value="${d.slug}">${d.name}</option>`;
+                        let displayName = d.name;
+                        if (d.campus === 'Satellite Campus Amethi') {
+                            displayName += ' (Amethi)';
+                        }
+                        deptFilter.innerHTML += `<option value="${d.slug}">${displayName}</option>`;
                     });
                 }
             }
@@ -124,16 +147,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
             }
-        } catch(e) {
+        } catch (e) {
             console.error("Filter Load Error:", e);
         }
     }
     loadDynamicFilters();
-    
+
     const searchInput = document.getElementById('pub-search');
     const deptFilter = document.getElementById('pub-dept-filter');
     const facultyFilter = document.getElementById('pub-faculty-filter');
+    const yearFilter = document.getElementById('year-filter');
     const tbody = document.getElementById('pubs-tbody');
+    const recordCount = document.getElementById('record-count');
+    const paginationControls = document.getElementById('pagination-controls');
     const apiBase = "<?php echo esc_js($api_base); ?>";
 
     const modal = document.getElementById('pubModal');
@@ -142,17 +168,19 @@ document.addEventListener('DOMContentLoaded', function() {
     let pubsData = [];
     let debounceTimer;
 
-    function fetchPublications() {
-        const query = searchInput.value.toLowerCase().trim();
-        const dept = deptFilter.value;
-        const fac = facultyFilter.value;
+    function fetchPublications(url = null) {
+        if (!url) {
+            const query = searchInput.value.toLowerCase().trim();
+            const dept = deptFilter.value;
+            const fac = facultyFilter.value;
+            const year = yearFilter.value;
 
-        // Fetch all up to a large number so JS filtering or API filtering can work. 
-        // We rely on the API to filter.
-        let url = `${apiBase}/api/v1/publications/?page_size=500&`;
-        if (query) url += `search=${encodeURIComponent(query)}&`;
-        if (dept) url += `department__slug=${encodeURIComponent(dept)}&`;
-        if (fac) url += `faculty__slug=${encodeURIComponent(fac)}&`;
+            url = `${apiBase}/api/v1/publications/?`;
+            if (query) url += `search=${encodeURIComponent(query)}&`;
+            if (dept) url += `department__slug=${encodeURIComponent(dept)}&`;
+            if (fac) url += `faculty__slug=${encodeURIComponent(fac)}&`;
+            if (year) url += `publication_date__year=${encodeURIComponent(year)}&`;
+        }
 
         tbody.innerHTML =
             `<tr><td colspan="6" class="text-center py-5 text-muted"><i class="fas fa-spinner fa-spin fa-2x mb-3 d-block"></i> Fetching records...</td></tr>`;
@@ -160,14 +188,40 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                pubsData = data.results || data;
+                pubsData = data.results || [];
                 renderTable(pubsData);
+                renderPagination(data);
+
+                const total = data.count || pubsData.length;
+                const shown = pubsData.length;
+                recordCount.textContent = `Showing ${shown} of ${total} records`;
             })
             .catch(err => {
                 console.error('Error fetching publications:', err);
                 tbody.innerHTML =
                     `<tr><td colspan="6" class="text-danger text-center py-4">Failed to load publications.</td></tr>`;
             });
+    }
+
+    function renderPagination(data) {
+        paginationControls.innerHTML = '';
+        if (!data.next && !data.previous) return;
+
+        if (data.previous) {
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'pagination-btn';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i> Previous';
+            prevBtn.onclick = () => fetchPublications(data.previous);
+            paginationControls.appendChild(prevBtn);
+        }
+
+        if (data.next) {
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'pagination-btn';
+            nextBtn.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
+            nextBtn.onclick = () => fetchPublications(data.next);
+            paginationControls.appendChild(nextBtn);
+        }
     }
 
     function renderTable(pubs) {
@@ -183,9 +237,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td class="fw-bold fw-blue">${p.title}</td>
                     <td>${p.faculty_name || 'N/A'}</td>
                     <td>${p.name_of_journal_or_conference_or_publisher || '-'}</td>
-                    <td><span class="status-badge badge-light">${p.publication_type || 'Other'}</span>
-                        ${p.indexing ? `<div class="indexing-small">[${p.indexing === 'Others' && p.others_indexing ? p.others_indexing : p.indexing}]</div>` : ''}
-                    </td>
+                    <td><span class="status-badge badge-light">${p.publication_type || 'Other'}</span></td>
+                    <td>${p.indexing ? `<span class="status-badge badge-indexing"> ${p.indexing === 'Others' && p.others_indexing ? p.others_indexing : p.indexing}</span>` : '<span class="text-muted">--</span>'}
                     <td>${p.publication_date || '-'}</td>
                     <td class="text-center">
                         <button class="btn-view-desc" data-index="${index}"><i class="fas fa-eye"></i></button>
@@ -252,11 +305,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     searchInput.addEventListener('input', () => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(fetchPublications, 400);
+        debounceTimer = setTimeout(() => fetchPublications(), 400);
     });
 
-    deptFilter.addEventListener('change', fetchPublications);
-    facultyFilter.addEventListener('change', fetchPublications);
+    deptFilter.addEventListener('change', () => fetchPublications());
+    facultyFilter.addEventListener('change', () => fetchPublications());
+    yearFilter.addEventListener('change', () => fetchPublications());
 
     fetchPublications();
 });
@@ -275,26 +329,44 @@ document.addEventListener('DOMContentLoaded', function() {
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 15px;
-    flex-wrap: nowrap;
     align-items: center;
     border: 1px solid #f1f5f9;
 }
 
-.w-30 { width: 30%; }
-.w-20 { width: 20%; }
-.w-15 { width: 15%; }
-.w-10 { width: 10%; }
-.w-5 { width: 5%; }
-.fw-blue { color: var(--theme-blue); }
+.w-30 {
+    width: 30%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-15 {
+    width: 15%;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.w-5 {
+    width: 5%;
+}
+
+.fw-blue {
+    color: var(--theme-blue);
+}
 
 .modal-title-blue {
     color: var(--theme-blue);
     font-size: 1.5rem !important;
     font-weight: 700 !important;
 }
-.modal-title-blue::after{
+
+.modal-title-blue::after {
     background: none;
 }
 
@@ -304,8 +376,15 @@ document.addEventListener('DOMContentLoaded', function() {
     line-height: 1.6;
 }
 
-.badge-light { background: #f1f5f9; color: #475569; }
-.badge-indexing { background: #dbeafe; color: #1e40af; }
+.badge-light {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.badge-indexing {
+    background: #dbeafe;
+    color: #1e40af;
+}
 
 .indexing-small {
     font-size: 0.75rem;
@@ -323,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
     display: inline-block;
     padding: 10px 20px;
     background: var(--theme-blue);
-    color: white  !important;
+    color: white !important;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
@@ -395,7 +474,7 @@ document.addEventListener('DOMContentLoaded', function() {
     font-weight: 700;
     letter-spacing: 0.05em;
     padding: 18px 20px;
-    text-align: left;
+    text-align: center;
     border-bottom: 2px solid #e2e8f0;
 }
 

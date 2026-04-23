@@ -10,7 +10,7 @@ $current_page   = isset($_GET['notice_page']) ? max(1, intval($_GET['notice_page
 $per_page       = 9;
 
 $api_base   = getenv('DJANGO_API_URL');
-$api_url = $api_base . '/api/v1/global-notices/';
+$api_url = $api_base . '/api/v1/global-notices/?page_size=100';
 if ( !empty($category_param) ) {
     $api_url .= '?category=' . urlencode($category_param);
 }
