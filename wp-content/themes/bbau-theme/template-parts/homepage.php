@@ -186,7 +186,6 @@ document.addEventListener("DOMContentLoaded", function () {
         <!-- ================= CARD 1 ================= -->
         <div class="info-card">
             <h3 class="info-title">Announcement</h3>
-
             <div class="info-scroll">
                 <?php if ( !empty($announcement_notices) ) : ?>
                     <?php foreach ( $announcement_notices as $an ) : ?>
@@ -196,14 +195,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     <span class="info-item" style="color:#777;">No announcements found.</span>
                 <?php endif; ?>
             </div>
-
-            <a href="/notices/?category=Announcement" class="info-btn orange">View All Announcement</a>
+            <a href="/notices/?category=Announcement" class="info-btn orange">
+                View All Announcements
+                <span class="arrow-icon">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </span>
+            </a>
         </div>
 
         <!-- ================= CARD 2 ================= -->
         <div class="info-card">
             <h3 class="info-title">Events</h3>
-
             <div class="info-scroll">
                 <?php if ( !empty($event_notices) ) : ?>
                     <?php foreach ( $event_notices as $en ) : ?>
@@ -213,14 +215,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     <span class="info-item" style="color:#777;">No events found.</span>
                 <?php endif; ?>
             </div>
-
-            <a href="/notices/?category=Event" class="info-btn dark">View All Events</a>
+            <a href="/notices/?category=Event" class="info-btn dark">
+                View All Events
+                <span class="arrow-icon">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </span>
+            </a>
         </div>
 
         <!-- ================= CARD 3 ================= -->
         <div class="info-card">
             <h3 class="info-title">Appointments</h3>
-
             <div class="info-scroll">
                 <?php if ( !empty($appointment_notices) ) : ?>
                     <?php foreach ( $appointment_notices as $ap ) : ?>
@@ -230,14 +235,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     <span class="info-item" style="color:#777;">No appointments found.</span>
                 <?php endif; ?>
             </div>
-
-            <a href="/notices/?category=Appointment" class="info-btn orange">View All Appointments</a>
+            <a href="/notices/?category=Appointment" class="info-btn orange">
+                View All Appointments
+                <span class="arrow-icon">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </span>
+            </a>
         </div>
 
         <!-- ================= CARD 4 ================= -->
         <div class="info-card">
             <h3 class="info-title">Tenders</h3>
-
             <div class="info-scroll">
                 <?php if ( !empty($tender_notices) ) : ?>
                     <?php foreach ( $tender_notices as $tn ) : ?>
@@ -247,13 +255,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     <span class="info-item" style="color:#777;">No tenders found.</span>
                 <?php endif; ?>
             </div>
-
-            <a href="/notices/?category=Tenders" class="info-btn dark">View All Tenders</a>
+            <a href="/notices/?category=Tenders" class="info-btn dark">
+                View All Tenders
+                <span class="arrow-icon">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </span>
+            </a>
         </div>
 
     </div>
 </section>
-
 
 <section class="auto-slider">
     <div class="auto-slider-container">
