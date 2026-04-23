@@ -69,16 +69,16 @@ function get_notice_href($notice) {
     </div>
 </section>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const video = document.querySelector(".hero-video");
+document.addEventListener("DOMContentLoaded", function() {
+    const video = document.querySelector(".hero-video");
 
-  if (video) {
-    video.muted = true;
-    video.play().catch(() => {
-      video.muted = true;
-      video.play();
-    });
-  }
+    if (video) {
+        video.muted = true;
+        video.play().catch(() => {
+            video.muted = true;
+            video.play();
+        });
+    }
 });
 </script>
 
@@ -87,12 +87,13 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="announce-container">
         <div class="announce-track">
             <?php if ( !empty($marquee_notices) ) : ?>
-                <?php foreach ( $marquee_notices as $mn ) : ?>
-                    <span><a target="_blank" href="<?php echo esc_url(get_notice_href($mn)); ?>"><?php echo esc_html($mn['title']); ?></a></span>
-                <?php endforeach; ?>
+            <?php foreach ( $marquee_notices as $mn ) : ?>
+            <span><a target="_blank"
+                    href="<?php echo esc_url(get_notice_href($mn)); ?>"><?php echo esc_html($mn['title']); ?></a></span>
+            <?php endforeach; ?>
             <?php else: ?>
-                <span><a href="#">No new marquee updates at this time.</a></span>
-            <?php endif; ?> 
+            <span><a href="#">No new marquee updates at this time.</a></span>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -122,9 +123,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                     <div class="stat-text">
                         <span class="num count"
-                         data-target="<?php echo preg_replace('/[^0-9]/', '', get_sub_field('stats_number')); ?>"
-                         data-suffix="<?php echo strpos(get_sub_field('stats_number'), '+') !== false ? '+' : ''; ?>">
-                         0
+                            data-target="<?php echo preg_replace('/[^0-9]/', '', get_sub_field('stats_number')); ?>"
+                            data-suffix="<?php echo strpos(get_sub_field('stats_number'), '+') !== false ? '+' : ''; ?>">
+                            0
                         </span>
 
                         <span class="label"><?php echo get_sub_field('stats_label');?></span>
@@ -184,81 +185,101 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="info-container">
 
         <!-- ================= CARD 1 ================= -->
-        <div class="info-card">
-            <h3 class="info-title">Announcement</h3>
-            <div class="info-scroll">
-                <?php if ( !empty($announcement_notices) ) : ?>
-                    <?php foreach ( $announcement_notices as $an ) : ?>
-                        <a href="<?php echo esc_url(get_notice_href($an)); ?>" class="info-item" target="_blank"><?php echo esc_html($an['title']); ?></a>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <span class="info-item" style="color:#777;">No announcements found.</span>
-                <?php endif; ?>
+        <div class="info-col">
+            <div class="info-card">
+                <h3 class="info-title">Announcement</h3>
+                <div class="info-scroll">
+                    <?php if ( !empty($announcement_notices) ) : ?>
+                        <?php foreach ( $announcement_notices as $an ) : ?>
+                            <a href="<?php echo esc_url(get_notice_href($an)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($an['title']); ?></a>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="info-item" style="color:#777;">No announcements found.</span>
+                    <?php endif; ?>
+                </div>
             </div>
             <a href="/notices/?category=Announcement" class="info-btn orange">
                 View All Announcements
                 <span class="arrow-icon">
-                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
                 </span>
             </a>
         </div>
 
         <!-- ================= CARD 2 ================= -->
-        <div class="info-card">
-            <h3 class="info-title">Events</h3>
-            <div class="info-scroll">
-                <?php if ( !empty($event_notices) ) : ?>
-                    <?php foreach ( $event_notices as $en ) : ?>
-                        <a href="<?php echo esc_url(get_notice_href($en)); ?>" class="info-item" target="_blank"><?php echo esc_html($en['title']); ?></a>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <span class="info-item" style="color:#777;">No events found.</span>
-                <?php endif; ?>
+        <div class="info-col">
+            <div class="info-card">
+                <h3 class="info-title">Events</h3>
+                <div class="info-scroll">
+                    <?php if ( !empty($event_notices) ) : ?>
+                        <?php foreach ( $event_notices as $en ) : ?>
+                            <a href="<?php echo esc_url(get_notice_href($en)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($en['title']); ?></a>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="info-item" style="color:#777;">No events found.</span>
+                    <?php endif; ?>
+                </div>
             </div>
             <a href="/notices/?category=Event" class="info-btn dark">
                 View All Events
                 <span class="arrow-icon">
-                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
                 </span>
             </a>
         </div>
 
         <!-- ================= CARD 3 ================= -->
-        <div class="info-card">
-            <h3 class="info-title">Appointments</h3>
-            <div class="info-scroll">
-                <?php if ( !empty($appointment_notices) ) : ?>
-                    <?php foreach ( $appointment_notices as $ap ) : ?>
-                        <a href="<?php echo esc_url(get_notice_href($ap)); ?>" class="info-item" target="_blank"><?php echo esc_html($ap['title']); ?></a>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <span class="info-item" style="color:#777;">No appointments found.</span>
-                <?php endif; ?>
+        <div class="info-col">
+            <div class="info-card">
+                <h3 class="info-title">Appointments</h3>
+                <div class="info-scroll">
+                    <?php if ( !empty($appointment_notices) ) : ?>
+                        <?php foreach ( $appointment_notices as $ap ) : ?>
+                            <a href="<?php echo esc_url(get_notice_href($ap)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($ap['title']); ?></a>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="info-item" style="color:#777;">No appointments found.</span>
+                    <?php endif; ?>
+                </div>
             </div>
             <a href="/notices/?category=Appointment" class="info-btn orange">
                 View All Appointments
                 <span class="arrow-icon">
-                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
                 </span>
             </a>
         </div>
 
         <!-- ================= CARD 4 ================= -->
-        <div class="info-card">
-            <h3 class="info-title">Tenders</h3>
-            <div class="info-scroll">
-                <?php if ( !empty($tender_notices) ) : ?>
-                    <?php foreach ( $tender_notices as $tn ) : ?>
-                        <a href="<?php echo esc_url(get_notice_href($tn)); ?>" class="info-item" target="_blank"><?php echo esc_html($tn['title']); ?></a>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <span class="info-item" style="color:#777;">No tenders found.</span>
-                <?php endif; ?>
+        <div class="info-col">
+            <div class="info-card">
+                <h3 class="info-title">Tenders</h3>
+                <div class="info-scroll">
+                    <?php if ( !empty($tender_notices) ) : ?>
+                        <?php foreach ( $tender_notices as $tn ) : ?>
+                            <a href="<?php echo esc_url(get_notice_href($tn)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($tn['title']); ?></a>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="info-item" style="color:#777;">No tenders found.</span>
+                    <?php endif; ?>
+                </div>
             </div>
             <a href="/notices/?category=Tenders" class="info-btn dark">
                 View All Tenders
                 <span class="arrow-icon">
-                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
                 </span>
             </a>
         </div>
