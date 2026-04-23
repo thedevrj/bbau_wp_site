@@ -836,17 +836,27 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 26px;
+  align-items: start;
+}
+
+/* ================= COLUMN WRAPPER ================= */
+.info-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 10px; /* ← gap between card and button */
 }
 
 /* ================= CARD ================= */
 .info-card {
-  height: 420px;
   background: #ffffff;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 8px;          /* ← full radius all sides */
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-height: 420px;
+  max-height: 420px;
 }
 
 /* ================= TITLE ================= */
@@ -866,7 +876,9 @@
 .info-scroll {
   flex: 1;
   min-height: 0;
+  max-height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: #d94a2c #f1f1f1;
 }
@@ -918,47 +930,57 @@
 
 /* ================= BUTTON ================= */
 .info-btn {
-  height: 44px;
-  border-radius: 6px;
-  padding: 0 16px;
+  height: 52px;
+  border-radius: 8px;          /* ← full radius all sides, fully separate */
+  border: none;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-family: "Poppins", sans-serif;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   color: #ffffff;
   text-decoration: none;
   flex-shrink: 0;
-  transition: color 0.3s ease;
+  transition: filter 0.3s ease;
 }
 
 /* ── Button Colours ── */
 .info-btn.orange {
-  background: #f28c28;
+  background: #e8871e;
 }
 
 .info-btn.dark {
-  background: #1f1f1f;
+  background: #1a1a1a;
 }
 
-/* ── Hover: background stays same ── */
+.info-btn.red {
+  background: #c0391b;
+}
+
+/* ── Hover ── */
 .info-btn.orange:hover {
-  background: #f28c28;
+  filter: brightness(1.1);
   color: #ffffff;
 }
 
 .info-btn.dark:hover {
-  background: #1f1f1f;
+  filter: brightness(1.4);
+  color: #ffffff;
+}
+
+.info-btn.red:hover {
+  filter: brightness(1.1);
   color: #ffffff;
 }
 
 /* ── Arrow Circle ── */
 .info-btn .arrow-icon {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -967,8 +989,8 @@
 }
 
 .info-btn .arrow-icon svg {
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   fill: none;
   stroke: #ffffff;
   stroke-width: 2;
@@ -980,12 +1002,10 @@
 /* ── Arrow moves right on hover ── */
 .info-btn:hover .arrow-icon svg {
   transform: translateX(4px);
-  stroke: #ffffff;
 }
 
-.info-btn.orange:hover .arrow-icon,
-.info-btn.dark:hover .arrow-icon {
-  border-color: rgba(255, 255, 255, 0.6);
+.info-btn:hover .arrow-icon {
+  border-color: rgba(255, 255, 255, 0.9);
 }
 
 /* ================= VIEW ALL BUTTONS SECTION ================= */
@@ -1019,9 +1039,11 @@
 .view-all-btn.dark {
   background: #1f1f1f;
 }
+
 .view-all-btn.red {
   background: #c0391b;
 }
+
 /* ── View All Arrow Circle ── */
 .view-all-btn .arrow-icon {
   width: 36px;
@@ -1032,8 +1054,9 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, transform 0.3s ease;
 }
+
 .view-all-btn .arrow-icon svg {
   width: 18px;
   height: 18px;
@@ -1042,43 +1065,43 @@
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: transform 0.3s ease, stroke 0.3s ease;
+  transition: stroke 0.3s ease;
 }
-/* ── View All Hover: Arrow Circle + Arrow Moves Right ── */
+
+/* ── View All Hover: Arrow Circle moves right ── */
 .view-all-btn:hover .arrow-icon {
   transform: translateX(5px);
   border-color: #ffffff;
 }
-/* Arrow inside stays centered — no extra transform needed */
-.view-all-btn:hover .arrow-icon svg {
-  transform: none;
-}
 
-.view-all-btn:hover .arrow-icon {
-  border-color: #ffffff;
-}
 /* ── View All Hover: White Background ── */
 .view-all-btn.orange:hover {
   background: #ffffff;
   color: #e07820;
 }
+
 .view-all-btn.dark:hover {
   background: #ffffff;
   color: #1f1f1f;
 }
+
 .view-all-btn.red:hover {
   background: #ffffff;
   color: #c0391b;
 }
+
 .view-all-btn.orange:hover .arrow-icon svg {
   stroke: #e07820;
 }
+
 .view-all-btn.dark:hover .arrow-icon svg {
   stroke: #1f1f1f;
 }
+
 .view-all-btn.red:hover .arrow-icon svg {
   stroke: #c0391b;
 }
+
 .view-all-btn.orange:hover .arrow-icon,
 .view-all-btn.dark:hover .arrow-icon,
 .view-all-btn.red:hover .arrow-icon {
@@ -1091,12 +1114,21 @@
     grid-template-columns: repeat(2, 1fr);
     padding: 0 24px;
   }
+
   .info-card {
-    height: 380px;
+    min-height: 380px;
+    max-height: 380px;
   }
+
+  .info-btn {
+    font-size: 14px;
+    height: 48px;
+  }
+
   .view-all-section {
     grid-template-columns: 1fr;
   }
+
   .view-all-btn {
     padding: 18px 24px;
     font-size: 15px;
@@ -1109,26 +1141,50 @@
     grid-template-columns: 1fr;
     padding: 0 16px;
   }
+
   .info-card {
-    height: 360px;
+    min-height: 360px;
+    max-height: 360px;
   }
+
   .info-title {
     font-size: 18px;
   }
+
   .info-item {
     font-size: 15px;
   }
+
+  .info-btn {
+    font-size: 13px;
+    height: 46px;
+    padding: 0 16px;
+  }
+
+  .info-btn .arrow-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .info-btn .arrow-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
   .view-all-section {
     grid-template-columns: 1fr;
   }
+
   .view-all-btn {
     padding: 16px 20px;
     font-size: 14px;
   }
+
   .view-all-btn .arrow-icon {
     width: 30px;
     height: 30px;
   }
+
   .view-all-btn .arrow-icon svg {
     width: 15px;
     height: 15px;
