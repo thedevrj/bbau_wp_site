@@ -9,7 +9,7 @@ if (!is_wp_error($prog_res) && wp_remote_retrieve_response_code($prog_res) === 2
     $programs_list = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
 }
 
-$cbcs_url = $api_base . '/api/v1/cbcs-courses/?department__slug=' . urlencode($slug);
+$cbcs_url = $api_base . '/api/v1/cbcs/?department__slug=' . urlencode($slug);
 $cbcs_res = wp_remote_get($cbcs_url, array('timeout' => 10));
 $cbcs_list = array();
 if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 200) {
@@ -25,9 +25,9 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
         <table class="prog-table">
             <thead>
                 <tr>
-                    <th style="width: 30%">Programme Name</th>
-                    <th>Level</th>
-                    <th>Duration</th>
+                    <th style="width: 25%">Programme Name</th>
+                    <th style="width: 8%">Level</th>
+                    <th style="width: 10%">Duration</th>
                     <th>Intake & Fees</th>
                     <th>Details</th>
                 </tr>

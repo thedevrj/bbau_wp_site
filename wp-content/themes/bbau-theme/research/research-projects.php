@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Research Patents
+ * Template Name: Research Projects
  */
 
 get_header();
@@ -15,47 +15,56 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
     <div class="research-container container">
         <?php get_template_part('template-parts/breadcrumb');?>
+        
+        <div class="portal-header mb-4">
+            <h2 class="section-title modal-title-blue">Research Projects</h2>
+        </div>
 
         <!-- FILTER BAR -->
         <div class="filter-bar">
-            <div class="patent-search-box">
-                <i class="fas fa-search search-pt-icon"></i>
-                <input type="text" id="patent-search" placeholder="Search by title or patent no..." autocomplete="off">
+            <div class="research-search-box">
+                <i class="fas fa-search research-search-icon"></i>
+                <input type="text" id="project-search" placeholder="Search by title, agency..." autocomplete="off">
             </div>
-
+            
             <select id="dept-filter" class="custom-select">
-                <option value="">Filter by Departments</option>
+                <option value="">All Departments</option>
+                <?php foreach($departments as $dept): ?>
+                    <option value="<?php echo esc_attr($dept['slug']); ?>"><?php echo esc_html($dept['name']); ?></option>
+                <?php endforeach; ?>
             </select>
 
             <select id="faculty-filter" class="custom-select">
-                <option value="">Filter by Faculty</option>
+                <option value="">All Principal Investigators</option>
+                <?php foreach($faculty_list as $fac): ?>
+                    <option value="<?php echo esc_attr($fac['slug']); ?>"><?php echo esc_html($fac['name']); ?></option>
+                <?php endforeach; ?>
             </select>
 
             <select id="status-filter" class="custom-select">
-                <option value=""> Status</option>
-                <option value="Filed">Filed</option>
-                <option value="Published">Published</option>
-                <option value="Granted">Granted</option>
+                <option value="">Status</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Completed">Completed</option>
             </select>
         </div>
 
         <div class="table-card">
             <div class="table-responsive">
-                <table class="prog-table w-100" id="patents-table">
+                <table class="prog-table w-100" id="projects-table">
                     <thead>
                         <tr>
-                            <th class="w-30">Title of Patent</th>
-                            <th class="w-20">Inventor</th>
-                            <th class="w-15">Patent No.</th>
-                            <th class="w-15">Department</th>
+                            <th class="w-30">Project Title</th>
+                            <th class="w-20">Principal Investigator</th>
+                            <th class="w-20">Funding Agency</th>
+                            <th class="w-10">Amount</th>
                             <th class="w-10">Status</th>
                             <th class="w-10">Details</th>
                         </tr>
                     </thead>
-                    <tbody id="patents-tbody">
+                    <tbody id="projects-tbody">
                         <tr>
                             <td colspan="6" class="text-center py-4 text-muted">
-                                <i class="fas fa-spinner fa-spin me-2"></i> Loading patents...
+                                <i class="fas fa-spinner fa-spin me-2"></i> Loading projects...
                             </td>
                         </tr>
                     </tbody>
@@ -64,15 +73,20 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         </div>
     </div>
 
-    <!-- PATENT MODAL -->
-    <div id="patentModal" class="custom-modal">
+    <!-- PROJECT MODAL -->
+    <div id="projectModal" class="custom-modal">
         <div class="custom-modal-content">
             <span class="close-modal">&times;</span>
-            <h2 id="modal-title" class="mb-3 modal-title-blue">Patent Title</h2>
+            <h2 id="modal-title" class="mb-3 modal-title-blue">Project Title</h2>
+            <div class="modal-tags mb-3">
+                <span id="modal-status" class="status-badge badge-light">Status</span>
+            </div>
             <div class="modal-meta mb-4 pb-3 modal-meta-custom">
-                <span class="me-3"><i class="fas fa-user-tie"></i> <span id="modal-inventor"></span></span>
-                <span class="me-3"><i class="fas fa-barcode"></i> <span id="modal-number"></span></span>
-                <span><i class="fas fa-calendar-alt"></i> <span id="modal-date"></span></span>
+                <div class="mb-2"><i class="fas fa-user-tie me-2"></i> <strong>P.I.:</strong> <span id="modal-pi"></span></div>
+                <div class="mb-2"><i class="fas fa-users me-2"></i> <strong>Co-P.I.(s):</strong> <span id="modal-copi"></span></div>
+                <div class="mb-2"><i class="fas fa-building me-2"></i> <strong>Agency:</strong> <span id="modal-agency"></span></div>
+                <div class="mb-2"><i class="fas fa-rupee-sign me-2"></i> <strong>Amount:</strong> <span id="modal-amount"></span></div>
+                <div class="mb-2"><i class="fas fa-university me-2"></i> <strong>Department:</strong> <span id="modal-dept"></span></div>
             </div>
             <div id="modal-description" class="modal-body-content modal-desc-custom">
                 <!-- Description HTML goes here -->
@@ -118,63 +132,67 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     loadDynamicFilters();
     
-    const searchInput = document.getElementById('patent-search');
+    const searchInput = document.getElementById('project-search');
     const deptFilter = document.getElementById('dept-filter');
     const facultyFilter = document.getElementById('faculty-filter');
     const statusFilter = document.getElementById('status-filter');
-    const tbody = document.getElementById('patents-tbody');
+    const tbody = document.getElementById('projects-tbody');
     const apiBase = "<?php echo esc_js($api_base); ?>";
-
+    
     // Modal Elements
-    const modal = document.getElementById('patentModal');
+    const modal = document.getElementById('projectModal');
     const closeBtn = document.querySelector('.close-modal');
-
-    let patentsData = []; // Store fetched patents locally
+    
+    let projectsData = [];
     let debounceTimer;
 
-    function fetchPatents() {
+    function fetchProjects() {
         const query = searchInput.value.toLowerCase().trim();
         const dept = deptFilter.value;
         const fac = facultyFilter.value;
         const status = statusFilter.value;
-
-        let url = `${apiBase}/api/v1/patents/?page_size=500&`;
+        
+        let url = `${apiBase}/api/v1/research-projects/?page_size=500&`;
         if (query) url += `search=${encodeURIComponent(query)}&`;
         if (dept) url += `department__slug=${encodeURIComponent(dept)}&`;
-        if (fac) url += `faculty__slug=${encodeURIComponent(fac)}&`;
+        if (fac) url += `principal_investigator__slug=${encodeURIComponent(fac)}&`;
         if (status) url += `status=${encodeURIComponent(status)}&`;
 
-        tbody.innerHTML =
-            `<tr><td colspan="6" class="text-center py-5 text-muted"><i class="fas fa-spinner fa-spin fa-2x mb-3 d-block"></i> Fetching records...</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-muted"><i class="fas fa-spinner fa-spin fa-2x mb-3 d-block"></i> Fetching records...</td></tr>`;
 
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                patentsData = data.results || data; // Handle paginated vs non-paginated
-                renderTable(patentsData);
+                projectsData = data.results || data;
+                renderTable(projectsData);
             })
             .catch(err => {
-                console.error('Error fetching patents:', err);
-                tbody.innerHTML =
-                    `<tr><td colspan="6" class="text-danger text-center py-4">Failed to load patents. Please try again later.</td></tr>`;
+                console.error('Error fetching projects:', err);
+                tbody.innerHTML = `<tr><td colspan="6" class="text-danger text-center py-4">Failed to load projects. Please try again later.</td></tr>`;
             });
     }
 
-    function renderTable(patents) {
-        if (patents.length === 0) {
-            tbody.innerHTML =
-                `<tr><td colspan="6" class="text-center py-5 text-muted">No patents found matching your criteria.</td></tr>`;
+    function renderTable(projects) {
+        if (projects.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-muted">No projects found matching your criteria.</td></tr>`;
             return;
         }
 
-        const html = patents.map((p, index) => {
-            const statusClass = (p.status || '').toLowerCase();
+        const html = projects.map((p, index) => {
+            const statusClass = (p.status || '').toLowerCase().replace(' ', '-');
+            const amount = p.amount_sanctioned ? '₹' + Number(p.amount_sanctioned).toLocaleString('en-IN') : '-';
+            
+            let coPiHtml = '';
+            if (p.co_investigators_names && p.co_investigators_names.length > 0) {
+                coPiHtml = `<div class="indexing-small">Co-PI: ${p.co_investigators_names.join(', ')}</div>`;
+            }
+
             return `
                 <tr>
                     <td class="fw-bold fw-blue">${p.title}</td>
-                    <td>${p.faculty_name || 'N/A'}</td>
-                    <td>${p.patent_number || '-'}</td>
-                    <td>${p.department_name || '-'}</td>
+                    <td>${p.pi_name || 'N/A'}${coPiHtml}</td>
+                    <td>${p.funding_agency || '-'}</td>
+                    <td>${amount}</td>
                     <td><span class="status-badge ${statusClass}">${p.status}</span></td>
                     <td class="text-center">
                         <button class="btn-view-desc" data-index="${index}"><i class="fas fa-eye"></i> View</button>
@@ -182,32 +200,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
         }).join('');
-
+        
         tbody.innerHTML = html;
 
-        // Attach click listeners to view buttons
         document.querySelectorAll('.btn-view-desc').forEach(btn => {
             btn.addEventListener('click', function() {
-                const pat = patentsData[this.getAttribute('data-index')];
-                openModal(pat);
+                const proj = projectsData[this.getAttribute('data-index')];
+                openModal(proj);
             });
         });
     }
 
-    function openModal(pat) {
-        document.getElementById('modal-title').textContent = pat.title;
-        document.getElementById('modal-inventor').textContent = pat.faculty_name || 'Not specified';
-        document.getElementById('modal-number').textContent = pat.patent_number || 'Not specified';
-        document.getElementById('modal-date').textContent = pat.date_of_filing || pat.year || 'Not specified';
-
-        const descEl = document.getElementById('modal-description');
-        if (pat.description && pat.description.trim() !== '') {
-            descEl.innerHTML = pat.description;
-        } else {
-            descEl.innerHTML =
-                '<p class="text-muted fst-italic">No detailed description available for this patent.</p>';
+    function openModal(proj) {
+        document.getElementById('modal-title').textContent = proj.title;
+        document.getElementById('modal-pi').textContent = proj.pi_name || 'Not specified';
+        
+        let copiText = 'None';
+        if (proj.co_investigators_names && proj.co_investigators_names.length > 0) {
+            copiText = proj.co_investigators_names.join(', ');
         }
+        document.getElementById('modal-copi').textContent = copiText;
 
+        document.getElementById('modal-agency').textContent = proj.funding_agency || 'Not specified';
+        document.getElementById('modal-amount').textContent = proj.amount_sanctioned ? '₹' + Number(proj.amount_sanctioned).toLocaleString('en-IN') : 'Not specified';
+        document.getElementById('modal-dept').textContent = proj.department_name || 'Not specified';
+        
+        const statusEl = document.getElementById('modal-status');
+        statusEl.textContent = proj.status || 'Project';
+        const statusClass = (proj.status || '').toLowerCase().replace(' ', '-');
+        statusEl.className = `status-badge ${statusClass}`;
+        
+        const descEl = document.getElementById('modal-description');
+        if (proj.description && proj.description.trim() !== '') {
+            descEl.innerHTML = proj.description;
+        } else {
+            descEl.innerHTML = '<p class="text-muted fst-italic">No detailed description available for this project.</p>';
+        }
+        
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
@@ -224,18 +253,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Event Listeners for Filters
     searchInput.addEventListener('input', () => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(fetchPatents, 400);
+        debounceTimer = setTimeout(fetchProjects, 400);
     });
+    
+    deptFilter.addEventListener('change', fetchProjects);
+    facultyFilter.addEventListener('change', fetchProjects);
+    statusFilter.addEventListener('change', fetchProjects);
 
-    deptFilter.addEventListener('change', fetchPatents);
-    facultyFilter.addEventListener('change', fetchPatents);
-    statusFilter.addEventListener('change', fetchPatents);
-
-    // Initial Fetch
-    fetchPatents();
+    fetchProjects();
 });
 </script>
 
@@ -246,12 +273,11 @@ document.addEventListener('DOMContentLoaded', function() {
     --theme-amber: #b45309;
 }
 
-/* FILTER BAR */
 .filter-bar {
     background: white;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
     margin-bottom: 30px;
     display: flex;
     gap: 15px;
@@ -262,23 +288,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .w-30 { width: 30%; }
 .w-20 { width: 20%; }
-.w-15 { width: 15%; }
 .w-10 { width: 10%; }
 .fw-blue { color: var(--theme-blue); }
 
 .modal-title-blue {
     color: var(--theme-blue);
-    font-size: 1.5rem !important;
-    font-weight: 700 !important;
-}
-.modal-title-blue::after{
-    background: none;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 .modal-meta-custom {
     border-bottom: 1px solid #e2e8f0;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #64748b;
+    line-height: 1.6;
 }
 
 .modal-desc-custom {
@@ -286,13 +309,13 @@ document.addEventListener('DOMContentLoaded', function() {
     color: #334155;
 }
 
-.patent-search-box {
+.research-search-box {
     flex: 1;
     min-width: 200px;
     position: relative;
 }
 
-.search-pt-icon {
+.research-search-icon {
     position: absolute;
     left: 15px;
     top: 50%;
@@ -300,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
     color: #94a3b8;
 }
 
-.patent-search-box input {
+.research-search-box input {
     width: 100%;
     padding: 10px 15px 10px 40px;
     border-radius: 8px;
@@ -309,7 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
     transition: all 0.2s;
 }
 
-.patent-search-box input:focus {
+.research-search-box input:focus {
     border-color: var(--theme-blue);
     outline: none;
     box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
@@ -326,11 +349,10 @@ document.addEventListener('DOMContentLoaded', function() {
     cursor: pointer;
 }
 
-/* TABLE CARD */
 .table-card {
     background: white;
     border-radius: 16px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
     overflow: hidden;
     border: 1px solid #f1f5f9;
 }
@@ -368,7 +390,6 @@ document.addEventListener('DOMContentLoaded', function() {
     background-color: #f8fafc;
 }
 
-/* BADGES AND BUTTONS */
 .status-badge {
     padding: 6px 12px;
     border-radius: 20px;
@@ -379,19 +400,15 @@ document.addEventListener('DOMContentLoaded', function() {
     white-space: nowrap;
 }
 
-.status-badge.filed {
-    background: #e0f2fe;
-    color: #0284c7;
-}
+.status-badge.ongoing { background: #e0f2fe; color: #0284c7; }
+.status-badge.completed { background: #dcfce7; color: #166534; }
+.badge-light { background: #f1f5f9; color: #475569; }
 
-.status-badge.published {
-    background: #fef3c7;
-    color: #d97706;
-}
-
-.status-badge.granted {
-    background: #dcfce7;
-    color: #166534;
+.indexing-small {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+    margin-top: 4px;
 }
 
 .btn-view-desc {
@@ -412,14 +429,10 @@ document.addEventListener('DOMContentLoaded', function() {
     color: white;
 }
 
-/* CUSTOM MODAL */
 .custom-modal {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(15, 23, 42, 0.7);
     z-index: 10000;
     backdrop-filter: blur(4px);
@@ -456,30 +469,14 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 @keyframes modalFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @media (max-width: 768px) {
-    .filter-bar {
-        flex-direction: column;
-    }
-
-    .custom-select {
-        width: 100%;
-    }
-
-    .custom-modal-content {
-        padding: 25px;
-        width: 95%;
-    }
+    .filter-bar { flex-direction: column; }
+    .custom-select { width: 100%; }
+    .custom-modal-content { padding: 25px; width: 95%; }
 }
 </style>
 

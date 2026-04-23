@@ -361,3 +361,24 @@ function custom_menu_query_var($vars) {
     return $vars;
 }
 add_filter('query_vars', 'custom_menu_query_var');
+
+//  Smart Labeling for Departments by Campus
+
+function get_dept_display_name($dept) {
+    if (empty($dept)) return '';
+    
+    $name = $dept['name'] ?? '';
+    $campus = $dept['campus'] ?? 'BBAU';
+    
+    // Check if we are on the Dedicated Satellite Campus Page
+    // We assume the page using 'page-satellite-campus.php' template is the context
+    if (is_page_template('page-satellite-campus.php')) {
+        return $name;
+    }
+    
+    if ($campus === 'Satellite Campus Amethi') {
+        return $name . ' (Amethi)';
+    }
+    
+    return $name;
+}

@@ -45,7 +45,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                     <?php endif; ?>
                 </div>
                 <div class="leader-info">
-                    <span class="leader-label">DEAN</span>
+                    <!-- <span class="leader-label">DEAN</span> -->
                     <h3 class="leader-name"><?php echo esc_html($dean['name']); ?></h3>
                     <p class="school-name"><?php echo esc_html($school['name']); ?></p>
                     
@@ -131,6 +131,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     padding: 25px;
     text-align: center;
     flex-grow: 1;
+    padding-bottom: 8px;
 }
 
 .leader-label {
@@ -148,14 +149,14 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 
 .leader-name {
     font-family: 'Merriweather', serif;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: #5c1010;
     margin-bottom: 8px;
     font-weight: 800;
 }
 
 .school-name {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #64748b;
     font-weight: 600;
     min-height: 40px;

@@ -88,8 +88,8 @@ function renderCentres(centres) {
                     <div class="info-row">
                         <div class="info-icon ii-dir">👤</div>
                         <div>
-                            <span class="info-label">Director</span>
-                            <span class="info-val">${c.director?.name}</span>
+                            <span class="info-label">${c.head_title || c.head_title_other}</span>
+                            <span class="info-val">${c.head?.name}</span>
                         </div>
                     </div>
 

@@ -1,11 +1,12 @@
 <?php
 /**
- * Template Name: R&D Cell Team
+ * Template Name: R&D Cell Members
  */
 
 get_header();
 
-$api_base = getenv('DJANGO_API_URL');
+$api_base = getenv('DJANGO_MEDIA_URL');
+$media_base = getenv('DJANGO_MEDIA_URL');
 $team_url = $api_base . '/api/v1/rd-cell-team/';
 $team_res = wp_remote_get($team_url, array('timeout' => 10));
 $team = array();
@@ -17,40 +18,34 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 ?>
 
 <main id="primary" class="site-main research-portal">
-    <div class="research-hero" style="background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);">
-        <div class="container">
-            <h1>R&D Cell Team</h1>
-            <p>The core administrative and advisory team driving Research and Development at the University.</p>
-            <div class="sub-nav">
-                <a href="/research-hub">Research Home</a>
-                <a href="/rd-cell">About R&D Cell</a>
-                <a href="#" class="active">Our Team</a>
-            </div>
-        </div>
-    </div>
+    <?php get_template_part('banners/about-banner'); ?>
 
     <div class="research-container container">
+        <?php get_template_part('template-parts/breadcrumb');?>
+
         <div class="team-grid">
             <?php if(!empty($team)): ?>
-                <?php foreach($team as $member): ?>
-                <div class="member-card">
-                    <div class="member-photo">
-                        <?php if(!empty($member['faculty']['image'])): ?>
-                            <img src="<?php echo esc_url($member['faculty']['image']); ?>" alt="<?php echo esc_attr($member['faculty']['name']); ?>">
-                        <?php else: ?>
-                            <div class="photo-placeholder"><i class="fas fa-user"></i></div>
-                        <?php endif; ?>
-                    </div>
-                    <div class="member-info">
-                        <h3><?php echo esc_html($member['faculty']['name']); ?></h3>
-                        <div class="member-designation"><?php echo esc_html($member['designation']); ?></div>
-                        <div class="member-dept"><?php echo esc_html($member['faculty']['department_name'] ?? ''); ?></div>
-                        <a href="/faculty-profile/<?php echo esc_attr($member['faculty']['slug']); ?>" class="profile-link">View Profile</a>
-                    </div>
+            <?php foreach($team as $member): ?>
+            <div class="member-card">
+                <div class="member-photo">
+                    <?php if(!empty($member['faculty']['photo'])): ?>
+                    <img src="<?php echo $media_base .  esc_url($member['faculty']['photo']); ?>"
+                        alt="<?php echo esc_attr($member['faculty']['name']); ?>">
+                    <?php else: ?>
+                    <div class="photo-placeholder"><i class="fas fa-user"></i></div>
+                    <?php endif; ?>
                 </div>
-                <?php endforeach; ?>
+                <div class="member-info">
+                    <h3><?php echo esc_html($member['faculty']['name']); ?></h3>
+                    <div class="member-designation"><?php echo esc_html($member['designation']); ?></div>
+                    <div class="member-dept"><?php echo esc_html($member['faculty']['department_name'] ?? ''); ?></div>
+                    <a href="/faculty/<?php echo esc_attr($member['faculty']['slug']); ?>" class="profile-link">View
+                        Profile</a>
+                </div>
+            </div>
+            <?php endforeach; ?>
             <?php else: ?>
-                <div class="no-data">R&D Cell team details are being updated.</div>
+            <div class="no-data">R&D Cell members details are being updated.</div>
             <?php endif; ?>
         </div>
     </div>
@@ -58,25 +53,6 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 <?php include_once(get_template_directory() . '/research/styles-research.php'); ?>
 <style>
-.sub-nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-.sub-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 4px;
-    opacity: 0.8;
-}
-.sub-nav a.active, .sub-nav a:hover {
-    opacity: 1;
-    background: rgba(255,255,255,0.2);
-}
-
 .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -87,7 +63,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     background: white;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
     text-align: center;
 }
@@ -104,7 +80,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 .member-photo img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: inherit;
 }
 
 .photo-placeholder {

@@ -136,12 +136,12 @@ if (!is_wp_error($patents_res) && wp_remote_retrieve_response_code($patents_res)
                     <div class="pub-type-mini"><?php echo esc_html($pub['publication_type']); ?></div>
                     <strong><?php echo esc_html($pub['title']); ?></strong>
                     <div class="pub-meta-mini"><?php echo esc_html($pub['faculty_name']); ?> |
-                        <?php echo esc_html($pub['publication_year']); ?></div>
+                        <?php echo esc_html($pub['publication_date']); ?></div>
                 </li>
                 <?php endforeach; ?>
             </ul>
             <?php if(count($pubs_list) > 5): ?>
-            <a href="/research/publications?department=<?php echo $slug; ?>" class="view-more">View All Publications</a>
+            <a href="/publications?department=<?php echo $slug; ?>" class="view-more">View All Publications</a>
             <?php endif; ?>
             <?php else: ?>
             <p class="empty-msg">No recent publications recorded.</p>
