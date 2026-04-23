@@ -109,7 +109,8 @@
 ============================================ */
 
 #dept-search,
-#school-filter {
+#school-filter,
+#campus-filter {
   border-radius: 14px !important;
   height: 44px;
   font-size: 14px;
@@ -121,7 +122,8 @@
   width: 260px;
 }
 
-#school-filter {
+#school-filter,
+#campus-filter {
   width: 260px;
   /* same as search */
 }
@@ -138,7 +140,8 @@
 ============================================ */
 
 #dept-search,
-#school-filter {
+#school-filter,
+#campus-filter {
   border: 2px solid #b5afc7;
   /* 🔥 darker default border */
   transition: all 0.25s ease;
@@ -146,14 +149,16 @@
 
 /* HOVER */
 #dept-search:hover,
-#school-filter:hover {
+#school-filter:hover,
+#campus-filter:hover {
   border-color: #6c3fc5;
   /* 🔥 bold purple */
 }
 
 /* FOCUS (CLICK) */
 #dept-search:focus,
-#school-filter:focus {
+#school-filter:focus,
+#campus-filter:focus {
   border-color: #4b2aa8;
   /* 🔥 stronger bold */
   box-shadow: 0 0 0 3px rgba(76, 42, 168, 0.15);

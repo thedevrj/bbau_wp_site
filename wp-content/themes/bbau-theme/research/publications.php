@@ -7,22 +7,10 @@ get_header();
 
 $api_base = getenv('DJANGO_MEDIA_URL');
 // Fetch Depts for filter
-$depts_url = $api_base . '/api/v1/departments/?page_size=500';
-$depts_res = wp_remote_get($depts_url, array('timeout' => 10));
-$departments = array();
-if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) === 200) {
-    $decoded = json_decode(wp_remote_retrieve_body($depts_res), true);
-    $departments = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
-}
+
 
 // Fetch Faculty for filters
-$fac_url = $api_base . '/api/v1/faculty/?page_size=500';
-$fac_res = wp_remote_get($fac_url, array('timeout' => 10));
-$faculty_list = array();
-if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200) {
-    $decoded = json_decode(wp_remote_retrieve_body($fac_res), true);
-    $faculty_list = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
-}
+
 ?>
 
 <main id="primary" class="site-main research-portal">
@@ -43,16 +31,10 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
 
             <select id="pub-dept-filter" class="custom-select">
                 <option value="">All Departments</option>
-                <?php foreach($departments as $dept): ?>
-                <option value="<?php echo esc_attr($dept['slug']); ?>"><?php echo esc_html($dept['name']); ?></option>
-                <?php endforeach; ?>
             </select>
 
             <select id="pub-faculty-filter" class="custom-select">
                 <option value="">All Faculty</option>
-                <?php foreach($faculty_list as $fac): ?>
-                <option value="<?php echo esc_attr($fac['slug']); ?>"><?php echo esc_html($fac['name']); ?></option>
-                <?php endforeach; ?>
             </select>
         </div>
 
@@ -93,7 +75,7 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
                 <span id="modal-indexing-badge" class="status-badge badge-indexing" style="display: none;">Indexing</span>
             </div>
 
-            <div class="modal-meta mb-4 pb-3 modal-meta-custom">
+            <div class="modal-meta mb-4 modal-meta-custom">
                 <div class="mb-2"><i class="fas fa-user-edit me-2"></i> <strong>Author:</strong> <span
                         id="modal-author"></span></div>
                 <div class="mb-2"><i class="fas fa-book me-2"></i> <strong>Published In:</strong> <span
@@ -113,6 +95,41 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    
+    // --- DYNAMICALLY LOAD FILTERS VIA JS TO PREVENT PHP LAG ---
+    async function loadDynamicFilters() {
+        try {
+            const apiBase = "<?php echo esc_js($api_base); ?>";
+            const deptFilter = document.getElementById('pub-dept-filter');
+            const facFilter = document.getElementById('pub-faculty-filter');
+
+            if (deptFilter) {
+                const dRes = await fetch(`${apiBase}/api/v1/departments/?page_size=500`);
+                if (dRes.ok) {
+                    const depts = await dRes.json();
+                    const dData = depts.results || depts;
+                    dData.forEach(d => {
+                        deptFilter.innerHTML += `<option value="${d.slug}">${d.name}</option>`;
+                    });
+                }
+            }
+
+            if (facFilter) {
+                const fRes = await fetch(`${apiBase}/api/v1/faculty/?page_size=500`);
+                if (fRes.ok) {
+                    const facs = await fRes.json();
+                    const fData = facs.results || facs;
+                    fData.forEach(f => {
+                        facFilter.innerHTML += `<option value="${f.slug}">${f.name}</option>`;
+                    });
+                }
+            }
+        } catch(e) {
+            console.error("Filter Load Error:", e);
+        }
+    }
+    loadDynamicFilters();
+    
     const searchInput = document.getElementById('pub-search');
     const deptFilter = document.getElementById('pub-dept-filter');
     const facultyFilter = document.getElementById('pub-faculty-filter');
@@ -274,8 +291,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .modal-title-blue {
     color: var(--theme-blue);
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+}
+.modal-title-blue::after{
+    background: none;
 }
 
 .modal-meta-custom {
@@ -303,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
     display: inline-block;
     padding: 10px 20px;
     background: var(--theme-blue);
-    color: white;
+    color: white  !important;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;

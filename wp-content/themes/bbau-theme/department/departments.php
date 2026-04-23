@@ -25,6 +25,11 @@ $api_url = $api_base . '/api/v1/departments/';
                     <select id="school-filter">
                         <option value="">Filter by School</option>
                     </select>
+                    <select id="campus-filter">
+                        <option value="">All Campuses</option>
+                        <option value="BBAU">Main Campus (BBAU)</option>
+                        <option value="Satellite Campus Amethi">Satellite Campus Amethi</option>
+                    </select>
                     
                     <input type="text" id="dept-search" placeholder="Search departments...">
 
@@ -125,16 +130,20 @@ function displayPage(departments) {
     if (pageDepts.length === 0) {
         container.innerHTML = "<p class='dept-empty'>No departments found.</p>";
     } else {
-        container.innerHTML = pageDepts.map(dept => `
+        container.innerHTML = pageDepts.map(dept => {
+            const displayCampus = dept.campus === 'Satellite Campus Amethi' ? ' (Amethi)' : '';            
+            return `
             <div class="dept-card">
-                <h3>${dept.name}</h3>
+                <div class="card-header-flex">
+                    <h3>${dept.name}${displayCampus}</h3>
+                </div>
                 <p>${dept.description || ''}</p>
 
                 <a class="dept-btn" href="/departments/${dept.slug}">
-                View Department<i class="fas fa-arrow-right"></i>
-            </a>
+                    View Department <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-        `).join('');
+        `;}).join('');
     }
 
     updatePaginationControls(totalPages);
@@ -206,10 +215,12 @@ function populateSchoolFilter(data) {
 function applyFilters() {
     const search = document.getElementById('dept-search').value.toLowerCase();
     const school = document.getElementById('school-filter').value;
+    const campus = document.getElementById('campus-filter').value;
 
     const filtered = allDepartments.filter(d =>
         d.name.toLowerCase().includes(search) &&
-        (!school || d.school_name === school)
+        (!school || d.school_name === school) &&
+        (!campus || (d.campus || 'BBAU') === campus)
     );
 
     renderDepartments(filtered);
@@ -218,6 +229,7 @@ function applyFilters() {
 /* ================= EVENTS ================= */
 document.getElementById('dept-search').addEventListener('input', applyFilters);
 document.getElementById('school-filter').addEventListener('change', applyFilters);
+document.getElementById('campus-filter').addEventListener('change', applyFilters);
 
 /* ================= INIT ================= */
 fetchDepartments();

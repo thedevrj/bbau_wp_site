@@ -82,7 +82,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
                             <?php foreach ($depts_list as $d): ?>
                             <option value="<?php echo esc_attr($d['slug']); ?>"
                                 <?php selected($_GET['department'] ?? '', $d['slug']); ?>>
-                                <?php echo esc_html($d['name']); ?>
+                                <?php echo esc_html(get_dept_display_name($d)); ?>
                             </option>
                             <?php endforeach; ?>
                         </select>
@@ -117,7 +117,19 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
                     <?php endif; ?>
                 </div>
                 <div class="fdc-body">
-                    <h3 class="fdc-name"><?php echo esc_html($fac['name']); ?></h3>
+                    <div class="fdc-header-flex">
+                        <h3 class="fdc-name">
+                            <?php echo esc_html($fac['name']); ?>
+                            <?php if(($fac['campus'] ?? '') === 'Satellite Campus Amethi'): ?>
+                                <small style="color: #9d174d; font-size: 0.8rem; font-weight: 800;">(Amethi)</small>
+                            <?php endif; ?>
+                        </h3>
+                        <?php if(($fac['campus'] ?? '') === 'Satellite Campus Amethi'): ?>
+                            <span class="campus-badge amethi">Amethi Campus</span>
+                        <?php else: ?>
+                            <span class="campus-badge main">Main Campus</span>
+                        <?php endif; ?>
+                    </div>
                     <p class="fdc-designation"><?php echo esc_html($fac['designation']); ?></p>
                     <?php if (!empty($fac['department']['name'])): ?>
                     <span class="fdc-dept"><?php echo esc_html($fac['department']['name']); ?></span>
@@ -340,12 +352,42 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
     flex-grow: 1;
 }
 
+.fdc-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
 .fdc-name {
-    margin: 0 0 6px;
+    margin: 0 !important;
     font-family: 'Merriweather', serif;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     color: #5c1010;
     font-weight: 700;
+}
+
+.campus-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.campus-badge.amethi {
+    background-color: #fce7f3;
+    color: #9d174d;
+    border: 1px solid #fbcfe8;
+}
+
+.campus-badge.main {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #dcfce7;
 }
 
 .fdc-designation {

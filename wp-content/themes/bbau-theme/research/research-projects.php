@@ -7,23 +7,7 @@ get_header();
 
 $api_base = getenv('DJANGO_MEDIA_URL');
 
-// Fetch Departments for Filters
-$depts_url = $api_base . '/api/v1/departments/?page_size=500';
-$depts_res = wp_remote_get($depts_url, array('timeout' => 10));
-$departments = array();
-if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) === 200) {
-    $decoded = json_decode(wp_remote_retrieve_body($depts_res), true);
-    $departments = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
-}
 
-// Fetch Faculty for Filters
-$fac_url = $api_base . '/api/v1/faculty/?page_size=500';
-$fac_res = wp_remote_get($fac_url, array('timeout' => 10));
-$faculty_list = array();
-if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200) {
-    $decoded = json_decode(wp_remote_retrieve_body($fac_res), true);
-    $faculty_list = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
-}
 ?>
 
 <main id="primary" class="site-main research-portal">
@@ -33,7 +17,7 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
         <?php get_template_part('template-parts/breadcrumb');?>
         
         <div class="portal-header mb-4">
-            <h2 class="section-title modal-title-blue">Funded Research Projects</h2>
+            <h2 class="section-title modal-title-blue">Research Projects</h2>
         </div>
 
         <!-- FILTER BAR -->
@@ -113,6 +97,41 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    
+    // --- DYNAMICALLY LOAD FILTERS VIA JS TO PREVENT PHP LAG ---
+    async function loadDynamicFilters() {
+        try {
+            const apiBase = "<?php echo esc_js($api_base); ?>";
+            const deptFilter = document.getElementById('dept-filter');
+            const facFilter = document.getElementById('faculty-filter');
+
+            if (deptFilter) {
+                const dRes = await fetch(`${apiBase}/api/v1/departments/?page_size=500`);
+                if (dRes.ok) {
+                    const depts = await dRes.json();
+                    const dData = depts.results || depts;
+                    dData.forEach(d => {
+                        deptFilter.innerHTML += `<option value="${d.slug}">${d.name}</option>`;
+                    });
+                }
+            }
+
+            if (facFilter) {
+                const fRes = await fetch(`${apiBase}/api/v1/faculty/?page_size=500`);
+                if (fRes.ok) {
+                    const facs = await fRes.json();
+                    const fData = facs.results || facs;
+                    fData.forEach(f => {
+                        facFilter.innerHTML += `<option value="${f.slug}">${f.name}</option>`;
+                    });
+                }
+            }
+        } catch(e) {
+            console.error("Filter Load Error:", e);
+        }
+    }
+    loadDynamicFilters();
+    
     const searchInput = document.getElementById('project-search');
     const deptFilter = document.getElementById('dept-filter');
     const facultyFilter = document.getElementById('faculty-filter');
