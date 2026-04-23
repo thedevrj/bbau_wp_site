@@ -72,8 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer.observe(document.querySelector(".glance-section"));
 });
-
-
 /* ================= VC SECTION SLIDER ================= */
 document.addEventListener('DOMContentLoaded', () => {
   const vcTrack = document.querySelector('.vc-slider-track');

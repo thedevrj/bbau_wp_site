@@ -746,8 +746,81 @@
     font-size: 13px;
   }
 }
+/* ================= TABLET & SMALL LAPTOP (768px to 1199px) ================= */
+@media (min-width: 768px) and (max-width: 1199px) {
 
+  .vc-container {
+    flex-direction: column !important;
+    padding: 0 20px;
+  }
+
+  .vc-image {
+    width: 100% !important;
+    overflow: hidden;
+  }
+
+  .vc-slider-track {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    /* ← REMOVED transform: none and transition: none */
+    gap: 0;
+  }
+
+  .vc-slide {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    min-width: 50% !important;
+    padding: 0 8px;
+    box-sizing: border-box;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .vc-slide img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
+  }
+
+  .vc-content {
+    width: 100% !important;
+    padding-top: 20px;
+  }
+}
+/* ================= MOBILE VIEW (767px and below) ================= */
+@media (max-width: 767px) {
+  .vc-container {
+    padding: 0 16px;
+  }
+
+  .vc-image img,
+  .vc-content {
+    border-radius: 32px;
+    /* CHANGE: Use min-height or remove height entirely to let content grow */
+    min-height: 260px; 
+    height: auto !important; 
+  }
+
+  .vc-content {
+    padding: 24px 20px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Ensures images don't distort */
+  .vc-image img {
+    object-fit: cover;
+    width: 100%;
+  }
+}
 /* ================= INFO / NOTICE SECTION ================= */
+/* ================= GOOGLE FONTS ================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
 /* ================= INFO SECTION ================= */
 .info-section {
   width: 100%;
@@ -755,59 +828,61 @@
   background: #ffffff;
 }
 
-/* GRID */
+/* ================= GRID ================= */
 .info-container {
   width: 100%;
   padding: 0 110px;
   box-sizing: border-box;
-
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 26px;
+  align-items: start;
+}
+
+/* ================= COLUMN WRAPPER ================= */
+.info-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 10px; /* ← gap between card and button */
 }
 
 /* ================= CARD ================= */
 .info-card {
-  height: 420px;
-  /* 🔥 FIXED HEIGHT (DESKTOP) */
   background: #ffffff;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
-
+  border-radius: 8px;          /* ← full radius all sides */
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* 🔥 prevents overflow bugs */
+  min-height: 420px;
+  max-height: 420px;
 }
 
-/* TITLE */
+/* ================= TITLE ================= */
 .info-title {
   font-family: "Poppins", sans-serif;
   font-size: 20px;
   font-weight: 600;
   color: #d94a2c;
   text-align: center;
-
   padding: 14px 16px;
   border-bottom: 1px solid #e5e5e5;
-
   flex-shrink: 0;
+  margin: 0;
 }
 
 /* ================= SCROLL AREA ================= */
 .info-scroll {
   flex: 1;
-  /* 🔥 fills available height */
   min-height: 0;
-  /* 🔥 REQUIRED for scrolling */
+  max-height: 100%;
   overflow-y: auto;
-  /* 🔥 MANUAL SCROLL */
-
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: #d94a2c #f1f1f1;
 }
 
-/* Chrome / Edge / Safari */
 .info-scroll::-webkit-scrollbar {
   width: 6px;
 }
@@ -821,60 +896,219 @@
   border-radius: 10px;
 }
 
-/* ITEM */
+/* ================= ITEM ================= */
 .info-item {
   display: flex;
   align-items: center;
   gap: 8px;
-
   padding: 14px 16px;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
-  color: #000;
+  color: #000000 !important;
   text-decoration: none;
-
   border-bottom: 1px solid #e6e6e6;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .info-item::before {
   content: "•";
   color: #d94a2c;
   font-size: 18px;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
 }
 
+/* ── Hover: red fill, white text ── */
 .info-item:hover {
-  background: #f5f7fb;
+  background: #c0391b;
+  color: #ffffff !important;
+}
+
+.info-item:hover::before {
+  color: #ffffff !important;
 }
 
 /* ================= BUTTON ================= */
 .info-btn {
-  height: 40px;
-  margin: 12px;
-  border-radius: 6px;
-
+  height: 52px;
+  border-radius: 8px;          /* ← full radius all sides, fully separate */
+  border: none;
+  padding: 0 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
-
+  justify-content: space-between;
   font-family: "Poppins", sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-
-  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
   text-decoration: none;
-
   flex-shrink: 0;
+  transition: filter 0.3s ease;
 }
 
+/* ── Button Colours ── */
 .info-btn.orange {
-  background: #f28c28;
+  background: #e8871e;
 }
 
 .info-btn.dark {
+  background: #1a1a1a;
+}
+
+.info-btn.red {
+  background: #c0391b;
+}
+
+/* ── Hover ── */
+.info-btn.orange:hover {
+  filter: brightness(1.1);
+  color: #ffffff;
+}
+
+.info-btn.dark:hover {
+  filter: brightness(1.4);
+  color: #ffffff;
+}
+
+.info-btn.red:hover {
+  filter: brightness(1.1);
+  color: #ffffff;
+}
+
+/* ── Arrow Circle ── */
+.info-btn .arrow-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.3s ease;
+}
+
+.info-btn .arrow-icon svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.3s ease;
+}
+
+/* ── Arrow moves right on hover ── */
+.info-btn:hover .arrow-icon svg {
+  transform: translateX(4px);
+}
+
+.info-btn:hover .arrow-icon {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* ================= VIEW ALL BUTTONS SECTION ================= */
+.view-all-section {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.view-all-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 30px;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ── View All Button Colours ── */
+.view-all-btn.orange {
+  background: #e07820;
+}
+
+.view-all-btn.dark {
   background: #1f1f1f;
 }
 
-/* ================= TABLET ================= */
+.view-all-btn.red {
+  background: #c0391b;
+}
+
+/* ── View All Arrow Circle ── */
+.view-all-btn .arrow-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-all-btn .arrow-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.3s ease;
+}
+
+/* ── View All Hover: Arrow Circle moves right ── */
+.view-all-btn:hover .arrow-icon {
+  transform: translateX(5px);
+  border-color: #ffffff;
+}
+
+/* ── View All Hover: White Background ── */
+.view-all-btn.orange:hover {
+  background: #ffffff;
+  color: #e07820;
+}
+
+.view-all-btn.dark:hover {
+  background: #ffffff;
+  color: #1f1f1f;
+}
+
+.view-all-btn.red:hover {
+  background: #ffffff;
+  color: #c0391b;
+}
+
+.view-all-btn.orange:hover .arrow-icon svg {
+  stroke: #e07820;
+}
+
+.view-all-btn.dark:hover .arrow-icon svg {
+  stroke: #1f1f1f;
+}
+
+.view-all-btn.red:hover .arrow-icon svg {
+  stroke: #c0391b;
+}
+
+.view-all-btn.orange:hover .arrow-icon,
+.view-all-btn.dark:hover .arrow-icon,
+.view-all-btn.red:hover .arrow-icon {
+  border-color: currentColor;
+}
+
+/* ================= TABLET (768px to 1199px) ================= */
 @media (max-width: 1199px) {
   .info-container {
     grid-template-columns: repeat(2, 1fr);
@@ -882,11 +1116,26 @@
   }
 
   .info-card {
-    height: 380px;
+    min-height: 380px;
+    max-height: 380px;
+  }
+
+  .info-btn {
+    font-size: 14px;
+    height: 48px;
+  }
+
+  .view-all-section {
+    grid-template-columns: 1fr;
+  }
+
+  .view-all-btn {
+    padding: 18px 24px;
+    font-size: 15px;
   }
 }
 
-/* ================= MOBILE ================= */
+/* ================= MOBILE (below 768px) ================= */
 @media (max-width: 767px) {
   .info-container {
     grid-template-columns: 1fr;
@@ -894,8 +1143,8 @@
   }
 
   .info-card {
-    height: 360px;
-    /* 🔥 shorter for mobile */
+    min-height: 360px;
+    max-height: 360px;
   }
 
   .info-title {
@@ -904,10 +1153,43 @@
 
   .info-item {
     font-size: 15px;
-    /* better readability */
+  }
+
+  .info-btn {
+    font-size: 13px;
+    height: 46px;
+    padding: 0 16px;
+  }
+
+  .info-btn .arrow-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .info-btn .arrow-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .view-all-section {
+    grid-template-columns: 1fr;
+  }
+
+  .view-all-btn {
+    padding: 16px 20px;
+    font-size: 14px;
+  }
+
+  .view-all-btn .arrow-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .view-all-btn .arrow-icon svg {
+    width: 15px;
+    height: 15px;
   }
 }
-
 /* ================= AUTO SLIDER ================= */
 /* ================= AUTO IMAGE SLIDER ================= */
 
