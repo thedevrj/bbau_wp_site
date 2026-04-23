@@ -860,7 +860,7 @@
   font-size: 13px;
   font-weight: 500;
 
-  color: #ffffff;
+  color: #ffffff !important;
   text-decoration: none;
 
   flex-shrink: 0;

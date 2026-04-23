@@ -1,6 +1,6 @@
 <?php
 // Inherited variables: $api_base, $slug
-$notices_url = $api_base . '/api/v1/notices/?department__slug=' . urlencode($slug);
+$notices_url = $api_base . '/api/v1/notices/?department__slug=' . urlencode($slug) . '&page_size=100';
 $notices_res = wp_remote_get($notices_url, array('timeout' => 10));
 $notices_list = array();
 
