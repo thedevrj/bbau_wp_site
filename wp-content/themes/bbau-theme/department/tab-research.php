@@ -1,6 +1,9 @@
 <?php
 // Inherited variables: $api_base, $slug
-$projects_url = $api_base . '/api/v1/research-projects/?department__slug=' . urlencode($slug);
+// Fetch Department Projects
+$dept_campus = isset($dept_data['campus']) ? $dept_data['campus'] : 'BBAU';
+
+$projects_url = $api_base . '/api/v1/research-projects/?department__slug=' . urlencode($slug) . '&campus=' . urlencode($dept_campus);
 $projects_res = wp_remote_get($projects_url, array('timeout' => 10));
 $projects_list = array();
 
@@ -9,7 +12,8 @@ if (!is_wp_error($projects_res) && wp_remote_retrieve_response_code($projects_re
     $projects_list = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
 }
 
-$scholars_url = $api_base . '/api/v1/research-scholars/?department__slug=' . urlencode($slug);
+// Fetch Research Scholars
+$scholars_url = $api_base . '/api/v1/research-scholars/?department__slug=' . urlencode($slug) . '&campus=' . urlencode($dept_campus);
 $scholars_res = wp_remote_get($scholars_url, array('timeout' => 10));
 $scholars_list = array();
 
@@ -19,7 +23,7 @@ if (!is_wp_error($scholars_res) && wp_remote_retrieve_response_code($scholars_re
 }
 
 // Fetch Department Publications
-$pubs_url = $api_base . '/api/v1/publications/?department__slug=' . urlencode($slug);
+$pubs_url = $api_base . '/api/v1/publications/?department__slug=' . urlencode($slug) . '&campus=' . urlencode($dept_campus);
 $pubs_res = wp_remote_get($pubs_url, array('timeout' => 10));
 $pubs_list = array();
 if (!is_wp_error($pubs_res) && wp_remote_retrieve_response_code($pubs_res) === 200) {
@@ -28,7 +32,7 @@ if (!is_wp_error($pubs_res) && wp_remote_retrieve_response_code($pubs_res) === 2
 }
 
 // Fetch Department Patents
-$patents_url = $api_base . '/api/v1/patents/?department__slug=' . urlencode($slug);
+$patents_url = $api_base . '/api/v1/patents/?department__slug=' . urlencode($slug) . '&campus=' . urlencode($dept_campus);
 $patents_res = wp_remote_get($patents_url, array('timeout' => 10));
 $patents_list = array();
 if (!is_wp_error($patents_res) && wp_remote_retrieve_response_code($patents_res) === 200) {
@@ -106,10 +110,11 @@ if (!is_wp_error($patents_res) && wp_remote_retrieve_response_code($patents_res)
                         <td class="scholar-name-cell"><?php echo esc_html($scholar['scholar_name']); ?></td>
                         <td class="topic-cell">"<?php echo esc_html($scholar['research_topic']); ?>"</td>
                         <td>
-                            <strong>Sup:</strong> <?php echo esc_html($scholar['supervisor_name'] ?? 'N/A'); ?><br>
-                            <?php if(!empty($scholar['co_supervisor_name'])): ?>
-                            <small class="co-sup-text">Co-Sup:
-                                <?php echo esc_html($scholar['co_supervisor_name']); ?></small>
+                            <strong>Sup:</strong> <?php echo esc_html($scholar['supervisor']['name'] ?? 'N/A'); ?><br>
+                            <?php if(!empty($scholar['co_supervisor'])): ?>
+                            <?php foreach($scholar['co_supervisor'] as $co_sup) {
+                                    echo '<small class="co-sup-text">Co-Sup: ' . esc_html($co_sup['name']) . '</small><br>';
+                                }?>
                             <?php endif; ?>
                         </td>
                         <td><?php echo esc_html($scholar['registration_year'] ?? '-'); ?></td>

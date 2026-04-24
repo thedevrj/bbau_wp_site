@@ -84,7 +84,7 @@
 
 /* PORTAL SEARCH HUB */
 .research-container {
-    padding: 60px 0;
+    padding: 60px 60px;
 }
 
 .portal-header {
@@ -311,6 +311,31 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.pagination-btn {
+    background: #f1f5f9;
+    color: var(--research-primary);
+    border: 1px solid #e2e8f0;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagination-btn:hover {
+    background: var(--research-primary);
+    color: white;
+}
+
+.pagination-wrapper {
+    background: #ffffff;
+    padding: 20px;
 }
 
 @media (max-width: 768px) {

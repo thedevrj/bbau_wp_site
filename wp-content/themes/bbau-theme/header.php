@@ -78,9 +78,9 @@
             ?>
         </div>
     </div>
-    <div class="top-bar">
+    <div class="top-bar d-none d-lg-flex">
         <!-- DESKTOP TOP BAR -->
-        <div class="container-fluid d-none d-mg-flex justify-content-between align-items-center">
+        <div class="container-fluid justify-content-between align-items-center">
             <!-- LEFT LINKS -->
             <div class="top-left d-flex gap-3 flex-wrap">
                 <?php
@@ -109,9 +109,10 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="top-bar d-flex d-lg-none flex-column ">
         <!-- MOBILE TOP BAR: 2 rows - links row then controls row -->
-        <div class="d-flex d-lg-none flex-column top-bar-mobile">
+        <div class=" top-bar-mobile">
             <!-- ROW 1: Nav links - horizontally scrollable -->
             <div class="tb-mobile-links">
                 <?php

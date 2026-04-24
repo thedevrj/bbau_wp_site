@@ -15,7 +15,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
     <div class="research-container container">
         <?php get_template_part('template-parts/breadcrumb');?>
-        
+
         <div class="portal-header mb-4">
             <h2 class="section-title modal-title-blue">Research Projects</h2>
         </div>
@@ -26,19 +26,13 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 <i class="fas fa-search research-search-icon"></i>
                 <input type="text" id="project-search" placeholder="Search by title, agency..." autocomplete="off">
             </div>
-            
+
             <select id="dept-filter" class="custom-select">
                 <option value="">All Departments</option>
-                <?php foreach($departments as $dept): ?>
-                    <option value="<?php echo esc_attr($dept['slug']); ?>"><?php echo esc_html($dept['name']); ?></option>
-                <?php endforeach; ?>
             </select>
 
             <select id="faculty-filter" class="custom-select">
                 <option value="">All Principal Investigators</option>
-                <?php foreach($faculty_list as $fac): ?>
-                    <option value="<?php echo esc_attr($fac['slug']); ?>"><?php echo esc_html($fac['name']); ?></option>
-                <?php endforeach; ?>
             </select>
 
             <select id="status-filter" class="custom-select">
@@ -46,9 +40,22 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 <option value="Ongoing">Ongoing</option>
                 <option value="Completed">Completed</option>
             </select>
+
+            <select id="year-filter" class="custom-select">
+                <option value="">Select Year</option>
+                <?php 
+                    $current_year = date("Y");
+                    for($y = $current_year; $y >= 2010; $y--) {
+                        echo "<option value=\"$y\">$y</option>";
+                    }
+                ?>
+            </select>
         </div>
 
         <div class="table-card">
+            <div class="table-header-info d-flex justify-content-between align-items-center p-3 border-bottom">
+                <span class="text-muted small" id="record-count">Showing 0 records</span>
+            </div>
             <div class="table-responsive">
                 <table class="prog-table w-100" id="projects-table">
                     <thead>
@@ -70,6 +77,9 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     </tbody>
                 </table>
             </div>
+            <div id="pagination-controls" class="pagination-wrapper p-3 border-top d-flex justify-content-center gap-3">
+                <!-- Pagination buttons will be injected here -->
+            </div>
         </div>
     </div>
 
@@ -82,11 +92,16 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 <span id="modal-status" class="status-badge badge-light">Status</span>
             </div>
             <div class="modal-meta mb-4 pb-3 modal-meta-custom">
-                <div class="mb-2"><i class="fas fa-user-tie me-2"></i> <strong>P.I.:</strong> <span id="modal-pi"></span></div>
-                <div class="mb-2"><i class="fas fa-users me-2"></i> <strong>Co-P.I.(s):</strong> <span id="modal-copi"></span></div>
-                <div class="mb-2"><i class="fas fa-building me-2"></i> <strong>Agency:</strong> <span id="modal-agency"></span></div>
-                <div class="mb-2"><i class="fas fa-rupee-sign me-2"></i> <strong>Amount:</strong> <span id="modal-amount"></span></div>
-                <div class="mb-2"><i class="fas fa-university me-2"></i> <strong>Department:</strong> <span id="modal-dept"></span></div>
+                <div class="mb-2"><i class="fas fa-user-tie me-2"></i> <strong>P.I.:</strong> <span
+                        id="modal-pi"></span></div>
+                <div class="mb-2"><i class="fas fa-users me-2"></i> <strong>Co-P.I.(s):</strong> <span
+                        id="modal-copi"></span></div>
+                <div class="mb-2"><i class="fas fa-building me-2"></i> <strong>Agency:</strong> <span
+                        id="modal-agency"></span></div>
+                <div class="mb-2"><i class="fas fa-rupee-sign me-2"></i> <strong>Amount:</strong> <span
+                        id="modal-amount"></span></div>
+                <div class="mb-2"><i class="fas fa-university me-2"></i> <strong>Department:</strong> <span
+                        id="modal-dept"></span></div>
             </div>
             <div id="modal-description" class="modal-body-content modal-desc-custom">
                 <!-- Description HTML goes here -->
@@ -97,7 +112,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    
+
     // --- DYNAMICALLY LOAD FILTERS VIA JS TO PREVENT PHP LAG ---
     async function loadDynamicFilters() {
         try {
@@ -111,7 +126,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     const depts = await dRes.json();
                     const dData = depts.results || depts;
                     dData.forEach(d => {
-                        deptFilter.innerHTML += `<option value="${d.slug}">${d.name}</option>`;
+                        let displayName = d.name;
+                        if (d.campus === 'Satellite Campus Amethi') {
+                            displayName += ' (Amethi)';
+                        }
+                        deptFilter.innerHTML += `<option value="${d.slug}">${displayName}</option>`;
                     });
                 }
             }
@@ -126,65 +145,104 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
             }
-        } catch(e) {
+        } catch (e) {
             console.error("Filter Load Error:", e);
         }
     }
     loadDynamicFilters();
-    
+
     const searchInput = document.getElementById('project-search');
     const deptFilter = document.getElementById('dept-filter');
     const facultyFilter = document.getElementById('faculty-filter');
     const statusFilter = document.getElementById('status-filter');
+    const yearFilter = document.getElementById('year-filter');
     const tbody = document.getElementById('projects-tbody');
+    const recordCount = document.getElementById('record-count');
+    const paginationControls = document.getElementById('pagination-controls');
     const apiBase = "<?php echo esc_js($api_base); ?>";
-    
+
     // Modal Elements
     const modal = document.getElementById('projectModal');
     const closeBtn = document.querySelector('.close-modal');
-    
+
     let projectsData = [];
     let debounceTimer;
 
-    function fetchProjects() {
-        const query = searchInput.value.toLowerCase().trim();
-        const dept = deptFilter.value;
-        const fac = facultyFilter.value;
-        const status = statusFilter.value;
-        
-        let url = `${apiBase}/api/v1/research-projects/?page_size=500&`;
-        if (query) url += `search=${encodeURIComponent(query)}&`;
-        if (dept) url += `department__slug=${encodeURIComponent(dept)}&`;
-        if (fac) url += `principal_investigator__slug=${encodeURIComponent(fac)}&`;
-        if (status) url += `status=${encodeURIComponent(status)}&`;
+    function fetchProjects(url = null) {
+        if (!url) {
+            const query = searchInput.value.toLowerCase().trim();
+            const dept = deptFilter.value;
+            const fac = facultyFilter.value;
+            const status = statusFilter.value;
+            const year = yearFilter.value;
+            
+            url = `${apiBase}/api/v1/research-projects/?`;
+            if (query) url += `search=${encodeURIComponent(query)}&`;
+            if (dept) url += `department__slug=${encodeURIComponent(dept)}&`;
+            if (fac) url += `principal_investigator__slug=${encodeURIComponent(fac)}&`;
+            if (status) url += `status=${encodeURIComponent(status)}&`;
+            if (year) url += `start_date__year=${encodeURIComponent(year)}&`;
+        }
 
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-muted"><i class="fas fa-spinner fa-spin fa-2x mb-3 d-block"></i> Fetching records...</td></tr>`;
+        tbody.innerHTML =
+            `<tr><td colspan="6" class="text-center py-5 text-muted"><i class="fas fa-spinner fa-spin fa-2x mb-3 d-block"></i> Fetching records...</td></tr>`;
 
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                projectsData = data.results || data;
+                projectsData = data.results || [];
                 renderTable(projectsData);
+                renderPagination(data);
+                
+                // Update count
+                const total = data.count || projectsData.length;
+                const shown = projectsData.length;
+                recordCount.textContent = `Showing ${shown} of ${total} records`;
             })
             .catch(err => {
                 console.error('Error fetching projects:', err);
-                tbody.innerHTML = `<tr><td colspan="6" class="text-danger text-center py-4">Failed to load projects. Please try again later.</td></tr>`;
+                tbody.innerHTML =
+                    `<tr><td colspan="6" class="text-danger text-center py-4">Failed to load projects. Please try again later.</td></tr>`;
             });
+    }
+
+    function renderPagination(data) {
+        paginationControls.innerHTML = '';
+        if (!data.next && !data.previous) return;
+
+        if (data.previous) {
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'pagination-btn';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i> Previous';
+            prevBtn.onclick = () => fetchProjects(data.previous);
+            paginationControls.appendChild(prevBtn);
+        }
+
+        if (data.next) {
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'pagination-btn';
+            nextBtn.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
+            nextBtn.onclick = () => fetchProjects(data.next);
+            paginationControls.appendChild(nextBtn);
+        }
     }
 
     function renderTable(projects) {
         if (projects.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-muted">No projects found matching your criteria.</td></tr>`;
+            tbody.innerHTML =
+                `<tr><td colspan="6" class="text-center py-5 text-muted">No projects found matching your criteria.</td></tr>`;
             return;
         }
 
         const html = projects.map((p, index) => {
             const statusClass = (p.status || '').toLowerCase().replace(' ', '-');
-            const amount = p.amount_sanctioned ? '₹' + Number(p.amount_sanctioned).toLocaleString('en-IN') : '-';
-            
+            const amount = p.amount_sanctioned ? '₹' + Number(p.amount_sanctioned).toLocaleString(
+                'en-IN') : '-';
+
             let coPiHtml = '';
             if (p.co_investigators_names && p.co_investigators_names.length > 0) {
-                coPiHtml = `<div class="indexing-small">Co-PI: ${p.co_investigators_names.join(', ')}</div>`;
+                coPiHtml =
+                    `<div class="indexing-small">Co-PI: ${p.co_investigators_names.join(', ')}</div>`;
             }
 
             return `
@@ -200,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
         }).join('');
-        
+
         tbody.innerHTML = html;
 
         document.querySelectorAll('.btn-view-desc').forEach(btn => {
@@ -214,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function openModal(proj) {
         document.getElementById('modal-title').textContent = proj.title;
         document.getElementById('modal-pi').textContent = proj.pi_name || 'Not specified';
-        
+
         let copiText = 'None';
         if (proj.co_investigators_names && proj.co_investigators_names.length > 0) {
             copiText = proj.co_investigators_names.join(', ');
@@ -222,21 +280,23 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('modal-copi').textContent = copiText;
 
         document.getElementById('modal-agency').textContent = proj.funding_agency || 'Not specified';
-        document.getElementById('modal-amount').textContent = proj.amount_sanctioned ? '₹' + Number(proj.amount_sanctioned).toLocaleString('en-IN') : 'Not specified';
+        document.getElementById('modal-amount').textContent = proj.amount_sanctioned ? '₹' + Number(proj
+            .amount_sanctioned).toLocaleString('en-IN') : 'Not specified';
         document.getElementById('modal-dept').textContent = proj.department_name || 'Not specified';
-        
+
         const statusEl = document.getElementById('modal-status');
         statusEl.textContent = proj.status || 'Project';
         const statusClass = (proj.status || '').toLowerCase().replace(' ', '-');
         statusEl.className = `status-badge ${statusClass}`;
-        
+
         const descEl = document.getElementById('modal-description');
         if (proj.description && proj.description.trim() !== '') {
             descEl.innerHTML = proj.description;
         } else {
-            descEl.innerHTML = '<p class="text-muted fst-italic">No detailed description available for this project.</p>';
+            descEl.innerHTML =
+                '<p class="text-muted fst-italic">No detailed description available for this project.</p>';
         }
-        
+
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
@@ -255,12 +315,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     searchInput.addEventListener('input', () => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(fetchProjects, 400);
+        debounceTimer = setTimeout(() => fetchProjects(), 400);
     });
-    
-    deptFilter.addEventListener('change', fetchProjects);
-    facultyFilter.addEventListener('change', fetchProjects);
-    statusFilter.addEventListener('change', fetchProjects);
+
+    deptFilter.addEventListener('change', () => fetchProjects());
+    facultyFilter.addEventListener('change', () => fetchProjects());
+    statusFilter.addEventListener('change', () => fetchProjects());
+    yearFilter.addEventListener('change', () => fetchProjects());
 
     fetchProjects();
 });
@@ -277,19 +338,50 @@ document.addEventListener('DOMContentLoaded', function() {
     background: white;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 15px;
-    flex-wrap: nowrap;
     align-items: center;
     border: 1px solid #f1f5f9;
 }
 
-.w-30 { width: 30%; }
-.w-20 { width: 20%; }
-.w-10 { width: 10%; }
-.fw-blue { color: var(--theme-blue); }
+.pagination-btn {
+    background: #f1f5f9;
+    color: var(--theme-blue);
+    border: 1px solid #e2e8f0;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagination-btn:hover {
+    background: var(--theme-blue);
+    color: white;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.fw-blue {
+    color: var(--theme-blue);
+}
 
 .modal-title-blue {
     color: var(--theme-blue);
@@ -352,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .table-card {
     background: white;
     border-radius: 16px;
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
     overflow: hidden;
     border: 1px solid #f1f5f9;
 }
@@ -375,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function() {
     font-weight: 700;
     letter-spacing: 0.05em;
     padding: 18px 20px;
-    text-align: left;
+    text-align: center;
     border-bottom: 2px solid #e2e8f0;
 }
 
@@ -400,9 +492,20 @@ document.addEventListener('DOMContentLoaded', function() {
     white-space: nowrap;
 }
 
-.status-badge.ongoing { background: #e0f2fe; color: #0284c7; }
-.status-badge.completed { background: #dcfce7; color: #166534; }
-.badge-light { background: #f1f5f9; color: #475569; }
+.status-badge.ongoing {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.status-badge.completed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge-light {
+    background: #f1f5f9;
+    color: #475569;
+}
 
 .indexing-small {
     font-size: 0.75rem;
@@ -432,7 +535,10 @@ document.addEventListener('DOMContentLoaded', function() {
 .custom-modal {
     display: none;
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(15, 23, 42, 0.7);
     z-index: 10000;
     backdrop-filter: blur(4px);
@@ -469,14 +575,30 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 @keyframes modalFadeIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 @media (max-width: 768px) {
-    .filter-bar { flex-direction: column; }
-    .custom-select { width: 100%; }
-    .custom-modal-content { padding: 25px; width: 95%; }
+    .filter-bar {
+        flex-direction: column;
+    }
+
+    .custom-select {
+        width: 100%;
+    }
+
+    .custom-modal-content {
+        padding: 25px;
+        width: 95%;
+    }
 }
 </style>
 
