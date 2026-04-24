@@ -185,9 +185,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const regDate = s.date_of_registration || '-';
             const regYear = s.registration_year || '-';
             
-            let supervisorHtml = `<strong>${s.supervisor_name || 'N/A'}</strong>`;
-            if (s.co_supervisors_names && s.co_supervisors_names.length > 0) {
-                supervisorHtml += `<div class="sub-text">Co-Sup: ${s.co_supervisors_names.join(', ')}</div>`;
+            let supervisorHtml = `<strong>${s.supervisor.name || 'N/A'}</strong>`;
+            if (s.co_supervisor && s.co_supervisor.length > 0) {
+                const names = s.co_supervisor.map(cs => cs.name).join(', ');
+                supervisorHtml += `<div class="sub-text">Co-Sup: ${names}</div>`;
             }
 
             return `
