@@ -5,7 +5,7 @@
 
 get_header();
 
-$api_base = getenv('DJANGO_MEDIA_URL');
+$api_base = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'about';
 
@@ -51,9 +51,13 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
                 <a href="?tab=policies" class="<?php echo $active_tab === 'policies' ? 'active' : ''; ?>">
                     <i class="fas fa-file-signature"></i> Policies & Guidelines
                 </a>
+                <a href="?tab=consultancy" class="<?php echo $active_tab === 'consultancy' ? 'active' : ''; ?>">
+                    <i class="fas fa-handshake"></i> Consultancy
+                </a>
                 <a href="?tab=links" class="<?php echo $active_tab === 'links' ? 'active' : ''; ?>">
                     <i class="fas fa-link"></i> Important Links
                 </a>
+                
             </nav>
         </div>
     </div>
@@ -214,7 +218,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
                         <h3>Doctoral Research</h3>
                         <p>Real-time tracking of PhD scholars and fellowships.</p>
                     </a>
-                    <a href="/projects/" class="rd-portal-link">
+                    <a href="/research-projects/" class="rd-portal-link">
                         <div class="icon-wrap"><i class="fas fa-flask"></i></div>
                         <h3>Ongoing Projects</h3>
                         <p>Comprehensive database of active research initiatives.</p>
@@ -229,17 +233,164 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
                             <p>Showcasing our institutional intellectual property.</p>
                         </a>
                         <a href="/research-facilities/" class="rd-portal-link">
-                            <div class="icon-wrap"><i class="fas fa-microscope"></i></div>
-                            <h3>Research Facilities</h3>
-                            <p>Centralized equipment and laboratory instrumentation.</p>
-                        </a>
-                        <!-- <a href="https://vidwan.inflibnet.ac.in/" target="_blank" class="rd-portal-link">
-                        <div class="icon-wrap"><i class="fas fa-id-card"></i></div>
-                        <h3>Vidwan / IRINS</h3>
-                        <p>National research network profiles of BBAU faculty.</p>
-                    </a> -->
+                        <div class="icon-wrap"><i class="fas fa-microscope"></i></div>
+                        <h3>Research Facilities</h3>
+                        <p>Centralized equipment and laboratory instrumentation.</p>
+                    </a>
+                    <a href="?tab=consultancy" class="rd-portal-link">
+                        <div class="icon-wrap"><i class="fas fa-briefcase"></i></div>
+                        <h3>Consultancy</h3>
+                        <p>Professional services and industry-sponsored consultancy work.</p>
+                    </a>
                 </div>
             </div>
+
+            <?php elseif ($active_tab === 'consultancy'): ?>
+                <!-- CONSULTANCY TAB -->
+                <?php
+                // Fetch Consultancy Data
+                $cons_url = $api_base . '/api/v1/consultancies/';
+                $cons_res = wp_remote_get($cons_url, array('timeout' => 10));
+                $cons_list = array();
+                if (!is_wp_error($cons_res) && wp_remote_retrieve_response_code($cons_res) === 200) {
+                    $decoded = json_decode(wp_remote_retrieve_body($cons_res), true);
+                    $cons_list = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
+                }
+
+                // Fetch Departments for Filter
+                $dept_url = $api_base . '/api/v1/departments/';
+                $dept_res = wp_remote_get($dept_url, array('timeout' => 10));
+                $dept_list = array();
+                if (!is_wp_error($dept_res) && wp_remote_retrieve_response_code($dept_res) === 200) {
+                    $dept_data = json_decode(wp_remote_retrieve_body($dept_res), true);
+                    $dept_list = isset($dept_data['results']) ? $dept_data['results'] : (is_array($dept_data) ? $dept_data : array());
+                }
+                ?>
+                <div class="rd-tab-pane animate-up">
+                    <div class="rd-card-premium">
+                        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                            <h2 class="rd-section-title m-0">Faculty Consultancy Projects</h2>
+                        </div>
+
+                        <!-- SEARCH & FILTERS -->
+                        <div class="search-filter-wrapper mb-5">
+                            <div class="search-box1">
+                                <i class="fas fa-search search-icon1"></i>
+                                <input type="text" id="consSearch" placeholder="Search by nature of consultancy or faculty name...">
+                            </div>
+                            <select id="deptFilter" class="custom-select">
+                                <option value="">All Departments</option>
+                                <?php foreach ($dept_list as $dept): ?>
+                                    <option value="<?php echo esc_attr($dept['slug']); ?>"><?php echo esc_html($dept['name']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <select id="campusFilter" class="custom-select">
+                                <option value="">All Campuses</option>
+                                <option value="BBAU">Main Campus (Lucknow)</option>
+                                <option value="Satellite Campus Amethi">Satellite Campus (Amethi)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="data-table w-100" id="consTable">
+                                <thead>
+                                    <tr>
+                                        <th>Faculty Name</th>
+                                        <th>Nature of Consultancy</th>
+                                        <th>Awarding Agency</th>
+                                        <th>Amount</th>
+                                        <th>Duration</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (!empty($cons_list)): ?>
+                                        <?php foreach ($cons_list as $cons): ?>
+                                        <tr class="cons-row" 
+                                            data-dept="<?php echo esc_attr($cons['department_slug'] ?? ''); ?>" 
+                                            data-campus="<?php echo esc_attr($cons['campus'] ?? ''); ?>"
+                                            data-search-text="<?php echo esc_attr(strtolower(($cons['faculty_name']??'') . ' ' . ($cons['nature_of_consultancy']??'') . ' ' . ($cons['name_of_awarding_agency_organization']??''))); ?>">
+                                            <td class="bold-cell"><?php echo esc_html($cons['faculty_name'] ?? 'N/A'); ?></td>
+                                            <td><?php echo esc_html($cons['nature_of_consultancy'] ?? 'N/A'); ?></td>
+                                            <td><?php echo esc_html($cons['name_of_awarding_agency_organization'] ?? 'N/A'); ?></td>
+                                            <td class="amount">₹<?php echo number_format($cons['amount_sanctioned'] ?? 0, 2); ?></td>
+                                            <td class="small">
+                                                <?php 
+                                                $start = !empty($cons['start_date']) ? date('M Y', strtotime($cons['start_date'])) : '';
+                                                $end = !empty($cons['end_date']) ? date('M Y', strtotime($cons['end_date'])) : 'Present';
+                                                echo $start ? "$start - $end" : 'N/A';
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr id="noResults">
+                                            <td colspan="5" class="text-center py-5">
+                                                <div class="empty-state">
+                                                    <i class="fas fa-search-minus mb-3" style="font-size: 3rem; opacity: 0.2;"></i>
+                                                    <p style="color: #64748b;">No consultancy records found.</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const searchInput = document.getElementById('consSearch');
+                    const deptFilter = document.getElementById('deptFilter');
+                    const campusFilter = document.getElementById('campusFilter');
+                    const rows = document.querySelectorAll('.cons-row');
+                    const noResults = document.getElementById('noResults');
+
+                    function filterTable() {
+                        const searchText = searchInput.value.toLowerCase();
+                        const selectedDept = deptFilter.value;
+                        const selectedCampus = campusFilter.value;
+                        let visibleCount = 0;
+
+                        rows.forEach(row => {
+                            const rowSearchText = row.getAttribute('data-search-text');
+                            const rowDept = row.getAttribute('data-dept');
+                            const rowCampus = row.getAttribute('data-campus');
+
+                            const matchesSearch = rowSearchText.includes(searchText);
+                            const matchesDept = !selectedDept || rowDept === selectedDept;
+                            const matchesCampus = !selectedCampus || rowCampus === selectedCampus;
+
+                            if (matchesSearch && matchesDept && matchesCampus) {
+                                row.style.display = '';
+                                visibleCount++;
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        });
+
+                        // Show/hide no results message if all rows are hidden
+                        if (noResults) {
+                            if (visibleCount === 0 && rows.length > 0) {
+                                if (!document.getElementById('tempNoResults')) {
+                                    const tbody = document.querySelector('#consTable tbody');
+                                    const tr = document.createElement('tr');
+                                    tr.id = 'tempNoResults';
+                                    tr.innerHTML = '<td colspan="5" class="text-center py-5" style="color: #64748b;">No matching records found.</td>';
+                                    tbody.appendChild(tr);
+                                }
+                            } else {
+                                const temp = document.getElementById('tempNoResults');
+                                if (temp) temp.remove();
+                            }
+                        }
+                    }
+
+                    searchInput.addEventListener('input', filterTable);
+                    deptFilter.addEventListener('change', filterTable);
+                    campusFilter.addEventListener('change', filterTable);
+                });
+                </script>
             <?php endif; ?>
 
         </div>
@@ -258,8 +409,8 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 /* HERO SECTION */
 .premium-hero-rd {
-    height: 350px;
-    background: url('https://images.unsplash.com/photo-1532187875605-2fe35951856c?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+    height: 310px;
+    background: url('/wp-content/uploads/2026/04/rd-cell-image.png') center/cover no-repeat;
     position: relative;
     display: flex;
     align-items: center;
@@ -272,7 +423,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgba(30, 58, 138, 0.7));
+    background: linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgb(85 99 138 / 70%))
 }
 
 .hero-content-glass {
@@ -355,7 +506,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 /* MAIN CONTENT AREA */
 .rd-tab-pane {
-    padding: 20px 0 60px;
+    padding: 20px 0 10px;
 }
 
 .animate-up {
@@ -577,7 +728,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 .team-img-wrap img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: inherit;
 }
 
 .img-placeholder {
@@ -726,7 +877,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 }
 
 .rd-portal-link h3 {
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
     margin-bottom: 12px;
 }
