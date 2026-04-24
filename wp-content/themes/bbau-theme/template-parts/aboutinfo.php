@@ -110,7 +110,7 @@ $page_Id = get_the_ID();
 /* ================= CARD FLOATED LEFT ================= */
 .profile-page .cards-column {
     float: left;
-    width: 360px;
+    width: 420px;
     margin-right: 40px;
     margin-bottom: 20px;
     display: flex;
@@ -146,6 +146,9 @@ $page_Id = get_the_ID();
 }
 
 .profile-page .content-wrap > h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a2e5a;
     padding-bottom: 8px;
     display: inline-block;
     margin-bottom: 16px;
@@ -175,6 +178,7 @@ $page_Id = get_the_ID();
     color: #1a7abf;
     text-decoration: none;
 }
+
 
 /* ================= PROFILE CARD ================= */
 .profile-page .profile-card {
