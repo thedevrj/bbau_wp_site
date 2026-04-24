@@ -5,7 +5,7 @@
 
 get_header();
 
-$api_base = getenv('DJANGO_API_URL');
+$api_base = getenv('DJANGO_MEDIA_URL');
 ?>
 
 <main id="primary" class="site-main research-portal">
