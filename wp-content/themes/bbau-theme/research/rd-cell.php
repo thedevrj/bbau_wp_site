@@ -508,6 +508,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 .rd-tab-pane {
     padding: 20px 0 10px;
     margin-bottom: 40px;
+    margin-top: 40px;
 }
 
 .animate-up {

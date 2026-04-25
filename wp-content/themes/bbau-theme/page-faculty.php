@@ -51,16 +51,16 @@ $current_page = isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1
 $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
 ?>
 
-    <!-- PREMIUM HERO BANNER -->
-    <section class="premium-hero-rd1">
-        <div class="hero-overlay"></div>
-        <div class="container">
-            <div class="hero-content-glass1 animate-up">
-                <div class="badge-new-rd1">Academic Excellence</div>
-                <h1 style="font-size: 2rem;">Faculty Directory</h1>
-            </div>
+<!-- PREMIUM HERO BANNER -->
+<section class="premium-hero-fac">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="fac-content-glass animate-fac-up">
+            <div class="badge-fac">Academic Excellence</div>
+            <h1 style="font-size: 2rem;">Faculty Directory</h1>
         </div>
-    </section>
+    </div>
+</section>
 
 <main id="primary" class="site-main faculty-directory" style="background:#fdfaf6; padding-bottom:60px;">
     <div class="container pt-4">
@@ -68,51 +68,58 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
         <?php get_template_part('template-parts/breadcrumb'); ?>
 
         <!-- PREMIUM GLASS FILTERS -->
-        <div class="ra-glass-filters animate-up mt-5" style="animation-delay: 0.1s;">
+        <div class="faculty-glass-filters animate-fac-up mt-5" style="animation-delay: 0.1s;">
             <form method="GET" action="" id="faculty-filter-form" class="w-100 d-flex flex-wrap gap-4 align-items-end">
-                <div class="ra-search-box" style="flex: 1; min-width: 300px;">
-                    <i class="fas fa-search ra-search-icon"></i>
+                <div class="faculty-search-box" style="flex: 1; min-width: 300px;">
+                    <i class="fas fa-search faculty-search-icon"></i>
                     <input type="text" name="search" placeholder="Search by name, expertise or designation..."
-                           value="<?php echo esc_attr($_GET['search'] ?? ''); ?>" autocomplete="off">
+                        value="<?php echo esc_attr($_GET['search'] ?? ''); ?>" autocomplete="off">
                 </div>
 
-                <div class="ra-filter-group" style="flex: 2;">
-                    <div class="filter-item">
+                <div class="faculty-filter-group" style="flex: 2;">
+                    <div class="faculty-filter-item">
                         <label>School</label>
-                        <select name="school" class="ra-select" onchange="this.form.submit()">
+                        <select name="school" class="faculty-select" onchange="this.form.submit()">
                             <option value="">All Schools</option>
                             <?php foreach ($schools_list as $s): ?>
-                                <option value="<?php echo esc_attr($s['slug']); ?>" <?php selected($_GET['school'] ?? '', $s['slug']); ?>>
-                                    <?php echo esc_html($s['name']); ?>
-                                </option>
+                            <option value="<?php echo esc_attr($s['slug']); ?>"
+                                <?php selected($_GET['school'] ?? '', $s['slug']); ?>>
+                                <?php echo esc_html($s['name']); ?>
+                            </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="filter-item">
+                    <div class="faculty-filter-item">
                         <label>Department</label>
-                        <select name="department" class="ra-select" onchange="this.form.submit()">
+                        <select name="department" class="faculty-select" onchange="this.form.submit()">
                             <option value="">All Departments</option>
                             <?php foreach ($depts_list as $d): ?>
-                                <option value="<?php echo esc_attr($d['slug']); ?>" <?php selected($_GET['department'] ?? '', $d['slug']); ?>>
-                                    <?php echo esc_html(get_dept_display_name($d)); ?>
-                                </option>
+                            <option value="<?php echo esc_attr($d['slug']); ?>"
+                                <?php selected($_GET['department'] ?? '', $d['slug']); ?>>
+                                <?php echo esc_html(get_dept_display_name($d)); ?>
+                            </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="filter-item">
+                    <div class="faculty-filter-item">
                         <label>Campus</label>
-                        <select name="campus" class="ra-select" onchange="this.form.submit()">
+                        <select name="campus" class="faculty-select" onchange="this.form.submit()">
                             <option value="">All Campuses</option>
-                            <option value="BBAU" <?php selected($_GET['campus'] ?? '', 'BBAU'); ?>>Main Campus (Lucknow)</option>
-                            <option value="Satellite Campus Amethi" <?php selected($_GET['campus'] ?? '', 'Satellite Campus Amethi'); ?>>Satellite Campus (Amethi)</option>
+                            <option value="BBAU" <?php selected($_GET['campus'] ?? '', 'BBAU'); ?>>Main Campus (Lucknow)
+                            </option>
+                            <option value="Satellite Campus Amethi"
+                                <?php selected($_GET['campus'] ?? '', 'Satellite Campus Amethi'); ?>>Satellite Campus
+                                (Amethi)</option>
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="filter-footer-actions d-flex align-items-center gap-3 w-100 mt-2">
-                    <button type="submit" class="btn-rd-profile" style="padding: 12px 30px;">Apply Filters</button>
-                    <a href="<?php echo esc_url(get_permalink()); ?>" class="text-muted small fw-bold text-decoration-none">Clear All</a>
-                    <span class="ms-auto small fw-bold text-muted"><?php echo intval($total_count); ?> Faculty Experts found</span>
+                    <button type="submit" class="btn-fac-profile" style="padding: 12px 30px;">Apply Filters</button>
+                    <a href="<?php echo esc_url(get_permalink()); ?>"
+                        class="text-muted small fw-bold text-decoration-none">Clear All</a>
+                    <span class="ms-auto small fw-bold text-muted"><?php echo intval($total_count); ?> Faculty Experts
+                        found</span>
                 </div>
             </form>
         </div>
@@ -121,37 +128,39 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
         <?php if (!empty($faculty_list)): ?>
         <div class="faculty-dir-grid">
             <?php foreach ($faculty_list as $fac): ?>
-            <a href="<?php echo esc_url(home_url('/faculty/' . ($fac['slug'] ?? ''))); ?>" class="faculty-card-premium">
-                <div class="faculty-image-wrap">
+            <a href="<?php echo esc_url(home_url('/faculty/' . ($fac['slug'] ?? ''))); ?>" class="fac-card-premium">
+                <div class="fac-image-wrap">
                     <?php if (!empty($fac['photo'])): ?>
-                        <img src="<?php echo esc_url($media_base . $fac['photo']); ?>" alt="<?php echo esc_attr($fac['name']); ?>">
+                    <img src="<?php echo esc_url($media_base . $fac['photo']); ?>"
+                        alt="<?php echo esc_attr($fac['name']); ?>">
                     <?php else: ?>
-                        <div class="faculty-no-photo"><i class="fas fa-user-graduate"></i></div>
+                    <div class="fac-no-photo"><i class="fas fa-user-graduate"></i></div>
                     <?php endif; ?>
-                    <div class="faculty-overlay-info">
-                        <span class="campus-pill <?php echo (($fac['campus'] ?? '') === 'Satellite Campus Amethi') ? 'amethi' : 'main'; ?>">
+                    <div class="fac-overlay-info">
+                        <span
+                            class="campus-pill <?php echo (($fac['campus'] ?? '') === 'Satellite Campus Amethi') ? 'amethi' : 'main'; ?>">
                             <?php echo (($fac['campus'] ?? '') === 'Satellite Campus Amethi') ? 'Amethi' : 'Lucknow'; ?>
                         </span>
                     </div>
                 </div>
-                <div class="faculty-info-body">
-                    <h3 class="faculty-name-new"><?php echo esc_html($fac['name']); ?></h3>
-                    <p class="faculty-title-new"><?php echo esc_html($fac['designation']); ?></p>
-                    
-                    <div class="faculty-dept-box">
+                <div class="fac-info-body">
+                    <h3 class="fac-name-new"><?php echo esc_html($fac['name']); ?></h3>
+                    <p class="fac-title-new"><?php echo esc_html($fac['designation']); ?></p>
+
+                    <div class="fac-dept-box">
                         <?php 
                         $dept_name = $fac['department']['name'] ?? ($fac['school']['name'] ?? ($fac['centre']['name'] ?? 'University Faculty'));
                         echo esc_html($dept_name);
                         ?>
                     </div>
-                    
+
                     <?php if (!empty($fac['insti_email'])): ?>
-                        <div class="faculty-email-new">
-                            <i class="far fa-envelope"></i> <?php echo esc_html($fac['insti_email']); ?>
-                        </div>
+                    <div class="fac-email-new">
+                        <i class="far fa-envelope"></i> <?php echo esc_html($fac['insti_email']); ?>
+                    </div>
                     <?php endif; ?>
                 </div>
-                <div class="faculty-card-footer">
+                <div class="fac-card-footer">
                     <span>View Academic Portfolio</span>
                     <i class="fas fa-arrow-right"></i>
                 </div>
@@ -191,6 +200,6 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
     </div>
 </main>
 
-<?php include_once(get_template_directory() . '/research/styles-research.php'); ?>
+<?php include_once(get_template_directory() . '/styles-faculty.php'); ?>
 
 <?php get_footer(); ?>
