@@ -67,7 +67,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
             <?php if ($active_tab === 'about'): ?>
             <!-- ABOUT TAB -->
-            <div class="rd-tab-pane animate-up">
+            <div class="rd-tab-pane animate-up ">
                 <div class="rd-flex-layout">
                     <div class="rd-main-text">
                         <div class="rd-card-premium">
@@ -286,7 +286,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
                             </select>
                             <select id="campusFilter" class="custom-select">
                                 <option value="">All Campuses</option>
-                                <option value="BBAU">Main Campus (Lucknow)</option>
+                                <option value="BBAU">Main Campus (BBAU)</option>
                                 <option value="Satellite Campus Amethi">Satellite Campus (Amethi)</option>
                             </select>
                         </div>
@@ -309,11 +309,11 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
                                             data-dept="<?php echo esc_attr($cons['department_slug'] ?? ''); ?>" 
                                             data-campus="<?php echo esc_attr($cons['campus'] ?? ''); ?>"
                                             data-search-text="<?php echo esc_attr(strtolower(($cons['faculty_name']??'') . ' ' . ($cons['nature_of_consultancy']??'') . ' ' . ($cons['name_of_awarding_agency_organization']??''))); ?>">
-                                            <td class="bold-cell"><?php echo esc_html($cons['faculty_name'] ?? 'N/A'); ?></td>
-                                            <td><?php echo esc_html($cons['nature_of_consultancy'] ?? 'N/A'); ?></td>
-                                            <td><?php echo esc_html($cons['name_of_awarding_agency_organization'] ?? 'N/A'); ?></td>
-                                            <td class="amount">₹<?php echo number_format($cons['amount_sanctioned'] ?? 0, 2); ?></td>
-                                            <td class="small">
+                                            <td class="bold-cell" data-label="Faculty Name"><?php echo esc_html($cons['faculty_name'] ?? 'N/A'); ?></td>
+                                            <td data-label="Nature of Consultancy"><?php echo esc_html($cons['nature_of_consultancy'] ?? 'N/A'); ?></td>
+                                            <td data-label="Awarding Agency"><?php echo esc_html($cons['name_of_awarding_agency_organization'] ?? 'N/A'); ?></td>
+                                            <td class="amount" data-label="Amount">₹<?php echo number_format($cons['amount_sanctioned'] ?? 0, 2); ?></td>
+                                            <td class="small" data-label="Duration">
                                                 <?php 
                                                 $start = !empty($cons['start_date']) ? date('M Y', strtotime($cons['start_date'])) : '';
                                                 $end = !empty($cons['end_date']) ? date('M Y', strtotime($cons['end_date'])) : 'Present';
@@ -507,6 +507,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 /* MAIN CONTENT AREA */
 .rd-tab-pane {
     padding: 20px 0 10px;
+    margin-bottom: 40px;
 }
 
 .animate-up {
@@ -880,6 +881,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     font-weight: 700;
     color: var(--rd-indigo);
     margin-bottom: 12px;
+    font-size: 1.3rem ;
 }
 
 .rd-portal-link p {
@@ -889,13 +891,133 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     margin: 0;
 }
 
-@media (max-width: 1024px) {
+/* CONSULTANCY TAB STYLES */
+.search-filter-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: #f8fafc;
+    padding: 30px;
+    border-radius: 24px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 40px;
+}
 
+.search-box1 {
+    flex: 2;
+    min-width: 300px;
+    position: relative;
+}
+
+.search-icon1 {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    z-index: 5;
+}
+
+.search-box1 input {
+    width: 100%;
+    padding: 14px 20px 14px 50px;
+    border-radius: 12px;
+    border: 2px solid #fff;
+    background: white;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    transition: all 0.3s;
+}
+
+.search-box1 input:focus {
+    border-color: var(--rd-royal);
+    outline: none;
+    box-shadow: 0 10px 20px rgba(30, 58, 138, 0.08);
+}
+
+.search-filter-wrapper .custom-select {
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 2px solid #fff;
+    background: white;
+    font-weight: 700;
+    color: #475569;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.search-filter-wrapper .custom-select:focus {
+    border-color: var(--rd-royal);
+    outline: none;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.data-table th {
+    padding: 18px 25px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+}
+
+.data-table td {
+    padding: 22px 25px;
+    background: white;
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.empty-state {
+    padding: 60px 0;
+    text-align: center;
+    background: #fdfdfd;
+    border-radius: 20px;
+    border: 2px dashed #e2e8f0;
+}
+
+.data-table td:first-child { border-left: 1px solid #f1f5f9; border-radius: 15px 0 0 15px; }
+.data-table td:last-child { border-right: 1px solid #f1f5f9; border-radius: 0 15px 15px 0; }
+
+.data-table tr:hover td {
+    background: #fcfcfc;
+    border-color: var(--rd-gold);
+}
+
+.bold-cell {
+    font-weight: 800;
+    color: var(--rd-indigo);
+}
+
+.amount {
+    font-weight: 800;
+    color: #10b981;
+}
+
+@media (max-width: 1024px) {
     .rd-flex-layout,
     .rd-objectives-grid,
-    .rd-links-grid {
+    .rd-links-grid,
+    .search-filter-wrapper {
         grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: stretch;
     }
+    .search-box1 { width: 100%; min-width: 100%; }
+    .search-filter-wrapper .custom-select { width: 100%; }
 
     .hero-content-glass h1 {
         font-size: 2rem;
@@ -924,6 +1046,12 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     .rd-links-grid {
         grid-template-columns: 1fr;
     }
+    
+    .data-table thead { display: none; }
+    .data-table tr { display: block; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 15px; overflow: hidden; }
+    .data-table td { display: block; width: 100% !important; text-align: left; padding: 15px 20px; border: none; border-bottom: 1px solid #f1f5f9; }
+    .data-table td:last-child { border-bottom: none; }
+    .data-table td::before { content: attr(data-label); font-weight: 800; color: #94a3b8; display: block; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 4px; }
 }
 </style>
 

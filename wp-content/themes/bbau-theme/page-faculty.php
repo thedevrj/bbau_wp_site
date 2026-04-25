@@ -51,54 +51,68 @@ $current_page = isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1
 $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
 ?>
 
-<?php get_template_part('banners/about-banner'); ?>
+    <!-- PREMIUM HERO BANNER -->
+    <section class="premium-hero-rd1">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content-glass1 animate-up">
+                <div class="badge-new-rd1">Academic Excellence</div>
+                <h1 style="font-size: 2rem;">Faculty Directory</h1>
+            </div>
+        </div>
+    </section>
 
 <main id="primary" class="site-main faculty-directory" style="background:#fdfaf6; padding-bottom:60px;">
     <div class="container pt-4">
 
         <?php get_template_part('template-parts/breadcrumb'); ?>
 
-        <!-- Search & Filter Section -->
-        <div class="faculty-filters">
-            <form method="GET" action="" id="faculty-filter-form">
-                <div class="filter-row">
-                    <div class="filter-search">
-                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" name="search" placeholder="Search by name, designation..."
-                            value="<?php echo esc_attr($_GET['search'] ?? ''); ?>">
-                    </div>
-                    <div class="filter-dropdowns">
-                        <select name="school" onchange="this.form.submit()">
+        <!-- PREMIUM GLASS FILTERS -->
+        <div class="ra-glass-filters animate-up mt-5" style="animation-delay: 0.1s;">
+            <form method="GET" action="" id="faculty-filter-form" class="w-100 d-flex flex-wrap gap-4 align-items-end">
+                <div class="ra-search-box" style="flex: 1; min-width: 300px;">
+                    <i class="fas fa-search ra-search-icon"></i>
+                    <input type="text" name="search" placeholder="Search by name, expertise or designation..."
+                           value="<?php echo esc_attr($_GET['search'] ?? ''); ?>" autocomplete="off">
+                </div>
+
+                <div class="ra-filter-group" style="flex: 2;">
+                    <div class="filter-item">
+                        <label>School</label>
+                        <select name="school" class="ra-select" onchange="this.form.submit()">
                             <option value="">All Schools</option>
                             <?php foreach ($schools_list as $s): ?>
-                            <option value="<?php echo esc_attr($s['slug']); ?>"
-                                <?php selected($_GET['school'] ?? '', $s['slug']); ?>>
-                                <?php echo esc_html($s['name']); ?>
-                            </option>
+                                <option value="<?php echo esc_attr($s['slug']); ?>" <?php selected($_GET['school'] ?? '', $s['slug']); ?>>
+                                    <?php echo esc_html($s['name']); ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
-                        <select name="department" onchange="this.form.submit()">
+                    </div>
+                    <div class="filter-item">
+                        <label>Department</label>
+                        <select name="department" class="ra-select" onchange="this.form.submit()">
                             <option value="">All Departments</option>
                             <?php foreach ($depts_list as $d): ?>
-                            <option value="<?php echo esc_attr($d['slug']); ?>"
-                                <?php selected($_GET['department'] ?? '', $d['slug']); ?>>
-                                <?php echo esc_html(get_dept_display_name($d)); ?>
-                            </option>
+                                <option value="<?php echo esc_attr($d['slug']); ?>" <?php selected($_GET['department'] ?? '', $d['slug']); ?>>
+                                    <?php echo esc_html(get_dept_display_name($d)); ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
-                        <select name="campus" onchange="this.form.submit()">
+                    </div>
+                    <div class="filter-item">
+                        <label>Campus</label>
+                        <select name="campus" class="ra-select" onchange="this.form.submit()">
                             <option value="">All Campuses</option>
-                            <option value="BBAU" <?php selected($_GET['campus'] ?? '', 'BBAU'); ?>>BBAU</option>
-                            <option value="Satellite Campus Amethi"
-                                <?php selected($_GET['campus'] ?? '', 'Satellite Campus Amethi'); ?>>Satellite Campus
-                                Amethi</option>
+                            <option value="BBAU" <?php selected($_GET['campus'] ?? '', 'BBAU'); ?>>Main Campus (Lucknow)</option>
+                            <option value="Satellite Campus Amethi" <?php selected($_GET['campus'] ?? '', 'Satellite Campus Amethi'); ?>>Satellite Campus (Amethi)</option>
                         </select>
                     </div>
                 </div>
-                <div class="filter-actions">
-                    <button type="submit" class="btn-filter-search"><i class="fa-solid fa-search"></i> Search</button>
-                    <a href="<?php echo esc_url(get_permalink()); ?>" class="btn-filter-clear">Clear Filters</a>
-                    <span class="result-count"><?php echo intval($total_count); ?> faculty found</span>
+                
+                <div class="filter-footer-actions d-flex align-items-center gap-3 w-100 mt-2">
+                    <button type="submit" class="btn-rd-profile" style="padding: 12px 30px;">Apply Filters</button>
+                    <a href="<?php echo esc_url(get_permalink()); ?>" class="text-muted small fw-bold text-decoration-none">Clear All</a>
+                    <span class="ms-auto small fw-bold text-muted"><?php echo intval($total_count); ?> Faculty Experts found</span>
                 </div>
             </form>
         </div>
@@ -107,44 +121,39 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
         <?php if (!empty($faculty_list)): ?>
         <div class="faculty-dir-grid">
             <?php foreach ($faculty_list as $fac): ?>
-            <a href="<?php echo esc_url(home_url('/faculty/' . ($fac['slug'] ?? ''))); ?>" class="faculty-dir-card">
-                <div class="fdc-photo-wrap">
+            <a href="<?php echo esc_url(home_url('/faculty/' . ($fac['slug'] ?? ''))); ?>" class="faculty-card-premium">
+                <div class="faculty-image-wrap">
                     <?php if (!empty($fac['photo'])): ?>
-                    <img src="<?php echo esc_url($media_base . $fac['photo']); ?>"
-                        alt="<?php echo esc_attr($fac['photo_alt_text'] ?? $fac['name']); ?>">
+                        <img src="<?php echo esc_url($media_base . $fac['photo']); ?>" alt="<?php echo esc_attr($fac['name']); ?>">
                     <?php else: ?>
-                    <div class="fdc-no-photo"><i class="fa-solid fa-user-tie"></i></div>
+                        <div class="faculty-no-photo"><i class="fas fa-user-graduate"></i></div>
                     <?php endif; ?>
-                </div>
-                <div class="fdc-body">
-                    <div class="fdc-header-flex">
-                        <h3 class="fdc-name">
-                            <?php echo esc_html($fac['name']); ?>
-                            <?php if(($fac['campus'] ?? '') === 'Satellite Campus Amethi'): ?>
-                                <small style="color: #9d174d; font-size: 0.8rem; font-weight: 800;">(Amethi)</small>
-                            <?php endif; ?>
-                        </h3>
-                        <?php if(($fac['campus'] ?? '') === 'Satellite Campus Amethi'): ?>
-                            <span class="campus-badge amethi">Amethi Campus</span>
-                        <?php else: ?>
-                            <span class="campus-badge main">Main Campus</span>
-                        <?php endif; ?>
+                    <div class="faculty-overlay-info">
+                        <span class="campus-pill <?php echo (($fac['campus'] ?? '') === 'Satellite Campus Amethi') ? 'amethi' : 'main'; ?>">
+                            <?php echo (($fac['campus'] ?? '') === 'Satellite Campus Amethi') ? 'Amethi' : 'Lucknow'; ?>
+                        </span>
                     </div>
-                    <p class="fdc-designation"><?php echo esc_html($fac['designation']); ?></p>
-                    <?php if (!empty($fac['department']['name'])): ?>
-                    <span class="fdc-dept"><?php echo esc_html($fac['department']['name']); ?></span>
-                    <?php elseif (!empty($fac['school']['name'])): ?>
-                    <span class="fdc-dept"><?php echo esc_html($fac['school']['name']); ?></span>
-                    <?php elseif (!empty($fac['centre']['name'])): ?>
-                    <span class="fdc-dept"><?php echo esc_html($fac['centre']['name']); ?></span>
-                    <?php endif; ?>
+                </div>
+                <div class="faculty-info-body">
+                    <h3 class="faculty-name-new"><?php echo esc_html($fac['name']); ?></h3>
+                    <p class="faculty-title-new"><?php echo esc_html($fac['designation']); ?></p>
+                    
+                    <div class="faculty-dept-box">
+                        <?php 
+                        $dept_name = $fac['department']['name'] ?? ($fac['school']['name'] ?? ($fac['centre']['name'] ?? 'University Faculty'));
+                        echo esc_html($dept_name);
+                        ?>
+                    </div>
+                    
                     <?php if (!empty($fac['insti_email'])): ?>
-                    <div class="fdc-email"><i class="fa-solid fa-envelope"></i>
-                        <?php echo esc_html($fac['insti_email']); ?></div>
+                        <div class="faculty-email-new">
+                            <i class="far fa-envelope"></i> <?php echo esc_html($fac['insti_email']); ?>
+                        </div>
                     <?php endif; ?>
                 </div>
-                <div class="fdc-footer">
-                    <span class="fdc-view">View Profile <i class="fa-solid fa-arrow-right"></i></span>
+                <div class="faculty-card-footer">
+                    <span>View Academic Portfolio</span>
+                    <i class="fas fa-arrow-right"></i>
                 </div>
             </a>
             <?php endforeach; ?>
@@ -182,309 +191,6 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
     </div>
 </main>
 
-<style>
-/* ── Filter Bar ── */
-.faculty-filters {
-    background: #fff;
-    border: 1px solid #e2d9cc;
-    border-radius: 16px;
-    padding: 25px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-}
-
-.filter-row {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    align-items: stretch;
-}
-
-.filter-search {
-    position: relative;
-    flex: 1;
-    min-width: 250px;
-}
-
-.filter-search input {
-    width: 100%;
-    padding: 12px 15px 12px 42px;
-    border: 2px solid #e2d9cc;
-    border-radius: 10px;
-    font-size: 0.95rem;
-    transition: 0.2s;
-    outline: none;
-}
-
-.filter-search input:focus {
-    border-color: #8B1A1A;
-    box-shadow: 0 0 0 3px rgba(139, 26, 26, 0.1);
-}
-
-.search-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-}
-
-.filter-dropdowns {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.filter-dropdowns select {
-    padding: 12px 15px;
-    border: 2px solid #e2d9cc;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    background: #fff;
-    cursor: pointer;
-    min-width: 160px;
-    outline: none;
-    transition: 0.2s;
-}
-
-.filter-dropdowns select:focus {
-    border-color: #8B1A1A;
-}
-
-.filter-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.btn-filter-search {
-    padding: 10px 25px;
-    background: #5c1010;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.btn-filter-search:hover {
-    background: #8B1A1A;
-}
-
-.btn-filter-clear {
-    padding: 10px 20px;
-    border: 2px solid #e2d9cc;
-    border-radius: 10px;
-    color: #64748b !important;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-.btn-filter-clear:hover {
-    border-color: #8B1A1A;
-    color: #8B1A1A;
-}
-
-.result-count {
-    margin-left: auto;
-    font-size: 0.9rem;
-    color: #64748b;
-    font-weight: 600;
-}
-
-/* ── Faculty Card Grid ── */
-.faculty-dir-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-}
-
-.faculty-dir-card {
-    background: #fff;
-    border: 1px solid #e2d9cc;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-    transition: 0.3s;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-}
-
-.faculty-dir-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 35px rgba(139, 26, 26, 0.12);
-    border-color: #c9a84c;
-}
-
-.fdc-photo-wrap {
-    height: 250px;
-    overflow: hidden;
-    background: #f1f5f9;
-}
-
-.fdc-photo-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: inherit;
-    transition: 0.4s;
-}
-
-.faculty-dir-card:hover .fdc-photo-wrap img {
-    transform: scale(1.05);
-}
-
-.fdc-no-photo {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 4rem;
-    color: #cbd5e1;
-}
-
-.fdc-body {
-    padding: 20px;
-    flex-grow: 1;
-}
-
-.fdc-header-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 8px;
-}
-
-.fdc-name {
-    margin: 0 !important;
-    font-family: 'Merriweather', serif;
-    font-size: 1.1rem;
-    color: #5c1010;
-    font-weight: 700;
-}
-
-.campus-badge {
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.65rem;
-    font-weight: 800;
-    white-space: nowrap;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.campus-badge.amethi {
-    background-color: #fce7f3;
-    color: #9d174d;
-    border: 1px solid #fbcfe8;
-}
-
-.campus-badge.main {
-    background-color: #f0fdf4;
-    color: #166534;
-    border: 1px solid #dcfce7;
-}
-
-.fdc-designation {
-    margin: 0 0 10px;
-    font-size: 0.9rem;
-    color: #8B1A1A;
-    font-weight: 600;
-}
-
-.fdc-dept {
-    display: inline-block;
-    font-size: 0.8rem;
-    background: #fdfaf6;
-    border: 1px solid #e2d9cc;
-    padding: 3px 12px;
-    border-radius: 20px;
-    color: #64748b;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.fdc-email {
-    font-size: 0.82rem;
-    color: #64748b;
-    margin-top: 8px;
-}
-
-.fdc-footer {
-    padding: 15px 20px;
-    border-top: 1px solid #f1f5f9;
-}
-
-.fdc-view {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #5c1010;
-    transition: 0.2s;
-}
-
-.faculty-dir-card:hover .fdc-view {
-    color: #c9a84c;
-}
-
-/* ── Pagination ── */
-.faculty-pagination {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 40px;
-    flex-wrap: wrap;
-}
-
-.page-btn {
-    padding: 10px 18px;
-    border: 2px solid #e2d9cc;
-    border-radius: 10px;
-    color: #5c1010 !important;
-    text-decoration: none;
-    font-weight: 700;
-    transition: 0.2s;
-}
-
-.page-btn:hover,
-.page-btn.active {
-    background: #5c1010;
-    color: #fff !important;
-    border-color: #5c1010;
-}
-
-/* ── Responsive ── */
-@media (max-width: 768px) {
-    .filter-row {
-        flex-direction: column;
-    }
-
-    .filter-dropdowns {
-        flex-direction: column;
-    }
-
-    .filter-dropdowns select {
-        width: 100%;
-    }
-
-    .filter-actions {
-        flex-wrap: wrap;
-    }
-
-    .result-count {
-        margin-left: 0;
-        width: 100%;
-        text-align: center;
-    }
-
-    /* .faculty-dir-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    } */
-}
-</style>
+<?php include_once(get_template_directory() . '/research/styles-research.php'); ?>
 
 <?php get_footer(); ?>

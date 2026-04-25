@@ -22,7 +22,34 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 }
 ?>
 
-<?php get_template_part('banners/about-banner'); ?>
+    <!-- PREMIUM PORTFOLIO HERO -->
+    <section class="premium-hero-rd" style="min-height: 250px;">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content-glass animate-up" style="max-width: 100%;">
+                <div class="d-flex align-items-center gap-4 flex-wrap">
+                    <div class="portfolio-avatar-wrap">
+                        <?php if (!empty($fac['photo'])): ?>
+                            <img src="<?php echo esc_url($media_base . $fac['photo']); ?>" alt="<?php echo esc_attr($fac['name']); ?>">
+                        <?php else: ?>
+                            <div class="portfolio-no-photo"><i class="fas fa-user-graduate"></i></div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="portfolio-header-text">
+                        <div class="badge-new-rd mb-2">Faculty Portfolio</div>
+                        <h1 style="font-size: 2.8rem; margin: 0;"><?php echo esc_html($fac['name']); ?></h1>
+                        <p style="font-size: 1.1rem; opacity: 0.9; margin: 5px 0 0;"><?php echo esc_html($fac['designation']); ?></p>
+                        <div class="d-flex gap-3 mt-3 flex-wrap">
+                            <?php if (!empty($fac['department']['name'])): ?>
+                                <span class="small fw-bold"><i class="fas fa-building-columns me-2"></i><?php echo esc_html($fac['department']['name']); ?></span>
+                            <?php endif; ?>
+                            <span class="small fw-bold"><i class="fas fa-map-marker-alt me-2"></i><?php echo (($fac['campus'] ?? '') === 'Satellite Campus Amethi') ? 'Amethi Campus' : 'Main Campus'; ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <main id="primary" class="site-main faculty-profile-page" style="background:#fdfaf6; padding-bottom:60px;">
     <div class="container pt-4">
@@ -30,135 +57,138 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
         <?php get_template_part('template-parts/breadcrumb'); ?>
 
         <?php if ($fac): ?>
-        <div class="fp-layout">
-            <!-- Left Column: Photo & Quick Info -->
-            <aside class="fp-sidebar">
-                <div class="fp-photo-card">
-                    <?php if (!empty($fac['photo'])): ?>
-                    <img src="<?php echo esc_url($media_base . $fac['photo']); ?>"
-                        alt="<?php echo esc_attr($fac['photo_alt_text'] ?? $fac['name']); ?>" class="fp-photo">
-                    <?php else: ?>
-                    <div class="fp-no-photo"><i class="fa-solid fa-user-tie"></i></div>
+        <div class="portfolio-layout mt-5">
+            <!-- Sidebar: Quick Contact & Meta -->
+            <aside class="portfolio-sidebar animate-up" style="animation-delay: 0.1s;">
+                <div class="rd-card-premium p-4 mb-4">
+                    <h4 class="small-title-rd">Contact Information</h4>
+                    <div class="portfolio-contact-list mt-3">
+                        <?php if (!empty($fac['insti_email'])): ?>
+                            <a href="mailto:<?php echo esc_attr($fac['insti_email']); ?>" class="contact-item">
+                                <i class="fas fa-envelope-open"></i>
+                                <span><?php echo esc_html($fac['insti_email']); ?></span>
+                            </a>
+                        <?php endif; ?>
+                        <?php if (!empty($fac['phone1'])): ?>
+                            <div class="contact-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <span>+91 <?php echo esc_html($fac['phone1']); ?></span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-4">
+                        <?php if (!empty($fac['google_scholar_url'])): ?>
+                            <a href="<?php echo esc_url($fac['google_scholar_url']); ?>" target="_blank" class="social-icon-rd" title="Google Scholar"><i class="fab fa-google"></i></a>
+                        <?php endif; ?>
+                        <?php if (!empty($fac['linkedin_url'])): ?>
+                            <a href="<?php echo esc_url($fac['linkedin_url']); ?>" target="_blank" class="social-icon-rd" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <?php endif; ?>
+                        <?php if (!empty($fac['website_url'])): ?>
+                            <a href="<?php echo esc_url($fac['website_url']); ?>" target="_blank" class="social-icon-rd" title="Website"><i class="fas fa-globe"></i></a>
+                        <?php endif; ?>
+                    </div>
+
+                    <?php if (!empty($fac['cv_document'])): ?>
+                        <a href="<?php echo esc_url($media_base . $fac['cv_document']); ?>" target="_blank" class="btn-rd-profile w-100 mt-4 justify-content-center">
+                            <i class="fas fa-file-pdf"></i> Download CV
+                        </a>
                     <?php endif; ?>
                 </div>
 
-                <div class="fp-quick-info">
-                    <h1 class="fp-name"><?php echo esc_html($fac['name']); ?></h1>
-                    <p class="fp-designation"><?php echo esc_html($fac['designation']); ?></p>
-
-                    <?php if (!empty($fac['department']['name'])): ?>
-                    <a href="<?php echo esc_url(home_url('/departments/' . $fac['department']['slug'])); ?>"
-                        class="fp-tag">
-                        <i class="fa-solid fa-building-columns"></i> <?php echo esc_html($fac['department']['name']); ?>
-                    </a>
-                    <?php endif; ?>
-                    <?php if (!empty($fac['school']['name'])): ?>
-                    <a href="<?php echo esc_url(home_url('/schools/' . $fac['school']['slug'])); ?>" class="fp-tag">
-                        <i class="fa-solid fa-school"></i> <?php echo esc_html($fac['school']['name']); ?>
-                    </a>
-                    <?php endif; ?>
-                    <?php if (!empty($fac['centre']['name'])): ?>
-                    <span class="fp-tag"><i class="fa-solid fa-landmark"></i>
-                        <?php echo esc_html($fac['centre']['name']); ?></span>
-                    <?php endif; ?>
-
-                    <div class="fp-contact-list">
-                        <?php if (!empty($fac['insti_email'])): ?>
-                        <a href="mailto:<?php echo esc_attr($fac['insti_email']); ?>">
-                            <i class="fa-solid fa-envelope"></i> <?php echo esc_html($fac['insti_email']); ?>
-                        </a>
+                <div class="rd-card-premium p-4">
+                    <h4 class="small-title-rd">Academic Experience</h4>
+                    <div class="mt-3">
+                        <?php if (!empty($fac['teaching_exp'])): ?>
+                            <div class="exp-item mb-3">
+                                <label>Teaching</label>
+                                <div class="fw-bold text-dark"><?php echo esc_html($fac['teaching_exp']); ?> Years</div>
+                            </div>
                         <?php endif; ?>
-                        <?php if (!empty($fac['other_email'])): ?>
-                        <a href="mailto:<?php echo esc_attr($fac['other_email']); ?>">
-                            <i class="fa-regular fa-envelope"></i> <?php echo esc_html($fac['other_email']); ?>
-                        </a>
-                        <?php endif; ?>
-                        <?php if (!empty($fac['phone1'])): ?>
-                        <a href="tel:<?php echo esc_attr($fac['phone1']); ?>">
-                            <i class="fa-solid fa-phone"></i> +91 <?php echo esc_html($fac['phone1']); ?>
-                        </a>
-                        <?php endif; ?>
-                        <?php if (!empty($fac['phone2'])): ?>
-                        <a href="tel:<?php echo esc_attr($fac['phone2']); ?>">
-                            <i class="fa-solid fa-phone"></i> +91 <?php echo esc_html($fac['phone2']); ?>
-                        </a>
+                        <?php if (!empty($fac['research_exp'])): ?>
+                            <div class="exp-item">
+                                <label>Research</label>
+                                <div class="fw-bold text-dark"><?php echo esc_html($fac['research_exp']); ?> Years</div>
+                            </div>
                         <?php endif; ?>
                     </div>
-
-                    <!-- External Links -->
-                    <div class="fp-social-links">
-                        <?php if (!empty($fac['google_scholar_url'])): ?>
-                        <a href="<?php echo esc_url($fac['google_scholar_url']); ?>" target="_blank"
-                            title="Google Scholar">
-                            <i class="fa-brands fa-google-scholar"></i>
-                        </a>
-                        <?php endif; ?>
-                        <?php if (!empty($fac['linkedin_url'])): ?>
-                        <a href="<?php echo esc_url($fac['linkedin_url']); ?>" target="_blank" title="LinkedIn">
-                            <i class="fa-brands fa-linkedin"></i>
-                        </a>
-                        <?php endif; ?>
-                        <?php if (!empty($fac['website_url'])): ?>
-                        <a href="<?php echo esc_url($fac['website_url']); ?>" target="_blank" title="Personal Website">
-                            <i class="fa-solid fa-globe"></i>
-                        </a>
-                        <?php endif; ?>
-                    </div>
-
-                    <!-- CV Download -->
-                    <?php if (!empty($fac['cv_document'])): ?>
-                    <a href="<?php echo esc_url($media_base . $fac['cv_document']); ?>" target="_blank"
-                        class="fp-cv-btn">
-                        <i class="fa-solid fa-file-pdf"></i> Download CV
-                    </a>
-                    <?php endif; ?>
                 </div>
             </aside>
 
-            <!-- Right Column: Profile Details -->
-            <div class="fp-content">
-
-                <!-- Meta Tags -->
-                <div class="fp-meta-bar">
-                
-                    <?php if (!empty($fac['campus'])): ?>
-                    <span class="fp-meta-chip"><i class="fa-solid fa-location-dot"></i>
-                        <?php echo esc_html($fac['campus']); ?></span>
-                    <?php endif; ?>
-                    <?php if (!empty($fac['teaching_exp'])): ?>
-                    <span class="fp-meta-chip"><i class="fa-solid fa-clock"></i> Teaching Exp:
-                        <?php echo esc_html($fac['teaching_exp']); ?></span>
-                    <?php endif; ?>
-                    <?php if (!empty($fac['research_exp'])): ?>
-                    <span class="fp-meta-chip"><i class="fa-solid fa-flask"></i> Research Exp:
-                        <?php echo esc_html($fac['research_exp']); ?></span>
-                    <?php endif; ?>
+            <!-- Main Content: Tabs & Data -->
+            <div class="portfolio-main animate-up" style="animation-delay: 0.2s;">
+                <!-- Tab Navigation -->
+                <div class="portfolio-tabs">
+                    <button class="portfolio-tab-btn active" data-tab="overview">Overview</button>
+                    <button class="portfolio-tab-btn" data-tab="publications" data-load="true">Publications</button>
+                    <button class="portfolio-tab-btn" data-tab="patents" data-load="true">Patents</button>
+                    <button class="portfolio-tab-btn" data-tab="projects" data-load="true">Projects</button>
+                    <button class="portfolio-tab-btn" data-tab="scholars" data-load="true">Scholars</button>
                 </div>
 
-                <!-- Qualification -->
-                <?php if (!empty($fac['qualification'])): ?>
-                <div class="fp-section">
-                    <h2><i class="fa-solid fa-graduation-cap"></i> Qualification</h2>
-                    <div class="fp-rich-content"><?php echo wp_kses_post($fac['qualification']); ?></div>
-                </div>
-                <?php endif; ?>
+                <!-- Tab Panes -->
+                <div class="portfolio-tab-content">
+                    <!-- Overview Pane -->
+                    <div class="portfolio-pane active" id="overview">
+                        <?php if (!empty($fac['bio'])): ?>
+                            <div class="rd-card-premium mb-4">
+                                <h3 class="rd-section-title">Biography</h3>
+                                <div class="premium-rich-text"><?php echo wp_kses_post($fac['bio']); ?></div>
+                            </div>
+                        <?php endif; ?>
 
-                <!-- Bio -->
-                <?php if (!empty($fac['bio'])): ?>
-                <div class="fp-section">
-                    <h2><i class="fa-solid fa-user"></i> About</h2>
-                    <div class="fp-rich-content"><?php echo wp_kses_post($fac['bio']); ?></div>
-                </div>
-                <?php endif; ?>
+                        <?php if (!empty($fac['qualification'])): ?>
+                            <div class="rd-card-premium mb-4">
+                                <h3 class="rd-section-title">Academic Qualifications</h3>
+                                <div class="premium-rich-text"><?php echo wp_kses_post($fac['qualification']); ?></div>
+                            </div>
+                        <?php endif; ?>
 
-                <!-- Research Interest -->
-                <?php if (!empty($fac['research_int'])): ?>
-                <div class="fp-section">
-                    <h2><i class="fa-solid fa-microscope"></i> Research Interests</h2>
-                    <div class="fp-rich-content"><?php echo wp_kses_post($fac['research_int']); ?></div>
-                </div>
-                <?php endif; ?>
+                        <?php if (!empty($fac['research_int'])): ?>
+                            <div class="rd-card-premium">
+                                <h3 class="rd-section-title">Research Focus</h3>
+                                <div class="premium-rich-text"><?php echo wp_kses_post($fac['research_int']); ?></div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
 
+                    <!-- Dynamic Panes (Populated by JS) -->
+                    <div class="portfolio-pane" id="publications">
+                        <div class="rd-card-premium">
+                            <h3 class="rd-section-title">Scholarly Publications</h3>
+                            <div class="dynamic-feed-container" data-api="publications">
+                                <div class="rd-loader-wrap text-center py-5"><div class="rd-loader"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-pane" id="patents">
+                        <div class="rd-card-premium">
+                            <h3 class="rd-section-title">Innovations & Patents</h3>
+                            <div class="dynamic-feed-container" data-api="patents">
+                                <div class="rd-loader-wrap text-center py-5"><div class="rd-loader"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-pane" id="projects">
+                        <div class="rd-card-premium">
+                            <h3 class="rd-section-title">Research Projects</h3>
+                            <div class="dynamic-feed-container" data-api="projects">
+                                <div class="rd-loader-wrap text-center py-5"><div class="rd-loader"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-pane" id="scholars">
+                        <div class="rd-card-premium">
+                            <h3 class="rd-section-title">Ph.D. Scholars Supervised</h3>
+                            <div class="dynamic-feed-container" data-api="scholars">
+                                <div class="rd-loader-wrap text-center py-5"><div class="rd-loader"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -177,248 +207,102 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     </div>
 </main>
 
-<style>
-/* ── Layout ── */
-.fp-layout {
-    display: grid;
-    grid-template-columns: 380px 1fr;
-    gap: 45px;
-    align-items: start;
-}
+</main>
 
-/* ── Sidebar ── */
-.fp-sidebar {
-    position: sticky;
-    top: 100px;
-}
+<?php include_once(get_template_directory() . '/research/styles-research.php'); ?>
 
-.fp-photo-card {
-    margin: 0 auto;
-    max-width: 320px;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 3px solid #c9a84c;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.portfolio-tab-btn');
+    const panes = document.querySelectorAll('.portfolio-pane');
+    const facultyName = "<?php echo esc_js($fac['name']); ?>";
+    const apiBase = "<?php echo esc_js($api_base); ?>";
+    
+    // TAB SWITCHING
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.dataset.tab;
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            panes.forEach(p => p.classList.remove('active'));
+            
+            tab.classList.add('active');
+            document.getElementById(target).classList.add('active');
+            
+            if (tab.dataset.load === 'true') {
+                loadTabData(target);
+                tab.dataset.load = 'false'; // Load only once
+            }
+        });
+    });
 
-.fp-photo {
-    width: 100%;
-    height: 265px;
-    object-fit: inherit ;
-    display: block;
-}
+    // DYNAMIC DATA LOADER
+    async function loadTabData(type) {
+        const container = document.querySelector(`#${type} .dynamic-feed-container`);
+        let endpoint = '';
+        
+        switch(type) {
+            case 'publications': endpoint = '/api/v1/publications/'; break;
+            case 'patents': endpoint = '/api/v1/patents/'; break;
+            case 'projects': endpoint = '/api/v1/research-projects/'; break;
+            case 'scholars': endpoint = '/api/v1/doctoral-research/'; break;
+        }
 
-.fp-no-photo {
-    width: 100%;
-    height: 265px;
-    background: #f1f5f9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 5rem;
-    color: #cbd5e1;
-}
+        try {
+            const response = await fetch(`${apiBase}${endpoint}?faculty_name=${encodeURIComponent(facultyName)}&page_size=100`);
+            const data = await response.json();
+            const records = data.results || data;
 
-.fp-quick-info {
-    background: #fff;
-    border: 1px solid #e2d9cc;
-    border-radius: 20px;
-    padding: 25px;
-    margin-top: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-}
+            if (!records || records.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-folder-open mb-3" style="font-size: 3rem; opacity: 0.1;"></i>
+                        <p class="text-muted">No records found for this faculty member.</p>
+                    </div>`;
+                return;
+            }
 
-.fp-name {
-    font-family: 'Merriweather', serif;
-    font-size: 1.5rem;
-    color: #5c1010;
-    margin: 0 0 6px;
-    font-weight: 800 !important;
-}
-
-.fp-designation {
-    font-size: 1rem;
-    color: #8B1A1A;
-    font-weight: 600;
-    margin: 0 0 15px;
-}
-
-.fp-tag {
-    display: inline-block;
-    font-size: 0.8rem;
-    background: #fdfaf6;
-    border: 1px solid #e2d9cc;
-    padding: 5px 14px;
-    border-radius: 25px;
-    color: #64748b !important;
-    font-weight: 600;
-    margin: 0 5px 8px 0;
-    text-decoration: none;
-    transition: 0.2s;
-}
-
-.fp-tag:hover {
-    border-color: #c9a84c;
-    color: #5c1010;
-}
-
-/* Contact */
-.fp-contact-list {
-    margin-top: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.fp-contact-list a {
-    font-size: 0.88rem;
-    color: #475569;
-    text-decoration: none;
-    transition: 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.fp-contact-list a:hover {
-    color: #8B1A1A;
-}
-
-.fp-contact-list i {
-    width: 16px;
-    text-align: center;
-    color: #8B1A1A;
-}
-
-/* Social */
-.fp-social-links {
-    margin-top: 18px;
-    display: flex;
-    gap: 12px;
-}
-
-.fp-social-links a {
-    width: 40px;
-    height: 40px;
-    background: #f1f5f9;
-    color: #5c1010;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: 0.2s;
-}
-
-.fp-social-links a:hover {
-    background: #8B1A1A;
-    color: #fff;
-}
-
-/* CV Button */
-.fp-cv-btn {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-    padding: 12px;
-    text-align: center;
-    background: #5c1010;
-    color: #fff !important;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.95rem;
-    transition: 0.2s;
-}
-
-.fp-cv-btn:hover {
-    background: #8B1A1A;
-    transform: scale(1.02);
-}
-
-/* ── Content Area ── */
-.fp-meta-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 25px;
-}
-
-.fp-meta-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #5c1010;
-    background: #fff;
-    border: 1px solid #e2d9cc;
-    padding: 8px 16px;
-    border-radius: 25px;
-}
-
-.fp-section {
-    background: #fff;
-    border: 1px solid #e2d9cc;
-    border-radius: 16px;
-    padding: 25px 30px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-}
-
-.fp-section h2 {
-    font-family: 'Merriweather', serif !important;
-    font-size: 1.2rem !important;
-    color: #5c1010;
-    margin: 0 0 15px !important;
-    padding-bottom: 12px;
-    border-bottom: 3px solid #f1f5f9;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.fp-section h2:after{
-    background: none;
-}
-
-.fp-section h2 i {
-    color: #c9a84c;
-}
-
-.fp-rich-content {
-    font-size: 0.95rem;
-    line-height: 1.8;
-    color: #334155;
-}
-
-.fp-rich-content p {
-    margin-bottom: 10px;
-}
-
-.fp-rich-content ul,
-.fp-rich-content ol {
-    padding-left: 20px;
-}
-
-/* ── Responsive ── */
-@media (max-width: 900px) {
-    .fp-layout {
-        grid-template-columns: 1fr;
+            renderData(type, records, container);
+        } catch (error) {
+            container.innerHTML = `<div class="alert alert-danger">Failed to load academic records.</div>`;
+        }
     }
 
-    .fp-sidebar {
-        position: static;
-    }
+    function renderData(type, records, container) {
+        let html = '<div class="table-responsive"><table class="premium-table"><thead><tr>';
+        
+        // Dynamic Headers
+        if (type === 'publications') {
+            html += '<th>Title</th><th>Journal</th><th>Year</th>';
+        } else if (type === 'patents') {
+            html += '<th>Innovation</th><th>Patent ID</th><th>Status</th>';
+        } else if (type === 'projects') {
+            html += '<th>Project Title</th><th>Agency</th><th>Status</th>';
+        } else if (type === 'scholars') {
+            html += '<th>Scholar Name</th><th>Topic</th><th>Status</th>';
+        }
+        
+        html += '</tr></thead><tbody>';
 
-    .fp-photo {
-        height: 300px;
-    }
+        // Rows
+        records.forEach(r => {
+            html += '<tr>';
+            if (type === 'publications') {
+                html += `<td class="fw-bold" data-label="Title">${r.title}</td><td data-label="Journal">${r.name_of_journal_or_conference_or_publisher || '-'}</td><td data-label="Year">${r.publication_date ? new Date(r.publication_date).getFullYear() : '-'}</td>`;
+            } else if (type === 'patents') {
+                html += `<td class="fw-bold" data-label="Innovation">${r.title}</td><td data-label="Patent ID">${r.patent_number || '-'}</td><td data-label="Status"><span class="status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
+            } else if (type === 'projects') {
+                html += `<td class="fw-bold" data-label="Project Title">${r.title}</td><td data-label="Agency">${r.funding_agency || '-'}</td><td data-label="Status"><span class="status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
+            } else if (type === 'scholars') {
+                html += `<td class="fw-bold" data-label="Scholar Name">${r.scholar_name}</td><td data-label="Topic">${r.research_topic || '-'}</td><td data-label="Status"><span class="status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
+            }
+            html += '</tr>';
+        });
 
-    .fp-no-photo {
-        height: 300px;
+        html += '</tbody></table></div>';
+        container.innerHTML = html;
     }
-}
-</style>
+});
+</script>
 
 <?php get_footer(); ?>
