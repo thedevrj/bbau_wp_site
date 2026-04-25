@@ -10,7 +10,16 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
 <main id="primary" class="site-main research-portal">
     <!-- PREMIUM HERO BANNER -->
-<?php get_template_part('banners/about-banner') ?>
+    <section class="premium-hero-rd1">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content-glass1 animate-up">
+                <div class="badge-new-rd1">Academic Domains</div>
+                <h1 style="font-size: 3rem;">Research Areas</h1>
+                <p>Exploring the frontiers of knowledge through specialized research domains across science, humanities, and technology.</p>
+            </div>
+        </div>
+    </section>
 
     <div class="research-container container">
         <?php get_template_part('template-parts/breadcrumb');?>

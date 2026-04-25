@@ -17,13 +17,17 @@ if (!is_wp_error($facilities_res) && wp_remote_retrieve_response_code($facilitie
 ?>
 
 <main id="primary" class="site-main research-portal">
-    <div class="research-hero" style="background: linear-gradient(135deg, #065f46 0%, #10b981 100%);">
+    <!-- PREMIUM HERO BANNER -->
+    <section class="premium-hero-rd1">
+        <div class="hero-overlay"></div>
         <div class="container">
-            <h1>Research Facilities</h1>
-            <p>Advanced laboratories and instrumentation centers supporting multi-disciplinary research.</p>
-            <!-- <a href="/research-portal" class="back-link"><i class="fas fa-arrow-left"></i> Back to Research Hub</a> -->
+            <div class="hero-content-glass1 animate-up">
+                <div class="badge-new-rd1">Advanced Instrumentation</div>
+                <h1 style="font-size: 3rem;">Research Facilities</h1>
+                <p>Equipping our researchers with state-of-the-art laboratories and cutting-edge analytical instrumentation for breakthroughs in discovery.</p>
+            </div>
         </div>
-    </div>
+    </section>
 
     <div class="research-container container">
         <?php get_template_part('template-parts/breadcrumb');?>
