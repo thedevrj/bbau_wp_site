@@ -173,7 +173,6 @@
 .fac-image-wrap img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     transition: transform 0.6s;
 }
 
@@ -208,8 +207,15 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.campus-pill.main { background: rgba(30, 58, 138, 0.9); color: white; }
-.campus-pill.amethi { background: rgba(190, 24, 93, 0.9); color: white; }
+.campus-pill.main {
+    background: rgba(30, 58, 138, 0.9);
+    color: white;
+}
+
+.campus-pill.amethi {
+    background: rgba(190, 24, 93, 0.9);
+    color: white;
+}
 
 .fac-info-body {
     padding: 25px;
@@ -340,12 +346,12 @@
 .social-icon-fac {
     width: 40px;
     height: 40px;
-    background: #f1f5f9;
+    background: #f1f5f9 !important;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--fac-indigo);
+    color: var(--fac-indigo) !important;
     font-size: 1.1rem;
     transition: all 0.3s;
     text-decoration: none !important;
@@ -379,6 +385,7 @@
     line-height: 1.8;
     color: #334155;
     font-size: 1.05rem;
+    padding-left: 20px;
 }
 
 /* PORTFOLIO TABS */
@@ -410,11 +417,11 @@
 .portfolio-tab-btn.active {
     background: white;
     color: var(--fac-indigo);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .portfolio-tab-btn:hover:not(.active) {
-    background: rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.5);
 }
 
 /* UTILITIES */
@@ -506,9 +513,70 @@
     letter-spacing: 0.5px;
 }
 
-.fac-status-badge.completed, .fac-status-badge.published, .fac-status-badge.granted { background: #ecfdf5; color: #065f46; }
-.fac-status-badge.ongoing, .fac-status-badge.pending { background: #fff7ed; color: #9a3412; }
-.fac-status-badge.rejected { background: #fef2f2; color: #991b1b; }
+.fac-status-badge.completed,
+.fac-status-badge.published,
+.fac-status-badge.granted {
+    background: #ecfdf5;
+    color: #065f46;
+}
+
+.fac-status-badge.ongoing,
+.fac-status-badge.pending {
+    background: #fff7ed;
+    color: #9a3412;
+}
+
+.fac-status-badge.rejected {
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+/* PREMIUM PAGINATION */
+.faculty-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.faculty-pagination .page-btn {
+    min-width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    color: #64748b;
+    text-decoration: none !important;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.faculty-pagination .page-btn:hover {
+    background: #f8fafc;
+    border-color: var(--fac-gold);
+    color: var(--fac-indigo);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+.faculty-pagination .page-btn.active {
+    background: var(--fac-indigo);
+    border-color: var(--fac-indigo);
+    color: white;
+    box-shadow: 0 10px 20px rgba(30, 27, 75, 0.2);
+}
+
+.faculty-pagination .page-btn.prev-next {
+    padding: 0 20px;
+    min-width: auto;
+}
 
 @keyframes facSpin {
     to {
@@ -521,6 +589,7 @@
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
