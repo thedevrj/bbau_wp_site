@@ -18,13 +18,12 @@ if (!is_wp_error($facilities_res) && wp_remote_retrieve_response_code($facilitie
 
 <main id="primary" class="site-main research-portal">
     <!-- PREMIUM HERO BANNER -->
-    <section class="premium-hero-rd1">
+    <section class="premium-hero-rd1 mb-4">
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content-glass1 animate-up">
                 <div class="badge-new-rd1">Advanced Instrumentation</div>
-                <h1 style="font-size: 3rem;">Research Facilities</h1>
-                <p>Equipping our researchers with state-of-the-art laboratories and cutting-edge analytical instrumentation for breakthroughs in discovery.</p>
+                <h1 style="font-size: 2rem;">Research Facilities</h1>
             </div>
         </div>
     </section>
@@ -32,7 +31,7 @@ if (!is_wp_error($facilities_res) && wp_remote_retrieve_response_code($facilitie
     <div class="research-container container">
         <?php get_template_part('template-parts/breadcrumb');?>
 
-        <div class="facility-grid">
+        <div class="facility-grid mt-4 mb-4">
             <?php if(!empty($facilities)): ?>
                 <?php foreach($facilities as $facility): ?>
                 <div class="facility-card">

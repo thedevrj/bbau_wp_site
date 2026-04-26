@@ -281,7 +281,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
                             <select id="deptFilter" class="custom-select">
                                 <option value="">All Departments</option>
                                 <?php foreach ($dept_list as $dept): ?>
-                                    <option value="<?php echo esc_attr($dept['slug']); ?>"><?php echo esc_html($dept['name']); ?></option>
+                                    <option value="<?php echo esc_attr($dept['slug']); ?>"><?php echo esc_html(get_dept_display_name($dept)); ?></option>
                                 <?php endforeach; ?>
                             </select>
                             <select id="campusFilter" class="custom-select">
@@ -326,7 +326,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
                                         <tr id="noResults">
                                             <td colspan="5" class="text-center py-5">
                                                 <div class="empty-state">
-                                                    <i class="fas fa-search-minus mb-3" style="font-size: 3rem; opacity: 0.2;"></i>
+                                                    <i class="fas fa-search-minus mb-3" style="font-size: 2rem; opacity: 0.2;"></i>
                                                     <p style="color: #64748b;">No consultancy records found.</p>
                                                 </div>
                                             </td>
@@ -817,6 +817,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     margin: 0 0 5px 0;
     font-weight: 800;
     color: var(--rd-indigo);
+    font-size: 25px;
 }
 
 .policy-info p {

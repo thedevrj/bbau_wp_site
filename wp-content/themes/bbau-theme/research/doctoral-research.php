@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const depts = await dRes.json();
                     const dData = depts.results || depts;
                     dData.forEach(d => {
-                        deptFilter.innerHTML += `<option value="${d.slug}">${d.name}</option>`;
+                        const displayName = d.campus === 'Satellite Campus Amethi' ? `${d.name} (Amethi)` : d.name;
+                        deptFilter.innerHTML += `<option value="${d.slug}">${displayName}</option>`;
                     });
                 }
             }

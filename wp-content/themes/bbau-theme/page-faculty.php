@@ -159,9 +159,14 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
                         <i class="far fa-envelope"></i> <?php echo esc_html($fac['insti_email']); ?>
                     </div>
                     <?php endif; ?>
+                    <?php if (!empty($fac['other_email'])): ?>
+                    <div class="fac-email-new">
+                        <i class="far fa-envelope"></i> <?php echo esc_html($fac['other_email']); ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
                 <div class="fac-card-footer">
-                    <span>View Academic Portfolio</span>
+                    <span>View Portfolio</span>
                     <i class="fas fa-arrow-right"></i>
                 </div>
             </a>
@@ -170,22 +175,33 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
 
         <!-- Pagination -->
         <?php if ($total_pages > 1): ?>
-        <div class="faculty-pagination">
+        <div class="faculty-pagination animate-fac-up" style="animation-delay: 0.3s;">
             <?php if ($current_page > 1): ?>
-            <a href="<?php echo esc_url(add_query_arg('page_num', $current_page - 1)); ?>" class="page-btn">&laquo;
-                Previous</a>
+                <a href="<?php echo esc_url(add_query_arg('page_num', $current_page - 1)); ?>" class="page-btn prev-next">
+                    <i class="fas fa-chevron-left me-2"></i> Previous
+                </a>
             <?php endif; ?>
 
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-            <a href="<?php echo esc_url(add_query_arg('page_num', $i)); ?>"
-                class="page-btn <?php echo ($i === $current_page) ? 'active' : ''; ?>">
-                <?php echo $i; ?>
-            </a>
-            <?php endfor; ?>
+            <?php 
+            // Simple logic for showing page numbers
+            for ($i = 1; $i <= $total_pages; $i++): 
+                if ($i == 1 || $i == $total_pages || ($i >= $current_page - 1 && $i <= $current_page + 1)):
+            ?>
+                <a href="<?php echo esc_url(add_query_arg('page_num', $i)); ?>"
+                    class="page-btn <?php echo ($i === $current_page) ? 'active' : ''; ?>">
+                    <?php echo $i; ?>
+                </a>
+            <?php 
+                elseif ($i == $current_page - 2 || $i == $current_page + 2):
+                    echo '<span class="px-2 text-muted">...</span>';
+                endif;
+            endfor; 
+            ?>
 
             <?php if ($current_page < $total_pages): ?>
-            <a href="<?php echo esc_url(add_query_arg('page_num', $current_page + 1)); ?>" class="page-btn">Next
-                &raquo;</a>
+                <a href="<?php echo esc_url(add_query_arg('page_num', $current_page + 1)); ?>" class="page-btn prev-next">
+                    Next <i class="fas fa-chevron-right ms-2"></i>
+                </a>
             <?php endif; ?>
         </div>
         <?php endif; ?>

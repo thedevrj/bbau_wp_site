@@ -73,14 +73,26 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                     <div class="portfolio-contact-list mt-3">
                         <?php if (!empty($fac['insti_email'])): ?>
                         <a href="mailto:<?php echo esc_attr($fac['insti_email']); ?>" class="contact-item">
-                            <i class="fas fa-envelope-open"></i>
+                            <i class="fas fa-envelope"></i>
                             <span><?php echo esc_html($fac['insti_email']); ?></span>
+                        </a>
+                        <?php endif; ?>
+                        <?php if (!empty($fac['other_email'])): ?>
+                        <a href="mailto:<?php echo esc_attr($fac['other_email']); ?>" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span><?php echo esc_html($fac['other_email']); ?></span>
                         </a>
                         <?php endif; ?>
                         <?php if (!empty($fac['phone1'])): ?>
                         <div class="contact-item">
                             <i class="fas fa-phone-alt"></i>
                             <span>+91 <?php echo esc_html($fac['phone1']); ?></span>
+                        </div>
+                        <?php endif; ?>
+                        <?php if (!empty($fac['phone2'])): ?>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>+91 <?php echo esc_html($fac['phone2']); ?></span>
                         </div>
                         <?php endif; ?>
                     </div>
@@ -90,9 +102,23 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                         <a href="<?php echo esc_url($fac['google_scholar_url']); ?>" target="_blank"
                             class="social-icon-fac" title="Google Scholar"><i class="fab fa-google"></i></a>
                         <?php endif; ?>
+                        <?php if (!empty($fac['research_gate_url'])): ?>
+                        <a href="<?php echo esc_url($fac['research_gate_url']); ?>" target="_blank"
+                            class="social-icon-fac" title="Research Gate"><i class="fa-brands fa-researchgate"></i></a>
+                        <?php endif; ?>
                         <?php if (!empty($fac['linkedin_url'])): ?>
                         <a href="<?php echo esc_url($fac['linkedin_url']); ?>" target="_blank" class="social-icon-fac"
                             title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <?php endif; ?>
+                        <?php if (!empty($fac['scopus_url'])): ?>
+                        <a href="<?php echo esc_url($fac['scopus_url']); ?>" target="_blank" class="social-icon-fac"
+                            title="Scopus Url"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                id="Scopus--Streamline-Simple-Icons" height="24" width="24">
+                                <title>Scopus</title>
+                                <path
+                                    d="m24 19.059 -0.14 -1.777c-1.426 0.772 -2.945 1.076 -4.465 1.076 -3.319 0 -5.96 -2.782 -5.96 -6.475 0 -3.903 2.595 -6.31 5.633 -6.31 1.917 0 3.39 0.303 4.792 1.075L24 4.895c-1.286 -0.608 -2.337 -0.889 -4.698 -0.889 -4.534 0 -7.97 3.53 -7.97 8.017 0 5.12 4.09 7.924 7.9 7.924 1.916 0 3.506 -0.257 4.768 -0.888zm-14.954 -3.46c0 -2.22 -1.964 -3.225 -3.857 -4.347C3.716 10.364 2.15 9.756 2.15 8.12c0 -1.215 0.889 -2.548 2.642 -2.548 1.519 0 2.57 0.234 3.903 1.029l0.117 -1.847c-1.239 -0.514 -2.127 -0.748 -4.137 -0.748C1.8 4.006 0.047 5.876 0.047 8.26c0 2.384 2.103 3.413 4.02 4.581 1.426 0.865 2.922 1.45 2.922 2.992 0 1.496 -1.333 2.571 -2.922 2.571 -1.566 0 -2.594 -0.35 -3.786 -1.075L0 19.176c1.215 0.56 2.454 0.818 4.16 0.818 2.385 0 4.885 -1.473 4.885 -4.395z"
+                                    fill="#1e1b4b" stroke-width="1"></path>
+                            </svg></a>
                         <?php endif; ?>
                         <?php if (!empty($fac['website_url'])): ?>
                         <a href="<?php echo esc_url($fac['website_url']); ?>" target="_blank" class="social-icon-fac"
@@ -110,7 +136,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 
                 <div class="fac-card-premium p-4">
                     <h4 class="faculty-small-title">Academic Experience</h4>
-                    <div class="mt-3">
+                    <div class="mt-2">
                         <?php if (!empty($fac['teaching_exp'])): ?>
                         <div class="exp-item mb-3">
                             <label>Teaching</label>
@@ -228,12 +254,15 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 </main>
 
 <?php include_once(get_template_directory() . '/styles-faculty.php'); ?>
+<?php include_once(get_template_directory() . '/research/styles-research.php'); ?>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.portfolio-tab-btn');
     const panes = document.querySelectorAll('.portfolio-pane');
     const facultyName = "<?php echo esc_js($fac['name']); ?>";
+    const facultySlug = "<?php echo esc_js($fac['slug']); ?>";
     const apiBase = "<?php echo esc_js($api_base); ?>";
 
     // TAB SWITCHING
@@ -258,32 +287,38 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loadTabData(type) {
         const container = document.querySelector(`#${type} .dynamic-feed-container`);
         let endpoint = '';
+        let filterParam = 'faculty__slug'; // Default filter param
 
         switch (type) {
             case 'publications':
                 endpoint = '/api/v1/publications/';
+                filterParam = 'faculty__slug';
                 break;
             case 'patents':
                 endpoint = '/api/v1/patents/';
+                filterParam = 'faculty__slug';
                 break;
             case 'projects':
                 endpoint = '/api/v1/research-projects/';
+                filterParam = 'principal_investigator__slug';
                 break;
             case 'scholars':
                 endpoint = '/api/v1/research-scholars/';
+                filterParam = 'supervisor__slug';
                 break;
         }
 
         try {
-            const response = await fetch(
-                `${apiBase}${endpoint}?faculty_name=${encodeURIComponent(facultyName)}&page_size=100`);
+            const url =
+                `${apiBase}${endpoint}?${filterParam}=${encodeURIComponent(facultySlug)}&page_size=100`;
+            const response = await fetch(url);
             const data = await response.json();
             const records = data.results || data;
 
             if (!records || records.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <i class="fas fa-folder-open mb-3" style="font-size: 3rem; opacity: 0.1;"></i>
+                        <i class="fas fa-folder-open mb-3" style="font-size: 2rem; opacity: 0.1;"></i>
                         <p class="text-muted">No records found for this faculty member.</p>
                     </div>`;
                 return;
@@ -304,9 +339,10 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (type === 'patents') {
             html += '<th>Innovation</th><th>Patent ID</th><th>Status</th>';
         } else if (type === 'projects') {
-            html += '<th>Project Title</th><th>Agency</th><th>Status</th>';
+            html += '<th>Project Title</th><th>Agency</th><th>Amount sanctioned</th><th>Status</th>';
         } else if (type === 'scholars') {
-            html += '<th>Scholar Name</th><th>Topic</th><th>Status</th>';
+            html +=
+                '<th>Enrollment No</th><th>Scholar Name</th><th>Specialization</th><th>Reg Year</th><th>Status</th>';
         }
 
         html += '</tr></thead><tbody>';
@@ -322,10 +358,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     `<td class="fw-bold" data-label="Innovation">${r.title}</td><td data-label="Patent ID">${r.patent_number || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
             } else if (type === 'projects') {
                 html +=
-                    `<td class="fw-bold" data-label="Project Title">${r.title}</td><td data-label="Agency">${r.funding_agency || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
+                    `<td class="fw-bold" data-label="Project Title">${r.title}</td><td data-label="Agency">${r.funding_agency || '-'}</td><td data-label="Amount">${r.amount_sanctioned || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
             } else if (type === 'scholars') {
                 html +=
-                    `<td class="fw-bold" data-label="Scholar Name">${r.scholar_name}</td><td data-label="Topic">${r.research_topic || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
+                    `<td data-label="Enroll No.">${r.enrollment_no || '-'}</td><td class="fw-bold" data-label="Scholar Name">${r.scholar_name}</td><td data-label="Topic">${r.research_topic || '-'}</td><td data-label="Topic">${r.registration_year || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
             }
             html += '</tr>';
         });
@@ -337,3 +373,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <?php get_footer(); ?>
+<style>
+.rd-section-title {
+    margin: 20px;
+    font-size: 27px;
+}
+
+.empty-state {
+    padding: 0 40px;
+
+}

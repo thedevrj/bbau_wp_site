@@ -10,13 +10,12 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
 <main id="primary" class="site-main research-portal">
     <!-- PREMIUM HERO BANNER -->
-    <section class="premium-hero-rd1">
+    <section class="premium-hero-rd1 mb-4">
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content-glass1 animate-up">
                 <div class="badge-new-rd1">Academic Domains</div>
-                <h1 style="font-size: 3rem;">Research Areas</h1>
-                <p>Exploring the frontiers of knowledge through specialized research domains across science, humanities, and technology.</p>
+                <h1 style="font-size: 2rem;">Research Areas</h1>
             </div>
         </div>
     </section>
@@ -25,7 +24,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         <?php get_template_part('template-parts/breadcrumb');?>
         
         <!-- ENHANCED FILTER BAR (Glassmorphism) -->
-        <div class="ra-glass-filters mb-5">
+        <div class="ra-glass-filters mt-4">
             <div class="ra-search-box">
                 <i class="fas fa-search ra-search-icon"></i>
                 <input type="text" id="area-search" placeholder="Search by area, keyword or specialization..." autocomplete="off">
@@ -80,7 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const depts = await dRes.json();
                     const dData = depts.results || depts;
                     dData.forEach(d => {
-                        deptFilter.innerHTML += `<option value="${d.slug}">${d.name}</option>`;
+                        const displayName = d.campus === 'Satellite Campus Amethi' ? `${d.name} (Amethi)` : d.name;
+                        deptFilter.innerHTML += `<option value="${d.slug}">${displayName}</option>`;
                     });
                 }
             }
