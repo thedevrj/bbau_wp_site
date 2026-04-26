@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const panes = document.querySelectorAll('.portfolio-pane');
     const facultyName = "<?php echo esc_js($fac['name']); ?>";
     const facultySlug = "<?php echo esc_js($fac['slug']); ?>";
-    const apiBase = "<?php echo esc_js($api_base); ?>";
+    const apiBase = "<?php echo esc_js($media_base); ?>";
 
     // TAB SWITCHING
     tabs.forEach(tab => {
