@@ -288,7 +288,7 @@
 .portfolio-avatar-wrap img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: inherit;
 }
 
 .portfolio-no-photo {
