@@ -36,7 +36,7 @@ get_header();
                 </ul>
 
                 <div class="accreditation-links">
-                    <a href="/wp-content/uploads/nirf/nirf-main-report-2025.pdf" target="_blank">
+                    <a href="/about-us/accreditation/report/" target="_blank">
                         View Report (PDF)
                     </a>
 
