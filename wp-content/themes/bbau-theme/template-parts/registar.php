@@ -3,9 +3,7 @@
 Template Name: Registrar Template
 */
 
-// Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
-
+defined('ABSPATH') || exit;
 get_header();
 ?>
 
@@ -13,174 +11,147 @@ get_header();
 
 <div class="container-fluid page-bg page-template-about-bg py-lg-5">
 
-    <?php get_template_part('template-parts/breadcrumb'); ?>
+<?php get_template_part('template-parts/breadcrumb'); ?>
 
-    <!-- =====================================
-     REGISTRAR SECTION
-===================================== -->
+<!-- ================= REGISTRAR ================= -->
 
-    <section class="registrar-modern-style">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-10 col-lg-11">
+<section class="registrar-modern-style">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-xl-10 col-lg-11">
 
-                    <div class="registrar-card">
+<div class="registrar-card">
 
-                        <!-- LEFT IMAGE -->
-                        <div class="registrar-right">
-                            <img src="/wp-content/uploads/2026/03/registar-Copy.jpg" alt="Registrar">
-                        </div>
-
-                        <!-- RIGHT CONTENT -->
-                        <div class="registrar-left">
-                            <h3>Dr. Ashwini Kumar Singh</h3>
-                            <p class="vc-designation">Registrar</p>
-
-                            <!-- Contact -->
-                            <div class="vc-contact">
-                                <p>
-                                    ✉
-                                    <a class="link-new" href="mailto:registrar@bbau.ac.in">
-                                        registrar@bbau.ac.in
-                                    </a>
-                                </p>
-
-                                <p>
-                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                    <a class="link-new" href="tel:+915222440821">
-                                        +91-522-2440821
-                                    </a>
-                                </p>
-                            </div>
-
-                            <!-- Buttons -->
-                            <div class="registrar-buttons">
-                                <a href="#" class="reg-btn"
-                                    target="_blank">
-                                    Profile
-                                </a>
-
-                                <a href="/wp-content/uploads/2026/03/Registrar.pdf" class="reg-btn"
-                                    target="_blank">
-                                    Tenure of Registrar
-                                </a>
-                            </div>
-
-                            <!-- Office -->
-                            <div class="registrar-office">
-                                <strong>Registrar Office:</strong><br>
-                                Dr. Balan G. (PS)<br>
-                                Shri Diwan Singh Bisth (MTS)
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- =====================================
-     ADMINISTRATIVE SECTIONS
-===================================== -->
-
-    <section class="registrar-department-section">
-        <div class="container">
-            <h2 class="vc-section-title">
-                Sections Under Registrar
-            </h2>
-
-            <div class="vc-resource-grid">
-
-                <div class="vc-resource-card">
-                    <h3>General Administration</h3>
-                    <p><strong>Mr. Atul Bajpai </strong>, (GAD) <br>
-                    <a class="link-new" href="mailto:gad@bbau.ac.in"><strong>Email:</strong> gad@bbau.ac.in</a> </p>
-                    <a href= "#" class="vc-btn"s>Visit page</a>
-                </div>
-
-                <div class="vc-resource-card">
-                    <h3>Establishment</h3>
-                    <p><strong>Smt. Sudha Srivastava </strong>, Section Officer <br>
-                    <strong>Shri. Somesh Chandra </strong>, Section Officer <br>
-                    <strong> Shri. Pradeep Kumar </strong>, Stenographer </p>
-                    <a href= "#" class="vc-btn"s>Visit page</a>
-                </div>
-
-                <div class="vc-resource-card">
-                    <h3>Academic Section</h3>
-                    <p><strong>Dr. Ranjeev Kumar Sahu </strong>, Deputy Registrar <br>
-                    <strong>Shri. Govind Bhushan Madhukar </strong>, (LDC) </p>
-                    <a href= "#" class="vc-btn"s>Visit page</a>
-                </div>
-
-                <div class="vc-resource-card">
-                    <h3>Store & Purchase Section</h3>
-                    <p><strong>Dr. Subhash Kumar Yadav </strong>, Deputy In-charge <br>
-                    <strong>Dr. Vinit Kumar </strong>, Deputy In-charge <br> </p>
-                
-                    <a href= "#" class="vc-btn"s>Visit page</a>
-                </div>
-                
-
-                <div class="vc-resource-card">
-                    <h3>Vehicle Section</h3>
-                    <p><strong>Shri Gokaran Prasad</strong>, Assistant Registrar </p>
-                    <a href= "#" class="vc-btn"s>Visit page</a>
-                </div>
-
-                <div class="vc-resource-card">
-                    <h3>ST / SC Cell</h3>
-                    <p><strong>Mr. Arvind Shukla </strong>, RSO (I/c) </p>
-                    <a href= "/scst-cell" class="vc-btn">Visit page</a>
-                </div>
-
-                <div class="vc-resource-card">
-                    <h3>Legal / RTI Cell</h3>
-                    <p><strong>Shri Ashish Rastogi </strong>, Deputy Registrar (I/C) <br>
-                    <strong>Shri B.S. Saini </strong>, SO </p>
-                    <a href= "#" class="vc-btn"s>Visit page</a>
-                </div>
-
-                <div class="vc-resource-card">
-                    <h3>Research-cum-Statistical Office</h3>
-                    <p><strong>Shri Arvind Shukla </strong>, RSO </p>
-                    <a href= "#" class="vc-btn" >Visit page</a>
-                </div>
-
-                <div class="vc-resource-card">
-                    <h3>University Works Department</h3>
-                    <p><strong>Er. Pratik Kumar </strong>, Executive Engineer </p>
-                    <a href= "/universityworks-department" class="vc-btn"s>Visit page</a>
-                </div>
-
-                <div class="vc-resource-card">
-                    <h3>Hindi Cell</h3>
-                    <p><strong>Mr. S. K. Tripathi </strong>, Hindi Officer </p>
-                    <a href= "/hindi-cell" class="vc-btn">Visit page</a>
-                </div>
-
-                <div class="vc-resource-card">
-                    <h3>Estate office</h3>
-                    <p><strong> </strong> </p>
-                    <a href= "#" class="vc-btn"s>Visit page</a>
-                </div>
-
-                <div class="vc-resource-card">
-                    <h3>Sanitation Section</h3>
-                    <p><strong>Dr. Ravi Shankar Verma </strong>, In-Charge </p>
-                    <a href= "#" class="vc-btn"s>Visit page</a>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
+<!-- IMAGE -->
+<div class="registrar-right">
+<?php 
+$img = get_field('registrar_image');
+if( $img && isset($img['url']) ): ?>
+<img src="<?php echo esc_url($img['url']); ?>" alt="Registrar Image">
+<?php endif; ?>
 </div>
 
+<!-- CONTENT -->
+<div class="registrar-left">
+
+<h3><?php echo esc_html(get_field('registrar_name')); ?></h3>
+
+<p class="vc-designation">
+<?php echo esc_html(get_field('designation')); ?>
+</p>
+
+<!-- CONTACT -->
+<div class="vc-contact">
+
+<?php if( get_field('email') ): ?>
+<p>
+<i class="fa fa-envelope"></i>
+<a href="mailto:<?php echo esc_attr(get_field('email')); ?>">
+<?php echo esc_html(get_field('email')); ?>
+</a>
+</p>
+<?php endif; ?>
+
+<?php if( get_field('phone') ): ?>
+<p>
+<i class="fa fa-phone"></i>
+<a href="tel:<?php echo esc_attr(get_field('phone')); ?>">
+<?php echo esc_html(get_field('phone')); ?>
+</a>
+</p>
+<?php endif; ?>
+
+</div>
+
+<!-- BUTTONS -->
+<div class="registrar-buttons">
+
+<?php 
+$profile = get_field('profile_link');
+if( $profile && isset($profile['url']) ): ?>
+<a href="<?php echo esc_url($profile['url']); ?>" class="reg-btn" target="_blank">
+Profile
+</a>
+<?php endif; ?>
+
+<?php 
+$pdf = get_field('tenure_pdf');
+if( $pdf && isset($pdf['url']) ): ?>
+<a href="<?php echo esc_url($pdf['url']); ?>" class="reg-btn" target="_blank">
+Tenure of Registrar
+</a>
+<?php endif; ?>
+
+</div>
+
+<!-- OFFICE -->
+<div class="registrar-office">
+<strong>Registrar Office:</strong>
+<?php echo nl2br(esc_html(get_field('office_details'))); ?>
+</div>
+
+</div><!-- /.registrar-left -->
+</div><!-- /.registrar-card -->
+
+</div><!-- /.col -->
+</div><!-- /.row -->
+</div><!-- /.container -->
+</section>
+
+<!-- ================= SECTIONS UNDER REGISTRAR ================= -->
+
+<div class="container">
+
+<h2 class="rg-sec-title">Sections Under Registrar</h2>
+<div class="rg-sec-bar"></div>
+
+<div class="rg-grid">
+
+<?php if( have_rows('registrar_sections') ): ?>
+<?php while( have_rows('registrar_sections') ): the_row(); ?>
+
+<div class="rg-card">
+
+<div class="rg-stripe"></div>
+
+<div class="rg-card-inner">
+
+<div class="rg-dept-row">
+<div class="rg-dept-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="#3730a3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+<polyline points="9 22 9 12 15 12 15 22"/>
+</svg>
+</div>
+<h3 class="rg-dept-name"><?php echo esc_html(get_sub_field('section_title')); ?></h3>
+</div>
+
+<div class="rg-divider"></div>
+
+<div class="rg-desc">
+<?php echo wp_kses_post(get_sub_field('section_description')); ?>
+</div>
+
+<?php 
+$link = get_sub_field('section_link');
+if( $link && isset($link['url']) ): ?>
+<a href="<?php echo esc_url($link['url']); ?>" class="rg-visit-btn" target="_blank">
+Visit page
+<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12">
+<path d="M5 12h14M12 5l7 7-7 7"/>
+</svg>
+</a>
+<?php endif; ?>
+
+</div><!-- /.rg-card-inner -->
+</div><!-- /.rg-card -->
+
+<?php endwhile; ?>
+<?php endif; ?>
+
+</div><!-- /.rg-grid -->
+</div><!-- /.container -->
+
+</div><!-- /.container-fluid -->
+
 <?php get_footer(); ?>
-
-
