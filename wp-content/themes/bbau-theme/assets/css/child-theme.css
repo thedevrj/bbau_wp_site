@@ -1827,6 +1827,8 @@ h2::after {
   --bg-soft: #f5f7fc;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
 /* =====================================
    REGISTRAR MODERN SECTION
 ===================================== */
@@ -1927,9 +1929,22 @@ h2::after {
   opacity: 0.85;
 }
 
+/* =====================================
+   OFFICE SECTION
+===================================== */
+.registrar-office {
+  margin-top: 18px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.registrar-office strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
 /* ======================================
-   REGISTRAR SECTION CUSTOM BTN DESIGN
-   Only affects Registrar section
+   BUTTONS
 ====================================== */
 .registrar-modern-style .reg-btn {
   background: linear-gradient(135deg, #2d83aa7e, #699fd4b3) !important;
@@ -1944,7 +1959,6 @@ h2::after {
   transition: all 0.3s ease !important;
 }
 
-/* hover */
 .registrar-modern-style .reg-btn:hover {
   background: linear-gradient(135deg, #3c8bcbd9, #5e93c9) !important;
   color: #ffffff !important;
@@ -1952,19 +1966,16 @@ h2::after {
   box-shadow: 0 12px 25px rgba(0, 80, 158, 0.35);
 }
 
-/* active */
 .registrar-modern-style .reg-btn:active {
   transform: translateY(0px);
   box-shadow: 0 4px 12px rgba(0, 80, 158, 0.25);
 }
 
-/* remove focus outline */
 .registrar-modern-style .reg-btn:focus {
   outline: none !important;
   box-shadow: 0 6px 18px rgba(0, 80, 158, 0.25) !important;
 }
 
-/* spacing between buttons */
 .registrar-modern-style .registrar-buttons {
   margin-top: 20px;
   display: flex;
@@ -1973,29 +1984,137 @@ h2::after {
 }
 
 /* =====================================
-   OFFICE SECTION
+   SECTIONS UNDER REGISTRAR
 ===================================== */
-.registrar-office {
-  margin-top: 18px;
-  font-size: 18px;
-  line-height: 1.5;
+
+
+.rg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-bottom: 60px;
 }
 
-.registrar-office strong {
-  display: block;
-  margin-bottom: -12px;
+.rg-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #dde4ef;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rg-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(15, 37, 87, 0.13);
+}
+
+.rg-stripe {
+  height: 5px;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, #0f2557, #1d4ed8, #3b82f6);
+}
+
+.rg-card-inner {
+  padding: 20px 22px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.rg-dept-row {
+  display: flex;
+  align-items:anchor-center ;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.rg-dept-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.rg-dept-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f2557;
+  line-height: 1.35;
+  margin: 0;
+  padding: 0;
+}
+
+.rg-divider {
+  height: 1px;
+  background: #f0f2f7;
+  margin: 0 0 14px;
+}
+
+.rg-desc {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.75;
+  flex: 1;
+  margin-bottom: 18px;
+}
+
+.rg-desc strong,
+.rg-desc b {
+  font-weight: 700;
+  color: #0f2557;
+}
+
+.rg-visit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #e3a008;
+  color: #fff !important;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  width: fit-content;
+  margin-top: auto;
+  transition: background 0.18s ease, transform 0.15s ease;
+  letter-spacing: 0.2px;
+}
+
+.rg-visit-btn:hover {
+  background: #c98100;
+  color: #fff !important;
+  transform: scale(1.04);
+  text-decoration: none;
 }
 
 /* =====================================
-   RESPONSIVE DESIGN
+   RESPONSIVE
 ===================================== */
-@media(max-width:1200px) {
+@media (max-width: 1200px) {
   .registrar-card {
     padding: 45px 60px;
   }
 }
 
-@media(max-width:992px) {
+@media (max-width: 1024px) {
+  .rg-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
   .registrar-card {
     flex-direction: column;
     text-align: center;
@@ -2016,7 +2135,17 @@ h2::after {
   }
 }
 
-@media(max-width:576px) {
+@media (max-width: 600px) {
+  .rg-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rg-sec-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
   .registrar-left h3 {
     font-size: 22px;
   }
