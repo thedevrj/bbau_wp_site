@@ -42,23 +42,19 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 <div class="filter-item">
                     <label>Status</label>
                     <select id="status-filter" class="ra-select">
-                        <option value="">All Status</option>
+                        <option value="">By Status</option>
                         <option value="Filed">Filed</option>
                         <option value="Published">Published</option>
                         <option value="Granted">Granted</option>
                     </select>
                 </div>
                 <div class="filter-item">
-                    <label>Year</label>
-                    <select id="year-filter" class="ra-select">
-                        <option value="">Any Year</option>
-                        <?php 
-                            $current_year = date("Y");
-                            for($y = $current_year; $y >= 2010; $y--) {
-                                echo "<option value=\"$y\">$y</option>";
-                            }
-                        ?>
-                    </select>
+                    <label>From Date</label>
+                    <input type="date" id="start-date" class="ra-select">
+                </div>
+                <div class="filter-item">
+                    <label>To Date</label>
+                    <input type="date" id="end-date" class="ra-select">
                 </div>
             </div>
         </div>
@@ -162,7 +158,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('patent-search');
     const deptFilter = document.getElementById('dept-filter');
     const statusFilter = document.getElementById('status-filter');
-    const yearFilter = document.getElementById('year-filter');
+    const startDate = document.getElementById('start-date');
+    const endDate = document.getElementById('end-date');
     const tbody = document.getElementById('patents-tbody');
     const recordCount = document.getElementById('record-count');
     const paginationControls = document.getElementById('pagination-controls');
@@ -179,13 +176,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const query = searchInput.value.toLowerCase().trim();
             const dept = deptFilter.value;
             const status = statusFilter.value;
-            const year = yearFilter.value;
+            const start = startDate.value;
+            const end = endDate.value;
 
             url = `${apiBase}/api/v1/patents/?page_size=10&`;
             if (query) url += `search=${encodeURIComponent(query)}&`;
-            if (dept) url += `department__slug=${encodeURIComponent(dept)}&`;
+            if (dept) url += `department_slug=${encodeURIComponent(dept)}&`;
             if (status) url += `status=${encodeURIComponent(status)}&`;
-            if (year) url += `date_of_filing__year=${encodeURIComponent(year)}&`;
+            if (start) url += `filing_date_after=${encodeURIComponent(start)}&`;
+            if (end) url += `filing_date_before=${encodeURIComponent(end)}&`;
         }
 
         tbody.innerHTML =
@@ -278,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => fetchPatents(), 400);
     };
-    [deptFilter, statusFilter, yearFilter].forEach(el => el.onchange = () => fetchPatents());
+    [deptFilter, statusFilter, startDate, endDate].forEach(el => el.onchange = () => fetchPatents());
 
     fetchPatents();
 });

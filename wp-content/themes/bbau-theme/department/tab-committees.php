@@ -22,8 +22,14 @@ if (!is_wp_error($committees_res) && wp_remote_retrieve_response_code($committee
             </div>
             <div class="committee-body">
                 <?php if(!empty($committee['description'])): ?>
-                <div class="committee-desc"><?php echo wp_kses_post($committee['description']); ?></div>
-                <?php endif; ?>
+                <div class="committee-desc"><?php echo wp_kses_post($committee['description']); ?>
+                    <?php endif; ?>
+                    <?php if(!empty($committee['notification_document'])): ?>
+                    <p>Committee Notification:<a class="link-new"
+                            href=<?php echo ($committee['notification_document']); ?>> &nbsp; View
+                            Notification </a></p>
+                        <?php endif; ?>
+                </div>
 
                 <?php if(!empty($committee['members'])): ?>
                 <table class="members-table">
@@ -36,7 +42,7 @@ if (!is_wp_error($committees_res) && wp_remote_retrieve_response_code($committee
                     <tbody>
                         <?php foreach($committee['members'] as $member): ?>
                         <tr>
-                            <td><strong><?php echo esc_html($member['faculty_name']); ?></strong></td>
+                            <td><strong><?php echo esc_html($member['name_of_member']); ?></strong></td>
                             <td>
                                 <span class="role-badge">
                                     <?php echo esc_html($member['designation_in_committee'] === 'Others' ? $member['other_designation'] : $member['designation_in_committee']); ?>
@@ -69,12 +75,12 @@ if (!is_wp_error($committees_res) && wp_remote_retrieve_response_code($committee
     border: 1px solid #e2d9cc;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
 .committee-header {
     background: linear-gradient(135deg, #5c1010, #8B1A1A);
-    padding: 15px 25px;
+    padding: 15px 40px;
     color: #fff;
 }
 
@@ -93,8 +99,7 @@ if (!is_wp_error($committees_res) && wp_remote_retrieve_response_code($committee
     font-size: 0.95rem;
     line-height: 1.6;
     margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 2px solid #f3f4f6;
 }
 
 .members-table {

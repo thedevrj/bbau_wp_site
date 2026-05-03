@@ -40,16 +40,12 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     </select>
                 </div>
                 <div class="filter-item">
-                    <label>Year</label>
-                    <select id="year-filter" class="ra-select">
-                        <option value="">Any Year</option>
-                        <?php 
-                            $current_year = date("Y");
-                            for($y = $current_year; $y >= 2010; $y--) {
-                                echo "<option value=\"$y\">$y</option>";
-                            }
-                        ?>
-                    </select>
+                    <label>From Date</label>
+                    <input type="date" id="start-date" class="ra-select">
+                </div>
+                <div class="filter-item">
+                    <label>To Date</label>
+                    <input type="date" id="end-date" class="ra-select">
                 </div>
             </div>
         </div>
@@ -158,7 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const searchInput = document.getElementById('pub-search');
     const deptFilter = document.getElementById('pub-dept-filter');
-    const yearFilter = document.getElementById('year-filter');
+    const startDate = document.getElementById('start-date');
+    const endDate = document.getElementById('end-date');
     const tbody = document.getElementById('pubs-tbody');
     const recordCount = document.getElementById('record-count');
     const paginationControls = document.getElementById('pagination-controls');
@@ -174,12 +171,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!url) {
             const query = searchInput.value.toLowerCase().trim();
             const dept = deptFilter.value;
-            const year = yearFilter.value;
+            const start = startDate.value;
+            const end = endDate.value;
 
             url = `${apiBase}/api/v1/publications/?page_size=10&`;
             if (query) url += `search=${encodeURIComponent(query)}&`;
-            if (dept) url += `department__slug=${encodeURIComponent(dept)}&`;
-            if (year) url += `publication_date__year=${encodeURIComponent(year)}&`;
+            if (dept) url += `department_slug=${encodeURIComponent(dept)}&`;
+            if (start) url += `publication_date_range_after=${encodeURIComponent(start)}&`;
+            if (end) url += `publication_date_range_before=${encodeURIComponent(end)}&`;
         }
 
         tbody.innerHTML =
@@ -297,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => fetchPublications(), 400);
     };
-    [deptFilter, yearFilter].forEach(el => el.onchange = () => fetchPublications());
+    [deptFilter, startDate, endDate].forEach(el => el.onchange = () => fetchPublications());
 
     fetchPublications();
 });

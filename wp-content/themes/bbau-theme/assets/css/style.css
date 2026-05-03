@@ -5,7 +5,7 @@
 @import url("schools.css");
 @import url("department.css");
 @import url("child-theme.css");
-
+@import url("404-design.css");
 
 p:empty {
     display: none;

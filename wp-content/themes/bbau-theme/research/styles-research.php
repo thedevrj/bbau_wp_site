@@ -147,14 +147,32 @@
 }
 
 .ra-select {
-    padding: 12px;
-    border-radius: 10px;
-    border: 2px solid #f1f5f9;
+    padding: 10px 15px !important;
+    border-radius: 10px !important;
+    border: 2px solid #f1f5f9 !important;
     background: #f8fafc;
     font-weight: 600;
-    color: #334155;
+    color: #334155 !important;
     cursor: pointer;
     font-size: 0.9rem;
+    height: 48px;
+    transition: all 0.3s;
+}
+
+.ra-select:focus {
+    border-color: var(--rd-royal);
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.05);
+}
+
+input[type="date"].ra-select {
+    font-family: inherit;
+}
+
+input[type="date"].ra-select::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(0.4);
 }
 
 /* PREMIUM TABLE & CARDS */
