@@ -46,13 +46,19 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
                     <td>
                         <div style="display:flex; flex-direction:column; gap:8px;">
                             <?php if(!empty($prog['syllabus'])): ?>
-                            <a href="<?php echo esc_url($prog['syllabus']); ?>" target="_blank" class="syllabus-btn">📄
+                            <a href="<?php echo esc_url($prog['syllabus']); ?>" target="_blank" class="syllabus-btn"><i
+                                    class="fas fa-file-alt"></i>
                                 Syllabus</a>
                             <?php endif; ?>
 
                             <button class="curriculum-btn"
                                 onclick="toggleCurriculum('prog-<?php echo esc_attr($prog['id']); ?>')">📚 Course
                                 Structure</button>
+                            <?php if(!empty($prog['notification_or_document_file'])): ?>
+                            <a href="<?php echo esc_url($prog['notification_or_document_file']); ?>" target="_blank"
+                                class="syllabus-btn"><i class="fas fa-file-alt"></i>
+                                Course Notification</a>
+                            <?php endif; ?>
                         </div>
                     </td>
                 </tr>
@@ -78,10 +84,10 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
                                     <table class="course-mini-table">
                                         <thead>
                                             <tr>
-                                                <th>Code</th>
-                                                <th>Title</th>
-                                                <th>Credits</th>
-                                                <th>Type</th>
+                                                <th style="width: 15%">Course Code</th>
+                                                <th style="width: 50%">Course Title</th>
+                                                <th style="width: 10%">Credits</th>
+                                                <th style="width: 25%">Course Type</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -179,6 +185,10 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
     border-bottom: 1px solid #e2d9cc;
     color: #444;
     vertical-align: top;
+}
+
+.course-mini-table td {
+    text-align: center;
 }
 
 .prog-table tr:hover {
