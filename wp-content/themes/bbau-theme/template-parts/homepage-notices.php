@@ -9,35 +9,39 @@ $category_param = isset($_GET['category']) ? sanitize_text_field($_GET['category
 $current_page   = isset($_GET['notice_page']) ? max(1, intval($_GET['notice_page'])) : 1;
 $per_page       = 9;
 
-$api_base   = getenv('DJANGO_API_URL');
-$api_url = $api_base . '/api/v1/global-notices/?page_size=100';
-if ( !empty($category_param) ) {
-    $api_url .= '?category=' . urlencode($category_param);
+/* ===== API ===== */
+$api_base = getenv('DJANGO_API_URL');
+$api_url  = $api_base . '/api/v1/global-notices/?page_size=100';
+
+if (!empty($category_param)) {
+    $api_url .= '&category=' . urlencode($category_param);
 }
 
 $response = wp_remote_get($api_url, array('timeout' => 10));
 $notices_data = array();
 
-if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
-    $body = wp_remote_retrieve_body( $response );
-    $decoded = json_decode( $body, true );
+if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+    $body = wp_remote_retrieve_body($response);
+    $decoded = json_decode($body, true);
     $notices_data = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
 }
 
+/* ===== HELPERS ===== */
 function get_notice_href_page($n) {
-
-    if (!empty($n['attachment'])) 
-        return $n['attachment'];
-
-    if (!empty($n['link']))
-        return $n['link'];
-
+    if (!empty($n['attachment'])) return $n['attachment'];
+    if (!empty($n['link'])) return $n['link'];
     return '#';
 }
 
-$page_title = empty($category_param) ? 'All Notices' : esc_html(ucfirst($category_param)) . 's';
+/* ===== DYNAMIC PAGE NAME ===== */
+$page_name = !empty($category_param) ? ucfirst($category_param) : 'Notice';
 
-// --- ARRAY PAGINATION LOGIC ---
+function pluralize($word) {
+    if (strtolower($word) === 'news') return 'News';
+    return strtolower($word) . 's';
+}
+
+/* ===== PAGINATION ===== */
 $total_notices = count($notices_data);
 $total_pages   = ceil($total_notices / $per_page);
 
@@ -47,171 +51,473 @@ if ($current_page > $total_pages && $total_pages > 0) {
 
 $offset = ($current_page - 1) * $per_page;
 $notices_to_display = array_slice($notices_data, $offset, $per_page);
-// ------------------------------
-
 ?>
 
 <div class="page-bg">
+<main id="primary" class="site-main">
+<div class="ntl-wrap">
 
-    <main id="primary" class="site-main" style="background:#f3f4f6; padding-bottom:60px;">
-        <div class="notices-container">
-            <h1 class="notices-title"><?php echo $page_title; ?></h1>
-            <ul class="notices-list">
-                <?php if ( !empty($notices_to_display) ) : ?>
-                <?php foreach ( $notices_to_display as $notice ) : ?>
-                <li>
-                    <a href="<?php echo esc_url(get_notice_href_page($notice)); ?>" target="_blank">
-                        <?php echo esc_html($notice['title']); ?>
-                    </a>
-                    <div class="notices-meta">
-                        <span><i class="fa fa-folder-open"></i>
-                            <?php $cats = isset($notice['categories']) && is_array($notice['categories']) ? implode(', ', $notice['categories']) : ''; echo esc_html($cats); ?></span>
-                        <span><i class="fa fa-calendar"></i>
-                            <?php echo esc_html(date('F j, Y', strtotime($notice['date_posted']))); ?></span>
-                    </div>
-                </li>
-                <?php endforeach; ?>
-                <?php else : ?>
-                <li style="text-align:center; color:#6b7280; font-size:1.1rem; border-left:none;">No notices found for
-                    this
-                    category at the moment.</li>
-                <?php endif; ?>
-            </ul>
-
-            <?php if ($total_pages > 1) : ?>
-            <div class="pagination-controls">
-                <?php
-                $prev_url = add_query_arg('notice_page', max(1, $current_page - 1));
-                $next_url = add_query_arg('notice_page', min($total_pages, $current_page + 1));
-                ?>
-                <a href="<?php echo esc_url($prev_url); ?>"
-                    class="<?php echo ($current_page <= 1) ? 'disabled' : ''; ?>">« </a>
-                <span class="page-info">Page <?php echo intval($current_page); ?> of
-                    <?php echo intval($total_pages); ?></span>
-                <a href="<?php echo esc_url($next_url); ?>"
-                    class="<?php echo ($current_page >= $total_pages) ? 'disabled' : ''; ?>"> »</a>
+    <!-- HEADER -->
+    <div class="ntl-hdr">
+        <div class="ntl-hdr-left">
+            <div class="ntl-tag-line">
+                <span class="ntl-tag-dot"></span>
+                Updates
             </div>
-            <?php endif; ?>
 
-            <div class="btn-back-wrap">
-                <a href="/" class="btn-back">Back to Homepage</a>
+            <h1 class="ntl-title">
+                <?php echo esc_html($page_name); ?>
+            </h1>
+        </div>
+
+        <div class="ntl-hdr-box">
+            <div class="ntl-hdr-num">
+                <?php echo str_pad($total_notices, 2, '0', STR_PAD_LEFT); ?>
+            </div>
+            <div class="ntl-hdr-lbl">
+                <?php echo esc_html(pluralize($page_name)); ?>
             </div>
         </div>
-    </main>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="ntl-timeline">
+
+        <?php if (!empty($notices_to_display)) : ?>
+        <?php foreach ($notices_to_display as $i => $notice) : 
+            $index = $offset + $i + 1;
+            $href = esc_url(get_notice_href_page($notice));
+            $is_new = ($index === 1);
+        ?>
+
+        <a class="ntl-item" href="<?php echo $href; ?>" target="_blank">
+            <div class="ntl-dot"></div>
+
+            <div class="ntl-card">
+                <div class="ntl-card-num">
+                    <?php echo str_pad($index, 2, '0', STR_PAD_LEFT); ?>
+                </div>
+
+                <div class="ntl-card-body">
+                    <p class="ntl-card-title">
+                        <?php echo esc_html($notice['title']); ?>
+                    </p>
+
+                    <div class="ntl-card-date">
+                        <?php echo esc_html(date('F j, Y', strtotime($notice['date_posted']))); ?>
+                    </div>
+                </div>
+
+                <div class="ntl-card-right">
+                    <?php if ($is_new) : ?>
+                        <span class="ntl-new-pill">New</span>
+                    <?php endif; ?>
+                    <span class="ntl-arr">→</span>
+                </div>
+            </div>
+        </a>
+
+        <?php endforeach; ?>
+        <?php else : ?>
+            <p class="ntl-empty">No <?php echo strtolower($page_name); ?> found.</p>
+        <?php endif; ?>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="ntl-foot">
+
+        <a href="/" class="ntl-back-btn">← Back to home</a>
+
+        <?php if ($total_pages > 1) : ?>
+        <div class="ntl-pager">
+
+            <?php
+            $prev = max(1, $current_page - 1);
+            $next = min($total_pages, $current_page + 1);
+            ?>
+
+            <a href="<?php echo esc_url(add_query_arg('notice_page', $prev)); ?>"
+               class="ntl-pb <?php echo ($current_page <= 1) ? 'off' : ''; ?>">‹</a>
+
+            <?php
+            $start = max(1, $current_page - 1);
+            $end   = min($total_pages, $start + 2);
+            for ($p = $start; $p <= $end; $p++) :
+            ?>
+            <a href="<?php echo esc_url(add_query_arg('notice_page', $p)); ?>"
+               class="ntl-pb <?php echo ($p === $current_page) ? 'on' : ''; ?>">
+               <?php echo $p; ?>
+            </a>
+            <?php endfor; ?>
+
+            <a href="<?php echo esc_url(add_query_arg('notice_page', $next)); ?>"
+               class="ntl-pb <?php echo ($current_page >= $total_pages) ? 'off' : ''; ?>">›</a>
+
+        </div>
+        <?php endif; ?>
+
+    </div>
+
 </div>
-<?php
-get_footer();
-?>
-
+</main>
+</div>
 <style>
-.notices-container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 0 20px;
-    font-family: 'Inter', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 
-.notices-title {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 2.5rem;
-    color: #1f2937;
-}
-
-.notices-list {
-    list-style: none;
+/* ===== GLOBAL RESET ===== */
+* {
+    margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-.notices-list li {
-    background: #ffffff;
-    margin-bottom: 15px;
-    padding: 25px;
-    border-radius: 12px;
-    border-left: 6px solid #ea580c;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transition: transform 0.2s ease;
+/* ===== FULL WIDTH FIX ===== */
+.site-main,
+.page-bg {
+    width: 100% !important;
+    max-width: 100% !important;
 }
 
-.notices-list li:hover {
-    transform: translateY(-3px);
+.site-main {
+    background: #fafaf9;
+    padding-bottom: 60px;
+    min-height: 80vh;
 }
 
-.notices-list li a {
-    text-decoration: none;
-    color: #111827;
-    font-size: 1.25rem;
+/* ===== CONTAINER ===== */
+.ntl-wrap {
+    font-family: 'Outfit', sans-serif;
+    width: 100%;
+    margin: 0;
+    padding: 3rem clamp(16px, 5vw, 60px);
+}
+
+/* ================= HEADER ================= */
+.ntl-hdr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+}
+
+.ntl-hdr-left {
+    max-width: 70%;
+}
+
+/* TAG */
+.ntl-tag-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
     font-weight: 600;
-    display: block;
+    color: #c2410c;
+    letter-spacing: 0.5px;
     margin-bottom: 8px;
 }
 
-.notices-list li a:hover {
-    color: #ea580c;
-    text-decoration: underline;
+.ntl-tag-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #f97316;
+    animation: ntl-blink 1.5s infinite;
 }
 
-.notices-meta {
+@keyframes ntl-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* TITLE */
+.ntl-title {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: #1c1917;
+    line-height: 1.1;
+}
+
+.ntl-title em {
+    color: #f97316;
+    font-style: normal;
+}
+
+/* COUNT BOX */
+.ntl-hdr-box {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: #fff7ed;
+    border: 1.5px solid #fed7aa;
     display: flex;
-    gap: 20px;
-    font-size: 0.95rem;
-    color: #6b7280;
-    font-weight: 500;
-}
-
-.btn-back-wrap {
-    text-align: center;
-    margin-top: 40px;
-}
-
-.btn-back {
-    padding: 12px 28px;
-    background: #1f2937;
-    color: white !important;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: background 0.3s;
-    display: inline-block;
-}
-
-.btn-back:hover {
-    background: #ea580c;
-}
-
-/* Pagination Styles */
-.pagination-controls {
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    gap: 15px;
-    margin-top: 30px;
+    justify-content: center;
 }
 
-.pagination-controls a {
-    padding: 8px 16px;
-    background: #ea580c;
-    color: white;
+.ntl-hdr-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #c2410c;
+}
+
+.ntl-hdr-lbl {
+    font-size: 9px;
+    color: #fb923c;
+}
+
+/* ================= TIMELINE ================= */
+.ntl-timeline {
+    position: relative;
+    padding-left: 28px;
+}
+
+/* LINE */
+.ntl-timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #fed7aa 0,
+        #fed7aa 6px,
+        transparent 6px,
+        transparent 12px
+    );
+}
+
+/* ITEM */
+.ntl-item {
+    position: relative;
+    margin-bottom: 10px;
     text-decoration: none;
-    border-radius: 6px;
+    display: block;
+}
+
+/* DOT */
+.ntl-dot {
+    position: absolute;
+    left: -24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2.5px solid #fed7aa;
+    transition: 0.25s;
+    z-index: 2;
+}
+
+.ntl-item:hover .ntl-dot {
+    background: #f97316;
+    border-color: #f97316;
+    transform: translateY(-50%) scale(1.25);
+}
+
+/* CARD */
+.ntl-card {
+    background: #fff;
+    border: 1px solid #e7e5e4;
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: 0.25s;
+}
+
+.ntl-item:hover .ntl-card {
+    background: #fff7ed;
+    border-color: #fed7aa;
+    transform: translateX(4px);
+}
+
+/* NUMBER */
+.ntl-card-num {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fb923c;
+    flex-shrink: 0;
+    transition: 0.25s;
+}
+
+.ntl-item:hover .ntl-card-num {
+    background: #f97316;
+    color: #fff;
+}
+
+/* BODY */
+.ntl-card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.ntl-card-title {
+    font-size: 14px;
     font-weight: 600;
-    transition: background 0.2s;
+    color: #1c1917;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.pagination-controls a:hover {
-    background: #c2410a;
+.ntl-item:hover .ntl-card-title {
+    color: #9a3412;
 }
 
-.pagination-controls .page-info {
+.ntl-card-date {
+    font-size: 11px;
+    color: #78716c;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* RIGHT SIDE */
+.ntl-card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+/* NEW TAG */
+.ntl-new-pill {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+    padding: 2px 7px;
+    border-radius: 20px;
+}
+
+/* ARROW */
+.ntl-arr {
+    font-size: 14px;
+    color: #fb923c;
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: 0.2s;
+}
+
+.ntl-item:hover .ntl-arr {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* EMPTY */
+.ntl-empty {
+    text-align: center;
+    padding: 2rem;
+    color: #78716c;
+}
+
+/* ================= FOOTER ================= */
+.ntl-foot {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 1rem;
+    border-top: 1px dashed #fed7aa;
+}
+
+/* BACK BUTTON */
+.ntl-back-btn {
+    padding: 7px 16px;
+    border-radius: 8px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #c2410c;
     font-weight: 600;
-    color: #374151;
-    font-size: 1.1rem;
+    text-decoration: none;
+    transition: 0.2s;
 }
 
-.pagination-controls a.disabled {
-    background: #d1d5db;
-    color: #9ca3af;
+.ntl-back-btn:hover {
+    background: #ffedd5;
+}
+
+/* PAGINATION */
+.ntl-pager {
+    display: flex;
+    gap: 5px;
+}
+
+.ntl-pb {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #e7e5e4;
+    background: #fff;
+    color: #78716c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.ntl-pb:hover {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.ntl-pb.on {
+    background: #f97316;
+    color: #fff;
+    border-color: #f97316;
+}
+
+.ntl-pb.off {
+    opacity: 0.3;
     pointer-events: none;
 }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .ntl-wrap {
+        padding: 2rem 1rem;
+    }
+
+    .ntl-title {
+        font-size: 1.5rem;
+    }
+
+    .ntl-card-title {
+        font-size: 13px;
+    }
+
+    .ntl-hdr-box {
+        width: 54px;
+        height: 54px;
+    }
+
+    .ntl-hdr-num {
+        font-size: 1.3rem;
+    }
+}
 </style>
+<?php get_footer(); ?>
