@@ -43,17 +43,27 @@ h1 {
   background-position: center center !important;
 }
 
-/* =====================================================
-   ABOUT PAGE BACKGROUND
-===================================================== */
-.page-template-about-bg {
-  position: relative;
-  background-image: url(../img/about-us/about-us-page-bg.png) !important;
+/* ================= ROOT COLOR ================= */
+:root {
+  --s-bg: #e9e6e1; /* your exact background color */
 }
 
+/* ================= PAGE BACKGROUND ================= */
+.page-template-about-bg {
+  background: var(--s-bg) !important;
+  min-height: 100vh;
+}
+
+/* ================= REMOVE OLD IMAGE BACKGROUND ================= */
+.page-template-about-bg {
+  background-image: none !important;
+}
+
+/* ================= MOBILE FIX ================= */
 @media (max-width: 1200px) {
   .page-template-about-bg {
-    background-image: url(../img/about-us/m-about-us-page-bg.png) !important;
+    background: var(--s-bg) !important;
+    background-image: none !important;
   }
 }
 
@@ -1986,15 +1996,12 @@ h2::after {
 /* =====================================
    SECTIONS UNDER REGISTRAR
 ===================================== */
-
-
 .rg-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding-bottom: 60px;
 }
-
 .rg-card {
   background: #ffffff;
   border-radius: 16px;
@@ -2022,14 +2029,12 @@ h2::after {
   display: flex;
   flex-direction: column;
 }
-
 .rg-dept-row {
   display: flex;
   align-items:anchor-center ;
   gap: 12px;
   margin-bottom: 14px;
 }
-
 .rg-dept-icon {
   width: 40px;
   height: 40px;
@@ -2041,7 +2046,6 @@ h2::after {
   justify-content: center;
   margin-top: 2px;
 }
-
 .rg-dept-name {
   font-family: 'Outfit', sans-serif;
   font-size: 1rem;
@@ -2051,13 +2055,11 @@ h2::after {
   margin: 0;
   padding: 0;
 }
-
 .rg-divider {
   height: 1px;
   background: #f0f2f7;
   margin: 0 0 14px;
 }
-
 .rg-desc {
   font-family: 'Outfit', sans-serif;
   font-size: 13px;
@@ -2067,7 +2069,6 @@ h2::after {
   flex: 1;
   margin-bottom: 18px;
 }
-
 .rg-desc strong,
 .rg-desc b {
   font-weight: 700;
