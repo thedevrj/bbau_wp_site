@@ -1,0 +1,193 @@
+/* 404 Page Design - BBAU Theme Premium Redesign */
+
+:root {
+    --bbau-navy: #1a2a6c;
+    --bbau-gold: #f1c40f;
+    --bbau-text: #2c3e50;
+    --bbau-light: #f8f9fa;
+    --glass: rgba(255, 255, 255, 0.9);
+}
+
+.error-404.not-found {
+    padding: 80px 20px;
+    background: radial-gradient(circle at top right, rgba(26, 42, 108, 0.05), transparent),
+                radial-gradient(circle at bottom left, rgba(241, 196, 15, 0.05), transparent);
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-404-hero {
+    width: 100%;
+    max-width: 1100px;
+    margin-bottom: 60px;
+}
+
+.error-404-hero .row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.error-404-hero .col-lg-6 {
+    flex: 1;
+    min-width: 300px;
+}
+
+.error-404-illustration {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+    transform: perspective(1000px) rotateY(-5deg);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.error-404-illustration:hover {
+    transform: perspective(1000px) rotateY(0deg) translateY(-10px);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.18);
+}
+
+.error-404 .page-title {
+    font-size: 2.5rem;
+    color: var(--bbau-navy);
+    margin-bottom: 20px;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    text-decoration: none !important; /* Remove underline */
+}
+
+.error-404 .page-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 6px;
+    background: var(--bbau-gold);
+    margin-top: 15px;
+    border-radius: 3px;
+}
+
+.error-404 .page-subtitle {
+    color: var(--bbau-text);
+    margin-bottom: 40px;
+    line-height: 1.5;
+    opacity: 0.8;
+}
+
+/* Search Section */
+.page-content {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.error-404 .search-form {
+    display: flex;
+    background: var(--glass);
+    padding: 10px;
+    border-radius: 60px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.05);
+    margin: 0 auto 60px;
+    max-width: 600px;
+}
+
+.error-404 .search-field {
+    border: none;
+    background: transparent;
+    padding: 15px 30px;
+    flex: 1;
+    font-size: 1.1rem;
+    color: var(--bbau-text);
+}
+
+.error-404 .search-field:focus {
+    outline: none;
+}
+
+.error-404 .search-submit {
+    background: var(--bbau-navy);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.error-404 .search-submit:hover {
+    background: #000;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Suggestions Section */
+.error-404-suggestions h2 {
+    font-size: 1.8rem;
+    color: var(--bbau-navy);
+    margin-bottom: 40px;
+    font-weight: 800;
+}
+
+.suggestion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 25px;
+}
+
+.suggestion-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.05);
+    text-decoration: none !important;
+    color: var(--bbau-navy) !important;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+}
+
+.suggestion-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    border-color: var(--bbau-gold);
+    background: var(--bbau-navy);
+    color: white !important;
+}
+
+.suggestion-card .dashicons {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease;
+}
+
+.suggestion-card:hover .dashicons {
+    transform: rotate(10deg) scale(1.2);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .error-404 .page-title {
+        font-size: 3rem;
+    }
+    .error-404-hero .row {
+        flex-direction: column;
+        text-align: center;
+    }
+    .error-404 .page-title::after {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

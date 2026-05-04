@@ -13,44 +13,48 @@ get_header();
 	<main id="primary" class="site-main">
 
 		<section class="error-404 not-found">
-			<header class="page-header">
-				<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'bbau-theme' ); ?></h1>
-			</header><!-- .page-header -->
+			<div class="error-404-hero">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="text-center illustration-wrapper">
+							<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/404-illustration.png' ); ?>" alt="<?php esc_attr_e( '404 - Page Not Found', 'bbau-theme' ); ?>" class="error-404-illustration">
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="content-wrapper">
+							<h1 class="page-title"><?php esc_html_e( '404 - Page Not Found', 'bbau-theme' ); ?></h1>
+							<p class="page-subtitle"><?php esc_html_e( ' The page you are looking for does not exist in our current records.', 'bbau-theme' ); ?></p>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<div class="page-content">
-				<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'bbau-theme' ); ?></p>
+				<div class="search-wrapper">
+					<?php get_search_form(); ?>
+				</div>
 
-					<?php
-					get_search_form();
-
-					the_widget( 'WP_Widget_Recent_Posts' );
-					?>
-
-					<div class="widget widget_categories">
-						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'bbau-theme' ); ?></h2>
-						<ul>
-							<?php
-							wp_list_categories(
-								array(
-									'orderby'    => 'count',
-									'order'      => 'DESC',
-									'show_count' => 1,
-									'title_li'   => '',
-									'number'     => 10,
-								)
-							);
-							?>
-						</ul>
-					</div><!-- .widget -->
-
-					<?php
-					/* translators: %1$s: smiley */
-					$bbau_theme_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'bbau-theme' ), convert_smilies( ':)' ) ) . '</p>';
-					the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$bbau_theme_archive_content" );
-
-					the_widget( 'WP_Widget_Tag_Cloud' );
-					?>
-
+				<div class="error-404-suggestions">
+					<h2><?php esc_html_e( 'Explore Other Pathways', 'bbau-theme' ); ?></h2>
+					<div class="suggestion-grid">
+						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="suggestion-card">
+							<span class="dashicons dashicons-admin-home"></span>
+							<span><?php esc_html_e( 'Home Page', 'bbau-theme' ); ?></span>
+						</a>
+						<a href="<?php echo esc_url( home_url( '/admissions' ) ); ?>" class="suggestion-card">
+							<span class="dashicons dashicons-welcome-learn-more"></span>
+							<span><?php esc_html_e( 'Admissions', 'bbau-theme' ); ?></span>
+						</a>
+						<a href="<?php echo esc_url( home_url( '/faculty' ) ); ?>" class="suggestion-card">
+							<span class="dashicons dashicons-businessman"></span>
+							<span><?php esc_html_e( 'Faculty Profiles', 'bbau-theme' ); ?></span>
+						</a>
+						<a href="<?php echo esc_url( home_url( '/research' ) ); ?>" class="suggestion-card">
+							<span class="dashicons dashicons-search"></span>
+							<span><?php esc_html_e( 'Research', 'bbau-theme' ); ?></span>
+						</a>
+					</div>
+				</div>
 			</div><!-- .page-content -->
 		</section><!-- .error-404 -->
 

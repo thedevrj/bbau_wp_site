@@ -43,10 +43,10 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
         <div class="container">
             <nav class="rd-tab-nav">
                 <a href="?tab=about" class="<?php echo $active_tab === 'about' ? 'active' : ''; ?>">
-                    <i class="fas fa-info-circle"></i> About Cell
+                    <i class="fas fa-info-circle"></i> About 
                 </a>
                 <a href="?tab=team" class="<?php echo $active_tab === 'team' ? 'active' : ''; ?>">
-                    <i class="fas fa-users"></i> Our Team
+                    <i class="fas fa-users"></i>Team
                 </a>
                 <a href="?tab=policies" class="<?php echo $active_tab === 'policies' ? 'active' : ''; ?>">
                     <i class="fas fa-file-signature"></i> Policies & Guidelines
@@ -220,7 +220,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
                     </a>
                     <a href="/research-projects/" class="rd-portal-link">
                         <div class="icon-wrap"><i class="fas fa-flask"></i></div>
-                        <h3>Ongoing Projects</h3>
+                        <h3>Research Projects</h3>
                         <p>Comprehensive database of active research initiatives.</p>
                         <a href="/publications" class="rd-portal-link">
                             <div class="icon-wrap"><i class="fas fa-book"></i></div>
@@ -466,7 +466,6 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     position: sticky;
     top: 80px;
     /* Adjust based on your header height */
-    z-index: 100;
     border-bottom: 2px solid #f1f5f9;
 }
 

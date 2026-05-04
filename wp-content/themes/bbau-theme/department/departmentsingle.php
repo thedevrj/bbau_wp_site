@@ -23,7 +23,7 @@ if (!empty($slug)) {
 }
 
 // Ensure valid tab
-$allowed_tabs = ['about','thrust' ,'faculty', 'programs', 'research', 'notices', 'committee', 'gallery', 'timetable'];
+$allowed_tabs = ['about','thrust' ,'faculty', 'programs', 'research', 'notices', 'committees', 'gallery', 'timetable'];
 if (!in_array($tab, $allowed_tabs)) {
     $tab = 'about';
 }
@@ -80,18 +80,12 @@ get_header();
             <a href="<?php echo dept_nav_url($slug, 'notices'); ?>" class="<?php echo ($tab === 'notices') ? 'active' : ''; ?>">Notices</a>
             <a href="<?php echo dept_nav_url($slug, 'research'); ?>" class="<?php echo ($tab === 'research') ? 'active' : ''; ?>">Research Activities</a>
             <a href="<?php echo dept_nav_url($slug, 'timetable'); ?>" class="<?php echo ($tab === 'timetable') ? 'active' : ''; ?>">Time Table</a>
-            <a href="<?php echo dept_nav_url($slug, 'committee'); ?>" class="<?php echo ($tab === 'committee') ? 'active' : ''; ?>">Committees</a>
+            <a href="<?php echo dept_nav_url($slug, 'committees'); ?>" class="<?php echo ($tab === 'committees') ? 'active' : ''; ?>">Committees</a>
             <a href="<?php echo dept_nav_url($slug, 'gallery'); ?>" class="<?php echo ($tab === 'gallery') ? 'active' : ''; ?>">Gallery</a>
         </div>
     </div>
 
     <div class="container py-4">
-
-        <!-- <div class="page-title">
-            <h2 class="dept-title-gradient">
-                Department of <?php echo esc_html($dept_data['name'] ?? 'Department Overview'); ?>
-            </h2>
-        </div> -->
 
         <?php 
         // DYNAMIC INCLUSION OF TAB FILE

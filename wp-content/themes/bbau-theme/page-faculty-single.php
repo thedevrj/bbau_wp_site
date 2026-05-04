@@ -84,16 +84,16 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                         </a>
                         <?php endif; ?>
                         <?php if (!empty($fac['phone1'])): ?>
-                        <div class="contact-item">
-                            <i class="fas fa-phone-alt"></i>
-                            <span>+91 <?php echo esc_html($fac['phone1']); ?></span>
-                        </div>
+
+                        <a class="contact-item" href="tel:+91<?php echo preg_replace('/\D+/', '', $fac['phone1']); ?>">
+                            <i class="fas fa-phone-alt"></i>+91 <?php echo esc_html($fac['phone1']); ?></a>
+
                         <?php endif; ?>
                         <?php if (!empty($fac['phone2'])): ?>
-                        <div class="contact-item">
-                            <i class="fas fa-phone-alt"></i>
-                            <span>+91 <?php echo esc_html($fac['phone2']); ?></span>
-                        </div>
+
+                        <a class="contact-item" href="tel:+91<?php echo preg_replace('/\D+/', '', $fac['phone2']); ?>">
+                            <i class="fas fa-phone-alt"></i>+91 <?php echo esc_html($fac['phone2']); ?></a>
+
                         <?php endif; ?>
                     </div>
 
