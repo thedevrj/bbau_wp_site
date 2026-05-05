@@ -171,6 +171,8 @@ get_header();
   padding: 8px 14px;
   border-radius: 10px;
   font-weight: 600;
+  margin-top: 12px;    /* space from image above */
+  margin-bottom: 12px; /* space from image below */
 }
 /* target inside each event only */
 .eg-event-detail .eg-year-block:nth-of-type(1) .eg-year-title {
