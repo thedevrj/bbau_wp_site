@@ -26,12 +26,6 @@ get_header();
             </div>
             <div class="row py-lg-2 py-3">
                 <div class="col-lg-12">
-
-                    <!-- Page Title -->
-                    <h3 class="section-heading mb-3">
-                        <?php the_title(); ?>
-                    </h3>
-
                     <!-- Page Content -->
                     <?php 
                     if ( have_posts() ) : 
