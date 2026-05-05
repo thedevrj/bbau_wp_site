@@ -225,20 +225,11 @@ get_header();
 /* ================= AVATAR ================= */
 .avatar {
     width: 150px;
-    /* 🔥 increased */
     height: 150px;
-    /* 🔥 increased */
     border-radius: 50%;
     border: 5px solid #c9a84c;
     overflow: hidden;
-    /* 🔥 important for image */
-}
-
-.avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+}   
 
 /* ================= BADGE ================= */
 .hod-badge {

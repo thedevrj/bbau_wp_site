@@ -26,7 +26,7 @@ $api_url = $api_base . '/api/v1/centres/';
                     <div class="filter-wrap">
                         <span class="filter-icon">🎓</span>
                         <select id="schoolFilter">
-                            <option value="">All Schools</option>
+                            <option value="">Schools</option>
                         </select>
                     </div>
 
