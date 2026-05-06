@@ -246,7 +246,7 @@ get_header();
 
             <?php elseif ($tab === 'committee') : ?>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 mb-3">
                     <!-- COMMITTEES -->
                     <h3 class="dept-title-gradient">School Committees</h3>
 
@@ -296,7 +296,7 @@ get_header();
                     </div>
                     <?php endif;?>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 mb-3">
                     <h3 class="dept-title-gradient"> Minutes of Meetings</h3>
                     <?php if (!empty($minutes)) : ?>
 
@@ -346,7 +346,6 @@ get_header();
     display: flex;
     flex-direction: column;
     gap: 30px;
-    margin-top: 20px;
 }
 
 .committee-card {

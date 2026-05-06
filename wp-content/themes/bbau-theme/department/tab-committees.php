@@ -20,7 +20,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
 
 <div class="section">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 mb-3">
             <h3>Department Committees</h3>
             <?php if(!empty($committees_list)): ?>
             <div class="committees-wrap">
@@ -70,7 +70,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
             <p style="margin-top:20px; color:#555;">No committee information is available for this department.</p>
             <?php endif; ?>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 mb-3">
             <h3>Minutes of Meetings</h3>
             <?php if(!empty($minutes_list)): ?>
             <div class="section-card">
@@ -123,6 +123,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    margin-top: 20px;
 }
 
 
