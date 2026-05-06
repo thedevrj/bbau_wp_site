@@ -46,7 +46,6 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                     <?php endif; ?>
                 </div>
                 <div class="leader-info">
-                    <span class="leader-label">HEAD OF DEPARTMENT</span>
                     <h3 class="leader-name"><?php echo esc_html($hod['name']); ?></h3>
                     <p class="school-name"><?php echo esc_html($dept['name']); ?></p>
                     <p style="font-size:0.75rem; color:#888; margin-top:-5px;">(<?php echo esc_html($dept['school_name'] ?? ''); ?>)</p>
@@ -136,7 +135,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     flex-grow: 1;
 }
 
-.leader-label {
+/* .leader-label {
     display: inline-block;
     font-size: 0.65rem;
     font-weight: 800;
@@ -147,7 +146,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     border: 1px solid #cbd5e1;
     margin-bottom: 12px;
     letter-spacing: 1.5px;
-}
+} */
 
 .leader-name {
     font-family: 'Merriweather', serif;
