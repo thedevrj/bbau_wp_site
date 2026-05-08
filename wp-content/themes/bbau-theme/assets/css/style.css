@@ -2,10 +2,14 @@
 @import url("icons.css");
 @import url("header.css");
 @import url("homepage.css");
-@import url("Schools.css");
+@import url("schools.css");
+@import url("department.css");
 @import url("child-theme.css");
+@import url("404-design.css");
 
-
+p:empty {
+    display: none;
+}
 
 /* Visitor Section */
 .visitor-hero {
@@ -142,4 +146,25 @@
     .container {
         max-width: 1500px !important;
     }
+}
+
+/* Remove browser default padding */
+ol,
+ul {
+    margin-left: 0 !important;
+}
+
+/* Objective list only */
+ol,
+ul {
+    padding-left: 2.5rem !important;
+}
+
+@media screen and (max-width: 760px) {
+
+    ol,
+    ul {
+        padding-left: 0.5rem !important;
+    }
+
 }

@@ -16,4 +16,4 @@ echo "→ Restarting containers"
 docker-compose down
 docker-compose up -d
 
-echo "✅ STAG deployment complete"
+echo "STAG deployment complete"

@@ -2,228 +2,356 @@
 /*
 Template Name: Video Gallery
 */
-
 defined('ABSPATH') || exit;
 get_header();
 ?>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <?php get_template_part('banners/about-banner'); ?>
+
 <div class="container-fluid page-bg py-lg-5 overflow-hidden">
     <?php get_template_part('template-parts/breadcrumb'); ?>
-    <section class="vg-section">
-        <div class="container">
-            <h2 class="vg-title">Video <span>Gallery</span></h2>
-            <?php
-$video_index = isset($_GET['video']) ? intval($_GET['video']) : -1;
-$repeater = 'video_gallery';
-?>
-            <?php if($video_index === -1): ?>
-            <!-- VIDEO CARDS -->
-            <div class="vg-grid">
-                <?php
-$vi = 0;
-if( have_rows($repeater) ):
-while( have_rows($repeater) ): the_row();
-$title = get_sub_field('video_title');
-$bg    = get_sub_field('video_background');
-$bg_url = $bg ? $bg['url'] : '';
-?>
-                <a href="?video=<?php echo $vi; ?>" class="vg-card">
-                    <div class="vg-card-cover" style="background-image:url('<?php echo esc_url($bg_url); ?>')">
-                        <div class="vg-overlay"></div>
-                        <div class="vg-play">▶</div>
-                    </div>
-                    <div class="vg-card-body">
-                        <h3><?php echo esc_html($title); ?></h3>
-                    </div>
-                </a>
-                <?php
-$vi++;
-endwhile;
-endif;
-?>
-            </div>
-            <?php else: ?>
-            <!-- VIDEO DETAIL PAGE -->
-            <?php
-$vi=0;
-if( have_rows($repeater) ):
-while( have_rows($repeater) ): the_row();
-if($vi==$video_index):
-$title = get_sub_field('video_title');
-?> <br>
-            <a href="?" class="vg-back">← Back to Videos</a><br>
-            <h2 class="vg-title"><?php echo esc_html($title); ?></h2>
 
-            <?php if( have_rows('video_years') ): ?>
-            <?php while( have_rows('video_years') ): the_row();
-$year = get_sub_field('year_title');
-?>
-            <div class="vg-year">
-                <h3><?php echo esc_html($year); ?></h3>
-                <div class="vg-video-grid">
-                    <?php if( have_rows('videos') ): ?>
-                    <?php while( have_rows('videos') ): the_row();
-$vtitle = get_sub_field('video_name');
-$vurl   = get_sub_field('video_url');
-?>
-                    <div class="vg-video-card" onclick="openVideo('<?php echo esc_url($vurl); ?>')">
-                        <div class="vg-thumb">▶</div>
-                        <div class="vg-video-title">
-                            <?php echo esc_html($vtitle); ?>
-                        </div>
-                    </div>
-                    <?php endwhile; endif; ?>
-                </div>
-            </div>
-            <?php endwhile; ?>
-            <?php endif; ?>
-            <?php
-endif;
-$vi++;
-endwhile;
-endif;
-?>
-            <?php endif; ?>
+    <div class="container">
+        <div class="menu-wrapper">
+            <?php get_template_part('menu/menu'); ?>
         </div>
-    </section>
-    <!-- VIDEO LIGHTBOX -->
-    <div id="vgLightbox" class="vg-lightbox" onclick="closeVideo()">
-        <div class="vg-video-wrap">
-            <iframe id="vgVideoFrame" src="" frameborder="0" allowfullscreen></iframe>
+        <h2>Video Gallery</h2>
+
+        <!-- VIDEO CARDS -->
+        <div id="egCards" class="eg-grid">
+            <?php
+            $i = 0;
+            if( have_rows('video_gallery') ):
+            while( have_rows('video_gallery') ): the_row();
+            ?>
+            <div class="eg-card" onclick="openEvent(<?php echo $i; ?>)">
+                <img src="<?php echo get_sub_field('video_background')['url']; ?>" class="eg-cover">
+                <div class="eg-card-name"><?php echo esc_html(get_sub_field('video_title')); ?></div>
+            </div>
+            <?php $i++; endwhile; endif; ?>
+        </div>
+
+        <!-- DETAILS -->
+        <div id="egDetails">
+            <?php
+            $i = 0;
+            if( have_rows('video_gallery') ):
+            while( have_rows('video_gallery') ): the_row();
+            ?>
+            <div class="eg-event-detail" id="event-<?php echo $i; ?>">
+
+                <h3><?php echo esc_html(get_sub_field('video_title')); ?></h3>
+
+                <button class="eg-back-btn" onclick="goBack()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to Gallery
+                </button>
+
+                <?php if( have_rows('video_year') ): ?>
+                <?php while( have_rows('video_year') ): the_row(); ?>
+                <div class="eg-year-block">
+                    <h3 class="eg-year-title"><?php echo esc_html(get_sub_field('year_title')); ?></h3>
+
+                    <div class="eg-photo-grid">
+                        <?php
+                        if( have_rows('videos') ):
+                        while( have_rows('videos') ): the_row();
+                            $vtitle = get_sub_field('video_name');
+                            $vurl   = get_sub_field('video_url');
+                            if( empty($vurl) ) continue;
+
+                            $videoId = "";
+                            if( strpos($vurl, "watch?v=") !== false ){
+                                $videoId = explode("watch?v=", $vurl)[1];
+                            } elseif( strpos($vurl, "youtu.be/") !== false ){
+                                $videoId = explode("youtu.be/", $vurl)[1];
+                            }
+                            if( strpos($videoId, "&") !== false ){
+                                $videoId = explode("&", $videoId)[0];
+                            }
+                            $thumb = "https://img.youtube.com/vi/" . $videoId . "/hqdefault.jpg";
+                        ?>
+                        <div class="eg-photo-wrap" onclick='openVideo("<?php echo esc_url($vurl); ?>")'>
+                            <img src="<?php echo $thumb; ?>" class="eg-photo">
+                            <div class="eg-play-overlay">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <?php if( $vtitle ): ?>
+                            <div class="eg-video-label"><?php echo esc_html($vtitle); ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <?php endwhile; endif; ?>
+                    </div>
+                </div>
+                <?php endwhile; endif; ?>
+
+            </div>
+            <?php $i++; endwhile; endif; ?>
         </div>
     </div>
+
+    <!-- VIDEO LIGHTBOX -->
+    <div id="egLightbox" class="eg-lightbox">
+
+        <div class="eg-close-btn" onclick="closeVideo()">
+            <i class="fa-solid fa-xmark"></i>
+            <span>Close</span>
+        </div>
+
+        <div class="eg-video-wrap" onclick="event.stopPropagation()">
+            <iframe id="egVideoFrame" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+        </div>
+
+    </div>
 </div>
-<style>
-.vg-section {
-    padding: 70px 0;
-    background: #faf7f2;
-}
+<!-- ================= CSS ================= -->
+ <style>
+/* ===== HIDE ON LOAD ===== */
+#egDetails { display: none; }
+.eg-event-detail { display: none; }
 
-.vg-container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 0 30px;
-}
-
-.vg-title {
-    font-size: 32px;
-    margin-bottom: 30px;
-}
-
-.vg-grid {
+/* ===== CARD GRID ===== */
+.eg-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
+    gap: 30px;
 }
 
-.vg-card {
-    background: white;
-    border-radius: 12px;
+.eg-card {
+    background: #fff;
+    border-radius: 20px;
     overflow: hidden;
-    text-decoration: none;
-    color: black;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: 0.3s;
 }
+.eg-card:hover { transform: translateY(-6px); }
 
-.vg-card-cover {
-    height: 180px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.vg-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
+.eg-cover {
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.45);
+    height: 260px;
+    object-fit: cover;
 }
 
-.vg-play {
-    position: relative;
-    font-size: 40px;
-    color: white;
-}
-
-.vg-card-body {
-    padding: 18px;
+.eg-card-name {
     text-align: center;
+    padding: 12px;
+    font-weight: 600;
 }
 
-.vg-video-grid {
+/* ===== PHOTO / VIDEO GRID ===== */
+.eg-photo-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
-.vg-video-card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
+/* ===== VIDEO THUMBNAIL WRAP ===== */
+.eg-photo-wrap {
+    border-radius: 18px;
+    overflow: hidden;
+    background: #fff;
     cursor: pointer;
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    position: relative;
 }
 
-.vg-thumb {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.vg-lightbox {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
+.eg-photo-wrap .eg-photo {
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.eg-play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 0, 0, 0.9);
+    display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    pointer-events: none;
 }
 
-.vg-video-wrap iframe {
+.eg-play-overlay i {
+    color: #fff;
+    font-size: 20px;
+}
+
+.eg-video-label {
+    text-align: center;
+    padding: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    background: #fff;
+    color: #333;
+}
+
+/* ===== YEAR TITLE ===== */
+#egDetails .eg-year-title {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.eg-event-detail .eg-year-block:nth-of-type(1) .eg-year-title { background: #f5f0e8; color: #8B0000; }
+.eg-event-detail .eg-year-block:nth-of-type(2) .eg-year-title { background: #e8f5f2; color: #00695c; }
+.eg-event-detail .eg-year-block:nth-of-type(3) .eg-year-title { background: #f3e8f5; color: #6a1b9a; }
+.eg-event-detail .eg-year-block:nth-of-type(4) .eg-year-title { background: #e8eef5; color: #1a237e; }
+.eg-event-detail .eg-year-block:nth-of-type(5) .eg-year-title { background: #fff3e0; color: #e65100; }
+
+/* ===== LIGHTBOX ===== */
+.eg-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+/* Image lightbox */
+.eg-lightbox img#egLightboxImg {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+/* Video lightbox */
+.eg-video-wrap {
     width: 800px;
-    height: 450px;
     max-width: 90vw;
 }
 
-@media(max-width:900px) {
-    .vg-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .vg-video-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.eg-video-wrap iframe {
+    width: 100%;
+    height: 450px;
 }
 
-@media(max-width:600px) {
-    .vg-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .vg-video-grid {
-        grid-template-columns: 1fr;
-    }
+/* ===== CLOSE BUTTON ===== */
+.eg-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    display: flex;
+    gap: 6px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
 }
+.eg-close-btn:hover { background: #fff; color: #000; }
+
+/* ===== BACK BUTTON ===== */
+.eg-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    margin-bottom: 15px;
+    background: #f5f0e8;
+    color: #8B0000;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.eg-back-btn:hover { background: #8B0000; color: #fff; }
+
+/* ===== RESPONSIVE ===== */
+@media(max-width: 992px) {
+    .eg-grid, .eg-photo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media(max-width: 600px) {
+    .eg-grid, .eg-photo-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== HEADER FIX ===== */
+body.eg-open { overflow: hidden; }
+body.eg-open header { position: static !important; }
 </style>
 <script>
+    /* ===== CARD → DETAIL ===== */
+function openEvent(id) {
+    document.getElementById("egCards").style.display = "none";
+    document.getElementById("egDetails").style.display = "block";
+    document.querySelectorAll(".eg-event-detail").forEach(el => el.style.display = "none");
+    document.getElementById("event-" + id).style.display = "block";
+}
+
+/* ===== BACK TO CARDS ===== */
+function goBack() {
+    document.getElementById("egCards").style.display = "grid";
+    document.getElementById("egDetails").style.display = "none";
+}
+
+/* ===== IMAGE LIGHTBOX (Event Gallery) ===== */
+let currentImages = [], currentIndex = 0;
+
+function openImage(el) {
+    const allImgs = [...document.querySelectorAll(".eg-event-detail[style*='block'] .eg-photo")];
+    currentImages = allImgs;
+    currentIndex = allImgs.indexOf(el);
+    document.getElementById("egLightboxImg").src = el.src;
+    document.getElementById("egLightbox").style.display = "flex";
+    document.body.classList.add("eg-open");
+}
+
+function prevImage() {
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    document.getElementById("egLightboxImg").src = currentImages[currentIndex].src;
+}
+
+function nextImage() {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    document.getElementById("egLightboxImg").src = currentImages[currentIndex].src;
+}
+
+function closeImage() {
+    document.getElementById("egLightbox").style.display = "none";
+    document.getElementById("egLightboxImg").src = "";
+    document.body.classList.remove("eg-open");
+}
+
+/* ===== VIDEO LIGHTBOX (Video Gallery) ===== */
 function openVideo(url) {
-    var embed = url.replace("watch?v=", "embed/");
-    document.getElementById("vgVideoFrame").src = embed;
-    document.getElementById("vgLightbox").style.display = "flex";
+    let id = "";
+    if (url.includes("watch?v=")) { id = url.split("watch?v=")[1]; }
+    else if (url.includes("youtu.be/")) { id = url.split("youtu.be/")[1]; }
+    if (id.includes("&")) { id = id.split("&")[0]; }
+
+    document.getElementById("egVideoFrame").src =
+        "https://www.youtube.com/embed/" + id + "?autoplay=1";
+
+    document.getElementById("egLightbox").style.display = "flex";
+    document.body.classList.add("eg-open");
 }
 
 function closeVideo() {
-    document.getElementById("vgLightbox").style.display = "none";
-    document.getElementById("vgVideoFrame").src = "";
+    document.getElementById("egLightbox").style.display = "none";
+    document.getElementById("egVideoFrame").src = "";
+    document.body.classList.remove("eg-open");
 }
+
+/* ===== LIGHTBOX CLOSE ON BACKDROP CLICK ===== */
+document.getElementById("egLightbox").addEventListener("click", function(e) {
+    if (e.target === this) {
+        closeImage();
+        closeVideo();
+    }
+});
 </script>
 <?php get_footer(); ?>

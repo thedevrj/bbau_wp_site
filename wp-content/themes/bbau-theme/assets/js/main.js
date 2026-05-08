@@ -72,8 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer.observe(document.querySelector(".glance-section"));
 });
-
-
 /* ================= VC SECTION SLIDER ================= */
 document.addEventListener('DOMContentLoaded', () => {
   const vcTrack = document.querySelector('.vc-slider-track');
@@ -123,6 +121,66 @@ document.addEventListener('DOMContentLoaded', () => {
   vcSlider.addEventListener('mouseenter', () => clearInterval(timer));
   vcSlider.addEventListener('mouseleave', () => { timer = setInterval(next, PAUSE); });
 });
+
+
+
+//inner menu js to store cookies
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  const url = new URL(window.location.href);
+  const menu = url.searchParams.get('menu');
+
+  /*      STEP 1: Store menu + clean URL  */
+
+  if (menu) {
+      document.cookie = "current_menu=" + menu + "; path=/";
+
+      // remove ?menu from URL
+      url.searchParams.delete('menu');
+      window.history.replaceState({}, document.title, url.pathname);
+  }
+
+  /*      STEP 2: Store menu pages on click  */
+
+  document.querySelectorAll('.common-menu-link').forEach(function(link) {
+
+      link.addEventListener('click', function() {
+
+          const menu = this.getAttribute('data-menu');
+          const pages = this.getAttribute('data-pages');
+
+          document.cookie = "current_menu=" + menu + "; path=/";
+          document.cookie = "menu_pages=" + pages + "; path=/";
+      });
+
+  });
+
+  /*      STEP 3: Auto reset when leaving menu  */
+
+  function getCookie(name) {
+      const value = document.cookie.split('; ').find(row => row.startsWith(name + '='));
+      return value ? value.split('=')[1] : null;
+  }
+  const currentUrl = window.location.href.split('?')[0];
+  const storedPages = getCookie('menu_pages');
+
+  if (storedPages) {
+      try {
+          const pages = JSON.parse(decodeURIComponent(storedPages));
+          const isInsideMenu = pages.some(page => page === currentUrl);
+          if (!isInsideMenu) {
+              // reset cookies
+              document.cookie = "current_menu=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+              document.cookie = "menu_pages=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          }
+
+      } catch (e) {
+          console.log('Menu reset error:', e);
+      }
+  }
+});
+
 
 
 /* ================= HOMEPAGE SLIDER (MARQUEE) ================= */
