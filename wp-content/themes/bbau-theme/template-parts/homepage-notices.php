@@ -75,7 +75,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
                 <?php echo str_pad($total_notices, 2, '0', STR_PAD_LEFT); ?>
             </div>
             <div class="ntl-hdr-lbl">
-                <?php echo esc_html(pluralize($page_name)); ?>
+                <?php echo esc_html(($page_name)); ?>
             </div>
         </div>
     </div>
@@ -127,7 +127,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     <!-- FOOTER -->
     <div class="ntl-foot">
 
-        <a href="/" class="ntl-back-btn">← Back to home</a>
+        <a href="/" class="ntl-back-btn"><i class="fa fa-arrow-left"></i> Back to home</a>
 
         <?php if ($total_pages > 1) : ?>
         <div class="ntl-pager">
@@ -249,8 +249,8 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
 
 /* COUNT BOX */
 .ntl-hdr-box {
-    width: 64px;
-    height: 64px;
+    width: auto;
+    height: auto;
     border-radius: 18px;
     background: #fff7ed;
     border: 1.5px solid #fed7aa;
@@ -258,10 +258,11 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding : 8px;
 }
 
 .ntl-hdr-num {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 800;
     color: #c2410c;
 }
@@ -370,7 +371,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
 }
 
 .ntl-card-title {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     color: #1c1917;
     margin-bottom: 4px;
@@ -449,7 +450,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     border-radius: 8px;
     background: #fff7ed;
     border: 1px solid #fed7aa;
-    color: #c2410c;
+    color: #c2410c !important;
     font-weight: 600;
     text-decoration: none;
     transition: 0.2s;
@@ -511,8 +512,13 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     }
 
     .ntl-hdr-box {
-        width: 54px;
-        height: 54px;
+        width: auto;
+        height: auto;
+        margin: 8px;
+
+    }
+    .ntl-hdr-lbl {
+        font-size: 7px;
     }
 
     .ntl-hdr-num {
