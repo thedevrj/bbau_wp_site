@@ -38,8 +38,8 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                 </div>
                 <div class="portfolio-header-text">
                     <div class="badge-fac">Faculty Portfolio</div>
-                    <h1 style="font-size: 2.1rem; margin: 0;"><?php echo esc_html($fac['name']); ?></h1>
-                    <p style="font-size: 1.1rem; opacity: 0.9; margin: 5px 0 0;">
+                    <h1 class="fac-name-main"><?php echo esc_html($fac['name']); ?></h1>
+                    <p class="fac-designation-main">
                         <?php echo esc_html($fac['designation']); ?></p>
                     <div class="d-flex gap-3 mt-3 flex-wrap">
                         <?php if (!empty($fac['school']['name'])): ?>
@@ -383,3 +383,4 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 0 40px;
 
 }
+</style>

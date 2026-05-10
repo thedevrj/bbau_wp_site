@@ -7,6 +7,7 @@ defined( 'ABSPATH' ) || exit;
 
 // === Fetch Global Notices ===
 $api_base   = getenv('DJANGO_API_URL');
+$media_base = getenv('DJANGO_MEDIA_URL');
 $api_url = $api_base . "/api/v1/global-notices/?page_size=100";
 $response = wp_remote_get($api_url, array('timeout' => 10));
 $notices_data = array();
@@ -191,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div class="info-scroll">
                     <?php if ( !empty($announcement_notices) ) : ?>
                         <?php foreach ( $announcement_notices as $an ) : ?>
-                            <a href="<?php echo esc_url(get_notice_href($an)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($an['title']); ?></a>
+                            <a href="<?php echo $media_base . esc_url(get_notice_href($an)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($an['title']); ?></a>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <span class="info-item" style="color:#777;">No announcements found.</span>
@@ -216,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div class="info-scroll">
                     <?php if ( !empty($event_notices) ) : ?>
                         <?php foreach ( $event_notices as $en ) : ?>
-                            <a href="<?php echo esc_url(get_notice_href($en)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($en['title']); ?></a>
+                            <a href="<?php echo $media_base . esc_url(get_notice_href($en)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($en['title']); ?></a>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <span class="info-item" style="color:#777;">No events found.</span>
@@ -241,7 +242,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div class="info-scroll">
                     <?php if ( !empty($appointment_notices) ) : ?>
                         <?php foreach ( $appointment_notices as $ap ) : ?>
-                            <a href="<?php echo esc_url(get_notice_href($ap)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($ap['title']); ?></a>
+                            <a href="<?php echo $media_base . esc_url(get_notice_href($ap)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($ap['title']); ?></a>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <span class="info-item" style="color:#777;">No appointments found.</span>
@@ -266,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div class="info-scroll">
                     <?php if ( !empty($tender_notices) ) : ?>
                         <?php foreach ( $tender_notices as $tn ) : ?>
-                            <a href="<?php echo esc_url(get_notice_href($tn)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($tn['title']); ?></a>
+                            <a href="<?php echo $media_base .  esc_url(get_notice_href($tn)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($tn['title']); ?></a>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <span class="info-item" style="color:#777;">No tenders found.</span>
