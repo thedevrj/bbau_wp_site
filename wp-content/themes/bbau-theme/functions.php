@@ -307,6 +307,7 @@ add_action('init','vc_speech_post_type');
 function add_custom_query_vars($vars) {
     $vars[] = 'school_slug';
     $vars[] = 'dept_slug';
+    $vars[] = 'centre_slug';
     $vars[] = 'faculty_slug';
     return $vars;
 }
@@ -318,6 +319,14 @@ function add_school_rewrite_rule() {
     add_rewrite_rule(
         '^schools/([^/]+)/?$',
         'index.php?pagename=school-detail&school_slug=$matches[1]',
+        'top'
+    );
+    
+    // centre rewrite rule (only for specific centres acting as departments)
+    $dept_centres = 'centre-of-post-graduate-legal-studies|centre-for-the-study-of-social-inclusion-cssi';
+    add_rewrite_rule(
+        '^centres/(' . $dept_centres . ')/?$',
+        'index.php?pagename=centre&centre_slug=$matches[1]',
         'top'
     );
     // department rewrite rule
@@ -381,4 +390,8 @@ function get_dept_display_name($dept) {
     }
     
     return $name;
+}
+function get_centre_display_name($centre) {
+    if (empty($centre)) return '';
+    return $centre['name'] ?? '';
 }

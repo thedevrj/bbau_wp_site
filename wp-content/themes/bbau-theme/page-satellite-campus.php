@@ -193,7 +193,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     color: var(--sc-midnight);
     padding: 6px 20px;
     border-radius: 50px;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -204,7 +204,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 .sc-hero-card h1 {
     font-family: 'Merriweather', serif;
     font-size: 2.5rem;
-    font-weight: 900;
+    font-weight: 800;
     margin-bottom: 10px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
@@ -228,7 +228,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 .sc-section-title {
     font-family: 'Merriweather', serif;
     font-size: 1.8rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--sc-midnight);
     margin-bottom: 25px;
     position: relative;
@@ -359,7 +359,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     text-transform: uppercase;
     letter-spacing: 3px;
     font-size: 10px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--sc-gold);
 }
 
@@ -409,7 +409,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     font-family: 'Merriweather', serif;
     font-size: 1.3rem;
     /* 🔥 More professional size */
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 5px;
 }
 

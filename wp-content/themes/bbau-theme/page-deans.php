@@ -22,7 +22,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     
     <!-- <div class="leadership-header py-5 text-center" style="background: linear-gradient(135deg, #5c1010, #8B1A1A); color: #fff;">
         <div class="container">
-            <h1 style="font-family: 'Merriweather', serif; font-weight: 800; font-size: 3rem;">Deans of Schools</h1>
+            <h1 style="font-family: 'Merriweather', serif; font-weight: 700; font-size: 3rem;">Deans of Schools</h1>
             <p style="font-size: 1.2rem; opacity: 0.9;">Leading the Academic Excellence across BBAU</p>
         </div>
     </div> -->
@@ -137,7 +137,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 .leader-label {
     display: inline-block;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     color: #8B1A1A;
     background: #fdfaf6;
     padding: 4px 15px;
@@ -152,7 +152,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     font-size: 1.1rem;
     color: #5c1010;
     margin-bottom: 8px;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .school-name {

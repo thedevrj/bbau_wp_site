@@ -14,7 +14,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     max-width: 100% !important;
     overflow-x: hidden !important;
 }
@@ -73,7 +74,7 @@ html, body {
     padding: 6px 16px;
     border-radius: 30px;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 20px;
@@ -143,7 +144,7 @@ html, body {
 
 .faculty-filter-item label {
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #64748b;
     letter-spacing: 0.5px;
@@ -223,7 +224,7 @@ html, body {
     padding: 6px 14px;
     border-radius: 30px;
     font-size: 0.65rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     backdrop-filter: blur(8px);
@@ -247,7 +248,7 @@ html, body {
 
 .fac-name-new {
     font-size: 1.25rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--fac-indigo);
     margin-bottom: 6px;
     line-height: 1.3;
@@ -287,7 +288,7 @@ html, body {
     justify-content: space-between;
     align-items: center;
     font-size: 0.8rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--fac-royal);
     transition: all 0.3s;
 }
@@ -326,7 +327,7 @@ html, body {
 .fac-name-main {
     font-size: 2.1rem;
     margin: 0;
-    font-weight: 800;
+    font-weight: 700;
     overflow-wrap: break-word;
     word-break: break-word;
 }
@@ -339,6 +340,15 @@ html, body {
     word-break: break-word;
 }
 
+.premium-rich-text a {
+    color: #00509e;
+    text-decoration: none;
+    font-weight: 600;
+}
+.premium-rich-text a:hover{
+    text-decoration: underline;
+}
+
 .premium-rich-text {
     line-height: 1.8;
     color: #334155 !important;
@@ -347,6 +357,7 @@ html, body {
     overflow-wrap: break-word;
     word-break: break-word;
 }
+
 .portfolio-layout {
     display: grid;
     grid-template-columns: 320px 1fr;
@@ -355,13 +366,14 @@ html, body {
     max-width: 100%;
 }
 
-.portfolio-main, .portfolio-sidebar {
+.portfolio-main,
+.portfolio-sidebar {
     min-width: 0;
 }
 
 .faculty-small-title {
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #94a3b8;
     letter-spacing: 1px;
@@ -418,7 +430,7 @@ html, body {
 .exp-item label {
     display: block;
     font-size: 0.65rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #94a3b8;
     margin-bottom: 2px;
@@ -519,7 +531,7 @@ html, body {
     background: #f8fafc;
     color: #64748b;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     border: none;
@@ -553,7 +565,7 @@ html, body {
     padding: 5px 12px;
     border-radius: 6px;
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -697,7 +709,7 @@ html, body {
         content: attr(data-label);
         display: block;
         font-size: 0.7rem;
-        font-weight: 800;
+        font-weight: 700;
         color: #94a3b8;
         text-transform: uppercase;
         margin-bottom: 4px;
@@ -753,13 +765,13 @@ html, body {
         margin-left: -10px;
         padding: 10px;
         border-radius: 0;
-        scrollbar-width: none; 
+        scrollbar-width: none;
         margin-bottom: 20px;
         background: #f1f5f9;
     }
 
     .portfolio-tabs::-webkit-scrollbar {
-        display: none; 
+        display: none;
     }
 
     .portfolio-tab-btn {

@@ -251,7 +251,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     color: var(--sc-midnight);
     padding: 6px 20px;
     border-radius: 50px;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -262,7 +262,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-hero-card h1 {
     font-family: 'Merriweather', serif;
     font-size: 2rem;
-    font-weight: 900;
+    font-weight: 700;
     margin: 0;
 }
 
@@ -278,7 +278,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-section-title {
     font-family: 'Merriweather', serif;
     font-size: 1.6rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--sc-midnight);
     margin-bottom: 25px;
     position: relative;
@@ -348,7 +348,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-btn-gold {
     background: var(--sc-gold);
     color: var(--sc-midnight);
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     border: none;
@@ -370,7 +370,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-btn-midnight {
     background: var(--sc-midnight);
     color: var(--sc-gold);
-    font-weight: 800;
+    font-weight: 700;
     border: none;
     min-height: 50px;
     height: auto;
@@ -522,7 +522,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-modal-header h3 {
     font-family: 'Merriweather', serif;
     font-size: 1.8rem;
-    font-weight: 900;
+    font-weight: 700;
     color: var(--sc-midnight);
     margin-bottom: 8px;
 }
@@ -556,7 +556,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 
 .sc-input-label {
     display: block;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -587,7 +587,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     border: none;
     padding: 18px;
     border-radius: 14px;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 0.9rem;

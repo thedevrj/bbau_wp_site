@@ -1,8 +1,8 @@
 <?php
 // Inherited variables: $api_base, $slug
 $api_base = getenv('DJANGO_API_URL');
-$fac_campus = isset($dept_data['campus']) ? $dept_data['campus'] : 'BBAU';
-$fac_url = $api_base . '/api/v1/faculty/?department__slug=' . urlencode($slug) . '&campus=' . urlencode($fac_campus) . '&page_size=500';
+$fac_campus = isset($centre_data['campus']) ? $centre_data['campus'] : 'BBAU';
+$fac_url = $api_base . '/api/v1/faculty/?centre_slug=' . urlencode($slug) . '&campus=' . urlencode($fac_campus) . '&page_size=500';
 $fac_res = wp_remote_get($fac_url, array('timeout' => 10));
 $faculty_list = array();
 
@@ -17,7 +17,7 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
 
 
 <div class="section">
-    <h3>Department Faculty</h3>
+    <h3>Centre Faculty</h3>
     <?php if(!empty($faculty_list)): ?>
     <div class="faculty-grid">
         <?php foreach($faculty_list as $fac): ?>
@@ -42,7 +42,7 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
         <?php endforeach; ?>
     </div>
     <?php else: ?>
-    <p style="margin-top:20px; color:#555;">No faculty members have been explicitly assigned to this department yet.</p>
+    <p style="margin-top:20px; color:#555;">No faculty members have been explicitly assigned to this centre yet.</p>
     <?php endif; ?>
 </div>
 

@@ -23,7 +23,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     
     <!-- <div class="leadership-header py-5 text-center" style="background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff;">
         <div class="container">
-            <h1 style="font-family: 'Merriweather', serif; font-weight: 800; font-size: 3rem;">Heads of Departments</h1>
+            <h1 style="font-family: 'Merriweather', serif; font-weight: 700; font-size: 3rem;">Heads of Departments</h1>
             <p style="font-size: 1.2rem; opacity: 0.9;">The Academic Pillars leading our Departmental Excellence</p>
         </div>
     </div> -->
@@ -153,7 +153,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     font-size: 1.2rem;
     color: #1e293b;
     margin-bottom: 5px;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .school-name {
