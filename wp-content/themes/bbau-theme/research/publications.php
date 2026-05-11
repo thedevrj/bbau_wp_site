@@ -95,7 +95,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 <div class="modal-badge" id="modal-type">PUBLICATION</div>
                 <div class="modal-badge indexing" id="modal-indexing-badge" style="display: none;">INDEXED</div>
             </div>
-            <h2 id="modal-title" class="mb-4" style="font-size: 1.8rem; font-weight: 800; color: var(--rd-indigo);">
+            <h2 id="modal-title" class="mb-4" style="font-size: 1.8rem; font-weight: 700; color: var(--rd-indigo);">
                 Publication Title</h2>
 
             <div class="modal-grid mb-4">
@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 6px 16px;
     border-radius: 30px;
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     background: #f1f5f9;
     color: #475569;
@@ -392,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .modal-info-item label {
     display: block;
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #94a3b8;
     margin-bottom: 5px;

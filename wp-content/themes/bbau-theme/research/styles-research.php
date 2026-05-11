@@ -56,14 +56,14 @@
     padding: 6px 16px;
     border-radius: 30px;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 20px;
 }
 
 .hero-content-glass1 h1 {
-    font-weight: 900 !important;
+    font-weight: 800 !important;
     margin-bottom: 15px;
     color: white;
     letter-spacing: -0.03em;
@@ -140,7 +140,7 @@
 
 .filter-item label {
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #64748b;
     letter-spacing: 0.5px;
@@ -186,7 +186,7 @@ input[type="date"].ra-select::-webkit-calendar-picker-indicator {
 
 .rd-section-title {
     font-size: 1.4rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
     margin-bottom: 30px;
     position: relative;
@@ -219,7 +219,7 @@ input[type="date"].ra-select::-webkit-calendar-picker-indicator {
     background: #f8fafc;
     color: #64748b;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     border: none;
@@ -384,7 +384,7 @@ input[type="date"].ra-select::-webkit-calendar-picker-indicator {
         content: attr(data-label);
         display: block;
         font-size: 0.7rem;
-        font-weight: 800;
+        font-weight: 700;
         color: #94a3b8;
         text-transform: uppercase;
         margin-bottom: 4px;

@@ -440,7 +440,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     padding: 6px 16px;
     border-radius: 30px;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 20px;
@@ -586,7 +586,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 }
 
 .obj-card h4 {
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
     margin-bottom: 10px;
 }
@@ -615,7 +615,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 .rd-checklist li::before {
     content: '\f058';
     font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
+    font-weight: 700;
     position: absolute;
     left: 0;
     color: #10b981;
@@ -648,7 +648,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 .dir-top h4 {
     margin: 0;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
 }
 
@@ -749,7 +749,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 .team-details-rd h3 {
     font-size: 1.25rem;
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 5px;
     color: var(--rd-indigo);
 }
@@ -814,7 +814,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 .policy-info h4 {
     margin: 0 0 5px 0;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
     font-size: 25px;
 }
@@ -966,7 +966,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     background: #f1f5f9;
     color: #475569;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     border: none;
@@ -999,12 +999,12 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 }
 
 .bold-cell {
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
 }
 
 .amount {
-    font-weight: 800;
+    font-weight: 700;
     color: #10b981;
 }
 
@@ -1052,7 +1052,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     .data-table tr { display: block; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 15px; overflow: hidden; }
     .data-table td { display: block; width: 100% !important; text-align: left; padding: 15px 20px; border: none; border-bottom: 1px solid #f1f5f9; }
     .data-table td:last-child { border-bottom: none; }
-    .data-table td::before { content: attr(data-label); font-weight: 800; color: #94a3b8; display: block; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 4px; }
+    .data-table td::before { content: attr(data-label); font-weight: 700; color: #94a3b8; display: block; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 4px; }
 }
 </style>
 

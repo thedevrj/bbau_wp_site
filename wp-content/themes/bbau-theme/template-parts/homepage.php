@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <?php if ( !empty($marquee_notices) ) : ?>
             <?php foreach ( $marquee_notices as $mn ) : ?>
             <span><a target="_blank"
-                    href="<?php echo esc_url(get_notice_href($mn)); ?>"><?php echo esc_html($mn['title']); ?></a></span>
+                    href="<?php echo $media_base . esc_url(get_notice_href($mn)); ?>"><?php echo esc_html($mn['title']); ?></a></span>
             <?php endforeach; ?>
             <?php else: ?>
             <span><a href="#">No new marquee updates at this time.</a></span>

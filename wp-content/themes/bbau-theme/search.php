@@ -187,7 +187,7 @@ $media_base = getenv('DJANGO_MEDIA_URL');
 
 .sec-title {
     font-family: 'Merriweather', serif;
-    font-weight: 800;
+    font-weight: 700;
     color: #5c1010;
     margin-bottom: 25px;
     padding-bottom: 12px;
@@ -219,7 +219,7 @@ $media_base = getenv('DJANGO_MEDIA_URL');
 
 .card-label {
     font-size: 0.68rem;
-    font-weight: 800;
+    font-weight: 700;
     color: #8B1A1A;
     text-transform: uppercase;
     letter-spacing: 1.5px;

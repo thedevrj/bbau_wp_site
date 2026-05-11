@@ -392,7 +392,7 @@ get_header();
     font-size: 0.85rem;
     text-transform: uppercase;
     color: #8B1A1A;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .members-table td {
@@ -529,7 +529,7 @@ get_header();
     background: #c9a84c;
     color: #5c1010;
     font-size: 11px;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 2px;
     padding: 6px 16px;
     border-radius: 20px;
@@ -695,7 +695,7 @@ get_header();
 }
 
 .min-date .d {
-    font-weight: 900;
+    font-weight: 800;
     font-size: 20px;
     line-height: 1;
 }

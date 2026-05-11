@@ -216,7 +216,7 @@ $syllabus_url = $prog['syllabus'] ?? '';
 .details-inner h5 {
     font-size: 0.95rem;
     color: #5c1010;
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 10px;
     border-bottom: 1px solid #e2d9cc;
     padding-bottom: 5px;
