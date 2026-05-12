@@ -1,9 +1,9 @@
 <?php
 // Inherited variables: $api_base, $slug
 // Fetch Department Projects
-$dept_campus = isset($dept_data['campus']) ? $dept_data['campus'] : 'BBAU';
+$centre_campus = isset($centre_data['campus']) ? $centre_data['campus'] : 'BBAU';
 
-$projects_url = $api_base . '/api/v1/research-projects/?department__slug=' . urlencode($slug) . '&campus=' . urlencode($dept_campus);
+$projects_url = $api_base . '/api/v1/research-projects/?centre_slug=' . urlencode($slug) . '&campus=' . urlencode($centre_campus);
 $projects_res = wp_remote_get($projects_url, array('timeout' => 10));
 $projects_list = array();
 
@@ -13,7 +13,7 @@ if (!is_wp_error($projects_res) && wp_remote_retrieve_response_code($projects_re
 }
 
 // Fetch Research Scholars
-$scholars_url = $api_base . '/api/v1/research-scholars/?department__slug=' . urlencode($slug) . '&campus=' . urlencode($dept_campus);
+$scholars_url = $api_base . '/api/v1/research-scholars/?centre_slug=' . urlencode($slug) . '&campus=' . urlencode($centre_campus);
 $scholars_res = wp_remote_get($scholars_url, array('timeout' => 10));
 $scholars_list = array();
 
@@ -23,7 +23,7 @@ if (!is_wp_error($scholars_res) && wp_remote_retrieve_response_code($scholars_re
 }
 
 // Fetch Department Publications
-$pubs_url = $api_base . '/api/v1/publications/?department__slug=' . urlencode($slug) . '&campus=' . urlencode($dept_campus);
+$pubs_url = $api_base . '/api/v1/publications/?centre_slug=' . urlencode($slug) . '&campus=' . urlencode($centre_campus);
 $pubs_res = wp_remote_get($pubs_url, array('timeout' => 10));
 $pubs_list = array();
 if (!is_wp_error($pubs_res) && wp_remote_retrieve_response_code($pubs_res) === 200) {
@@ -32,7 +32,7 @@ if (!is_wp_error($pubs_res) && wp_remote_retrieve_response_code($pubs_res) === 2
 }
 
 // Fetch Department Patents
-$patents_url = $api_base . '/api/v1/patents/?department__slug=' . urlencode($slug) . '&campus=' . urlencode($dept_campus);
+$patents_url = $api_base . '/api/v1/patents/?centre_slug=' . urlencode($slug) . '&campus=' . urlencode($centre_campus);
 $patents_res = wp_remote_get($patents_url, array('timeout' => 10));
 $patents_list = array();
 if (!is_wp_error($patents_res) && wp_remote_retrieve_response_code($patents_res) === 200) {
@@ -86,7 +86,7 @@ if (!is_wp_error($patents_res) && wp_remote_retrieve_response_code($patents_res)
             </table>
         </div>
         <?php else: ?>
-        <p class="empty-msg">No research projects are currently documented for this department.</p>
+        <p class="empty-msg">No research projects are currently documented for this centre.</p>
         <?php endif; ?>
     </div>
 
@@ -124,7 +124,7 @@ if (!is_wp_error($patents_res) && wp_remote_retrieve_response_code($patents_res)
             </table>
         </div>
         <?php else: ?>
-        <p class="empty-msg">No PhD scholars are currently registered under this department.</p>
+        <p class="empty-msg">No PhD scholars are currently registered under this centre.</p>
         <?php endif; ?>
     </div>
 
@@ -168,7 +168,7 @@ if (!is_wp_error($patents_res) && wp_remote_retrieve_response_code($patents_res)
                 <?php endforeach; ?>
             </ul>
             <?php else: ?>
-            <p class="empty-msg">No patents recorded for this department.</p>
+            <p class="empty-msg">No patents recorded for this centre.</p>
             <?php endif; ?>
         </div>
     </div>

@@ -17,7 +17,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     <div class="sc-hero" style="background-image: url('<?php echo esc_url($banner_url); ?>');">
         <div class="sc-hero-overlay">
             <div class="sc-hero-card">
-                <span class="sc-badge">University Archive</span>
+                <span class="sc-badge">University Bulletin</span>
                 <h1>Notice Portal</h1>
                 <div class="sc-hero-line"></div>
             </div>
@@ -28,7 +28,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
         <!-- SEARCH & FILTER BAR -->
         <div class="sc-content-card mb-4">
             <div class="row g-3">
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="sc-search-wrap">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <input type="text" id="notice-search" class="form-control"
@@ -36,34 +36,21 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <select id="notice-source" class="form-select sc-select">
-                        <option value="all">Sort by</option>
-                        <option value="global">University Wide</option>
-                        <option value="dept">Departmental</option>
-                    </select>
-                </div>
-
-                <!-- Advanced Filters -->
-                <div class="col-lg-3 col-md-6">
                     <select id="notice-timeline" class="form-select sc-select">
                         <option value="all">Any Time</option>
                         <option value="7">Last 7 Days</option>
+                        <option value="15">Last 15 Days</option>
                         <option value="30">Last 30 Days</option>
                     </select>
                 </div>
-                <div class="col-lg-5 col-md-6">
-                    <select id="notice-dept" class="form-select sc-select">
-                        <option value="all">All Departments</option>
-                    </select>
-                </div>
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <select id="notice-sort" class="form-select sc-select">
                         <option value="desc">Newest First</option>
                         <option value="asc">Oldest First</option>
                     </select>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <button id="reset-filters" class="btn sc-btn-gold w-75">Reset</button>
+                <div class="col-lg-2 col-md-6">
+                    <button id="reset-filters" class="btn sc-btn-gold w-100">Reset</button>
                 </div>
             </div>
         </div>
@@ -79,20 +66,20 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                                 <span>All Notifications</span>
                                 <i class="fa-solid fa-chevron-right"></i>
                             </a>
-                            <a href="#" class="sc-cat-item" data-cat="Academic">
-                                <span>Academic</span>
+                            <a href="#" class="sc-cat-item" data-cat="Announcement">
+                                <span>Announcements</span>
                                 <i class="fa-solid fa-chevron-right"></i>
                             </a>
-                            <a href="#" class="sc-cat-item" data-cat="Examination">
-                                <span>Examination</span>
+                            <a href="#" class="sc-cat-item" data-cat="Event">
+                                <span>Events</span>
                                 <i class="fa-solid fa-chevron-right"></i>
                             </a>
-                            <a href="#" class="sc-cat-item" data-cat="Admission">
-                                <span>Admission</span>
+                            <a href="#" class="sc-cat-item" data-cat="Appointment">
+                                <span>Appointments</span>
                                 <i class="fa-solid fa-chevron-right"></i>
                             </a>
-                            <a href="#" class="sc-cat-item" data-cat="Recruitment">
-                                <span>Recruitment</span>
+                            <a href="#" class="sc-cat-item" data-cat="Tenders">
+                                <span>Tenders</span>
                                 <i class="fa-solid fa-chevron-right"></i>
                             </a>
                         </div>
@@ -104,17 +91,17 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                             <div id="auth-unlogged">
                                 <p class=" text-muted mb-3">Faculty and Staff login for internal notices.</p>
                                 <button class="btn sc-btn-midnight w-100" onclick="toggleModal('login-modal', true)">
-                                    <i class="fa-solid fa-user-lock me-2"></i> Login
+                                    <i class="fa-solid fa-user-lock me-2"></i>  Login
                                 </button>
                             </div>
                             <div id="auth-logged" class="d-none">
                                 <div class="sc-user-brief mb-3">
                                     <div class="sc-user-avatar"><i class="fa-solid fa-user-tie"></i></div>
-                                    <h4 id="logged-username" class="mb-0">Staff</h4>
+                                    <h4 id="logged-username" class="mb-0">Authorized User</h4>
                                     <span class="sc-status-dot">Verified Session</span>
                                 </div>
                                 <button class="btn sc-btn-gold w-100 mb-2 d-none" id="tab-private" data-tab="private">
-                                    Internal Dashboard
+                                    Dashboard
                                 </button>
                                 <button class="btn btn-outline-danger btn-sm w-100" id="btn-logout">Logout</button>
                             </div>
@@ -149,14 +136,14 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     <div class="sc-modal-box">
         <button class="sc-modal-close" onclick="toggleModal('login-modal', false)">&times;</button>
         <div class="sc-modal-header">
-            <h3>Login Portal</h3>
-            <p class="sc-modal-subtitle">Secure Authentication</p>
+            <h3>Portal Authentication</h3>
+            <p class="sc-modal-subtitle">Secure access for Faculty & Staff</p>
         </div>
         <div class="sc-modal-body">
             <form id="staff-login-form">
                 <div class="sc-input-group">
                     <label class="sc-input-label">Username</label>
-                    <input type="text" name="username" class="sc-input" placeholder="Enter your ID" required>
+                    <input type="text" name="username" class="sc-input" placeholder="Enter your Username" required>
                 </div>
                 <div class="sc-input-group">
                     <label class="sc-input-label">Password</label>
@@ -164,7 +151,34 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                 </div>
                 <div id="login-error" class="alert alert-danger d-none mb-4"></div>
                 <button type="submit" class="btn-sc-submit" id="btn-login-submit">
-                    Access Portal
+                    Login
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal (First Login) -->
+<div class="sc-modal" id="password-modal">
+    <div class="sc-modal-overlay"></div>
+    <div class="sc-modal-box">
+        <div class="sc-modal-header">
+            <h3>Update Security</h3>
+            <p class="sc-modal-subtitle">Set a new password for your account</p>
+        </div>
+        <div class="sc-modal-body">
+            <form id="change-password-form">
+                <div class="sc-input-group">
+                    <label class="sc-input-label">New Password</label>
+                    <input type="password" id="new-password" name="new_password" class="sc-input" placeholder="Min. 8 characters" required>
+                </div>
+                <div class="sc-input-group">
+                    <label class="sc-input-label">Confirm Password</label>
+                    <input type="password" id="confirm-password" class="sc-input" placeholder="Confirm your new password" required>
+                </div>
+                <div id="password-error" class="alert alert-danger d-none mb-4"></div>
+                <button type="submit" class="btn-sc-submit" id="btn-pass-submit">
+                    Set New Password
                 </button>
             </form>
         </div>
@@ -174,7 +188,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 <style>
 /* ============================================================
    BRANDED NOTICE PORTAL - SATELLITE CAMPUS STYLE
-============================================================ */
+ ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Nunito:wght@400;600;700;800&display=swap');
 
@@ -237,7 +251,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     color: var(--sc-midnight);
     padding: 6px 20px;
     border-radius: 50px;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -248,7 +262,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-hero-card h1 {
     font-family: 'Merriweather', serif;
     font-size: 2rem;
-    font-weight: 900;
+    font-weight: 700;
     margin: 0;
 }
 
@@ -264,7 +278,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-section-title {
     font-family: 'Merriweather', serif;
     font-size: 1.6rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--sc-midnight);
     margin-bottom: 25px;
     position: relative;
@@ -334,13 +348,18 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-btn-gold {
     background: var(--sc-gold);
     color: var(--sc-midnight);
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     border: none;
-    height: 50px;
+    min-height: 50px;
+    height: auto;
+    padding: 10px 15px;
     border-radius: 12px;
     transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sc-btn-gold:hover {
@@ -351,10 +370,15 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-btn-midnight {
     background: var(--sc-midnight);
     color: var(--sc-gold);
-    font-weight: 800;
+    font-weight: 700;
     border: none;
-    height: 50px;
+    min-height: 50px;
+    height: auto;
+    padding: 10px 15px;
     border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sc-btn-midnight:hover {
@@ -434,7 +458,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 
 .sc-notice-info h3 {
     font-family: 'Merriweather', serif;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--sc-midnight);
     margin-bottom: 5px;
@@ -498,7 +522,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-modal-header h3 {
     font-family: 'Merriweather', serif;
     font-size: 1.8rem;
-    font-weight: 900;
+    font-weight: 700;
     color: var(--sc-midnight);
     margin-bottom: 8px;
 }
@@ -532,7 +556,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 
 .sc-input-label {
     display: block;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -563,7 +587,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     border: none;
     padding: 18px;
     border-radius: 14px;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 0.9rem;
@@ -624,9 +648,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const listContainer = document.getElementById('notices-list');
     const searchInput = document.getElementById('notice-search');
-    const sourceSelect = document.getElementById('notice-source');
     const timelineSelect = document.getElementById('notice-timeline');
-    const deptSelect = document.getElementById('notice-dept');
     const sortSelect = document.getElementById('notice-sort');
     const resetBtn = document.getElementById('reset-filters');
     const authUnlogged = document.getElementById('auth-unlogged');
@@ -642,10 +664,14 @@ document.addEventListener('DOMContentLoaded', function() {
             authLogged.classList.remove('d-none');
             tabPrivate.classList.remove('d-none');
             loggedUsername.textContent = user;
+            currentTab = 'private'; // Default to private on login
+            tabPrivate.classList.add('btn-success');
         } else {
             authUnlogged.classList.remove('d-none');
             authLogged.classList.add('d-none');
             tabPrivate.classList.add('d-none');
+            currentTab = 'all';
+            tabPrivate.classList.remove('btn-success');
         }
     }
 
@@ -656,59 +682,31 @@ document.addEventListener('DOMContentLoaded', function() {
         } : {};
 
         try {
-            const [gRes, dRes] = await Promise.all([
-                fetch(`${apiBase}/global-notices/?page_size=500`, {
-                    headers
-                }),
-                fetch(`${apiBase}/notices/?page_size=500`, {
-                    headers
-                })
-            ]);
+            const res = await fetch(`${apiBase}/global-notices/?page_size=500`, {
+                headers
+            });
+            const data = await res.json();
 
-            const gData = await gRes.json();
-            const dData = await dRes.json();
-
-            const g = (gData.results || []).map(n => ({
+            allNotices = (data.results || []).map(n => ({
                 ...n,
-                source: 'global',
-                sourceLabel: 'University Wide',
                 cat: n.categories?. [0] || 'General',
                 date: new Date(n.date_posted)
             }));
-            const d = (dData.results || []).map(n => ({
-                ...n,
-                source: 'dept',
-                sourceLabel: n.department_name || 'Departmental',
-                cat: n.category || 'General',
-                date: new Date(n.date_posted)
-            }));
 
-            allNotices = [...g, ...d];
-            populateDeptFilter();
             render();
         } catch (e) {
             listContainer.innerHTML = '<p>Connection Error.</p>';
         }
     }
 
-    function populateDeptFilter() {
-        const depts = [...new Set(allNotices.filter(n => n.source === 'dept').map(n => n.sourceLabel))].sort();
-        deptSelect.innerHTML = '<option value="all">All Departments</option>' +
-            depts.map(d => `<option value="${d}">${d}</option>`).join('');
-    }
-
     function render() {
         const search = searchInput.value.toLowerCase();
-        const sourceVal = sourceSelect.value;
         const timelineVal = timelineSelect.value;
-        const deptVal = deptSelect.value;
         const sortVal = sortSelect.value;
 
         let filtered = allNotices.filter(n => {
             const matchesSearch = n.title.toLowerCase().includes(search);
             const matchesCat = !currentCat || n.cat === currentCat;
-            const matchesSource = sourceVal === 'all' || n.source === sourceVal;
-            const matchesDept = deptVal === 'all' || n.sourceLabel === deptVal;
             const matchesTab = currentTab === 'all' ? true : n.is_private;
 
             // Timeline Filter
@@ -721,8 +719,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 matchesTimeline = diffDays <= days;
             }
 
-            return matchesSearch && matchesCat && matchesSource && matchesDept && matchesTab &&
-                matchesTimeline;
+            return matchesSearch && matchesCat && matchesTab && matchesTimeline;
         });
 
         // Sorting
@@ -730,7 +727,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return sortVal === 'asc' ? a.date - b.date : b.date - a.date;
         });
 
-        document.getElementById('result-count').textContent = filtered.length;
+        document.getElementById('result-count').textContent = `Total: ${filtered.length}`;
 
         if (filtered.length === 0) {
             listContainer.innerHTML = '<p class="py-5 text-center">No announcements found.</p>';
@@ -745,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="sc-notice-info">
                     <h3>${n.title}</h3>
                     <div class="sc-notice-meta">
-                        ${n.cat} &bull; ${n.sourceLabel} &bull; ${n.date.toLocaleDateString('en-GB')}
+                        ${n.cat} &bull; ${n.date.toLocaleDateString('en-GB')}
                     </div>
                 </div>
             </a>
@@ -756,8 +753,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('staff-login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target).entries());
+        const loginError = document.getElementById('login-error');
+        loginError.classList.add('d-none');
+        
         try {
-            const res = await fetch(`${apiBase}/token/`, {
+            // Using our custom security-aware login endpoint
+            const res = await fetch(`${apiBase.replace('/api/v1', '')}/portal/api/login/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -765,17 +766,89 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(data)
             });
             const resData = await res.json();
+            
             if (res.ok) {
+                // Check if user is forced to change password
+                if (resData.force_password_change) {
+                    localStorage.setItem('temp_token', resData.access); // Save token for password change
+                    localStorage.setItem('temp_user', data.username);
+                    localStorage.setItem('temp_old_pass', data.password); // Needed for password change verification
+                    toggleModal('login-modal', false);
+                    toggleModal('password-modal', true);
+                    return;
+                }
+                
                 localStorage.setItem('portal_access_token', resData.access);
                 localStorage.setItem('portal_user', data.username);
                 toggleModal('login-modal', false);
                 updateAuthUI();
                 fetchNotices();
             } else {
-                alert("Login failed.");
+                loginError.textContent = resData.detail || "Login failed.";
+                loginError.classList.remove('d-none');
             }
         } catch (i) {
-            alert("Network Error.");
+            loginError.textContent = "Network error. Please try again.";
+            loginError.classList.remove('d-none');
+        }
+    });
+
+    document.getElementById('change-password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newPass = document.getElementById('new-password').value;
+        const confirmPass = document.getElementById('confirm-password').value;
+        const passError = document.getElementById('password-error');
+        
+        passError.classList.add('d-none');
+        
+        if (newPass.length < 8) {
+            passError.textContent = "Password must be at least 8 characters long.";
+            passError.classList.remove('d-none');
+            return;
+        }
+        
+        if (newPass !== confirmPass) {
+            passError.textContent = "Passwords do not match.";
+            passError.classList.remove('d-none');
+            return;
+        }
+
+        const token = localStorage.getItem('temp_token');
+        const oldPass = localStorage.getItem('temp_old_pass');
+        const username = localStorage.getItem('temp_user');
+
+        try {
+            const res = await fetch(`${apiBase.replace('/api/v1', '')}/portal/api/change-password/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    old_password: oldPass,
+                    new_password: newPass
+                })
+            });
+            
+            if (res.ok) {
+                // Password changed! Now log them in properly
+                localStorage.removeItem('temp_old_pass');
+                localStorage.removeItem('temp_token');
+                localStorage.setItem('portal_access_token', token);
+                localStorage.setItem('portal_user', username);
+                
+                toggleModal('password-modal', false);
+                updateAuthUI();
+                fetchNotices();
+                alert("Security updated! Welcome to the Portal.");
+            } else {
+                const data = await res.json();
+                passError.textContent = data.detail || "Update failed.";
+                passError.classList.remove('d-none');
+            }
+        } catch (err) {
+            passError.textContent = "Network error.";
+            passError.classList.remove('d-none');
         }
     });
 
@@ -786,7 +859,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Event Listeners for Filters
-    [searchInput, sourceSelect, timelineSelect, deptSelect, sortSelect].forEach(el => {
+    [searchInput, timelineSelect, sortSelect].forEach(el => {
         el.addEventListener('change', render);
         if (el === searchInput) el.addEventListener('input', render);
     });
@@ -810,9 +883,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     resetBtn.addEventListener('click', () => {
         searchInput.value = '';
-        sourceSelect.value = 'all';
         timelineSelect.value = 'all';
-        deptSelect.value = 'all';
         sortSelect.value = 'desc';
         currentCat = '';
         document.querySelectorAll('.sc-cat-item').forEach(l => l.classList.remove('active'));

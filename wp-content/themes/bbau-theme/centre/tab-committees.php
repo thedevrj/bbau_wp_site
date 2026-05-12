@@ -1,8 +1,8 @@
 <?php
 // Inherited variables: $api_base, $slug
 $api_base = getenv('DJANGO_API_URL');
-$committees_url = $api_base . '/api/v1/dept-committees/?department__slug=' . urlencode($slug);
-$minutes_url = $api_base . '/api/v1/dept-minutes/?department__slug=' . urlencode($slug);
+$committees_url = $api_base . '/api/v1/dept-committees/?centre_slug=' . urlencode($slug);
+$minutes_url = $api_base . '/api/v1/dept-minutes/?centre_slug=' . urlencode($slug);
 $committees_res = wp_remote_get($committees_url, array('timeout' => 10));
 $minutes_res = wp_remote_get($minutes_url, array('timeout' => 10));
 $committees_list = array();
@@ -21,7 +21,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
 <div class="section">
     <div class="row">
         <div class="col-lg-6 mb-3">
-            <h3>Department Committees</h3>
+            <h3>Centre Committees</h3>
             <?php if(!empty($committees_list)): ?>
             <div class="committees-wrap">
                 <?php foreach($committees_list as $committee): ?>
@@ -67,7 +67,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
                 <?php endforeach; ?>
             </div>
             <?php else: ?>
-            <p style="margin-top:20px; color:#555;">No committee information is available for this department.</p>
+            <p style="margin-top:20px; color:#555;">No committee information is available for this centre.</p>
             <?php endif; ?>
         </div>
         <div class="col-lg-6 mb-3">

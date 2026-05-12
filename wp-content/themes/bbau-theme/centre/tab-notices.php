@@ -1,6 +1,6 @@
 <?php
 // Inherited variables: $api_base, $slug
-$notices_url = $api_base . '/api/v1/notices/?department__slug=' . urlencode($slug) . '&page_size=100';
+$notices_url = $api_base . '/api/v1/notices/?centre_slug=' . urlencode($slug) . '&page_size=100';
 $notices_res = wp_remote_get($notices_url, array('timeout' => 10));
 $notices_list = array();
 
@@ -11,7 +11,7 @@ if (!is_wp_error($notices_res) && wp_remote_retrieve_response_code($notices_res)
 ?>
 
 <div class="section">
-    <h3>Department Notices</h3>
+    <h3>Centre Notices</h3>
     <?php if(!empty($notices_list)): ?>
     <div class="notice-list-wrap">
         <?php foreach($notices_list as $notice): ?>
@@ -35,7 +35,7 @@ if (!is_wp_error($notices_res) && wp_remote_retrieve_response_code($notices_res)
         <?php endforeach; ?>
     </div>
     <?php else: ?>
-    <p style="margin-top:20px; color:#555;">No active notices for this department at the moment.</p>
+    <p style="margin-top:20px; color:#555;">No active notices for this centre at the moment.</p>
     <?php endif; ?>
 </div>
 

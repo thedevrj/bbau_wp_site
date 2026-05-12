@@ -10,6 +10,29 @@
     --fac-shadow: 0 20px 50px rgba(30, 27, 75, 0.05);
 }
 
+.faculty-profile-page * {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+.faculty-profile-page {
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+}
+
+/* .faculty-profile-page .container {
+    max-width: 100% !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    overflow: hidden;
+} */
+
 /* PREMIUM FACULTY HERO */
 .premium-hero-fac {
     position: relative;
@@ -41,6 +64,7 @@
     padding: 40px;
     border-radius: 24px;
     max-width: 100%;
+    width: 100%;
 }
 
 .badge-fac {
@@ -50,7 +74,7 @@
     padding: 6px 16px;
     border-radius: 30px;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 20px;
@@ -120,7 +144,7 @@
 
 .faculty-filter-item label {
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #64748b;
     letter-spacing: 0.5px;
@@ -200,7 +224,7 @@
     padding: 6px 14px;
     border-radius: 30px;
     font-size: 0.65rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     backdrop-filter: blur(8px);
@@ -224,7 +248,7 @@
 
 .fac-name-new {
     font-size: 1.25rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--fac-indigo);
     margin-bottom: 6px;
     line-height: 1.3;
@@ -264,7 +288,7 @@
     justify-content: space-between;
     align-items: center;
     font-size: 0.8rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--fac-royal);
     transition: all 0.3s;
 }
@@ -300,16 +324,56 @@
     color: #e2e8f0;
 }
 
+.fac-name-main {
+    font-size: 2.1rem;
+    margin: 0;
+    font-weight: 700;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.fac-designation-main {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 5px 0 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.premium-rich-text a {
+    color: #00509e;
+    text-decoration: none;
+    font-weight: 600;
+}
+.premium-rich-text a:hover{
+    text-decoration: underline;
+}
+
+.premium-rich-text {
+    line-height: 1.8;
+    color: #334155 !important;
+    font-size: 1.05rem;
+    padding-left: 20px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
 .portfolio-layout {
     display: grid;
     grid-template-columns: 320px 1fr;
     gap: 40px;
     align-items: start;
+    max-width: 100%;
+}
+
+.portfolio-main,
+.portfolio-sidebar {
+    min-width: 0;
 }
 
 .faculty-small-title {
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #94a3b8;
     letter-spacing: 1px;
@@ -366,7 +430,7 @@
 .exp-item label {
     display: block;
     font-size: 0.65rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #94a3b8;
     margin-bottom: 2px;
@@ -381,13 +445,6 @@
     animation: facUp 0.4s ease-out;
 }
 
-.premium-rich-text {
-    line-height: 1.8;
-    color: #334155;
-    font-size: 1.05rem;
-    padding-left: 20px;
-}
-
 /* PORTFOLIO TABS */
 .portfolio-tabs {
     display: flex;
@@ -397,8 +454,8 @@
     border-radius: 15px;
     margin-bottom: 30px;
     position: sticky;
-    top: 20px;
-    z-index: 100;
+    top: 0;
+    z-index: 90;
 }
 
 .portfolio-tab-btn {
@@ -474,7 +531,7 @@
     background: #f8fafc;
     color: #64748b;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     border: none;
@@ -508,7 +565,7 @@
     padding: 5px 12px;
     border-radius: 6px;
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -600,6 +657,14 @@
     .portfolio-layout {
         grid-template-columns: 1fr;
     }
+
+    .portfolio-sidebar {
+        order: 2;
+    }
+
+    .portfolio-main {
+        order: 1;
+    }
 }
 
 @media (max-width: 768px) {
@@ -644,10 +709,92 @@
         content: attr(data-label);
         display: block;
         font-size: 0.7rem;
-        font-weight: 800;
+        font-weight: 700;
         color: #94a3b8;
         text-transform: uppercase;
         margin-bottom: 4px;
+    }
+
+    /* FACULTY SINGLE PROFILE MOBILE */
+    .premium-hero-fac {
+        padding: 30px 0;
+        min-height: auto;
+    }
+
+    .fac-content-glass {
+        padding: 25px;
+        border-radius: 20px;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .fac-content-glass .d-flex.align-items-center {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px !important;
+        width: 100%;
+    }
+
+    .portfolio-avatar-wrap {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto;
+    }
+
+    .fac-name-main {
+        font-size: 1.75rem;
+    }
+
+    .fac-designation-main {
+        font-size: 1rem;
+    }
+
+    .portfolio-header-text .d-flex {
+        justify-content: center;
+    }
+
+    .portfolio-tabs {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+        top: 0;
+        z-index: 10;
+        width: calc(100% + 20px);
+        margin-left: -10px;
+        padding: 10px;
+        border-radius: 0;
+        scrollbar-width: none;
+        margin-bottom: 20px;
+        background: #f1f5f9;
+    }
+
+    .portfolio-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .portfolio-tab-btn {
+        flex: 0 0 auto;
+        padding: 10px 18px;
+        white-space: nowrap;
+        font-size: 0.85rem;
+    }
+
+    .fac-card-premium {
+        padding: 20px !important;
+        border-radius: 16px;
+    }
+
+    .premium-rich-text {
+        padding-left: 0;
+        font-size: 1rem;
+    }
+
+    .rd-section-title {
+        margin-left: 0 !important;
+        margin-right: 0;
+        padding-left: 15px;
     }
 }
 </style>

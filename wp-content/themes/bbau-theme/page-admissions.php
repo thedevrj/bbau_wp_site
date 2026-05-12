@@ -110,7 +110,7 @@ if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_re
     font-family: 'Merriweather', serif;
     color: #5c1010;
     font-size: 3rem;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 

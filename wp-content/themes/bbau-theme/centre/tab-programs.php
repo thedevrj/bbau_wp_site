@@ -1,6 +1,6 @@
 <?php
 // Inherited variables: $api_base, $slug
-$prog_url = $api_base . '/api/v1/programs/?department__slug=' . urlencode($slug);
+$prog_url = $api_base . '/api/v1/programs/?centre_slug=' . urlencode($slug);
 $prog_res = wp_remote_get($prog_url, array('timeout' => 10));
 $programs_list = array();
 
@@ -9,7 +9,7 @@ if (!is_wp_error($prog_res) && wp_remote_retrieve_response_code($prog_res) === 2
     $programs_list = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
 }
 
-$cbcs_url = $api_base . '/api/v1/cbcs/?department__slug=' . urlencode($slug);
+$cbcs_url = $api_base . '/api/v1/cbcs/?centre_slug=' . urlencode($slug);
 $cbcs_res = wp_remote_get($cbcs_url, array('timeout' => 10));
 $cbcs_list = array();
 if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 200) {
@@ -121,14 +121,14 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
         </table>
     </div>
     <?php else: ?>
-    <p style="margin-top:20px; color:#555;">No academic programmes are currently documented for this department.</p>
+    <p style="margin-top:20px; color:#555;">No academic programmes are currently documented for this centre.</p>
     <?php endif; ?>
 </div>
 
 <?php if(!empty($cbcs_list)): ?>
 <div class="section" style="margin-top:50px;">
     <h3>Open Electives (CBCS Courses)</h3>
-    <p style="font-size:0.9rem; color:#666; margin-bottom:15px;">Inter-disciplinary courses offered by the department to
+    <p style="font-size:0.9rem; color:#666; margin-bottom:15px;">Inter-disciplinary courses offered by the centre to
         students of other departments.</p>
     <div class="prog-table-wrap">
         <table class="prog-table">

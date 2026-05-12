@@ -292,6 +292,12 @@
   height: clamp(38px, 4.5vw, 51px);
   flex-shrink: 0;
 }
+.univ-name a,
+.univ-name a:hover,
+.univ-name a:visited {
+    text-decoration: none !important;
+    color: inherit !important;
+}
 
 .univ-name {
   display: flex;
