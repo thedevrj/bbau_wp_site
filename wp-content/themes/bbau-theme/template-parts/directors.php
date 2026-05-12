@@ -8,203 +8,126 @@ defined('ABSPATH') || exit;
 get_header();
 ?>
 
-<!-- =========================
-BANNER
-========================= -->
-
 <?php get_template_part('banners/about-banner'); ?>
 
-<!-- =========================
-PAGE START
-========================= -->
-
 <div class="container-fluid py-lg-5 page-bg page-template-about-bg">
-
-    <!-- =========================
-    BREADCRUMB
-    ========================= -->
 
     <?php get_template_part('template-parts/breadcrumb'); ?>
 
     <div class="container">
-
         <div class="tm-page-wrap">
+
+            <!-- HEADING -->
             <div class="tm-heading-wrap">
-                    <h2 class="tm-main-heading">
-                        Directors / Coordinators / In-Charge
-                    </h2>
+                <h2 class="tm-main-heading">
+                    Directors / Coordinators / In-Charge
+                </h2>
+            </div>
 
-                </div>
-
-            <!-- =========================
-            GRID
-            ========================= -->
-
+            <!-- GRID -->
             <div class="tm-grid">
-                
+
                 <?php if( have_rows('team_members') ) : ?>
+                    <?php while( have_rows('team_members') ) : the_row();
 
-                <?php while( have_rows('team_members') ) : the_row();
+                        $name        = get_sub_field('name');
+                        $image       = get_sub_field('image');
+                        $designation = get_sub_field('designation');
+                        $center_name = get_sub_field('center_name');
+                        $button_link = get_sub_field('button_link');
 
-                    $name         = get_sub_field('name');
-                    $image        = get_sub_field('image');
-                    $designation  = get_sub_field('designation');
-                    $email        = get_sub_field('email');
-                    $phone        = get_sub_field('phone_number');
-                    $button_link  = get_sub_field('button_link');
+                        $initials = $name ? strtoupper(substr(trim($name), 0, 1)) : '?';
+                        $img_url  = '';
+                        if( $image ){
+                            $img_url = is_array($image) ? $image['url'] : $image;
+                        }
+                    ?>
 
-                ?>
+                    <div class="tm-card">
 
-                <!-- =========================
-                CARD
-                ========================= -->
-
-                <div class="tm-card">
-
-                    <!-- CIRCLES -->
-
-                    <div class="tm-circle-1"></div>
-                    <div class="tm-circle-2"></div>
-
-                    <!-- IMAGE -->
-
-                    <div class="tm-image-wrap">
-
-                        <?php if($image): ?>
-
-                        <img src="<?php echo esc_url(is_array($image) ? $image['url'] : $image); ?>"
-                            alt="<?php echo esc_attr($name); ?>" class="tm-image">
-
-                        <?php else: ?>
-
-                        <div class="tm-avatar">
-
-                            <?php echo esc_html(strtoupper(substr($name,0,1))); ?>
-
+                        <!-- TOP BAR -->
+                        <div class="tm-top-bar">
+                            <div class="tm-bar-circle"></div>
                         </div>
 
-                        <?php endif; ?>
+                        <!-- PHOTO -->
+                        <div class="tm-image-wrap">
+                            <?php if( $img_url ): ?>
+                                <img src="<?php echo esc_url($img_url); ?>"
+                                     alt="<?php echo esc_attr($name); ?>"
+                                     class="tm-image">
+                            <?php else: ?>
+                                <div class="tm-avatar">
+                                    <?php echo esc_html($initials); ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
 
-                    </div>
+                        <!-- CONTENT -->
+                        <div class="tm-content">
 
-                    <!-- CONTENT -->
-
-                    <div class="tm-content">
-
-                        <?php if($name): ?>
-
-                        <p class="tm-name">
-
-                            <?php echo esc_html($name); ?>
-
-                        </p>
-
-                        <?php endif; ?>
-
-                        <?php if($designation): ?>
-
-                        <span class="tm-designation">
-
-                            <?php echo esc_html($designation); ?>
-
-                        </span>
-
-                        <?php endif; ?>
-
-                        <!-- INFO -->
-
-                        <div class="tm-info-wrap">
-
-                            <?php if($email): ?>
-
-                            <div class="tm-info">
-
-                                <i class="fa-solid fa-envelope"></i>
-
-                                <a href="mailto:<?php echo esc_attr($email); ?>" class="tm-link">
-
-                                    <?php echo esc_html($email); ?>
-
-                                </a>
-
-                            </div>
-
+                            <?php if($name): ?>
+                                <p class="tm-name"><?php echo esc_html($name); ?></p>
                             <?php endif; ?>
 
-                            <?php if($phone): ?>
+                            <?php if($designation): ?>
+                                <span class="tm-designation">
+                                    <?php echo esc_html($designation); ?>
+                                </span>
+                            <?php endif; ?>
 
-                            <div class="tm-info">
+                            <?php if($center_name): ?>
+                                <div class="tm-center-name">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                    <?php echo esc_html($center_name); ?>
+                                </div>
+                            <?php endif; ?>
 
-                                <i class="fa-solid fa-phone"></i>
-
-                                <a href="tel:<?php echo esc_attr($phone); ?>" class="tm-link">
-
-                                    <?php echo esc_html($phone); ?>
-
+                            <?php if($button_link): ?>
+                                <a href="<?php echo esc_url($button_link); ?>"
+                                   class="tm-btn"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
+                                    View Profile
+                                    <i class="fa-solid fa-arrow-right"></i>
                                 </a>
-
-                            </div>
-
                             <?php endif; ?>
 
                         </div>
 
-                        <!-- BUTTON -->
-
-                        <?php if($button_link): ?>
-
-                        <a href="<?php echo esc_url($button_link); ?>" class="tm-btn" target="_blank"
-                            rel="noopener noreferrer">
-
-                            View Profile
-
-                        </a>
-
-                        <?php endif; ?>
-
                     </div>
 
-                </div>
+                    <?php endwhile; ?>
 
-                <?php endwhile; ?>
-
+                <?php else: ?>
+                    <p class="tm-empty">No team members found.</p>
                 <?php endif; ?>
 
             </div>
 
         </div>
-
     </div>
 
 </div>
 
-<!-- =========================
-CSS
-========================= -->
-
 <style>
-/* =========================
-FONT AWESOME
-========================= */
-
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
 
 /* =========================
-PAGE WRAPPER
+PAGE
 ========================= */
 
 .tm-page-wrap {
-    padding: 20px 0 10px;
+    padding: 20px 0 50px;
 }
 
 /* =========================
-GRID
+GRID — 5 IN A ROW
 ========================= */
 
 .tm-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 22px;
+    gap: 18px;
 }
 
 /* =========================
@@ -212,92 +135,114 @@ CARD
 ========================= */
 
 .tm-card {
-    background: linear-gradient(160deg, #ccc 60%, #9FE1CB 100%);
-    border: 1px solid #6c757d;
-    border-radius: 20px;
-    padding: 28px 18px 24px;
-    text-align: center;
-    position: relative;
+    background: #ffffff;
+    border-radius: 16px;
     overflow: hidden;
-    transition: transform .22s ease, box-shadow .22s ease;
+    border: 1px solid #ebebeb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .tm-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.09);
 }
 
 /* =========================
-DECORATIVE CIRCLES
+TOP BAR COLOURS — nth-child
 ========================= */
 
-.tm-circle-1 {
-    position: absolute;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.25);
-    top: -55px;
-    right: -55px;
+.tm-card:nth-child(5n+1) .tm-top-bar { background: #0F6E56; }
+.tm-card:nth-child(5n+2) .tm-top-bar { background: #854F0B; }
+.tm-card:nth-child(5n+3) .tm-top-bar { background: #993556; }
+.tm-card:nth-child(5n+4) .tm-top-bar { background: #534AB7; }
+.tm-card:nth-child(5n+5) .tm-top-bar { background: #993C1D; }
+
+/* =========================
+TOP BAR
+========================= */
+
+.tm-top-bar {
+    width: 100%;
+    height: 64px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
 }
 
-.tm-circle-2 {
+.tm-bar-circle {
     position: absolute;
-    width: 110px;
-    height: 110px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    bottom: -35px;
-    left: -35px;
+    background: rgba(255,255,255,0.08);
+    top: -25px;
+    right: -15px;
 }
 
 /* =========================
-IMAGE
+IMAGE WRAP — overlaps bar
 ========================= */
 
 .tm-image-wrap {
-    margin-bottom: 16px;
+    margin-top: -36px;
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    margin-bottom: 10px;
 }
 
 .tm-image {
-    width: 110px;
-    height: 110px;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
     object-fit: cover;
     object-position: top center;
-    border-radius: 50%;
+    border: 3px solid #ffffff;
     display: block;
     margin: 0 auto;
-    border: 4px solid #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
 }
 
 /* =========================
-AVATAR
+AVATAR FALLBACK
 ========================= */
 
 .tm-avatar {
-    width: 110px;
-    height: 110px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
-    border: 4px solid #fff;
+    border: 3px solid #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
+    font-size: 22px;
     font-weight: 700;
     margin: 0 auto;
-    color: #fff;
-    background: #8b0000;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
 }
+
+.tm-card:nth-child(5n+1) .tm-avatar { background: #0F6E56; }
+.tm-card:nth-child(5n+2) .tm-avatar { background: #854F0B; }
+.tm-card:nth-child(5n+3) .tm-avatar { background: #993556; }
+.tm-card:nth-child(5n+4) .tm-avatar { background: #534AB7; }
+.tm-card:nth-child(5n+5) .tm-avatar { background: #993C1D; }
 
 /* =========================
 CONTENT
 ========================= */
 
 .tm-content {
-    position: relative;
-    z-index: 1;
+    padding: 0 12px 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
 }
 
 /* =========================
@@ -305,178 +250,180 @@ NAME
 ========================= */
 
 .tm-name {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 700;
-    margin: 0 0 8px;
-    line-height: 1.4;
     color: #111;
+    margin: 0;
+    line-height: 1.4;
 }
 
 /* =========================
-DESIGNATION
+DESIGNATION BADGE
 ========================= */
 
 .tm-designation {
     display: inline-block;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 600;
-    padding: 4px 14px;
+    padding: 3px 12px;
     border-radius: 20px;
-    margin-bottom: 14px;
-    background: rgb(232 152 152 / 50%);
-    color: #333;
+    line-height: 1.5;
 }
+
+.tm-card:nth-child(5n+1) .tm-designation { background: #E1F5EE; color: #085041; }
+.tm-card:nth-child(5n+2) .tm-designation { background: #FAEEDA; color: #633806; }
+.tm-card:nth-child(5n+3) .tm-designation { background: #FBEAF0; color: #72243E; }
+.tm-card:nth-child(5n+4) .tm-designation { background: #EEEDFE; color: #3C3489; }
+.tm-card:nth-child(5n+5) .tm-designation { background: #FAECE7; color: #712B13; }
 
 /* =========================
-INFO WRAP
+CENTER NAME
 ========================= */
 
-.tm-info-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 18px;
-    text-align: left;
-    background: rgba(255, 255, 255, 0.55);
+.tm-center-name {
+    width: 100%;
+    background: #f5f7fa;
+    border: 1px solid #e8eaed;
     border-radius: 10px;
-    padding: 10px 14px;
-}
-
-.tm-info {
+    padding: 8px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #444;
+    line-height: 1.5;
+    min-height: 40px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: #444;
-    overflow: hidden;
+    justify-content: center;
+    gap: 6px;
+    flex: 1;
 }
 
-.tm-info i {
+.tm-center-name i {
     font-size: 12px;
-    width: 16px;
-    text-align: center;
-    color: #8b0000;
+    flex-shrink: 0;
 }
 
-/* =========================
-LINK
-========================= */
-
-.tm-link {
-    color: #333 !important;
-    text-decoration: none !important;
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-}
+.tm-card:nth-child(5n+1) .tm-center-name i { color: #0F6E56; }
+.tm-card:nth-child(5n+2) .tm-center-name i { color: #854F0B; }
+.tm-card:nth-child(5n+3) .tm-center-name i { color: #993556; }
+.tm-card:nth-child(5n+4) .tm-center-name i { color: #534AB7; }
+.tm-card:nth-child(5n+5) .tm-center-name i { color: #993C1D; }
 
 /* =========================
 BUTTON
 ========================= */
 
 .tm-btn {
-    display: inline-block;
-    padding: 10px 28px;
-    border-radius: 10px;
-    background: #8b0000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+    padding: 9px 0;
+    border-radius: 9px;
     color: #fff !important;
     text-decoration: none !important;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    transition: .3s;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-top: auto;
+}
+
+.tm-btn i {
+    font-size: 11px;
+    transition: transform 0.2s;
 }
 
 .tm-btn:hover {
-    background: #000;
+    opacity: 0.88;
     color: #fff !important;
 }
 
+.tm-btn:hover i {
+    transform: translateX(3px);
+}
+
+.tm-card:nth-child(5n+1) .tm-btn { background: #0F6E56; }
+.tm-card:nth-child(5n+2) .tm-btn { background: #854F0B; }
+.tm-card:nth-child(5n+3) .tm-btn { background: #993556; }
+.tm-card:nth-child(5n+4) .tm-btn { background: #534AB7; }
+.tm-card:nth-child(5n+5) .tm-btn { background: #993C1D; }
+
 /* =========================
-LARGE DESKTOP
+EMPTY
 ========================= */
 
-@media(max-width:1400px) {
-
-    .tm-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
+.tm-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #888;
+    padding: 40px 0;
 }
 
 /* =========================
-LAPTOP
+≤1400px — 4 CARDS
 ========================= */
 
-@media(max-width:1200px) {
-
-    .tm-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
+@media (max-width: 1400px) {
+    .tm-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 /* =========================
-TABLET
+≤1200px — 3 CARDS
 ========================= */
 
-@media(max-width:768px) {
-
-    .tm-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
+@media (max-width: 1200px) {
+    .tm-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* =========================
-MOBILE
+≤992px — 2 CARDS
 ========================= */
 
-@media(max-width:576px) {
+@media (max-width: 992px) {
+    .tm-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
 
+/* =========================
+≤768px — 2 CARDS SMALLER
+========================= */
+
+@media (max-width: 768px) {
+    .tm-main-heading { font-size: 26px; }
+    .tm-grid { gap: 14px; }
+    .tm-image  { width: 66px; height: 66px; }
+    .tm-avatar { width: 66px; height: 66px; font-size: 20px; }
+    .tm-name   { font-size: 13px; }
+}
+
+/* =========================
+≤576px — 1 CARD
+========================= */
+
+@media (max-width: 576px) {
     .tm-grid {
         grid-template-columns: 1fr;
+        max-width: 300px;
+        margin: 0 auto;
     }
-
-    .tm-card {
-        padding: 22px 16px 20px;
-        border-radius: 16px;
-    }
-
-    .tm-image {
-        width: 90px;
-        height: 90px;
-    }
-
-    .tm-avatar {
-        width: 90px;
-        height: 90px;
-        font-size: 30px;
-    }
-
-    .tm-name {
-        font-size: 15px;
-    }
-
-    .tm-designation {
-        font-size: 12px;
-    }
-
-    .tm-info {
-        font-size: 11px;
-    }
-
-    .tm-link {
-        font-size: 11px;
-    }
-
-    .tm-btn {
-        padding: 9px 22px;
-        font-size: 12px;
-    }
-
+    .tm-main-heading { font-size: 22px; }
+    .tm-image  { width: 70px; height: 70px; }
+    .tm-avatar { width: 70px; height: 70px; font-size: 22px; }
+    .tm-name   { font-size: 14px; }
+    .tm-content { padding: 0 14px 16px; }
 }
+
+/* =========================
+≤380px
+========================= */
+
+@media (max-width: 380px) {
+    .tm-grid   { max-width: 100%; }
+    .tm-image  { width: 62px; height: 62px; }
+    .tm-avatar { width: 62px; height: 62px; font-size: 20px; }
+    .tm-name   { font-size: 13px; }
+}
+
 </style>
 
 <?php get_footer(); ?>
