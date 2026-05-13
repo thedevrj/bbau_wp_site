@@ -368,8 +368,8 @@ get_header();
 
 <?php
 // ── Config (edit these values) ────────────────────────────────────
-$bbau_phone      = get_theme_mod('bbau_phone',   '+91-522-2440700');
-$bbau_email      = get_theme_mod('bbau_email',   'registrar@bbau.ac.in');
+$bbau_phone      = get_theme_mod('bbau_phone',   '1800-180-5789');
+$bbau_email      = get_theme_mod('bbau_email',   'info@bbau.ac.in');
 $bbau_address    = get_theme_mod('bbau_address', 'Vidya Vihar, Raebareli Road, Lucknow – 226025, U.P.');
 $bbau_maps_url   = get_theme_mod('bbau_maps_url', 'https://maps.google.com/?q=Babasaheb+Bhimrao+Ambedkar+University+Lucknow');
 $bbau_maps_embed = get_theme_mod('bbau_maps_embed', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.47!2d80.9899!3d26.7553!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399be3b6b2a7d9e7%3A0x0!2sBabasaheb+Bhimrao+Ambedkar+University!5e0!3m2!1sen!2sin!4v1234567890');
@@ -380,11 +380,11 @@ $bbau_transport = [
     'class'      => 'bbau-train',
     'icon_class' => 'fa-solid fa-train',
     'title'      => 'By Train',
-    'badge'      => '~14–18 km',
+    'badge'      => '~10–11 km',
     'steps'      => [
       'Alight at Lucknow Junction (NR) or Charbagh Railway Station',
       'Take auto-rickshaw or cab towards Raebareli Road',
-      'Ask for BBAU / Vidya Vihar — approx. 30–45 min ride',
+      'Ask for BBAU / Vidya Vihar — approx. 30–40 min ride',
     ],
   ],
   [
@@ -402,11 +402,11 @@ $bbau_transport = [
     'class'      => 'bbau-air',
     'icon_class' => 'fa-solid fa-plane',
     'title'      => 'By Air',
-    'badge'      => '~30 km',
+    'badge'      => '~6 km',
     'steps'      => [
       'Land at Chaudhary Charan Singh International Airport',
       'Board a pre-paid taxi or cab to Raebareli Road, BBAU',
-      'Journey takes approx. 50–60 min depending on traffic',
+      'Journey takes approx. 15–20 min depending on traffic',
     ],
   ],
   [
@@ -424,8 +424,8 @@ $bbau_transport = [
 
 // ── Quick reference ───────────────────────────────────────────────
 $bbau_quick = [
-  ['icon_class' => 'fa-solid fa-city',           'label' => 'From City Centre',     'value' => '~14–18 km · 30–40 min'],
-  ['icon_class' => 'fa-solid fa-plane-arrival',  'label' => 'From Airport',         'value' => '~30 km · 50–60 min'],
+  ['icon_class' => 'fa-solid fa-city',           'label' => 'From City Centre',     'value' => '~10–11 km · 30–40 min'],
+  ['icon_class' => 'fa-solid fa-plane-arrival',  'label' => 'From Airport',         'value' => '~6 km · 15–20 min'],
   ['icon_class' => 'fa-solid fa-train',          'label' => 'Nearest Railway Stn.', 'value' => 'Lucknow Junction / Charbagh'],
   ['icon_class' => 'fa-solid fa-road',           'label' => 'Main Road',            'value' => 'Raebareli Road (NH-30)'],
 ];
