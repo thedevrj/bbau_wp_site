@@ -8,248 +8,30 @@ defined('ABSPATH') || exit;
 get_header();
 ?>
 
-<!-- Banner -->
-<?php get_template_part('banners/about-banner'); ?>
+<!-- =========================================
+   FULL WIDTH HERO BANNER
+========================================= -->
 
-<div class="container-fluid page-bg page-template-about-bg py-lg-5">
+<div class="convocation-hero">
 
-    <!-- Breadcrumb -->
-    <?php get_template_part('template-parts/breadcrumb'); ?>
+    <div class="convocation-top">
 
-    <div class="container">
+        <div class="convocation-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
 
-        <div class="convocation-wrap">
+        <div>
 
-            <!-- ================= HERO ================= -->
-
-            <div class="convocation-hero">
-
-                <div class="convocation-top">
-
-                    <div class="convocation-icon">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                    </div>
-
-                    <div>
-
-                        <div class="convocation-subtitle">
-                            Babasaheb Bhimrao Ambedkar University
-                        </div>
-
-                        <h1 class="convocation-title">
-                            Convocation Chronicle
-                        </h1>
-
-                        <div class="convocation-year-line">
-                            Celebrating Academic Excellence • 2015 – 2017
-                        </div>
-
-                    </div>
-
-                </div>
-
+            <div class="convocation-subtitle">
+                BABASAHEB BHIMRAO AMBEDKAR UNIVERSITY
             </div>
 
-            <!-- ================= ABOUT ================= -->
-
-            <div class="convocation-section">
-
-                <div class="section-heading-wrap">
-                    <h2 class="section-heading">About the Convocation</h2>
-                </div>
-
-                <p class="convocation-text">
-                    The Annual Convocation of Babasaheb Bhimrao Ambedkar University is one of the most cherished milestones in a student’s academic journey. It is the day when years of dedication, perseverance and learning are formally recognised as graduates receive their degrees, diplomas and medals from distinguished national leaders and dignitaries.
-                </p>
-
-                <div class="convocation-main-image">
-                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200&auto=format&fit=crop"
-                         alt="Convocation">
-                </div>
-
-            </div>
-
-            <!-- ================= 2017 ================= -->
-
-            <div class="convocation-year-section">
-
-                <div class="year-banner">
-
-                    <div class="year-number">
-                        2017
-                    </div>
-
-                    <div>
-
-                        <div class="year-badge">
-                            Chief Guest
-                        </div>
-
-                        <div class="year-name">
-                            Hon’ble President of India
-                        </div>
-
-                        <div class="year-role">
-                            Shri Ram Nath Kovind
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="convocation-grid">
-
-                    <div class="convocation-card big-card">
-
-                        <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1200&auto=format&fit=crop"
-                             alt="2017">
-
-                        <div class="card-caption">
-                            Degree Conferral Ceremony
-                        </div>
-
-                    </div>
-
-                    <div class="side-grid">
-
-                        <div class="convocation-card small-card">
-
-                            <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=1200&auto=format&fit=crop"
-                                 alt="2017">
-
-                            <div class="card-caption">
-                                Award Ceremony
-                            </div>
-
-                        </div>
-
-                        <div class="convocation-card small-card">
-
-                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop"
-                                 alt="2017">
-
-                            <div class="card-caption">
-                                Presidential Address
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- ================= 2016 ================= -->
-
-            <div class="convocation-year-section">
-
-                <div class="year-banner">
-
-                    <div class="year-number">
-                        2016
-                    </div>
-
-                    <div>
-
-                        <div class="year-badge">
-                            Chief Guest
-                        </div>
-
-                        <div class="year-name">
-                            Shri Narendra Modi
-                        </div>
-
-                        <div class="year-role">
-                            Prime Minister of India
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="two-grid">
-
-                    <div class="convocation-card medium-card">
-
-                        <img src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?q=80&w=1200&auto=format&fit=crop"
-                             alt="2016">
-
-                        <div class="card-caption">
-                            PM Addressing Students
-                        </div>
-
-                    </div>
-
-                    <div class="convocation-card medium-card">
-
-                        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200&auto=format&fit=crop"
-                             alt="2016">
-
-                        <div class="card-caption">
-                            Medal Distribution
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- ================= 2015 ================= -->
-
-            <div class="convocation-year-section">
-
-                <div class="year-banner">
-
-                    <div class="year-number">
-                        2015
-                    </div>
-
-                    <div>
-
-                        <div class="year-badge">
-                            Annual Convocation
-                        </div>
-
-                        <div class="year-name">
-                            Distinguished Guest of Honour
-                        </div>
-
-                        <div class="year-role">
-                            BBAU Lucknow
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="two-grid">
-
-                    <div class="convocation-card medium-card">
-
-                        <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop"
-                             alt="2015">
-
-                        <div class="card-caption">
-                            Academic Procession
-                        </div>
-
-                    </div>
-
-                    <div class="convocation-card medium-card">
-
-                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=crop"
-                             alt="2015">
-
-                        <div class="card-caption">
-                            Degree Award Ceremony
-                        </div>
-
-                    </div>
-
-                </div>
-
+            <h1 class="convocation-title">
+                Convocation
+            </h1>
+
+            <div class="convocation-year-line">
+                Celebrating Academic Excellence
             </div>
 
         </div>
@@ -258,51 +40,329 @@ get_header();
 
 </div>
 
+<div class="container-fluid page-bg page-template-about-bg py-lg-5">
+
+    <!-- =========================================
+       BREADCRUMB
+    ========================================= -->
+
+    <?php get_template_part('template-parts/breadcrumb'); ?>
+
+    <div class="container">
+
+        <div class="convocation-wrap">
+
+            <!-- =========================================
+               ABOUT SECTION
+            ========================================= -->
+
+            <div class="convocation-section">
+
+                <div class="section-heading-wrap">
+
+                    <h2 class="section-heading">
+                        About the Convocation
+                    </h2>
+
+                </div>
+
+                <p class="convocation-text">
+                    The Annual Convocation of Babasaheb Bhimrao Ambedkar University is one of the most cherished milestones in a student's academic journey.
+                </p>
+
+                <?php 
+                $main_image = get_field('main_convocation_image');
+                ?>
+
+                <?php if($main_image): ?>
+
+                    <div class="convocation-main-image">
+
+                        <img src="<?php echo esc_url($main_image['url']); ?>"
+                             alt="<?php echo esc_attr($main_image['alt']); ?>">
+
+                    </div>
+
+                <?php endif; ?>
+
+            </div>
+
+            <!-- =========================================
+               REPEATER START
+            ========================================= -->
+
+            <?php if( have_rows('convocation_years') ): ?>
+
+                <?php while( have_rows('convocation_years') ) : the_row();
+
+                    $year = get_sub_field('year');
+                    $chief_guest = get_sub_field('chief_guest');
+                    $role = get_sub_field('role');
+                    $highlight = get_sub_field('highlight');
+
+                    $graduates = get_sub_field('graduates');
+                    $gold_medals = get_sub_field('gold_medals');
+                    $departments = get_sub_field('departments');
+
+                    $big_image = get_sub_field('big_image');
+
+                    $small_image_1 = get_sub_field('small_image_1');
+                    $small_image_2 = get_sub_field('small_image_2');
+
+                    $third_image_1 = get_sub_field('third_image_1');
+                    $third_image_2 = get_sub_field('third_image_2');
+                    $third_image_3 = get_sub_field('third_image_3');
+
+                ?>
+
+                <!-- =========================================
+                   YEAR SECTION
+                ========================================= -->
+
+                <div class="convocation-year-section">
+
+                    <!-- YEAR BANNER -->
+                    <div class="year-banner">
+
+                        <div class="year-number">
+                            <?php echo esc_html($year); ?>
+                        </div>
+
+                        <div class="year-vline"></div>
+
+                        <div>
+
+                            <div class="year-badge">
+                                Chief Guest
+                            </div>
+
+                            <div class="year-name">
+                                <?php echo esc_html($chief_guest); ?>
+                            </div>
+
+                            <div class="year-role">
+                                <?php echo esc_html($role); ?>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- STATS -->
+                    <div class="stats-row">
+
+                        <div class="stat-card">
+
+                            <div class="stat-num">
+                                <?php echo esc_html($graduates); ?>
+                            </div>
+
+                            <div class="stat-label">
+                                Graduates
+                            </div>
+
+                        </div>
+
+                        <div class="stat-card">
+
+                            <div class="stat-num">
+                                <?php echo esc_html($gold_medals); ?>
+                            </div>
+
+                            <div class="stat-label">
+                                Gold Medals
+                            </div>
+
+                        </div>
+
+                        <div class="stat-card">
+
+                            <div class="stat-num">
+                                <?php echo esc_html($departments); ?>
+                            </div>
+
+                            <div class="stat-label">
+                                Departments
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- HIGHLIGHT -->
+                    <div class="highlight-strip">
+                        <?php echo esc_html($highlight); ?>
+                    </div>
+
+                    <!-- IMAGE GRID -->
+                    <div class="convocation-grid">
+
+                        <!-- BIG IMAGE -->
+                        <div class="convocation-card big-card">
+
+                            <?php if($big_image): ?>
+
+                                <img src="<?php echo esc_url($big_image['url']); ?>"
+                                     alt="<?php echo esc_attr($big_image['alt']); ?>">
+
+                            <?php endif; ?>
+
+                            <div class="card-caption">
+                                Main Ceremony
+                            </div>
+
+                        </div>
+
+                        <!-- SIDE GRID -->
+                        <div class="side-grid">
+
+                            <!-- SMALL IMAGE 1 -->
+                            <div class="convocation-card small-card">
+
+                                <?php if($small_image_1): ?>
+
+                                    <img src="<?php echo esc_url($small_image_1['url']); ?>"
+                                         alt="<?php echo esc_attr($small_image_1['alt']); ?>">
+
+                                <?php endif; ?>
+
+                                <div class="card-caption">
+                                    Ceremony Moment
+                                </div>
+
+                            </div>
+
+                            <!-- SMALL IMAGE 2 -->
+                            <div class="convocation-card small-card">
+
+                                <?php if($small_image_2): ?>
+
+                                    <img src="<?php echo esc_url($small_image_2['url']); ?>"
+                                         alt="<?php echo esc_attr($small_image_2['alt']); ?>">
+
+                                <?php endif; ?>
+
+                                <div class="card-caption">
+                                    Special Event
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- THIRD GRID -->
+                    <div class="three-grid">
+
+                        <!-- THIRD IMAGE 1 -->
+                        <div class="convocation-card third-card">
+
+                            <?php if($third_image_1): ?>
+
+                                <img src="<?php echo esc_url($third_image_1['url']); ?>"
+                                     alt="<?php echo esc_attr($third_image_1['alt']); ?>">
+
+                            <?php endif; ?>
+
+                            <div class="card-caption">
+                                Academic Procession
+                            </div>
+
+                        </div>
+
+                        <!-- THIRD IMAGE 2 -->
+                        <div class="convocation-card third-card">
+
+                            <?php if($third_image_2): ?>
+
+                                <img src="<?php echo esc_url($third_image_2['url']); ?>"
+                                     alt="<?php echo esc_attr($third_image_2['alt']); ?>">
+
+                            <?php endif; ?>
+
+                            <div class="card-caption">
+                                Award Ceremony
+                            </div>
+
+                        </div>
+
+                        <!-- THIRD IMAGE 3 -->
+                        <div class="convocation-card third-card">
+
+                            <?php if($third_image_3): ?>
+
+                                <img src="<?php echo esc_url($third_image_3['url']); ?>"
+                                     alt="<?php echo esc_attr($third_image_3['alt']); ?>">
+
+                            <?php endif; ?>
+
+                            <div class="card-caption">
+                                Celebration Moment
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <?php endwhile; ?>
+
+            <?php endif; ?>
+
+        </div>
+
+    </div>
+
+</div>
+
 <style>
+    /* ================================================
+   CONVOCATION CHRONICLE – COMPLETE CSS
+================================================ */
 
-/* ================= WRAP ================= */
-
+/* ===== WRAPPER ===== */
 .convocation-wrap{
     background:#fff;
     border-radius:20px;
     overflow:hidden;
-    box-shadow:0 5px 30px rgba(0,0,0,.08);
+    box-shadow:0 5px 40px rgba(0,0,0,.10);
 }
 
-/* ================= HERO ================= */
-
+/* ===== HERO ===== */
 .convocation-hero{
-    background:linear-gradient(135deg,#081a35,#0e2b57);
-    padding:60px;
+    background:linear-gradient(135deg,#061526,#0e2b57);
+    padding:60px 90px;
 }
 
 .convocation-top{
     display:flex;
     align-items:center;
-    gap:20px;
+    gap:24px;
 }
 
 .convocation-icon{
-    width:80px;
-    height:80px;
+    width:84px;
+    height:84px;
     border-radius:50%;
-    background:rgba(255,255,255,.08);
+    background:rgba(255,255,255,.07);
     display:flex;
     align-items:center;
     justify-content:center;
-    border:1px solid rgba(255,255,255,.2);
+    border:1px solid rgba(255,255,255,.18);
     flex-shrink:0;
 }
 
 .convocation-icon i{
     color:#d4af37;
-    font-size:34px;
+    font-size:36px;
 }
 
 .convocation-subtitle{
     color:#d4af37;
-    letter-spacing:2px;
-    font-size:13px;
+    letter-spacing:3px;
+    font-size:12px;
     margin-bottom:8px;
     text-transform:uppercase;
 }
@@ -312,153 +372,205 @@ get_header();
     font-size:48px;
     font-weight:700;
     margin-bottom:10px;
-    line-height:1.2;
+    line-height:1.15;
 }
 
 .convocation-year-line{
-    color:rgba(255,255,255,.7);
-    font-size:15px;
+    color:rgba(255,255,255,.55);
+    font-size:14px;
+    letter-spacing:.5px;
 }
 
-/* ================= SECTIONS ================= */
-
-.convocation-section,
-.convocation-year-section{
-    padding:45px;
+/* ===== ABOUT SECTION ===== */
+.convocation-section{
+    padding:50px;
 }
 
-.convocation-year-section + .convocation-year-section{
-    border-top:1px solid #f0ece0;
-}
-
-.section-heading-wrap{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:20px;
-}
-
-.section-heading-wrap::before{
-    content:'';
-    width:5px;
-    height:28px;
-    background:#d4af37;
-    border-radius:3px;
-}
-
-.section-heading{
-    font-size:28px;
-    font-weight:700;
-    margin:0;
-}
 
 .convocation-text{
-    font-size:16px;
-    line-height:1.9;
-    color:#444;
+    font-size:15px;
+    line-height:2;
+    color:#555;
     margin-bottom:30px;
 }
 
-/* ================= MAIN IMAGE ================= */
+.convocation-main-image{
+    position:relative;
+    overflow:hidden;
+    border-radius:16px;
+}
 
 .convocation-main-image img{
     width:100%;
-    height:450px;
+    height:420px;
     object-fit:cover;
-    border-radius:18px;
+    border-radius:16px;
     display:block;
+    transition:transform .45s ease;
 }
 
-/* ================= YEAR BANNER ================= */
+.convocation-main-image:hover img{
+    transform:scale(1.03);
+}
 
+/* ===== YEAR SECTION ===== */
+.convocation-year-section{
+    padding:50px;
+    border-top:1px solid #f0ece0;
+}
+
+/* ===== YEAR BANNER ===== */
 .year-banner{
     background:#0e2b57;
-    border-radius:18px;
-    padding:25px 30px;
+    border-radius:16px;
+    padding:28px 36px;
     display:flex;
     align-items:center;
-    gap:25px;
-    margin-bottom:25px;
+    gap:0;
+    margin-bottom:24px;
 }
 
 .year-number{
-    font-size:70px;
+    font-size:76px;
     font-weight:700;
     color:#d4af37;
     line-height:1;
+    min-width:170px;
+}
+
+.year-vline{
+    width:1px;
+    height:64px;
+    background:rgba(255,255,255,.15);
+    margin-right:28px;
+    flex-shrink:0;
 }
 
 .year-badge{
     color:#d4af37;
     text-transform:uppercase;
-    letter-spacing:2px;
-    font-size:12px;
-    margin-bottom:6px;
+    letter-spacing:3px;
+    font-size:11px;
+    margin-bottom:8px;
 }
 
 .year-name{
     color:#fff;
     font-size:26px;
     font-weight:700;
-    line-height:1.3;
+    line-height:1.25;
+    margin-bottom:5px;
+    word-break:break-word;
 }
 
 .year-role{
-    color:#ddd;
-    margin-top:5px;
+    color:rgba(255,255,255,.65);
     font-size:15px;
+    word-break:break-word;
 }
 
-/* ================= GRID ================= */
+/* ===== STATS ===== */
+.stats-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-bottom:24px;
+}
 
+.stat-card{
+    background:#f4f2ee;
+    border-radius:12px;
+    padding:18px 20px;
+    text-align:center;
+    transition:.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-3px);
+}
+
+.stat-num{
+    font-size:30px;
+    font-weight:700;
+    color:#0e2b57;
+    margin-bottom:4px;
+}
+
+.stat-label{
+    font-size:11px;
+    color:#888;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+/* ===== HIGHLIGHT ===== */
+.highlight-strip{
+    background:#f8f5ed;
+    border-left:4px solid #d4af37;
+    border-radius:0 10px 10px 0;
+    padding:14px 20px;
+    margin-bottom:24px;
+    font-size:14px;
+    color:#555;
+    line-height:1.8;
+    word-break:break-word;
+}
+
+/* ===== GRID ===== */
 .convocation-grid{
     display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:20px;
+    grid-template-columns:1.6fr 1fr;
+    gap:16px;
 }
 
 .side-grid{
     display:flex;
     flex-direction:column;
-    gap:20px;
+    gap:16px;
 }
 
-.two-grid{
+.three-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:16px;
 }
 
-/* ================= CARD ================= */
-
+/* ===== CARD ===== */
 .convocation-card{
     position:relative;
     overflow:hidden;
-    border-radius:18px;
-    background:#12223A;
+    border-radius:16px;
+    background:#12223a;
+    transition:all .3s ease;
+}
+
+.convocation-card:hover{
+    transform:translateY(-3px);
 }
 
 .convocation-card img{
     width:100%;
-    display:block;
+    height:100%;
     object-fit:cover;
-    transition:transform .4s ease;
+    display:block;
+    transition:transform .45s ease;
 }
 
 .convocation-card:hover img{
-    transform:scale(1.04);
+    transform:scale(1.05);
 }
 
-.big-card img{
-    height:420px;
+.big-card{
+    height:460px;
 }
 
-.small-card img{
+.small-card{
+    height:222px;
+}
+
+.third-card{
     height:200px;
-}
-
-.medium-card img{
-    height:300px;
 }
 
 .card-caption{
@@ -466,73 +578,142 @@ get_header();
     left:0;
     right:0;
     bottom:0;
-    padding:18px;
+    padding:18px 20px;
     color:#fff;
     font-weight:600;
     font-size:14px;
-    background:linear-gradient(transparent, rgba(0,0,0,.8));
+    background:linear-gradient(transparent,rgba(0,0,0,.82));
 }
 
-/* ================= RESPONSIVE ================= */
+/* ===== EMPTY IMAGE FIX ===== */
+.convocation-card img[src=""],
+.convocation-main-image img[src=""]{
+    display:none;
+}
 
+/* ================================================
+   TABLET
+================================================ */
 @media(max-width:991px){
 
-    .convocation-grid,
-    .two-grid{
+    .convocation-grid{
         grid-template-columns:1fr;
     }
 
     .convocation-hero{
-        padding:40px 25px;
+        padding:40px 28px;
     }
 
     .convocation-title{
-        font-size:34px;
+        font-size:36px;
     }
 
     .convocation-section,
     .convocation-year-section{
-        padding:25px;
+        padding:30px 28px;
     }
 
-    .big-card img{
-        height:280px;
+    .big-card{
+        height:320px;
     }
 
-    .medium-card img{
+    .small-card{
         height:220px;
     }
+
+    .three-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
 }
 
-@media(max-width:576px){
+/* ================================================
+   MOBILE
+================================================ */
+@media(max-width:767px){
 
     .convocation-top{
         flex-direction:column;
         text-align:center;
     }
 
+    .convocation-title{
+        font-size:30px;
+    }
+
+    .convocation-section,
+    .convocation-year-section{
+        padding:24px 18px;
+    }
+
     .year-banner{
         flex-direction:column;
         text-align:center;
+        gap:12px;
+        padding:24px 20px;
+    }
+
+    .year-vline{
+        display:none;
     }
 
     .year-number{
-        font-size:52px;
+        font-size:56px;
+        min-width:unset;
+    }
+
+    .year-name{
+        font-size:20px;
+    }
+
+    .stats-row{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .three-grid{
+        grid-template-columns:1fr;
+    }
+
+    .convocation-main-image img{
+        height:240px;
+    }
+
+    .big-card{
+        height:240px;
+    }
+
+    .small-card,
+    .third-card{
+        height:180px;
+    }
+
+    .convocation-card img{
+        min-height:180px;
+    }
+
+}
+
+/* ================================================
+   SMALL MOBILE
+================================================ */
+@media(max-width:420px){
+
+    .stats-row{
+        grid-template-columns:1fr;
     }
 
     .convocation-title{
-        font-size:28px;
+        font-size:24px;
     }
 
     .section-heading{
         font-size:22px;
     }
 
-    .convocation-main-image img{
-        height:220px;
+    .year-number{
+        font-size:48px;
     }
+
 }
-
 </style>
-
 <?php get_footer(); ?>
