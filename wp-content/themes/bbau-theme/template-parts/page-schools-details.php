@@ -143,19 +143,19 @@ get_header();
                     <div class="name"><?php echo $dean_name; ?></div>
                     <div class="role"><?php echo  $leadership_title; ?> of School</div>
                     <div class="contacts">
-                    <div class="contact-row">
-                        <?php if ($dean_phone1) : ?>
+                        <div class="contact-row">
+                            <?php if ($dean_phone1) : ?>
                             <span class="label">Phone1:</span>
                             <span class="icon"><i class="fa fa-phone"></i></span>
-                            <span class="value"><a
-                                    href="tel:<?php echo esc_attr($dean_phone1); ?>">+91 <?php echo esc_html($dean_phone1); ?></a></span>
-                        <?php endif; ?>
-                        <?php if ($dean_phone2) : ?>
+                            <span class="value"><a href="tel:<?php echo esc_attr($dean_phone1); ?>">+91
+                                    <?php echo esc_html($dean_phone1); ?></a></span>
+                            <?php endif; ?>
+                            <?php if ($dean_phone2) : ?>
                             <span class="label">Phone2:</span>
                             <span class="icon"><i class="fa fa-phone"></i></span>
-                            <span class="value"><a
-                                    href="tel:<?php echo esc_attr($dean_phone2); ?>">+91 <?php echo esc_html($dean_phone2); ?></a></span>
-                        <?php endif; ?>
+                            <span class="value"><a href="tel:<?php echo esc_attr($dean_phone2); ?>">+91
+                                    <?php echo esc_html($dean_phone2); ?></a></span>
+                            <?php endif; ?>
                         </div>
                         <?php if ($dean_email) : ?>
                         <div class="contact-row">
@@ -622,7 +622,7 @@ get_header();
 
 .dept-link-item:hover {
     background: #8B1A1A;
-    color: #fff;
+    color: #fff !important;
     transform: translateX(10px);
 }
 

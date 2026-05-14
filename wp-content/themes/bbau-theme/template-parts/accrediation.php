@@ -8,7 +8,7 @@ get_header();
 
 <?php get_template_part('banners/about-banner'); ?>
 
-<section class="container-fluid page-bg page-template-about-bg py-lg-5 overflow-hidden">
+<section class="container-fluid page-bg page-template-about-bg py-5 overflow-hidden">
     <?php get_template_part('template-parts/breadcrumb'); ?>
 
     <div class="container">
@@ -168,7 +168,7 @@ get_header();
 /* CARD */
 .accreditation-card {
   background: #fff;
-  padding: 15px;              /* 🔻 reduced from 20px */
+  padding: 15px;              /*  reduced from 20px */
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 3px 10px rgba(0,0,0,0.08);
@@ -176,20 +176,19 @@ get_header();
 
 /* LOGO */
 .accreditation-logo img {
-  max-width: 90px;           /* 🔻 smaller logo */
   margin-bottom: 6px;
 }
 
 /* TITLE */
 .accreditation-name {
-  font-size: 18px;           /* 🔻 reduced */
+  font-size: 18px;           
   font-weight: 600;
   margin-bottom: 5px;
 }
 
 /* DESCRIPTION */
 .accreditation-desc {
-  font-size: 13px;           /* 🔻 smaller */
+  font-size: 13px;           /* smaller */
   margin: 6px 0;
   line-height: 1.3;
 }
@@ -205,7 +204,7 @@ get_header();
 .accreditation-links a {
   display: inline-block;
   margin: 4px 4px;
-  padding: 5px 8px;          /* 🔻 smaller buttons */
+  padding: 5px 8px;          /*  smaller buttons */
   font-size: 12px;
   background: #f1f1f1;
   border-radius: 4px;
