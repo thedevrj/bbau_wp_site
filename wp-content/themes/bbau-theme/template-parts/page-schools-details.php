@@ -622,7 +622,7 @@ get_header();
 
 .dept-link-item:hover {
     background: #8B1A1A;
-    color: #fff;
+    color: #fff !important;
     transform: translateX(10px);
 }
 

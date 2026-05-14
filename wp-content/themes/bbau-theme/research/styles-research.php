@@ -126,7 +126,7 @@
 .ra-filter-group {
     display: flex;
     gap: 15px;
-    flex: 3;
+    flex: auto !important;
     flex-wrap: wrap;
 }
 

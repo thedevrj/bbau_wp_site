@@ -292,11 +292,12 @@
   height: clamp(38px, 4.5vw, 51px);
   flex-shrink: 0;
 }
+
 .univ-name a,
 .univ-name a:hover,
 .univ-name a:visited {
-    text-decoration: none !important;
-    color: inherit !important;
+  text-decoration: none !important;
+  color: inherit !important;
 }
 
 .univ-name {
@@ -951,7 +952,37 @@ body {
   display: none;
 }
 
-#mega-menu-wrap-primary_menu #mega-menu-primary_menu > li.mega-menu-flyout ul.mega-sub-menu.flip-parent li.mega-menu-item ul.mega-sub-menu {
+#mega-menu-wrap-primary_menu #mega-menu-primary_menu>li.mega-menu-flyout ul.mega-sub-menu.flip-parent li.mega-menu-item ul.mega-sub-menu {
   left: auto !important;
   right: 100% !important;
+}
+
+
+
+@media (min-width: 1420px) and (max-width: 1540px) {
+  .main-header {
+    --header-gap: 45px !important;
+  }
+}
+
+/* ===== FIX FOR 992px - 1350px ===== */
+@media (min-width: 992px) and (max-width: 1370px) {
+
+
+  /* LEFT LOGO AREA */
+  .main-header .d-flex.align-items-center {
+    flex: 0 0 auto;
+  }
+
+  /* LOGO IMAGE */
+  .main-header .d-flex.align-items-center img {
+    width: auto;
+  }
+
+  /* UNIVERSITY NAME */
+  .main-header .univ-name {
+    font-size: 14px;
+    line-height: 1.2;
+    white-space: normal;
+  }
 }

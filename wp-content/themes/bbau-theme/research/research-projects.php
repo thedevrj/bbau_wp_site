@@ -75,7 +75,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                             <th>Project Details</th>
                             <th>Investigator</th>
                             <th>Funding Agency</th>
-                            <th>Grants</th>
+                            <th>Funding Amt.</th>
                             <th>Status</th>
                             <th class="text-center">Action</th>
                         </tr>
