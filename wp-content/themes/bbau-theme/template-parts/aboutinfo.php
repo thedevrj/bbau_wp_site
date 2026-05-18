@@ -290,79 +290,249 @@ $page_Id = get_the_ID();
     color: #8B0000;
 }
 
-/* ================= LAPTOP ================= */
+/* ================= LAPTOP 993–1200px ================= */
 @media (max-width: 1200px) {
     .profile-page .container {
         padding: 0 15px;
     }
 
     .profile-page .cards-column {
-        width: 320px;
-        margin-right: 30px;
-    }
-}
-
-/* ================= TABLET ================= */
-@media (max-width: 992px) {
-    .profile-page .cards-column {
-        float: none;
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 24px;
+        width: 300px;
+        margin-right: 28px;
     }
 
-    .profile-page .profile-photo img {
-        width: 130px;
-        height: 150px;
-    }
-}
-
-/* ================= MOBILE ================= */
-@media (max-width: 768px) {
+    /* Card goes vertical so 300px column is enough */
     .profile-page .profile-card {
         flex-direction: column;
-        text-align: center;
+        align-items: flex-start;
+        padding: 16px;
+        gap: 12px;
     }
 
     .profile-page .profile-photo img {
         width: 100%;
-        height: auto;
-        max-height: 260px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 8px;
     }
 
-    .profile-page .profile-name {
-        font-size: 18px;
-    }
-
-    .profile-page .contact-item {
-        justify-content: center;
-    }
-
-    .profile-page .content-wrap > h2 {
-        font-size: 22px;
-    }
-}
-
-/* ================= SMALL MOBILE ================= */
-@media (max-width: 480px) {
-    .profile-page .container {
-        padding: 0 10px;
-    }
-
-    .profile-page .profile-card {
-        padding: 15px;
+    .profile-page .profile-content {
+        width: 100%;
+        padding-top: 0;
+        min-width: 0;
     }
 
     .profile-page .profile-name {
         font-size: 16px;
+        word-break: break-word;
     }
 
     .profile-page .profile-designation {
         font-size: 13px;
     }
 
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 13px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+}
+/* ================= TABLET 769–992px ================= */
+@media (max-width: 992px) {
+    .profile-page .cards-column {
+        float: left;           /* keep float ON — don't stack */
+        width: auto;           /* shrink to fit card content */
+        margin-right: 24px;
+        margin-bottom: 20px;
+    }
+
+    .profile-page .profile-card {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 220px;          /* fixed compact width — adjust to taste */
+        padding: 14px;
+        gap: 10px;
+        max-width: none;
+    }
+
+    .profile-page .profile-photo img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .profile-page .profile-content {
+        width: 100%;
+        padding-top: 0;
+        min-width: 0;
+    }
+
+    .profile-page .profile-name {
+        font-size: 15px;
+        word-break: break-word;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 12px;
+    }
+
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 12px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+}
+
+/* ================= LARGE MOBILE 577–768px ================= */
+@media (max-width: 768px) {
+    .profile-page .page-body {
+        padding: 24px 0 36px;
+    }
+
+    .profile-page .container {
+        padding: 0 14px;
+    }
+
+    .profile-page .cards-column {
+        float: left;           /* keep float ON */
+        width: auto;
+        margin-right: 16px;
+        margin-bottom: 16px;
+    }
+
+    .profile-page .profile-card {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 160px;          /* compact on mobile — adjust to taste */
+        padding: 12px;
+        gap: 10px;
+        max-width: none;
+    }
+
+    .profile-page .profile-photo img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .profile-page .profile-content {
+        width: 100%;
+        padding-top: 0;
+        min-width: 0;
+    }
+
+    .profile-page .profile-name {
+        font-size: 14px;
+        word-break: break-word;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 12px;
+    }
+
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 11px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .profile-page .page-body-content h2,
     .profile-page .content-wrap > h2 {
         font-size: 20px;
+    }
+}
+/* ================= MOBILE ≤576px — card goes vertical ================= */
+@media (max-width: 576px) {
+    .profile-page .profile-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 18px 14px;
+    }
+
+    .profile-page .profile-photo img {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        max-height: 230px;
+        margin: 0 auto;
+    }
+
+    .profile-page .profile-content {
+        padding-top: 8px;
+        width: 100%;
+    }
+
+    .profile-page .contact-item {
+        justify-content: center;
+    }
+
+    .profile-page .profile-name {
+        font-size: 16px;
+    }
+
+    .profile-page .page-body-content h2,
+    .profile-page .content-wrap > h2 {
+        font-size: 20px;
+    }
+}
+
+/* ================= SMALL MOBILE ≤480px ================= */
+@media (max-width: 480px) {
+    .profile-page .container {
+        padding: 0 10px;
+    }
+
+    .profile-page .page-body {
+        padding: 16px 0 28px;
+    }
+
+    .profile-page .profile-card {
+        padding: 14px 12px;
+        border-radius: 10px;
+    }
+
+    .profile-page .profile-name {
+        font-size: 15px;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 12px;
+    }
+
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 12px;
+    }
+
+    .profile-page .page-body-content h2,
+    .profile-page .content-wrap > h2 {
+        font-size: 18px;
+    }
+
+    .profile-page .page-body-content p,
+    .profile-page .page-body-content li {
+        font-size: 14px;
+    }
+}
+
+/* ================= VERY SMALL ≤360px ================= */
+@media (max-width: 360px) {
+    .profile-page .container {
+        padding: 0 8px;
+    }
+
+    .profile-page .profile-card {
+        padding: 12px 10px;
+    }
+
+    .profile-page .profile-name {
+        font-size: 14px;
     }
 }
 

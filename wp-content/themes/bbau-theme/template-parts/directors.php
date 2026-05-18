@@ -155,10 +155,10 @@ CARD
 TOP BAR COLOURS — nth-child
 ========================= */
 
-.tm-card:nth-child(5n+1) .tm-top-bar { background: #0F6E56; }
+.tm-card:nth-child(5n+1) .tm-top-bar { background: #334a62; }
 .tm-card:nth-child(5n+2) .tm-top-bar { background: #854F0B; }
 .tm-card:nth-child(5n+3) .tm-top-bar { background: #993556; }
-.tm-card:nth-child(5n+4) .tm-top-bar { background: #534AB7; }
+.tm-card:nth-child(5n+4) .tm-top-bar { background: #576017; }
 .tm-card:nth-child(5n+5) .tm-top-bar { background: #993C1D; }
 
 /* =========================
@@ -225,10 +225,10 @@ AVATAR FALLBACK
     box-shadow: 0 4px 14px rgba(0,0,0,0.12);
 }
 
-.tm-card:nth-child(5n+1) .tm-avatar { background: #0F6E56; }
+.tm-card:nth-child(5n+1) .tm-avatar { background: #334a62; }
 .tm-card:nth-child(5n+2) .tm-avatar { background: #854F0B; }
 .tm-card:nth-child(5n+3) .tm-avatar { background: #993556; }
-.tm-card:nth-child(5n+4) .tm-avatar { background: #534AB7; }
+.tm-card:nth-child(5n+4) .tm-avatar { background: #576017; }
 .tm-card:nth-child(5n+5) .tm-avatar { background: #993C1D; }
 
 /* =========================
@@ -270,10 +270,10 @@ DESIGNATION BADGE
     line-height: 1.5;
 }
 
-.tm-card:nth-child(5n+1) .tm-designation { background: #E1F5EE; color: #085041; }
+.tm-card:nth-child(5n+1) .tm-designation { background: #E1F5EE; color: #334a62; }
 .tm-card:nth-child(5n+2) .tm-designation { background: #FAEEDA; color: #633806; }
 .tm-card:nth-child(5n+3) .tm-designation { background: #FBEAF0; color: #72243E; }
-.tm-card:nth-child(5n+4) .tm-designation { background: #EEEDFE; color: #3C3489; }
+.tm-card:nth-child(5n+4) .tm-designation { background: #EEEDFE; color: #576017; }
 .tm-card:nth-child(5n+5) .tm-designation { background: #FAECE7; color: #712B13; }
 
 /* =========================
@@ -303,10 +303,10 @@ CENTER NAME
     flex-shrink: 0;
 }
 
-.tm-card:nth-child(5n+1) .tm-center-name i { color: #0F6E56; }
+.tm-card:nth-child(5n+1) .tm-center-name i { color: #334a62; }
 .tm-card:nth-child(5n+2) .tm-center-name i { color: #854F0B; }
 .tm-card:nth-child(5n+3) .tm-center-name i { color: #993556; }
-.tm-card:nth-child(5n+4) .tm-center-name i { color: #534AB7; }
+.tm-card:nth-child(5n+4) .tm-center-name i { color: #576017; }
 .tm-card:nth-child(5n+5) .tm-center-name i { color: #993C1D; }
 
 /* =========================
@@ -343,10 +343,10 @@ BUTTON
     transform: translateX(3px);
 }
 
-.tm-card:nth-child(5n+1) .tm-btn { background: #0F6E56; }
+.tm-card:nth-child(5n+1) .tm-btn { background: #334a62; }
 .tm-card:nth-child(5n+2) .tm-btn { background: #854F0B; }
 .tm-card:nth-child(5n+3) .tm-btn { background: #993556; }
-.tm-card:nth-child(5n+4) .tm-btn { background: #534AB7; }
+.tm-card:nth-child(5n+4) .tm-btn { background: #576017; }
 .tm-card:nth-child(5n+5) .tm-btn { background: #993C1D; }
 
 /* =========================
