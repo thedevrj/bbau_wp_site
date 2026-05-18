@@ -1,13 +1,18 @@
 <?php
 /*
-Template Name: Admissions Template
+Template Name: Program Navigator Template
 */
 defined('ABSPATH') || exit;
 get_header();
 
 $api_base = getenv('DJANGO_API_URL');
+
+$query_params = array();
+if (!empty($_GET['page_num']))        $query_params['page'] = intval($_GET['page_num']);
+
 $schools_url = $api_base . '/api/v1/schools/';
-$programs_url = $api_base . '/api/v1/programs/';
+$programs_url = $api_base . '/api/v1/programs/?page_size=500' ;
+$programs_url_pagination = $api_base . '/api/v1/programs/?'. http_build_query($query_params);
 
 // Fetch Schools for the filter
 $schools_res = wp_remote_get($schools_url, array('timeout' => 10));
@@ -17,22 +22,30 @@ if (!is_wp_error($schools_res) && wp_remote_retrieve_response_code($schools_res)
 }
 
 // Fetch All Programs
-$programs_res = wp_remote_get($programs_url, array('timeout' => 15));
+$programs_res = wp_remote_get($programs_url_pagination, array('timeout' => 15));
 $programs = array();
+$total_count = 0;
+$next_page = null;
+$prev_page = null;
 if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_res) === 200) {
     $decoded = json_decode(wp_remote_retrieve_body($programs_res), true);
     $programs = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
+    $total_count = isset($decoded['count']) ? $decoded['count'] : count($programs);
+    $next_page = isset($decoded['next']) ? $decoded['next'] : null;
+    $prev_page = isset($decoded['previous']) ? $decoded['previous'] : null;
 }
+$current_page = isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1;
+$total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
 ?>
 
 <?php get_template_part('banners/about-banner'); ?>
 
 <div class="admissions-portal py-lg-5">
     <div class="container">
-        
+
         <!-- HEADER SECTION -->
         <div class="adm-header mb-5">
-            <h2 class="adm-title">Academic Explorer</h2>
+            <h2 class="adm-title">Program Navigator</h2>
         </div>
 
         <!-- FILTER BAR -->
@@ -44,7 +57,9 @@ if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_re
                     <button class="level-tab" data-level="UG">Undergraduate</button>
                     <button class="level-tab" data-level="PG">Postgraduate</button>
                     <button class="level-tab" data-level="PHD">PhD</button>
+                    <button class="level-tab" data-level="Integrated">Integrated</button>
                     <button class="level-tab" data-level="Others">Others</button>
+
                 </div>
             </div>
 
@@ -53,7 +68,8 @@ if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_re
                 <select id="school-select" class="adm-select">
                     <option value="all">All Schools</option>
                     <?php foreach($schools as $school): ?>
-                        <option value="<?php echo esc_attr($school['name']); ?>"><?php echo esc_html($school['name']); ?></option>
+                    <option value="<?php echo esc_attr($school['name']); ?>"><?php echo esc_html($school['name']); ?>
+                    </option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -67,29 +83,61 @@ if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_re
         <!-- PROGRAMS GRID -->
         <div id="prog-grid" class="mt-5">
             <?php if(!empty($programs)): ?>
-                <div class="row g-4">
-                    <?php foreach($programs as $prog): ?>
-                        <div class="col-md-6 col-lg-4 prog-card-wrapper" 
-                             data-level="<?php echo esc_attr($prog['level']); ?>"
-                             data-school="<?php echo esc_attr($prog['school_name'] ?? ''); ?>"
-                             data-name="<?php echo esc_attr(strtolower($prog['name'])); ?>">
-                            <?php 
+            <div class="row g-4">
+                <?php foreach($programs as $prog): ?>
+                <div class="col-md-6 col-lg-4 prog-card-wrapper" data-level="<?php echo esc_attr($prog['level']); ?>"
+                    data-school="<?php echo esc_attr($prog['school_name'] ?? ''); ?>"
+                    data-name="<?php echo esc_attr(strtolower($prog['name'])); ?>">
+                    <?php 
                             set_query_var('prog_data', $prog);
                             get_template_part('template-parts/admission-card'); 
                             ?>
-                        </div>
-                    <?php endforeach; ?>
                 </div>
-                <div id="no-results" class="text-center py-5" style="display:none;">
-                    <h3>No programs match your filters.</h3>
-                    <p>Try adjusting your criteria or reset the filters.</p>
-                </div>
+                <?php endforeach; ?>
+            </div>
+            <div id="no-results" class="text-center py-5" style="display:none;">
+                <h3>No programs match your filters.</h3>
+                <p>Try adjusting your criteria or reset the filters.</p>
+            </div>
             <?php else: ?>
-                <div class="text-center py-5">
-                    <h3>No programs found.</h3>
-                </div>
+            <div class="text-center py-5">
+                <h3>No programs found.</h3>
+            </div>
             <?php endif; ?>
         </div>
+
+        <!-- Pagination -->
+        <?php if ($total_pages > 1): ?>
+        <div class="faculty-pagination animate-fac-up" style="animation-delay: 0.3s;">
+            <?php if ($current_page > 1): ?>
+            <a href="<?php echo esc_url(add_query_arg('page_num', $current_page - 1)); ?>" class="page-btn prev-next">
+                <i class="fas fa-chevron-left me-2"></i> Previous
+            </a>
+            <?php endif; ?>
+
+            <?php 
+            // Simple logic for showing page numbers
+            for ($i = 1; $i <= $total_pages; $i++): 
+                if ($i == 1 || $i == $total_pages || ($i >= $current_page - 1 && $i <= $current_page + 1)):
+            ?>
+            <a href="<?php echo esc_url(add_query_arg('page_num', $i)); ?>"
+                class="page-btn <?php echo ($i === $current_page) ? 'active' : ''; ?>">
+                <?php echo $i; ?>
+            </a>
+            <?php 
+                elseif ($i == $current_page - 2 || $i == $current_page + 2):
+                    echo '<span class="px-2 text-muted">...</span>';
+                endif;
+            endfor; 
+            ?>
+
+            <?php if ($current_page < $total_pages): ?>
+            <a href="<?php echo esc_url(add_query_arg('page_num', $current_page + 1)); ?>" class="page-btn prev-next">
+                Next <i class="fas fa-chevron-right ms-2"></i>
+            </a>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
 
     </div>
 </div>
@@ -119,7 +167,7 @@ if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_re
     background: #fff;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
@@ -131,7 +179,6 @@ if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_re
 
 .filter-group {
     flex: 1;
-    min-width: 250px;
 }
 
 .filter-group label {
@@ -169,7 +216,8 @@ if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_re
     color: #fff;
 }
 
-.adm-select, .adm-input {
+.adm-select,
+.adm-input {
     width: 100%;
     padding: 10px 15px;
     border: 1px solid #d1d5db;
@@ -177,7 +225,8 @@ if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_re
     font-size: 0.95rem;
 }
 
-.adm-select:focus, .adm-input:focus {
+.adm-select:focus,
+.adm-input:focus {
     outline: none;
     border-color: #8B1A1A;
     box-shadow: 0 0 0 3px rgba(139, 26, 26, 0.1);
@@ -207,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function filterPrograms() {
         let visibleCount = 0;
-        
+
         cards.forEach(card => {
             const level = card.dataset.level;
             const school = card.dataset.school;
