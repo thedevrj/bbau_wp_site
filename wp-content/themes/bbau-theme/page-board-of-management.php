@@ -7,17 +7,22 @@ get_header();
 
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
-$api_url    = $api_base . '/api/v1/authorities/BOARD_OF_MANAGEMENT/';
 
-$response = wp_remote_get($api_url, array('timeout' => 15));
+$members_url = $api_base . '/api/v1/board-of-management-members/';
+$minutes_url = $api_base . '/api/v1/board-of-management-minutes/';
+
+$response_members = wp_remote_get($members_url, array('timeout' => 15));
+$response_minutes = wp_remote_get($minutes_url, array('timeout' => 15));
+
 $members = array();
 $minutes = array();
 $authority_title = "Board of Management";
 
-if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
-    $data = json_decode(wp_remote_retrieve_body($response), true);
-    $members = isset($data['members']) ? $data['members'] : array();
-    $minutes = isset($data['minutes']) ? $data['minutes'] : array();
+if (!is_wp_error($response_members) && wp_remote_retrieve_response_code($response_members) === 200) {
+    $members = json_decode(wp_remote_retrieve_body($response_members), true);
+}
+if (!is_wp_error($response_minutes) && wp_remote_retrieve_response_code($response_minutes) === 200) {
+    $minutes = json_decode(wp_remote_retrieve_body($response_minutes), true);
 }
 
 function parse_phones($phone_fax) {
@@ -153,9 +158,18 @@ function format_designation($designation) {
                     <?php if (!empty($minutes)): ?>
                     <div class="minutes-list-modern">
                         <?php foreach ($minutes as $min) : 
-                            $file_url = !empty($min['file']) ? $media_base . $min['file'] : '#';
-                            if (strpos($min['file'], 'http') === 0) {
-                                $file_url = $min['file'];
+                            $file_url = '#';
+                            if (!empty($min['file'])) {
+                                if (strpos($min['file'], 'http') === 0) {
+                                    $file_url = $min['file'];
+                                } else {
+                                    $media_url = rtrim($media_base, '/');
+                                    $file_path = '/' . ltrim($min['file'], '/');
+                                    if (strpos($media_url, '/media') !== false && strpos($file_path, '/media/') === 0) {
+                                        $file_path = substr($file_path, 6);
+                                    }
+                                    $file_url = $media_url . $file_path;
+                                }
                             }
                         ?>
                         <a href="<?php echo esc_url($file_url); ?>" class="minute-row" target="_blank">
@@ -311,7 +325,7 @@ function format_designation($designation) {
 }
 
 .member-desc {
-    font-size: 13px;
+    font-size: 15px;
     color: #64748b;
     margin-top: 4px;
     font-weight: 500;
