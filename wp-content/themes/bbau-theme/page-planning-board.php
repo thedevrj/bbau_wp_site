@@ -7,50 +7,22 @@ get_header();
 
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
-$api_url    = $api_base . '/api/v1/authorities/PLANNING_BOARD/';
 
-$response = wp_remote_get($api_url, array('timeout' => 15));
+$members_url = $api_base . '/api/v1/planning-board-members/';
+$minutes_url = $api_base . '/api/v1/planning-board-minutes/';
+
+$response_members = wp_remote_get($members_url, array('timeout' => 15));
+$response_minutes = wp_remote_get($minutes_url, array('timeout' => 15));
+
 $members = array();
 $minutes = array();
 $authority_title = "Planning Board";
 
-if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
-    $data = json_decode(wp_remote_retrieve_body($response), true);
-    $members = isset($data['members']) ? $data['members'] : array();
-    $minutes = isset($data['minutes']) ? $data['minutes'] : array();
+if (!is_wp_error($response_members) && wp_remote_retrieve_response_code($response_members) === 200) {
+    $members = json_decode(wp_remote_retrieve_body($response_members), true);
 }
-
-function parse_phones($phone_fax) {
-    if (empty($phone_fax)) {
-        return array();
-    }
-    $parsed = array();
-    $parts = explode(',', $phone_fax);
-    foreach ($parts as $part) {
-        $part = trim($part);
-        if (empty($part)) {
-            continue;
-        }
-        if (strpos($part, '(') !== false && strpos($part, ')') !== false) {
-            $num_parts = explode('(', $part, 2);
-            $number = trim($num_parts[0]);
-            $label_parts = explode(')', $num_parts[1], 2);
-            $label = '(' . trim($label_parts[0]) . ')';
-            $parsed[] = array('number' => $number, 'label' => $label);
-        } else {
-            $parsed[] = array('number' => $part, 'label' => '');
-        }
-    }
-    return $parsed;
-}
-
-function format_designation($designation) {
-    if (empty($designation)) {
-        return '';
-    }
-    $designation = str_replace('  ', '<br>', esc_html($designation));
-    $designation = nl2br($designation);
-    return $designation;
+if (!is_wp_error($response_minutes) && wp_remote_retrieve_response_code($response_minutes) === 200) {
+    $minutes = json_decode(wp_remote_retrieve_body($response_minutes), true);
 }
 ?>
 
@@ -74,7 +46,7 @@ function format_designation($designation) {
 
             <!-- Card Body Content -->
             <div class="authority-card-body">
-                
+
                 <!-- Members List Tab Panel -->
                 <div id="auth-members" class="auth-tab-panel active">
                     <?php if (!empty($members)): ?>
@@ -85,10 +57,9 @@ function format_designation($designation) {
                                     <th class="col-sno">S.No.</th>
                                     <th class="col-provision">Provision</th>
                                     <th class="col-name">Name of Member</th>
-                                    <th class="col-email">Email-Id</th>
-                                    <th class="col-phone">Phone/Fax</th>
-                                    <th class="col-date">Date of Nomination</th>
+                                    <th class="col-date">Date of Appointment</th>
                                     <th class="col-date">Date of Expiry</th>
+                                    <th class="col-date">In the Capacity of</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -98,42 +69,30 @@ function format_designation($designation) {
                                 ?>
                                 <tr>
                                     <td class="col-sno"><strong><?php echo $sno++; ?></strong></td>
-                                    <td class="col-provision"><?php echo esc_html(!empty($member['provision']) ? $member['provision'] : '—'); ?></td>
+                                    <td class="col-provision">
+                                        <?php echo esc_html(!empty($member['provision']) ? $member['provision'] : '—'); ?>
+                                    </td>
                                     <td class="col-name">
                                         <div class="member-title"><?php echo esc_html($member['name']); ?></div>
                                         <?php if (!empty($member['designation'])): ?>
-                                            <div class="member-desc"><?php echo format_designation($member['designation']); ?></div>
+                                        <div class="member-desc"><?php echo esc_html($member['designation']); ?></div>
                                         <?php endif; ?>
-                                    </td>
-                                    <td class="col-email">
-                                        <?php if (!empty($member['email'])): ?>
-                                            <a href="mailto:<?php echo esc_attr($member['email']); ?>" class="member-link"><?php echo esc_html($member['email']); ?></a>
-                                        <?php else: ?>
-                                            —
+                                        <?php if (!empty($member['institution'])): ?>
+                                        <div class="member-desc" style="font-style: italic;">
+                                            <?php echo esc_html($member['institution']); ?></div>
                                         <?php endif; ?>
-                                    </td>
-                                    <td class="col-phone">
-                                        <?php 
-                                        $phones = parse_phones($member['phone_fax']);
-                                        if (!empty($phones)):
-                                            foreach ($phones as $phone):
-                                        ?>
-                                            <span class="phone-number"><?php echo esc_html($phone['number']); ?></span><br>
-                                            <?php if (!empty($phone['label'])): ?>
-                                                <span class="phone-lbl"><?php echo esc_html($phone['label']); ?></span><br>
-                                            <?php endif; ?>
-                                        <?php 
-                                            endforeach;
-                                        else:
-                                            echo '—';
-                                        endif; 
-                                        ?>
                                     </td>
                                     <td class="col-date">
-                                        <?php echo esc_html(!empty($member['date_of_nomination']) ? date('d.m.Y', strtotime($member['date_of_nomination'])) : '—'); ?>
+                                        <?php echo esc_html(!empty($member['date_of_appointment']) ? date('d.m.Y', strtotime($member['date_of_appointment'])) : '—'); ?>
                                     </td>
                                     <td class="col-date">
                                         <?php echo esc_html(!empty($member['date_of_expiry']) ? date('d.m.Y', strtotime($member['date_of_expiry'])) : '—'); ?>
+                                    </td>
+                                    <td class="col-name">
+                                        <?php if (!empty($member['in_the_capacity_of'])): ?>
+                                        <div class="member-desc" style="font-weight: 600; ">
+                                            <?php echo esc_html($member['in_the_capacity_of']); ?></div>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -141,10 +100,10 @@ function format_designation($designation) {
                         </table>
                     </div>
                     <?php else: ?>
-                        <div class="auth-empty-state">
-                            <i class="fa-solid fa-users-slash"></i>
-                            <p>No members listed for this authority yet.</p>
-                        </div>
+                    <div class="auth-empty-state">
+                        <i class="fa-solid fa-users-slash"></i>
+                        <p>No members listed for this authority yet.</p>
+                    </div>
                     <?php endif; ?>
                 </div>
 
@@ -153,9 +112,18 @@ function format_designation($designation) {
                     <?php if (!empty($minutes)): ?>
                     <div class="minutes-list-modern">
                         <?php foreach ($minutes as $min) : 
-                            $file_url = !empty($min['file']) ? $media_base . $min['file'] : '#';
-                            if (strpos($min['file'], 'http') === 0) {
-                                $file_url = $min['file'];
+                            $file_url = '#';
+                            if (!empty($min['file'])) {
+                                if (strpos($min['file'], 'http') === 0) {
+                                    $file_url = $min['file'];
+                                } else {
+                                    $media_url = rtrim($media_base, '/');
+                                    $file_path = '/' . ltrim($min['file'], '/');
+                                    if (strpos($media_url, '/media') !== false && strpos($file_path, '/media/') === 0) {
+                                        $file_path = substr($file_path, 6);
+                                    }
+                                    $file_url = $media_url . $file_path;
+                                }
                             }
                         ?>
                         <a href="<?php echo esc_url($file_url); ?>" class="minute-row" target="_blank">
@@ -171,10 +139,10 @@ function format_designation($designation) {
                         <?php endforeach; ?>
                     </div>
                     <?php else: ?>
-                        <div class="auth-empty-state">
-                            <i class="fa-solid fa-folder-open"></i>
-                            <p>No meeting minutes uploaded for this authority yet.</p>
-                        </div>
+                    <div class="auth-empty-state">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <p>No meeting minutes uploaded for this authority yet.</p>
+                    </div>
                     <?php endif; ?>
                 </div>
 
@@ -240,8 +208,15 @@ function format_designation($designation) {
 }
 
 @keyframes authFadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* --- Table Styling --- */
@@ -305,13 +280,13 @@ function format_designation($designation) {
 }
 
 .member-title {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
     color: #1e293b;
 }
 
 .member-desc {
-    font-size: 13px;
+    font-size: 15px;
     color: #64748b;
     margin-top: 4px;
     font-weight: 500;
