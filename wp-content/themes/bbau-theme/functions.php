@@ -338,7 +338,7 @@ function add_school_rewrite_rule() {
     // faculty profile rewrite rule
     add_rewrite_rule(
         '^faculty/([^/]+)/?$',
-        'index.php?pagename=faculty-single&faculty_slug=$matches[1]',
+        'index.php?pagename=faculty-profile&faculty_slug=$matches[1]',
         'top'
     );
 }
