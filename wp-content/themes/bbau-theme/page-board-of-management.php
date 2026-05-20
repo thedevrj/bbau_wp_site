@@ -12,7 +12,6 @@ $members_url = $api_base . '/api/v1/board-of-management-members/';
 $minutes_url = $api_base . '/api/v1/board-of-management-minutes/';
 
 $response_members = wp_remote_get($members_url, array('timeout' => 15));
-$response_minutes = wp_remote_get($minutes_url, array('timeout' => 15));
 
 $members = array();
 $minutes = array();
@@ -21,9 +20,7 @@ $authority_title = "Board of Management";
 if (!is_wp_error($response_members) && wp_remote_retrieve_response_code($response_members) === 200) {
     $members = json_decode(wp_remote_retrieve_body($response_members), true);
 }
-if (!is_wp_error($response_minutes) && wp_remote_retrieve_response_code($response_minutes) === 200) {
-    $minutes = json_decode(wp_remote_retrieve_body($response_minutes), true);
-}
+
 
 function parse_phones($phone_fax) {
     if (empty($phone_fax)) {
@@ -68,7 +65,10 @@ function format_designation($designation) {
         <!-- Custom Card Container -->
         <div class="authority-card">
             <!-- Tabs Menu -->
-            <div class="authority-tabs">
+            
+            <!-- Authority Header Row -->
+            <div class="authority-header-row" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2d9cc; margin-bottom: 30px; flex-wrap:wrap; gap:15px;">
+                <div class="authority-tabs" style="border-bottom: none; margin-bottom: 0;">
                 <button class="auth-tab-btn active" onclick="switchAuthorityTab(event, 'auth-members')">
                     <i class="fa-solid fa-users" style="margin-right: 8px;"></i>Members
                 </button>
@@ -76,6 +76,12 @@ function format_designation($designation) {
                     <i class="fa-solid fa-file-pdf" style="margin-right: 8px;"></i>Minutes of Meetings
                 </button>
             </div>
+                <div class="auth-login-controls">
+                    <button class="btn-auth-trigger" id="auth-btn-login" style="display:none;"><i class="fa-solid fa-lock"></i> Login</button>
+                    <button class="btn-auth-logout" id="auth-btn-logout" style="display:none;"><i class="fa-solid fa-sign-out-alt"></i> Logout <span id="auth-username" style="font-size: 0.8em; margin-left:5px;"></span></button>
+                </div>
+            </div>
+
 
             <!-- Card Body Content -->
             <div class="authority-card-body">
@@ -154,322 +160,16 @@ function format_designation($designation) {
                 </div>
 
                 <!-- Minutes List Tab Panel -->
-                <div id="auth-minutes" class="auth-tab-panel">
-                    <?php if (!empty($minutes)): ?>
-                    <div class="minutes-list-modern">
-                        <?php foreach ($minutes as $min) : 
-                            $file_url = '#';
-                            if (!empty($min['file'])) {
-                                if (strpos($min['file'], 'http') === 0) {
-                                    $file_url = $min['file'];
-                                } else {
-                                    $media_url = rtrim($media_base, '/');
-                                    $file_path = '/' . ltrim($min['file'], '/');
-                                    if (strpos($media_url, '/media') !== false && strpos($file_path, '/media/') === 0) {
-                                        $file_path = substr($file_path, 6);
-                                    }
-                                    $file_url = $media_url . $file_path;
-                                }
-                            }
-                        ?>
-                        <a href="<?php echo esc_url($file_url); ?>" class="minute-row" target="_blank">
-                            <div class="min-date">
-                                <span class="d"><?php echo date('d', strtotime($min['date_of_meeting'])); ?></span>
-                                <span class="m"><?php echo date('M', strtotime($min['date_of_meeting'])); ?></span>
-                            </div>
-                            <div class="min-info">
-                                <strong><?php echo esc_html(!empty($min['meeting_title']) ? $min['meeting_title'] : 'Authority Meeting'); ?></strong>
-                                <span>Download PDF <i class="fa-solid fa-file-pdf"></i></span>
-                            </div>
-                        </a>
-                        <?php endforeach; ?>
+                <div id="auth-minutes" class="auth-tab-panel" data-api-url="<?php echo esc_attr($minutes_url); ?>">
+                    <div id="minutes-container">
+                        <div style="padding:40px; text-align:center;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>
                     </div>
-                    <?php else: ?>
-                        <div class="auth-empty-state">
-                            <i class="fa-solid fa-folder-open"></i>
-                            <p>No meeting minutes uploaded for this authority yet.</p>
-                        </div>
-                    <?php endif; ?>
                 </div>
-
             </div>
         </div>
     </div>
 </main>
 
-<style>
-/* --- Premium Custom Styling for Authorities --- */
-.authority-card {
-    background: #ffffff;
-    border: 1px solid #e2d9cc;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-    margin-top: 25px;
-    overflow: hidden;
-}
-
-.authority-tabs {
-    display: flex;
-    background: #fdfbf7;
-    border-bottom: 1px solid #e2d9cc;
-}
-
-.auth-tab-btn {
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 15px;
-    font-weight: 700;
-    color: #64748b;
-    padding: 16px 28px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border-right: 1px solid #e2d9cc;
-    display: flex;
-    align-items: center;
-}
-
-.auth-tab-btn:hover {
-    color: #8B1A1A;
-    background: #fff8f0;
-}
-
-.auth-tab-btn.active {
-    color: #fff;
-    background: #8B1A1A;
-    border-bottom: 1px solid #8B1A1A;
-}
-
-.authority-card-body {
-    padding: 30px;
-}
-
-.auth-tab-panel {
-    display: none;
-}
-
-.auth-tab-panel.active {
-    display: block;
-    animation: authFadeIn 0.3s ease-in-out;
-}
-
-@keyframes authFadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- Table Styling --- */
-.table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    border-radius: 12px;
-    border: 1px solid #e2d9cc;
-}
-
-.authority-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 16px;
-    text-align: left;
-}
-
-.authority-table th {
-    background: #fdfaf6;
-    color: #8B1A1A;
-    font-weight: 700;
-    padding: 16px 20px;
-    border-bottom: 2px solid #e2d9cc;
-    white-space: nowrap;
-    text-transform: uppercase;
-    font-size: 15px;
-    letter-spacing: 0.5px;
-}
-
-.authority-table td {
-    padding: 16px 20px;
-    border-bottom: 1px solid #f3f4f6;
-    vertical-align: top;
-    color: #374151;
-    line-height: 1.5;
-}
-
-.authority-table tbody tr:nth-child(even) {
-    background-color: #fcfbf9;
-}
-
-.authority-table tbody tr:hover {
-    background-color: #f7f3ed;
-    transition: background-color 0.2s ease;
-}
-
-.col-sno {
-    width: 60px;
-    font-weight: 700;
-    color: #1e293b;
-}
-
-.col-provision {
-    width: 100px;
-    font-weight: 500;
-    color: #475569;
-}
-
-.col-name {
-    min-width: 250px;
-}
-
-.member-title {
-    font-size: 17px;
-    font-weight: 700;
-    color: #1e293b;
-}
-
-.member-desc {
-    font-size: 15px;
-    color: #64748b;
-    margin-top: 4px;
-    font-weight: 500;
-}
-
-.member-link {
-    color: #8B1A1A;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.member-link:hover {
-    text-decoration: underline;
-}
-
-.phone-number {
-    font-weight: 600;
-    color: #1e293b;
-    white-space: nowrap;
-}
-
-.phone-lbl {
-    font-size: 11px;
-    color: #64748b;
-    font-weight: 700;
-}
-
-.col-date {
-    width: 130px;
-    white-space: nowrap;
-    font-weight: 500;
-}
-
-/* --- Empty State --- */
-.auth-empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: #64748b;
-}
-
-.auth-empty-state i {
-    font-size: 50px;
-    color: #cbd5e1;
-    margin-bottom: 15px;
-    display: block;
-}
-
-.auth-empty-state p {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-/* --- Minutes Styling --- */
-.minutes-list-modern{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.minutes-list-modern .minute-row{
-    width: calc(33% - 12px) !important;
-    flex: 0 0 calc(33% - 12px);
-}
-
-/* iPad / Tablet */
-@media (max-width: 991px){
-    .minutes-list-modern .minute-row{
-        width: calc(50% - 8px) !important;
-        flex: 0 0 calc(50% - 8px);
-    }
-}
-
-/* Mobile */
-@media (max-width: 576px){
-    .minutes-list-modern .minute-row{
-        width: 100% !important;
-        flex: 0 0 100%;
-    }
-}
-
-.minute-row {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 16px 20px;
-    background: #fdfbf7;
-    border: 1px solid #e2d9cc;
-    border-radius: 12px;
-    text-decoration: none !important;
-    transition: all 0.2s ease;
-}
-
-.minute-row:hover {
-    background: #ffffff;
-    box-shadow: 0 8px 25px rgba(139, 26, 26, 0.06);
-    border-color: #8B1A1A;
-    transform: translateY(-2px);
-}
-
-.min-date {
-    background: #8B1A1A;
-    color: #fff;
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.min-date .d {
-    font-weight: 800;
-    font-size: 20px;
-    line-height: 1;
-}
-
-.min-date .m {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.min-info {
-    flex-grow: 1;
-}
-
-.min-info strong {
-    display: block;
-    color: #5c1010;
-    font-size: 16px;
-    margin-bottom: 2px;
-}
-
-.min-info span {
-    font-size: 13px;
-    color: #8B1A1A;
-    font-weight: 700;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-</style>
 
 <script>
 function switchAuthorityTab(evt, panelId) {
@@ -489,6 +189,104 @@ function switchAuthorityTab(evt, panelId) {
     document.getElementById(panelId).classList.add("active");
     evt.currentTarget.classList.add("active");
 }
+</script>
+
+
+<?php get_template_part('template-parts/portal-auth-modal'); ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const minutesApiUrl = document.getElementById('auth-minutes').getAttribute('data-api-url');
+    const mediaBase = "<?php echo rtrim(getenv('DJANGO_MEDIA_URL'), '/'); ?>";
+    
+    const btnLogin = document.getElementById('auth-btn-login');
+    const btnLogout = document.getElementById('auth-btn-logout');
+    const labelUsername = document.getElementById('auth-username');
+    const minutesContainer = document.getElementById('minutes-container');
+
+    function updateAuthButtons() {
+        const token = localStorage.getItem('portal_access_token');
+        const user = localStorage.getItem('portal_user');
+        if (token) {
+            btnLogin.style.display = 'none';
+            btnLogout.style.display = 'inline-flex';
+            labelUsername.textContent = `(${user})`;
+        } else {
+            btnLogin.style.display = 'inline-flex';
+            btnLogout.style.display = 'none';
+            labelUsername.textContent = '';
+        }
+    }
+
+    async function fetchMinutes() {
+        const token = localStorage.getItem('portal_access_token');
+        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+        
+        minutesContainer.innerHTML = '<div style="padding:40px; text-align:center;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>';
+        
+        try {
+            const res = await fetch(minutesApiUrl, { headers });
+            if (!res.ok) throw new Error('Failed to fetch');
+            const data = await res.json();
+            
+            if (data.length === 0) {
+                minutesContainer.innerHTML = `
+                    <div class="auth-empty-state">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <p>No meeting minutes available.</p>
+                    </div>`;
+                return;
+            }
+
+            let html = '<div class="minutes-list-modern">';
+            data.forEach(min => {
+                let fileUrl = '#';
+                if (min.file) {
+                    if (min.file.startsWith('http')) {
+                        fileUrl = min.file;
+                    } else {
+                        let path = min.file;
+                        if (mediaBase.includes('/media') && path.startsWith('/media/')) {
+                            path = path.substring(6);
+                        }
+                        fileUrl = mediaBase + (path.startsWith('/') ? path : '/' + path);
+                    }
+                }
+                
+                const d = new Date(min.date_of_meeting);
+                const day = String(d.getDate()).padStart(2, '0');
+                const month = d.toLocaleString('en-US', { month: 'short' });
+                const title = min.meeting_title || 'Authority Meeting';
+                
+                const privateBadge = min.is_private ? '<span class="badge" style="background:#c9a84c; color:#0f172a; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Private</span>' : '';
+
+                html += `
+                <a href="${fileUrl}" class="minute-row" target="_blank" style="${min.is_private ? 'border-left:4px solid #c9a84c; background:#fffdf9;' : ''}">
+                    <div class="min-date">
+                        <span class="d">${day}</span>
+                        <span class="m">${month}</span>
+                    </div>
+                    <div class="min-info">
+                        <strong>${title} ${privateBadge}</strong>
+                        <span>Download PDF <i class="fa-solid fa-file-pdf"></i></span>
+                    </div>
+                </a>`;
+            });
+            html += '</div>';
+            minutesContainer.innerHTML = html;
+
+        } catch (e) {
+            minutesContainer.innerHTML = '<div style="padding:40px; text-align:center; color:red;">Error loading minutes.</div>';
+        }
+    }
+
+    updateAuthButtons();
+    fetchMinutes();
+
+    document.addEventListener('portalAuthStatusChanged', function() {
+        updateAuthButtons();
+        fetchMinutes();
+    });
+});
 </script>
 
 <?php get_footer(); ?>
