@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Board of Management
+Template Name: Academic Council
 */
 defined('ABSPATH') || exit;
 get_header();
@@ -8,43 +8,19 @@ get_header();
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 
-$members_url = $api_base . '/api/v1/board-of-management-members/';
-$minutes_url = $api_base . '/api/v1/board-of-management-minutes/';
+$members_url = $api_base . '/api/v1/academic-council-members/';
+$minutes_url = $media_base . '/api/v1/academic-council-minutes/';
 
 $response_members = wp_remote_get($members_url, array('timeout' => 15));
 
 $members = array();
 $minutes = array();
-$authority_title = "Board of Management";
+$authority_title = "Academic Council";
 
 if (!is_wp_error($response_members) && wp_remote_retrieve_response_code($response_members) === 200) {
     $members = json_decode(wp_remote_retrieve_body($response_members), true);
 }
 
-
-function parse_phones($phone_fax) {
-    if (empty($phone_fax)) {
-        return array();
-    }
-    $parsed = array();
-    $parts = explode(',', $phone_fax);
-    foreach ($parts as $part) {
-        $part = trim($part);
-        if (empty($part)) {
-            continue;
-        }
-        if (strpos($part, '(') !== false && strpos($part, ')') !== false) {
-            $num_parts = explode('(', $part, 2);
-            $number = trim($num_parts[0]);
-            $label_parts = explode(')', $num_parts[1], 2);
-            $label = '(' . trim($label_parts[0]) . ')';
-            $parsed[] = array('number' => $number, 'label' => $label);
-        } else {
-            $parsed[] = array('number' => $part, 'label' => '');
-        }
-    }
-    return $parsed;
-}
 
 function format_designation($designation) {
     if (empty($designation)) {
@@ -94,12 +70,9 @@ function format_designation($designation) {
                             <thead>
                                 <tr>
                                     <th class="col-sno">S.No.</th>
-                                    <th class="col-provision">Provision</th>
                                     <th class="col-name">Name of Member</th>
+                                    <th class="col-phone">Contact</th>
                                     <th class="col-email">Email-Id</th>
-                                    <th class="col-phone">Phone/Fax</th>
-                                    <th class="col-date">Date of Nomination</th>
-                                    <th class="col-date">Date of Expiry</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,12 +82,17 @@ function format_designation($designation) {
                                 ?>
                                 <tr>
                                     <td class="col-sno"><strong><?php echo $sno++; ?></strong></td>
-                                    <td class="col-provision"><?php echo esc_html(!empty($member['provision']) ? $member['provision'] : '—'); ?></td>
                                     <td class="col-name">
                                         <div class="member-title"><?php echo esc_html($member['name']); ?></div>
                                         <?php if (!empty($member['designation'])): ?>
                                             <div class="member-desc"><?php echo format_designation($member['designation']); ?></div>
                                         <?php endif; ?>
+                                        <?php if (!empty($member['institution'])): ?>
+                                            <div class="member-desc" style="font-style: italic;"><?php echo esc_html($member['institution']); ?></div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="col-phone">
+                                        <?php echo esc_html(!empty($member['contact']) ? $member['contact'] : '—'); ?>
                                     </td>
                                     <td class="col-email">
                                         <?php if (!empty($member['email'])): ?>
@@ -122,29 +100,6 @@ function format_designation($designation) {
                                         <?php else: ?>
                                             —
                                         <?php endif; ?>
-                                    </td>
-                                    <td class="col-phone">
-                                        <?php 
-                                        $phones = parse_phones($member['phone_fax']);
-                                        if (!empty($phones)):
-                                            foreach ($phones as $phone):
-                                        ?>
-                                            <span class="phone-number"><?php echo esc_html($phone['number']); ?></span><br>
-                                            <?php if (!empty($phone['label'])): ?>
-                                                <span class="phone-lbl"><?php echo esc_html($phone['label']); ?></span><br>
-                                            <?php endif; ?>
-                                        <?php 
-                                            endforeach;
-                                        else:
-                                            echo '—';
-                                        endif; 
-                                        ?>
-                                    </td>
-                                    <td class="col-date">
-                                        <?php echo esc_html(!empty($member['date_of_nomination']) ? date('d.m.Y', strtotime($member['date_of_nomination'])) : '—'); ?>
-                                    </td>
-                                    <td class="col-date">
-                                        <?php echo esc_html(!empty($member['date_of_expiry']) ? date('d.m.Y', strtotime($member['date_of_expiry'])) : '—'); ?>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -257,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const month = d.toLocaleString('en-US', { month: 'short' });
                 const title = min.meeting_title || 'Authority Meeting';
                 
-                const privateBadge = min.is_private ? '<span class="badge" style="background:#c9a84c; color:#0f172a; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Private</span>' : '';
+                const privateBadge = min.is_private ? '<span class="badge" style="background:#c9a84c; color:#0f172a; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Confidential</span>' : '';
 
                 html += `
                 <a href="${fileUrl}" class="minute-row" target="_blank" style="${min.is_private ? 'border-left:4px solid #c9a84c; background:#fffdf9;' : ''}">

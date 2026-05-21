@@ -113,14 +113,18 @@ get_header();
             ?>
             <a href="<?php echo school_tab_url($slug, 'about'); ?>"
                 class="<?php echo ($tab === 'about') ? 'active' : ''; ?>">About & Dean</a>
+            <a href="<?php echo school_tab_url($slug, 'school_board'); ?>"
+                class="<?php echo ($tab === 'school_board') ? 'active' : ''; ?>">School Board</a>
+            <a href="<?php echo school_tab_url($slug, 'minutes'); ?>"
+                class="<?php echo ($tab === 'minutes') ? 'active' : ''; ?>">School Minutes</a>
+
             <a href="<?php echo school_tab_url($slug, 'departments'); ?>"
                 class="<?php echo ($tab === 'departments') ? 'active' : ''; ?>">Departments</a>
             <?php if (!empty($matched_centres)): ?>
             <a href="<?php echo school_tab_url($slug, 'centers'); ?>"
                 class="<?php echo ($tab === 'centers') ? 'active' : ''; ?>">Centers</a>
             <?php endif; ?>
-            <a href="<?php echo school_tab_url($slug, 'committee'); ?>"
-                class="<?php echo ($tab === 'committee') ? 'active' : ''; ?>">Committees</a>
+
         </div>
 
         <!-- TAB CONTENT -->
@@ -204,7 +208,7 @@ get_header();
             <?php elseif ($tab === 'departments') : ?>
             <!-- MAIN CAMPUS -->
             <div class="section-card mb-5">
-                <h3 class="dept-title-gradient">Departments (Main Campus)</h3>
+                <h3 class="dept-title-gradient">Departments (BBAU Campus)</h3>
                 <div class="dept-list-modern">
                     <?php foreach ($main_departments as $dept) : ?>
                     <a href="<?php echo esc_url(home_url('/departments/' . $dept['slug'])); ?>" class="dept-link-item">
@@ -233,7 +237,7 @@ get_header();
 
             <?php elseif ($tab === 'centers') : ?>
             <div class="section-card">
-                <h3 class="dept-title-gradient">Centers under <?php ?> </h3>
+                <h3 class="dept-title-gradient">Centers under <?php echo $name; ?> </h3>
                 <div class="centers-grid-modern">
                     <?php foreach ($matched_centres as $center) : ?>
                     <a href="/centers/<?php echo esc_attr($center['slug'] ); ?>" class="center-box">
@@ -244,92 +248,96 @@ get_header();
                 </div>
             </div>
 
-            <?php elseif ($tab === 'committee') : ?>
-            <div class="row">
-                <div class="col-lg-6 mb-3">
-                    <!-- COMMITTEES -->
-                    <h3 class="dept-title-gradient">School Committees</h3>
+            <?php elseif ($tab === 'school_board') : ?>
+            <!-- COMMITTEES -->
 
-                    <?php if(!empty($committees)): ?>
-                    <div class="committees-wrap">
-                        <?php foreach ($committees as $comm) : ?>
-                        <div class="committee-card">
-                            <div class="committee-header">
-                                <h4><?php echo esc_html($comm['name']); ?></h4>
-                            </div>
-                            <div class="committee-body">
-                                <?php if(!empty($comm['description'])): ?>
-                                <div class="committee-desc"><?php echo wp_kses_post($comm['description']); ?>
-                                    <?php endif; ?>
-                                    <?php if(!empty($comm['notification_or_document'])): ?>
-                                    <p>Committee Notification:<a class="link-new"
-                                            href=<?php echo ($comm['notification_or_document']); ?>> &nbsp; View
-                                            Notification </a></p>
-                                    <?php endif; ?>
-                                </div>
-
-                                <?php if(!empty($comm['members'])): ?>
-                                <table class="members-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Member Name</th>
-                                            <th>Role in Committee</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach($comm['members'] as $member): ?>
-                                        <tr>
-                                            <td><strong><?php echo esc_html($member['members']); ?></strong></td>
-                                            <td>
-                                                <span class="role-badge">
-                                                    <?php echo esc_html($member['designation'] === 'Others' ? $member['other_designation'] : $member['designation']); ?>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
+            <?php if(!empty($committees)): ?>
+            <h3 class="dept-title-gradient">School Board</h3>
+            <div class="committees-wrap">
+                <?php foreach ($committees as $comm) : ?>
+                <div class="committee-card">
+                    <div class="committee-header">
+                        <h4><?php echo esc_html($comm['name']); ?></h4>
                     </div>
-                    <?php endif;?>
+                    <div class="committee-body">
+                        <?php if(!empty($comm['description'])): ?>
+                        <div class="committee-desc"><?php echo wp_kses_post($comm['description']); ?>
+                            <?php endif; ?>
+                            <?php if(!empty($comm['notification_or_document'])): ?>
+                            <p>Committee Notification:<a class="link-new"
+                                    href=<?php echo ($comm['notification_or_document']); ?>> &nbsp; View
+                                    Notification </a></p>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if(!empty($comm['members'])): ?>
+                        <table class="members-table">
+                            <thead>
+                                <tr>
+                                    <th>Member Name</th>
+                                    <th>Role in Committee</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($comm['members'] as $member): ?>
+                                <tr>
+                                    <td><strong><?php echo esc_html($member['members']); ?></strong></td>
+                                    <td>
+                                        <span class="role-badge">
+                                            <?php echo esc_html($member['designation'] === 'Others' ? $member['other_designation'] : $member['designation']); ?>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <?php endif; ?>
+                    </div>
                 </div>
-                <div class="col-lg-6 mb-3">
-                    <h3 class="dept-title-gradient"> Minutes of Meetings</h3>
-                    <?php if (!empty($minutes)) : ?>
+                <?php endforeach; ?>
+            </div>
+            <?php else: ?>
+            <span>No school board information available at the moment.</span>
+            <?php endif; ?>
 
-                    <div class="section-card">
-                        <div class="minutes-list-modern">
-                            <?php foreach ($minutes as $min) : ?>
-                            <a href="<?php echo esc_url( $min['minutes']); ?>" class="minute-row" target="_blank">
-                                <div class="min-date">
-                                    <span class="d"><?php echo date('d', strtotime($min['date_of_meeting'])); ?></span>
-                                    <span class="m"><?php echo date('M', strtotime($min['date_of_meeting'])); ?></span>
 
-                                </div>
-                                <div class="min-info">
-                                    <strong><?php echo esc_html(!empty($min['meeting_title']) ? $min['meeting_title'] : 'Board Meeting'); ?></strong>
-                                    <span>Download PDF <i class="fa-solid fa-file-pdf"></i></span>
-                                </div>
-                            </a>
-                            <?php endforeach; ?>
+            <?php elseif ($tab === 'minutes') : ?>
+            <!-- MINUTES -->
+            <?php if (!empty($minutes)) : ?>
+
+            <h3 class="dept-title-gradient"> School Board Minutes</h3>
+            <div class="section-card">
+                <div class="minutes-list-modern">
+                    <?php foreach ($minutes as $min) : ?>
+                    <a href="<?php echo esc_url( $min['minutes']); ?>" class="minute-row" target="_blank">
+                        <div class="min-date">
+                            <span class="d"><?php echo date('d', strtotime($min['date_of_meeting'])); ?></span>
+                            <span class="m"><?php echo date('M', strtotime($min['date_of_meeting'])); ?></span>
+
                         </div>
-                    </div>
-                    <?php endif; ?>
-
-
+                        <div class="min-info">
+                            <strong><?php echo esc_html(!empty($min['meeting_title']) ? $min['meeting_title'] : 'Board Meeting'); ?></strong>
+                            <span>Download PDF <i class="fa-solid fa-file-pdf"></i></span>
+                        </div>
+                    </a>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
-
-            <!-- MINUTES -->
+            <?php else: ?>
+            <p>No minutes available at the moment.</p>
 
             <?php endif; ?>
 
+            <?php endif; ?>
+
+
+
         </div>
+
+
     </div>
+</div>
 </div>
 
 <?php get_footer(); ?>
