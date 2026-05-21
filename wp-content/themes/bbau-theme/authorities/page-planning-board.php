@@ -9,7 +9,7 @@ $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 
 $members_url = $api_base . '/api/v1/planning-board-members/';
-$minutes_url = $api_base . '/api/v1/planning-board-minutes/';
+$minutes_url = $media_base . '/api/v1/planning-board-minutes/';
 
 $response_members = wp_remote_get($members_url, array('timeout' => 15));
 
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const month = d.toLocaleString('en-US', { month: 'short' });
                 const title = min.meeting_title || 'Authority Meeting';
                 
-                const privateBadge = min.is_private ? '<span class="badge" style="background:#c9a84c; color:#0f172a; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Private</span>' : '';
+                const privateBadge = min.is_private ? '<span class="badge" style="background:#c9a84c; color:#0f172a; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Confidential</span>' : '';
 
                 html += `
                 <a href="${fileUrl}" class="minute-row" target="_blank" style="${min.is_private ? 'border-left:4px solid #c9a84c; background:#fffdf9;' : ''}">

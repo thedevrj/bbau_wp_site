@@ -7,6 +7,8 @@
 
 get_header();
 
+$media_base = getenv('DJANGO_MEDIA_URL');
+
 // Reuse background from satellite campus if available, otherwise a placeholder
 $banner_url = "/wp-content/uploads/2026/04/language.png"; 
 ?>
@@ -640,7 +642,8 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const apiBase = isLocal ? 'http://localhost:8001/api/v1' : 'http://172.35.0.45:8001/api/v1';
+    const mediaBase = "<?= $media_base ?>";
+    const apiBase = isLocal ? 'http://localhost:8001/api/v1/' :`${mediaBase}/api/v1/`;
 
     let allNotices = [];
     let currentCat = '';

@@ -1,3 +1,7 @@
+<?php 
+$media_base = getenv('DJANGO_MEDIA_URL');
+?>
+
 <!-- Login Modal -->
 <div class="sc-modal" id="login-modal">
     <div class="sc-modal-overlay" onclick="toggleModal('login-modal', false)"></div>
@@ -230,7 +234,8 @@ function toggleModal(id, show) {
 
 document.addEventListener('DOMContentLoaded', function() {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const apiBase = isLocal ? 'http://localhost:8001/api/v1' : 'http://172.35.0.45:8001/api/v1';
+    const mediaBase = "<?= $media_base ?>";
+    const apiBase = isLocal ? 'http://localhost:8001/api/v1/' :`${mediaBase}/api/v1/`;
     const authApiBase = apiBase.replace('/api/v1', '');
 
     // Handle Login Submit
