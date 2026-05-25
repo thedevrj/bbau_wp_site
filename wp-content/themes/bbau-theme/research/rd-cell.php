@@ -370,19 +370,17 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
                         });
 
                         // Show/hide no results message if all rows are hidden
-                        if (noResults) {
-                            if (visibleCount === 0 && rows.length > 0) {
-                                if (!document.getElementById('tempNoResults')) {
-                                    const tbody = document.querySelector('#consTable tbody');
-                                    const tr = document.createElement('tr');
-                                    tr.id = 'tempNoResults';
-                                    tr.innerHTML = '<td colspan="5" class="text-center py-5" style="color: #64748b;">No matching records found.</td>';
-                                    tbody.appendChild(tr);
-                                }
-                            } else {
-                                const temp = document.getElementById('tempNoResults');
-                                if (temp) temp.remove();
+                        if (visibleCount === 0 && rows.length > 0) {
+                            if (!document.getElementById('tempNoResults')) {
+                                const tbody = document.querySelector('#consTable tbody');
+                                const tr = document.createElement('tr');
+                                tr.id = 'tempNoResults';
+                                tr.innerHTML = '<td colspan="5" class="text-center py-5"><div class="empty-state"><i class="fas fa-search-minus mb-3" style="font-size: 2rem; opacity: 0.2;"></i><p style="color: #64748b; margin:0;">No matching records found.</p></div></td>';
+                                tbody.appendChild(tr);
                             }
+                        } else {
+                            const temp = document.getElementById('tempNoResults');
+                            if (temp) temp.remove();
                         }
                     }
 
@@ -409,7 +407,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 /* HERO SECTION */
 .premium-hero-rd {
-    height: 310px;
+    height: 300px;
     background: url('/wp-content/uploads/2026/04/rd-cell-image.png') center/cover no-repeat;
     position: relative;
     display: flex;
@@ -821,7 +819,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 .policy-info p {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 18px;
     color: #64748b;
 }
 
@@ -1046,6 +1044,32 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
     .rd-links-grid {
         grid-template-columns: 1fr;
+    }
+
+    .policy-item {
+        display: grid;
+        grid-template-columns: 60px 1fr;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .policy-icon {
+        grid-column: 1;
+    }
+
+    .policy-info {
+        grid-column: 2;
+    }
+
+    .policy-info h4 {
+        font-size: 20px;
+    }
+
+    .btn-rd-download {
+        grid-column: 1 / -1;
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
     }
     
     .data-table thead { display: none; }

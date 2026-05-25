@@ -27,11 +27,11 @@ $syllabus_url = $prog['syllabus'] ?? '';
         <div class="prog-stats mt-3">
             <div class="stat-row">
                 <span class="stat-label"><i class="fa-solid fa-users"></i> Intake:</span>
-                <div class="stat-value"><?php echo str_replace(array('<p>', '</p>'), array('', '<br>'), wp_kses_post($prog['intake'] ?? 'Not Disclosed')); ?></div>
+                <div class="stat-value"><?php echo !empty($prog['intake']) ? str_replace(array('<p>', '</p>'), array('', '<br>'), wp_kses_post($prog['intake'])) : 'Not Disclosed'; ?></div>
             </div>
             <div class="stat-row">
                 <span class="stat-label"><i class="fa-solid fa-indian-rupee-sign"></i> Fees:</span>
-                <div class="stat-value"><?php echo str_replace(array('<p>', '</p>'), array('', '<br>'), wp_kses_post($prog['fees'] ?? 'As per University norms')); ?></div>
+                <div class="stat-value"><?php echo !empty($prog['fees']) ? str_replace(array('<p>', '</p>'), array('', '<br>'), wp_kses_post($prog['fees'])) : 'As per University norms'; ?></div>
             </div>
         </div>
     </div>
