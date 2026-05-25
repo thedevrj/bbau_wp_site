@@ -1,262 +1,370 @@
 <?php
 /* Template Name: Staff Page */
+
 get_header();
 ?>
 
 <?php get_template_part('banners/about-banner'); ?>
 
+<section class="container-fluid page-bg page-template-about-bg py-5 overflow-hidden">
+
+<?php get_template_part('template-parts/breadcrumb'); ?>
+
 <div class="staff-page">
-    <div class="container"> <!-- ✅ OPEN CONTAINER -->
 
-        <!-- MENU -->
-        <?php get_template_part('menu/menu'); ?>
+<div class="container">
 
-        <!-- TITLE -->
-        <h2 class="staff-title">
-            <?php 
-                if(get_field('heading')){
-                    the_field('heading');
-                } else {
-                    the_title();
-                }
-            ?>
-        </h2>
+<!-- MENU -->
+<?php get_template_part('menu/menu'); ?>
 
-        <!-- STAFF GRID -->
-        <div class="staff-grid">
+<!-- TITLE -->
+<h2 class="staff-title">
 
-            <?php if(have_rows('staff_list')): ?>
-                <?php while(have_rows('staff_list')): the_row(); ?>
+<?php
+if(get_field('heading')){
+the_field('heading');
+}else{
+the_title();
+}
+?>
 
-                    <div class="staff-card">
+</h2>
 
-                        <!-- LEFT IMAGE -->
-                        <div class="staff-left">
-                            <?php 
-                                $photo = get_sub_field('image');
 
-                                if($photo): 
-                                    if(is_array($photo)){
-                                        $img_url = $photo['url'];
-                                    } else {
-                                        $img_url = $photo;
-                                    }
-                            ?>
-                                <img src="<?php echo esc_url($img_url); ?>" alt="">
-                            <?php else: ?>
-                                <div class="staff-avatar">
-                                    <?php echo strtoupper(substr(get_sub_field('name'),0,1)); ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+<!-- GRID -->
+<div class="staff-grid">
 
-                        <!-- RIGHT CONTENT -->
-                        <div class="staff-right">
+<?php if(have_rows('staff_list')): ?>
 
-                            <div class="staff-name">
-                                <?php the_sub_field('name'); ?>
-                            </div>
+<?php while(have_rows('staff_list')): the_row(); ?>
 
-                            <div class="staff-designation">
-                                <?php the_sub_field('designation'); ?>
-                            </div>
+<div class="staff-card">
 
-                            <div class="staff-info email pt-2">
-                                <i class="fa-solid fa-envelope"></i>
-                                <a class="link-new" href="mailto:<?php the_sub_field('email'); ?>">
-                                    <?php the_sub_field('email'); ?>
-                                </a>
-                            </div>
+<!-- IMAGE -->
+<div class="staff-left">
 
-                            <div class="staff-info phone">
-                                <i class="fa-solid fa-phone"></i>
-                                <a class="link-new" href="tel:<?php the_sub_field('phone'); ?>">
-                                    <?php the_sub_field('phone'); ?>
-                                </a>
-                            </div>
+<?php
 
-                        </div>
+$photo=get_sub_field('image');
 
-                    </div>
+if($photo):
 
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p style="text-align:center;">No staff added yet</p>
-            <?php endif; ?>
+if(is_array($photo)){
 
-        </div>
+$img_url=$photo['url'];
 
-    </div> <!-- ✅ CLOSE CONTAINER -->
-</div>
-<style>
-/* ================= PAGE ================= */
-.staff-page {
-    background: #f8f4f2;
-    padding: 60px 20px;
-    font-family: 'DM Sans', sans-serif;
+}else{
+
+$img_url=$photo;
+
 }
 
-.container {
-    max-width: 1300px;
-    margin: auto;
+?>
+
+<img src="<?php echo esc_url($img_url); ?>" alt="">
+
+<?php else: ?>
+
+<div class="staff-avatar">
+
+<?php echo strtoupper(substr(get_sub_field('name'),0,1)); ?>
+
+</div>
+
+<?php endif; ?>
+
+</div>
+
+
+<!-- CONTENT -->
+
+<div class="staff-right">
+
+<div class="staff-name">
+
+<?php the_sub_field('name'); ?>
+
+</div>
+
+<div class="staff-designation">
+
+<?php the_sub_field('designation'); ?>
+
+</div>
+
+<div class="staff-info email pt-2">
+
+<i class="fa-solid fa-envelope"></i>
+
+<a
+class="link-new"
+href="mailto:<?php the_sub_field('email'); ?>">
+
+<?php the_sub_field('email'); ?>
+
+</a>
+
+</div>
+
+
+<div class="staff-info phone">
+
+<i class="fa-solid fa-phone"></i>
+
+<a
+class="link-new"
+href="tel:<?php the_sub_field('phone'); ?>">
+
+<?php the_sub_field('phone'); ?>
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<?php endwhile; ?>
+
+<?php else: ?>
+
+<p style="text-align:center;">
+
+No staff added yet
+
+</p>
+
+<?php endif; ?>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<style>
+
+/* ================= PAGE ================= */
+
+.staff-page{
+padding:10px 20px;
+font-family:'DM Sans',sans-serif;
+}
+
+.staff-page .container{
+max-width:1400px;
+margin:auto;
+padding-left:15px;
+padding-right:15px;
 }
 
 /* TITLE */
-.staff-title {
-    color: #853030;
+
+.staff-title{
+color:#853030;
+margin-bottom:35px;
 }
 
 /* GRID */
-.staff-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
+
+.staff-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:25px;
 }
 
 /* CARD */
-.staff-card {
-    display: flex;
-    height: 180px;
-    background: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid #eee;
-    transition: 0.3s ease;
+
+.staff-card{
+display:flex;
+background:#fff;
+border-radius:18px;
+overflow:hidden;
+border:1px solid #eee;
+transition:.3s;
+min-height:220px;
 }
 
-.staff-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+.staff-card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
-/* LEFT IMAGE */
-.staff-left {
-    width: 50%;
-    height: 100%;
+/* IMAGE */
+
+.staff-left{
+width:45%;
+flex-shrink:0;
 }
 
-.staff-left img {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
+.staff-left img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
 }
 
-/* AVATAR */
-.staff-avatar {
-    width: 100%;
-    height: 100%;
-    background: #8b3a1c;
-    color: #fff;
-    font-size: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.staff-avatar{
+width:100%;
+height:100%;
+background:#8b3a1c;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#fff;
+font-size:28px;
 }
 
 /* RIGHT */
-.staff-right {
-    width: 50%;
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6px;
+
+.staff-right{
+width:55%;
+padding:18px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:10px;
+overflow:hidden;
+min-width:0;
 }
 
 /* NAME */
-.staff-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1a1a1a;
+
+.staff-name{
+font-size:18px;
+font-weight:700;
+line-height:1.4;
+color:#1b1b1b;
+word-break:break-word;
 }
 
 /* DESIGNATION */
-.staff-designation {
-    font-size: 11px;
-    background: #fbe7df;
-    color: #8b3a1c;
-    padding: 4px 10px;
-    border-radius: 20px;
-    display: inline-block;
-    width: fit-content;
+
+.staff-designation{
+padding:8px 16px;
+background:#fbe7df;
+color:#8b3a1c;
+border-radius:30px;
+font-size:13px;
+width:fit-content;
+max-width:100%;
 }
 
 /* INFO */
-.staff-info {
-    font-size: 11px;
-    color: #555;
+
+.staff-info{
+display:flex;
+align-items:flex-start;
+gap:10px;
+font-size:14px;
+min-width:0;
 }
 
-.staff-info i {
-    margin-right: 6px;
-    color: #853030;
-    font-size: 12px;
+/* ICON */
+
+.staff-info i{
+color:#853030;
+margin-top:4px;
+flex-shrink:0;
 }
 
-/* ================= RESPONSIVE ================= */
-/* ================= LARGE SCREEN (≤1200px) ================= */
-@media (max-width: 1200px) {
-    .staff-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-    }
+/* LINKS */
+
+.staff-info a{
+text-decoration:none;
+color:#004aad;
+display:block;
+max-width:100%;
+overflow-wrap:anywhere;
+word-break:break-word;
+line-height:1.5;
 }
 
-/* ================= LAPTOP / TABLET (≤1024px) ================= */
-@media (max-width: 1024px) {
-    .staff-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
+.staff-info a:hover{
+text-decoration:underline;
 }
 
-/* ================= TABLET SMALL (≤768px) ================= */
-@media (max-width: 768px) {
-    .staff-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* DESKTOP */
 
-    .staff-card {
-        height: 160px;
-        /* slightly compact */
-    }
+@media(max-width:1300px){
+
+.staff-grid{
+grid-template-columns:repeat(3,1fr);
 }
 
-/* ================= MOBILE (≤600px) ================= */
-@media (max-width: 600px) {
-    .staff-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .staff-card {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .staff-left {
-        width: 100%;
-        height: 200px;
-    }
-
-    .staff-right {
-        width: 100%;
-    }
 }
 
-/* ================= SMALL MOBILE (≤400px) ================= */
-@media (max-width: 400px) {
-    .staff-title {
-        font-size: 26px;
-    }
+/* TABLET */
 
-    .staff-name {
-        font-size: 13px;
-    }
+@media(max-width:992px){
 
-    .staff-info {
-        font-size: 10px;
-    }
+.staff-grid{
+grid-template-columns:repeat(2,1fr);
 }
+
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+.staff-grid{
+grid-template-columns:1fr;
+}
+
+.staff-card{
+flex-direction:column;
+}
+
+.staff-left,
+.staff-right{
+width:100%;
+}
+
+.staff-left{
+height:260px;
+}
+
+.staff-right{
+padding:20px;
+}
+
+.staff-name{
+font-size:20px;
+}
+
+.staff-info{
+font-size:14px;
+}
+
+}
+
+/* SMALL */
+
+@media(max-width:420px){
+
+.staff-right{
+padding:16px;
+}
+
+.staff-name{
+font-size:18px;
+}
+
+.staff-designation{
+font-size:12px;
+}
+
+.staff-info{
+font-size:13px;
+}
+
+}
+
 </style>
 
 <?php get_footer(); ?>
