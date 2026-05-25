@@ -731,9 +731,6 @@ body {
     letter-spacing: 0;
   }
 
-  .univ-subtitle {
-    display: none;
-  }
 
   /* Header left takes remaining space, leave room for hamburger */
   .header-left {

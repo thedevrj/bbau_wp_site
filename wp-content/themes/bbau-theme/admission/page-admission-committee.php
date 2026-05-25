@@ -9,7 +9,7 @@ $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 
 $members_url = rtrim($api_base, '/') . '/api/v1/admission/committee-members/';
-$minutes_url = rtrim($api_base, '/') . '/api/v1/admission/committee-minutes/';
+$minutes_url = rtrim($media_base, '/') . '/api/v1/admission/committee-minutes/';
 
 $response_members = wp_remote_get($members_url, array('timeout' => 15));
 
