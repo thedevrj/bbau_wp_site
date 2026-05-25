@@ -396,8 +396,15 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 }
 
 @keyframes fadeInScale {
-    0% { opacity: 0; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 </style>
 
@@ -405,7 +412,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 document.addEventListener('DOMContentLoaded', function() {
     const mediaBase = "<?= $media_base ?>";
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const apiBase = isLocal ? 'http://localhost:8001/api/v1/admission' :`${mediaBase}/api/v1/admission`;
+    const apiBase = isLocal ? 'http://localhost:8001/api/v1/admission' : `${mediaBase}/api/v1/admission`;
 
     const category = '<?php echo esc_js($admission_category ?? "UG"); ?>';
 
@@ -479,10 +486,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const getTagsHTML = (item) => {
             let tags = '';
             if (item.departments_display && item.departments_display.length > 0) {
-                tags += item.departments_display.map(d => `<span class="badge bg-secondary me-1 mb-1" style="font-size: 0.75rem;">${d}</span>`).join('');
+                tags += item.departments_display.map(d =>
+                    `<span class="badge bg-secondary me-1 mb-1" style="font-size: 0.75rem;">${d}</span>`
+                    ).join('');
             }
             if (item.programs_display && item.programs_display.length > 0) {
-                tags += item.programs_display.map(p => `<span class="badge bg-primary me-1 mb-1" style="font-size: 0.75rem; background-color: var(--sc-gold) !important;">${p}</span>`).join('');
+                tags += item.programs_display.map(p =>
+                    `<span class="badge bg-primary me-1 mb-1" style="font-size: 0.75rem; background-color: var(--sc-gold) !important;">${p}</span>`
+                    ).join('');
             }
             return tags ? `<div class="mt-3 d-flex flex-wrap">${tags}</div>` : '';
         };
