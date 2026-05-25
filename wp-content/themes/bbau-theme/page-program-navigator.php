@@ -28,7 +28,7 @@ if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_re
 
 <?php get_template_part('banners/about-banner'); ?>
 
-<div class="admissions-portal py-lg-5">
+<div class="admissions-portal py-5">
     <div class="container">
 
         <!-- HEADER SECTION -->
