@@ -6,15 +6,25 @@ Template Name: Cell Cards Page
 get_header();
 ?>
 
+<!-- Banner -->
+<?php get_template_part('banners/about-banner'); ?>
+
+<section class="container-fluid page-bg page-template-about-bg py-5 overflow-hidden">
+    <?php get_template_part('template-parts/breadcrumb'); ?>
+
+<!-- Menu -->
+<?php get_template_part('template-parts/page-menu'); ?>
+
+
 <div class="container">
 
-<div class="cell-cards-wrapper">
+    <div class="cell-cards-wrapper">
 
-<?php if(have_rows('cell_items')): ?>
+        <?php if(have_rows('cell_items')): ?>
 
-<div class="cell-cards-grid">
+        <div class="cell-cards-grid">
 
-<?php while(have_rows('cell_items')): the_row();
+            <?php while(have_rows('cell_items')): the_row();
 
 $name=get_sub_field('cell_name');
 
@@ -40,10 +50,7 @@ $hover=$hover?:'#444441';
 
 
 
-<div
-class="cell-card"
-
-style="
+            <div class="cell-card" style="
 --bg:<?php echo esc_attr($bg); ?>;
 --iconbg:<?php echo esc_attr($icon_bg); ?>;
 --icon:<?php echo esc_attr($icon_color); ?>;
@@ -52,305 +59,288 @@ style="
 
 
 
-<div class="cell-icon">
+                <div class="cell-icon">
 
-<svg
-viewBox="0 0 24 24"
-fill="none"
-stroke="var(--icon)"
-stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="2">
 
-<circle cx="12" cy="12" r="10"/>
+                        <circle cx="12" cy="12" r="10" />
 
-<circle cx="12" cy="12" r="3"/>
+                        <circle cx="12" cy="12" r="3" />
 
-</svg>
+                    </svg>
 
-</div>
+                </div>
 
 
 
-<h3>
+                <h3>
 
-<?php echo esc_html($name); ?>
+                    <?php echo esc_html($name); ?>
 
-</h3>
-
-
-
-<?php if($link): ?>
-
-<a
-href="<?php echo esc_url($link); ?>"
-class="view-btn">
-
-View More
-
-<svg
-viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
-
-<line
-x1="5"
-y1="12"
-x2="19"
-y2="12"/>
-
-<polyline
-points="12 5 19 12 12 19"/>
-
-</svg>
-
-</a>
-
-<?php endif; ?>
-
-
-</div>
+                </h3>
 
 
 
-<?php endwhile; ?>
+                <?php if($link): ?>
 
-</div>
+                <a href="<?php echo esc_url($link); ?>" class="view-btn">
 
-<?php else: ?>
+                    View More
 
-<div class="empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 
-No Cards Added
+                        <line x1="5" y1="12" x2="19" y2="12" />
+
+                        <polyline points="12 5 19 12 12 19" />
+
+                    </svg>
+
+                </a>
+
+                <?php endif; ?>
+
+
+            </div>
+
+
+
+            <?php endwhile; ?>
+
+        </div>
+
+        <?php else: ?>
+
+        <div class="empty">
+
+            No Cards Added
+
+        </div>
+
+        <?php endif; ?>
+
+    </div>
 
 </div>
-
-<?php endif; ?>
-
-</div>
-
-</div>
-
-
 
 <style>
+/* KEEP YOUR EXISTING CSS SAME */
+.cell-cards-wrapper {
 
-.cell-cards-wrapper{
-
-padding:60px 0;
-
-}
-
-
-
-.cell-cards-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(5,1fr);
-
-gap:18px;
+    padding: 60px 0;
 
 }
 
 
 
-.cell-card{
+.cell-cards-grid {
 
-background:var(--bg);
+    display: grid;
 
-padding:22px;
+    grid-template-columns:
+        repeat(5, 1fr);
 
-border-radius:18px;
-
-display:flex;
-
-flex-direction:column;
-
-gap:18px;
-
-transition:.3s;
-
-min-height:220px;
+    gap: 18px;
 
 }
 
 
 
-.cell-card:hover{
+.cell-card {
 
-transform:translateY(-8px);
+    background: var(--bg);
 
-}
+    padding: 22px;
 
+    border-radius: 18px;
 
+    display: flex;
 
-.cell-icon{
+    flex-direction: column;
 
-width:52px;
+    gap: 18px;
 
-height:52px;
+    transition: .3s;
 
-background:var(--iconbg);
-
-border-radius:12px;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
+    min-height: 220px;
 
 }
 
 
 
-.cell-icon svg{
+.cell-card:hover {
 
-width:26px;
-
-height:26px;
+    transform: translateY(-8px);
 
 }
 
 
 
-.cell-card h3{
+.cell-icon {
 
-margin:0;
+    width: 52px;
 
-font-size:18px;
+    height: 52px;
 
-font-weight:600;
+    background: var(--iconbg);
 
-line-height:1.5;
+    border-radius: 12px;
 
-color:#222;
+    display: flex;
 
-font-family:
-"Poppins",
-sans-serif;
+    justify-content: center;
 
-}
-
-
-
-.view-btn{
-
-margin-top:auto;
-
-display:inline-flex;
-
-align-items:center;
-
-gap:8px;
-
-padding:10px 18px;
-
-border-radius:30px;
-
-background:#fff;
-
-text-decoration:none;
-
-font-size:13px;
-
-font-weight:600;
-
-color:#555;
-
-border:1px solid rgba(0,0,0,.15);
-
-transition:.3s;
-
-width:fit-content;
+    align-items: center;
 
 }
 
 
 
-.view-btn svg{
+.cell-icon svg {
 
-width:14px;
+    width: 26px;
 
-height:14px;
-
-}
-
-
-
-.view-btn:hover{
-
-background:var(--hover);
-
-color:#fff;
+    height: 26px;
 
 }
 
 
 
-.empty{
+.cell-card h3 {
 
-padding:100px;
+    margin: 0;
 
-text-align:center;
+    font-size: 18px;
 
-font-size:20px;
+    font-weight: 600;
 
-}
+    line-height: 1.5;
 
+    color: #222;
 
-
-@media(max-width:1199px){
-
-.cell-cards-grid{
-
-grid-template-columns:
-repeat(4,1fr);
-
-}
+    font-family:
+        "Poppins",
+        sans-serif;
 
 }
 
 
 
-@media(max-width:991px){
+.view-btn {
 
-.cell-cards-grid{
+    margin-top: auto;
 
-grid-template-columns:
-repeat(3,1fr);
+    display: inline-flex;
 
-}
+    align-items: center;
 
-}
+    gap: 8px;
 
+    padding: 10px 18px;
 
+    border-radius: 30px;
 
-@media(max-width:767px){
+    background: #fff;
 
-.cell-cards-grid{
+    text-decoration: none;
 
-grid-template-columns:
-repeat(2,1fr);
+    font-size: 13px;
 
-}
+    font-weight: 600;
 
-}
+    color: #555;
 
+    border: 1px solid rgba(0, 0, 0, .15);
 
+    transition: .3s;
 
-@media(max-width:480px){
-
-.cell-cards-grid{
-
-grid-template-columns:
-1fr;
+    width: fit-content;
 
 }
 
+
+
+.view-btn svg {
+
+    width: 14px;
+
+    height: 14px;
+
 }
 
+
+
+.view-btn:hover {
+
+    background: var(--hover);
+
+    color: #fff;
+
+}
+
+
+
+.empty {
+
+    padding: 100px;
+
+    text-align: center;
+
+    font-size: 20px;
+
+}
+
+
+
+@media(max-width:1199px) {
+
+    .cell-cards-grid {
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+    }
+
+}
+
+
+
+@media(max-width:991px) {
+
+    .cell-cards-grid {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+    }
+
+}
+
+
+
+@media(max-width:767px) {
+
+    .cell-cards-grid {
+
+
+    grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+
+@media(max-width:480px) {
+
+    .cell-cards-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
 </style>
 
 

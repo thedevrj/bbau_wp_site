@@ -8,9 +8,10 @@ get_header();
 ?>
 
 <!-- ================= FULL WIDTH BANNER ================= -->
-<div class="ciie-banner">
-    <?php get_template_part('banners/about-banner'); ?>
-</div>
+<?php get_template_part('banners/about-banner'); ?>
+<section class="container-fluid page-bg page-template-about-bg py-5 overflow-hidden">
+    <?php get_template_part('template-parts/breadcrumb'); ?>
+
 
 <!-- ================= PAGE START ================= -->
 <div class="ciie-page">
