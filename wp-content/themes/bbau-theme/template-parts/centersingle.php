@@ -7,287 +7,366 @@ defined('ABSPATH') || exit;
 get_header();
 ?>
 
-<!-- ================= FULL WIDTH BANNER ================= -->
 <?php get_template_part('banners/about-banner'); ?>
-<section class="container-fluid page-bg page-template-about-bg py-5 overflow-hidden">
-    <?php get_template_part('template-parts/breadcrumb'); ?>
 
+<section class="container-fluid py-5">
 
-<!-- ================= PAGE START ================= -->
-<div class="ciie-page">
-    <div class="page-body">
-        <div class="container">
-            <div class="menu-wrapper">
-                <?php get_template_part('menu/menu'); ?>
-            </div>
-            <div class="top-section">
+<?php get_template_part('template-parts/breadcrumb'); ?>
 
-                <!-- ================= LEFT: CARDS ================= -->
-                <div class="cards-column">
+<div class="container">
 
-                    <?php if (have_rows('members')): ?>
-                    <?php while (have_rows('members')): the_row(); ?>
+<div class="menu-wrapper">
+<?php get_template_part('menu/menu'); ?>
+</div>
 
-                    <div class="profile-card">
+<div class="top-section">
 
-                        <div class="profile-photo">
-                            <img src="<?php echo get_sub_field('image')['url']; ?>" alt="">
-                        </div>
+<!-- LEFT -->
+<div class="cards-column">
 
-                        <div class="profile-content">
+<?php if(have_rows('members')): ?>
+<?php while(have_rows('members')): the_row(); ?>
 
-                            <h3 class="profile-name">
-                                <?php echo get_sub_field('name'); ?>
-                            </h3>
+<div class="profile-card">
 
-                            <h6 class="profile-designation">
-                                <?php echo get_sub_field('designation'); ?>
-                            </h6>
+<div class="profile-photo">
 
-                            <div class="profile-contacts">
+<?php
+$image=get_sub_field('image');
+if($image):
+?>
 
-                                <!-- PHONE -->
-                                <div class="contact-item">
-                                    <div class="contact-icon">
-                                        <i class="fa-solid fa-phone"></i>
-                                    </div>
-                                    <div>
-                                        <span class="contact-label">Phone:</span>
-                                        <span class="contact-value">
-                                            <a href="tel:<?php echo get_sub_field('phone'); ?>">
-                                                <?php echo get_sub_field('phone'); ?>
-                                            </a>
-                                        </span>
-                                    </div>
-                                </div>
+<img
+src="<?php echo esc_url($image['url']); ?>"
+alt="">
 
-                                <!-- EMAIL -->
-                                <div class="contact-item">
-                                    <div class="contact-icon">
-                                        <i class="fa-solid fa-envelope"></i>
-                                    </div>
-                                    <div>
-                                        <span class="contact-label">Email:</span>
-                                        <span class="contact-value">
-                                            <a href="mailto:<?php echo get_sub_field('email'); ?>">
-                                                <?php echo get_sub_field('email'); ?>
-                                            </a>
-                                        </span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <?php endwhile; ?>
-                    <?php endif; ?>
-
-                </div>
-
-                <!-- ================= RIGHT ================= -->
-                <div class="side-text">
-                    <h3 class="section-title">About</h3>
-                    <?php echo get_field('about'); ?>
-                </div>
-
-            </div>
-
-            <!-- ================= BOTTOM CONTENT ================= -->
-            <div class="full-width-section">
-                <?php echo get_field('bottom_content'); ?>
-            </div>
-
-        </div>
-    </div>
+<?php endif; ?>
 
 </div>
 
+<div class="profile-content">
+
+<h3 class="profile-name">
+<?php echo get_sub_field('name'); ?>
+</h3>
+
+<h6 class="profile-designation">
+<?php echo get_sub_field('designation'); ?>
+</h6>
+
+<div class="profile-contacts">
+
+<?php if(get_sub_field('phone')): ?>
+
+<div class="contact-item">
+
+<div class="contact-icon">
+<i class="fa-solid fa-phone"></i>
+</div>
+
+<div>
+
+<span class="contact-label">
+Phone:
+</span>
+
+<span class="contact-value">
+
+<a href="tel:<?php echo get_sub_field('phone'); ?>">
+
+<?php echo get_sub_field('phone'); ?>
+
+</a>
+
+</span>
+
+</div>
+
+</div>
+
+<?php endif; ?>
+
+
+<?php if(get_sub_field('email')): ?>
+
+<div class="contact-item">
+
+<div class="contact-icon">
+<i class="fa-solid fa-envelope"></i>
+</div>
+
+<div>
+
+<span class="contact-label">
+Email:
+</span>
+
+<span class="contact-value">
+
+<a href="mailto:<?php echo get_sub_field('email'); ?>">
+
+<?php echo get_sub_field('email'); ?>
+
+</a>
+
+</span>
+
+</div>
+
+</div>
+
+<?php endif; ?>
+
+</div>
+
+</div>
+
+</div>
+
+<?php endwhile; ?>
+<?php endif; ?>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="side-text">
+
+<h3 class="section-title">
+About
+</h3>
+
+<?php echo get_field('about'); ?>
+
+</div>
+
+</div>
+
+<div class="full-width-section">
+
+<?php echo get_field('bottom_content'); ?>
+
+</div>
+
+</div>
+
+</section>
+
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-.ciie-page {
-    background: #fdf9f4;
-    font-family: 'Source Serif 4', serif;
+.container{
+max-width:1200px;
+margin:auto;
+padding:0 20px;
 }
 
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 0 20px;
+.menu-wrapper{
+margin-bottom:30px;
 }
 
-.page-body {
-    padding: 40px 0;
+.top-section{
+display:flex;
+gap:40px;
+align-items:flex-start;
 }
 
-.top-section {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start;
+.cards-column{
+flex:1;
+display:flex;
+flex-direction:column;
+gap:20px;
 }
 
-.cards-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.side-text{
+flex:1;
 }
 
-.side-text {
-    flex: 1;
-    padding-top: 10px;
+.section-title{
+font-size:24px;
+font-weight:700;
+margin-bottom:20px;
+color:#8B0000;
 }
 
-.section-title {
-    color: #8B0000;
-    margin-bottom: 15px;
-    font-size: 22px;
+.profile-card{
+
+background:#fff;
+
+display:flex;
+
+gap:20px;
+
+padding:25px;
+
+border-left:5px solid #8B0000;
+
+border-radius:14px;
+
+box-shadow:
+0 6px 20px rgba(0,0,0,.08);
+
+transition:.3s;
+
 }
 
-.profile-card {
-    display: flex;
-    gap: 15px;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 14px;
-    border-left: 5px solid #8B0000;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    transition: 0.3s;
+.profile-card:hover{
+transform:translateY(-4px);
 }
 
-.profile-card:hover {
-    transform: translateY(-4px);
+.profile-photo img{
+
+width:180px;
+
+height:180px;
+
+border-radius:12px;
+
+object-fit:cover;
+
 }
 
-.profile-photo img {
-    width: 170px;
-    height: 180px;
-    border-radius: 10px;
-    object-fit: cover;
+.profile-content{
+flex:1;
 }
 
-.profile-content {
-    padding-top: 5px;
+.profile-name{
+
+font-size:22px;
+
+font-weight:700;
+
+color:#8B0000;
+
+margin-bottom:8px;
+
 }
 
-.profile-name {
-    font-size: 22px;
-    color: #8B0000;
-    font-weight: 700;
-    margin-bottom: 6px;
+.profile-designation{
+
+font-size:15px;
+
+color:#b18c31;
+
+margin-bottom:15px;
+
 }
 
-.profile-designation {
-    color: #c8a84b;
-    margin-bottom: 10px;
-    font-size: 15px;
+.profile-contacts{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
 }
 
-.profile-contacts {
-    margin-top: 10px;
+.contact-item{
+
+display:flex;
+
+gap:10px;
+
+align-items:center;
+
 }
 
-.contact-item {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
-    align-items: center;
+.contact-icon{
+
+width:34px;
+
+height:34px;
+
+background:#f6f1ea;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
 }
 
-.contact-icon {
-    width: 26px;
-    height: 26px;
-    background: #f5f0e8;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.contact-value a{
+
+color:#333;
+
+text-decoration:none;
+
 }
 
-.contact-label {
-    font-weight: 600;
-    margin-right: 4px;
+.contact-value a:hover{
+
+text-decoration:underline;
+
 }
 
-.contact-value a {
-    color: #333;
-    text-decoration: none;
+.full-width-section{
+
+margin-top:40px;
+
+line-height:1.8;
+
 }
 
-.contact-value a:hover {
-    text-decoration: underline;
+@media(max-width:992px){
+
+.top-section{
+flex-direction:column;
 }
 
-.full-width-section {
-    margin-top: 30px;
-    padding-top: 10px;
-    line-height: 1.7;
+.cards-column,
+.side-text{
+width:100%;
 }
 
-/* ===== Laptop ===== */
-@media (max-width: 1200px) {
-    .container {
-        padding: 0 15px;
-    }
 }
 
-/* ===== Tablet ===== */
-@media (max-width: 992px) {
+@media(max-width:768px){
 
-    .top-section {
-        flex-direction: column;
-    }
-
-    .cards-column,
-    .side-text {
-        width: 100%;
-    }
+.profile-card{
+flex-direction:column;
+text-align:center;
 }
 
-/* ===== Mobile ===== */
-@media (max-width: 768px) {
+.profile-photo img{
 
-    .profile-card {
-        flex-direction: column;
-        text-align: center;
-    }
+width:100%;
 
-    .profile-photo img {
-        width: 100%;
-        height: auto;
-    }
+height:auto;
 
-    .profile-name {
-        font-size: 20px;
-    }
 }
 
-/* ===== Small Mobile ===== */
-@media (max-width: 480px) {
-
-    .container {
-        padding: 0 10px;
-    }
-
-    .profile-card {
-        padding: 15px;
-    }
-
-    .profile-name {
-        font-size: 18px;
-    }
-
-    .profile-designation {
-        font-size: 14px;
-    }
+.contact-item{
+justify-content:center;
 }
+
+}
+
+@media(max-width:480px){
+
+.container{
+padding:0 12px;
+}
+
+.profile-card{
+padding:18px;
+}
+
+.profile-name{
+font-size:18px;
+}
+
+}
+
 </style>
 
 <?php get_footer(); ?>

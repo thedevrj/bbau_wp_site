@@ -92,173 +92,282 @@ get_header();
 </div>
 <style>
 /* ================= PAGE ================= */
-.staff-page {
-    background: #f8f4f2;
-    padding: 60px 20px;
-    font-family: 'DM Sans', sans-serif;
+
+.staff-page{
+padding: 10px; 20px;
+font-family:'DM Sans',sans-serif;
 }
 
-.container {
-    max-width: 1300px;
-    margin: auto;
+.staff-page .container{
+max-width:1400px;
+margin:auto;
+padding-left:15px;
+padding-right:15px;
 }
 
 /* TITLE */
-.staff-title {
-    color: #853030;
+
+.staff-title{
+color:#853030;
+margin-bottom:35px;
 }
 
-/* GRID */
-.staff-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
+/* ================= GRID ================= */
+
+.staff-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:25px;
+
+width:100%;
+
 }
 
-/* CARD */
-.staff-card {
-    display: flex;
-    height: 180px;
-    background: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid #eee;
-    transition: 0.3s ease;
+/* ================= CARD ================= */
+
+.staff-card{
+
+display:flex;
+
+height:190px;
+
+background:#ffffff;
+
+border-radius:18px;
+
+overflow:hidden;
+
+border:1px solid #eeeeee;
+
+transition:.3s;
+
 }
 
-.staff-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+.staff-card:hover{
+
+transform:
+translateY(-5px);
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.08);
+
 }
 
-/* LEFT IMAGE */
-.staff-left {
-    width: 50%;
-    height: 100%;
+/* ================= IMAGE ================= */
+
+.staff-left{
+
+width:50%;
+
+height:100%;
+
 }
 
-.staff-left img {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
+.staff-left img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+display:block;
+
 }
 
-/* AVATAR */
-.staff-avatar {
-    width: 100%;
-    height: 100%;
-    background: #8b3a1c;
-    color: #fff;
-    font-size: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.staff-avatar{
+
+width:100%;
+
+height:100%;
+
+background:#8b3a1c;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+color:#fff;
+
+font-size:28px;
+
 }
 
-/* RIGHT */
-.staff-right {
-    width: 50%;
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6px;
+/* ================= CONTENT ================= */
+
+.staff-right{
+
+width:50%;
+
+padding:16px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+gap:8px;
+
 }
 
 /* NAME */
-.staff-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1a1a1a;
+
+.staff-name{
+
+font-size:18px;
+
+font-weight:700;
+
+color:#111827;
+
 }
 
 /* DESIGNATION */
-.staff-designation {
-    font-size: 11px;
-    background: #fbe7df;
-    color: #8b3a1c;
-    padding: 4px 10px;
-    border-radius: 20px;
-    display: inline-block;
-    width: fit-content;
+
+.staff-designation{
+
+display:inline-block;
+
+width:fit-content;
+
+padding:8px 16px;
+
+border-radius:30px;
+
+background:#fbe7df;
+
+color:#8b3a1c;
+
+font-size:13px;
+
 }
 
 /* INFO */
-.staff-info {
-    font-size: 11px;
-    color: #555;
+
+.staff-info{
+
+font-size:13px;
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
 }
 
-.staff-info i {
-    margin-right: 6px;
-    color: #853030;
-    font-size: 12px;
+.staff-info i{
+
+color:#853030;
+
 }
 
-/* ================= RESPONSIVE ================= */
-/* ================= LARGE SCREEN (≤1200px) ================= */
-@media (max-width: 1200px) {
-    .staff-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-    }
+.staff-info a{
+
+color:#004a99;
+
+text-decoration:none;
+
+word-break:break-word;
+
 }
 
-/* ================= LAPTOP / TABLET (≤1024px) ================= */
-@media (max-width: 1024px) {
-    .staff-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
+.staff-info a:hover{
+
+text-decoration:underline;
+
 }
 
-/* ================= TABLET SMALL (≤768px) ================= */
-@media (max-width: 768px) {
-    .staff-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* ================= LARGE ================= */
 
-    .staff-card {
-        height: 160px;
-        /* slightly compact */
-    }
+@media(max-width:1300px){
+
+.staff-grid{
+
+grid-template-columns:
+repeat(3,1fr);
+
 }
 
-/* ================= MOBILE (≤600px) ================= */
-@media (max-width: 600px) {
-    .staff-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .staff-card {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .staff-left {
-        width: 100%;
-        height: 200px;
-    }
-
-    .staff-right {
-        width: 100%;
-    }
 }
 
-/* ================= SMALL MOBILE (≤400px) ================= */
-@media (max-width: 400px) {
-    .staff-title {
-        font-size: 26px;
-    }
+/* ================= TABLET ================= */
 
-    .staff-name {
-        font-size: 13px;
-    }
+@media(max-width:992px){
 
-    .staff-info {
-        font-size: 10px;
-    }
+.staff-grid{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px){
+
+.staff-grid{
+
+grid-template-columns:
+1fr;
+
+}
+
+.staff-card{
+
+flex-direction:column;
+
+height:auto;
+
+}
+
+.staff-left{
+
+width:100%;
+
+height:220px;
+
+}
+
+.staff-right{
+
+width:100%;
+
+}
+
+}
+
+/* ================= SMALL MOBILE ================= */
+
+@media(max-width:400px){
+
+.staff-title{
+
+font-size:28px;
+
+}
+
+.staff-name{
+
+font-size:16px;
+
+}
+
+.staff-info{
+
+font-size:12px;
+
+}
+
 }
 </style>
-
 <?php get_footer(); ?>
