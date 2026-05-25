@@ -7,6 +7,7 @@
 @import url("child-theme.css");
 @import url("404-design.css");
 @import url("authorities.css");
+@import url("notice-portal.css");
 
 p:empty {
     display: none;

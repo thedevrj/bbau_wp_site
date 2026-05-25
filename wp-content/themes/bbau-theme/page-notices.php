@@ -93,7 +93,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                             <div id="auth-unlogged">
                                 <p class=" text-muted mb-3">Faculty and Staff login for internal notices.</p>
                                 <button class="btn sc-btn-midnight w-100" onclick="toggleModal('login-modal', true)">
-                                    <i class="fa-solid fa-user-lock me-2"></i>  Login
+                                    <i class="fa-solid fa-user-lock me-2"></i> Login
                                 </button>
                             </div>
                             <div id="auth-logged" class="d-none">
@@ -145,11 +145,13 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
             <form id="staff-login-form">
                 <div class="sc-input-group">
                     <label class="sc-input-label">Username</label>
-                    <input type="text" name="username" class="sc-input" placeholder="Enter your Username" required>
+                    <input type="text" name="username" class="sc-input" placeholder="Enter your Username" required
+                        autocomplete="username">
                 </div>
                 <div class="sc-input-group">
                     <label class="sc-input-label">Password</label>
-                    <input type="password" name="password" class="sc-input" placeholder="••••••••" required>
+                    <input type="password" name="password" class="sc-input" placeholder="••••••••" required
+                        autocomplete="current-password">
                 </div>
                 <div id="login-error" class="alert alert-danger d-none mb-4"></div>
                 <button type="submit" class="btn-sc-submit" id="btn-login-submit">
@@ -170,13 +172,18 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
         </div>
         <div class="sc-modal-body">
             <form id="change-password-form">
+
+                <input type="text" name="username" value="logged_in_username_here" autocomplete="username"
+                    style="display: none;">
                 <div class="sc-input-group">
                     <label class="sc-input-label">New Password</label>
-                    <input type="password" id="new-password" name="new_password" class="sc-input" placeholder="Min. 8 characters" required>
+                    <input type="password" id="new-password" name="new_password" class="sc-input"
+                        placeholder="Min. 8 characters" required autocomplete="new-password">
                 </div>
                 <div class="sc-input-group">
                     <label class="sc-input-label">Confirm Password</label>
-                    <input type="password" id="confirm-password" class="sc-input" placeholder="Confirm your new password" required>
+                    <input type="password" id="confirm-password" class="sc-input"
+                        placeholder="Confirm your new password" required autocomplete="Confirm your new password">
                 </div>
                 <div id="password-error" class="alert alert-danger d-none mb-4"></div>
                 <button type="submit" class="btn-sc-submit" id="btn-pass-submit">
@@ -187,463 +194,11 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     </div>
 </div>
 
-<style>
-/* ============================================================
-   BRANDED NOTICE PORTAL - SATELLITE CAMPUS STYLE
- ============================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Nunito:wght@400;600;700;800&display=swap');
-
-:root {
-    --sc-midnight: #0f172a;
-    --sc-slate: #1e293b;
-    --sc-gold: #c9a84c;
-    --sc-gold-light: #e2d9cc;
-    --sc-bg: #fdfaf6;
-    --sc-white: #ffffff;
-}
-
-.notice-portal-brand {
-    background-color: var(--sc-bg);
-    min-height: 100vh;
-    font-family: 'Nunito', sans-serif;
-    color: var(--sc-slate);
-}
-
-/* --- HERO --- */
-.sc-hero {
-    height: 350px;
-    background-size: contain;
-    background-position: center;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sc-hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7));
-}
-
-.sc-hero-overlay {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: 800px;
-    padding: 20px;
-}
-
-.sc-hero-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 25px;
-    border-radius: 30px;
-    text-align: center;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    color: #fff;
-    animation: scFadeInScale 0.8s ease-out;
-}
-
-.sc-badge {
-    background: var(--sc-gold);
-    color: var(--sc-midnight);
-    padding: 6px 20px;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    display: inline-block;
-    margin-bottom: 15px;
-}
-
-.sc-hero-card h1 {
-    font-family: 'Merriweather', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
-}
-
-.sc-hero-line {
-    width: 60px;
-    height: 4px;
-    background: var(--sc-gold);
-    margin: 20px auto;
-    border-radius: 2px;
-}
-
-/* --- COMPONENTS --- */
-.sc-section-title {
-    font-family: 'Merriweather', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--sc-midnight);
-    margin-bottom: 25px;
-    position: relative;
-    display: inline-block;
-}
-
-.sc-section-title::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 40px;
-    height: 3px;
-    background: var(--sc-gold);
-}
-
-.sc-content-card {
-    background: #fff;
-    padding: 30px;
-    border-radius: 20px;
-    border: 1px solid var(--sc-gold);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-#staff-auth-card {
-    background: #fdfaf6;
-    width: 300px;
-    border: 1px solid var(--sc-gold);
-    box-shadow: 0 10px 20px rgba(201, 168, 76, 0.2);
-}
-
-.sc-count-badge {
-    background: var(--sc-midnight);
-    color: #fff;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-
-/* --- SEARCH --- */
-.sc-search-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.sc-search-wrap i {
-    position: absolute;
-    left: 15px;
-    color: var(--sc-gold);
-}
-
-.sc-search-wrap input {
-    padding-left: 45px;
-    height: 50px;
-    border-radius: 12px;
-    border: 1px solid var(--sc-gold-light);
-}
-
-.sc-select {
-    height: 50px;
-    border-radius: 12px;
-    border: 1px solid var(--sc-gold-light);
-}
-
-.sc-btn-gold {
-    background: var(--sc-gold);
-    color: var(--sc-midnight);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: none;
-    min-height: 50px;
-    height: auto;
-    padding: 10px 15px;
-    border-radius: 12px;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sc-btn-gold:hover {
-    background: var(--sc-midnight);
-    color: var(--sc-gold);
-}
-
-.sc-btn-midnight {
-    background: var(--sc-midnight);
-    color: var(--sc-gold);
-    font-weight: 700;
-    border: none;
-    min-height: 50px;
-    height: auto;
-    padding: 10px 15px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sc-btn-midnight:hover {
-    background: var(--sc-gold);
-    color: var(--sc-midnight);
-}
-
-/* --- SIDEBAR --- */
-.sc-category-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.sc-cat-item {
-    background: #fff;
-    padding: 15px 20px;
-    border-radius: 14px;
-    text-decoration: none !important;
-    color: var(--sc-midnight) !important;
-    font-weight: 700;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid var(--sc-gold-light);
-    transition: 0.3s;
-}
-
-.sc-cat-item:hover,
-.sc-cat-item.active {
-    background: var(--sc-midnight);
-    color: var(--sc-gold) !important;
-    border-color: var(--sc-midnight);
-}
-
-/* --- NOTICE CARDS --- */
-.sc-notice-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.sc-notice-card {
-    background: #fff;
-    border: 1px solid var(--sc-gold-light);
-    padding: 25px;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    text-decoration: none !important;
-    transition: all 0.3s ease;
-}
-
-.sc-notice-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    border-color: var(--sc-gold);
-}
-
-.sc-notice-icon {
-    width: 60px;
-    height: 60px;
-    background: #f8fafc;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: var(--sc-midnight);
-}
-
-.sc-notice-card.is-private {
-    border-left: 6px solid var(--sc-gold);
-    background: #fffdf9;
-}
-
-.sc-notice-info h3 {
-    font-family: 'Merriweather', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--sc-midnight);
-    margin-bottom: 5px;
-}
-
-.sc-notice-meta {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--sc-gold);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* --- PREMIUM MODAL --- */
-.sc-modal {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-}
-
-.sc-modal.active {
-    display: flex;
-}
-
-.sc-modal-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.4);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-}
-
-.sc-modal-box {
-    background: #fff;
-    width: 100%;
-    max-width: 480px;
-    position: relative;
-    border-radius: 28px;
-    padding: 60px;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(201, 168, 76, 0.2);
-    transform: translateY(30px);
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.sc-modal.active .sc-modal-box {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.sc-modal-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.sc-modal-header h3 {
-    font-family: 'Merriweather', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--sc-midnight);
-    margin-bottom: 8px;
-}
-
-.sc-modal-subtitle {
-    color: #64748b;
-    font-size: 0.95rem;
-}
-
-.sc-modal-close {
-    position: absolute;
-    top: 25px;
-    right: 30px;
-    background: none;
-    border: none;
-    font-size: 2rem;
-    color: #94a3b8;
-    cursor: pointer;
-    transition: 0.3s;
-    line-height: 1;
-}
-
-.sc-modal-close:hover {
-    color: var(--sc-gold);
-    transform: rotate(90deg);
-}
-
-.sc-input-group {
-    margin-bottom: 30px;
-}
-
-.sc-input-label {
-    display: block;
-    font-weight: 700;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 12px;
-    color: var(--sc-gold);
-}
-
-.sc-input {
-    width: 100%;
-    border: none;
-    border-bottom: 2px solid #f1f1f1;
-    padding: 12px 0;
-    font-size: 1.1rem;
-    outline: none;
-    background: transparent;
-    font-family: 'Nunito', sans-serif;
-    transition: all 0.3s;
-}
-
-.sc-input:focus {
-    border-bottom-color: var(--sc-gold);
-}
-
-.btn-sc-submit {
-    width: 100%;
-    background: var(--sc-midnight);
-    color: var(--sc-gold);
-    border: none;
-    padding: 18px;
-    border-radius: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.9rem;
-    transition: 0.3s;
-    cursor: pointer;
-    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.2);
-}
-
-.btn-sc-submit:hover {
-    background: var(--sc-gold);
-    color: var(--sc-midnight);
-    transform: translateY(-2px);
-    box-shadow: 0 15px 30px rgba(201, 168, 76, 0.3);
-}
-
-/* --- ANIMATIONS --- */
-@keyframes scFadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.sc-shimmer {
-    height: 100px;
-    background: #eee;
-    border-radius: 18px;
-    margin-bottom: 20px;
-    animation: scPulse 1.5s infinite;
-}
-
-@keyframes scPulse {
-
-    0%,
-    100% {
-        opacity: 0.5;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-</style>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const mediaBase = "<?= $media_base ?>";
-    const apiBase = isLocal ? 'http://localhost:8001/api/v1/' :`${mediaBase}/api/v1/`;
+    const apiBase = isLocal ? 'http://localhost:8001/api/v1' : `${mediaBase}/api/v1`;
 
     let allNotices = [];
     let currentCat = '';
@@ -758,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const data = Object.fromEntries(new FormData(e.target).entries());
         const loginError = document.getElementById('login-error');
         loginError.classList.add('d-none');
-        
+
         try {
             // Using our custom security-aware login endpoint
             const res = await fetch(`${apiBase.replace('/api/v1', '')}/portal/api/login/`, {
@@ -769,18 +324,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(data)
             });
             const resData = await res.json();
-            
+
             if (res.ok) {
                 // Check if user is forced to change password
                 if (resData.force_password_change) {
-                    localStorage.setItem('temp_token', resData.access); // Save token for password change
+                    localStorage.setItem('temp_token', resData
+                        .access); // Save token for password change
                     localStorage.setItem('temp_user', data.username);
-                    localStorage.setItem('temp_old_pass', data.password); // Needed for password change verification
+                    localStorage.setItem('temp_old_pass', data
+                        .password); // Needed for password change verification
                     toggleModal('login-modal', false);
                     toggleModal('password-modal', true);
                     return;
                 }
-                
+
                 localStorage.setItem('portal_access_token', resData.access);
                 localStorage.setItem('portal_user', data.username);
                 toggleModal('login-modal', false);
@@ -801,15 +358,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const newPass = document.getElementById('new-password').value;
         const confirmPass = document.getElementById('confirm-password').value;
         const passError = document.getElementById('password-error');
-        
+
         passError.classList.add('d-none');
-        
+
         if (newPass.length < 8) {
             passError.textContent = "Password must be at least 8 characters long.";
             passError.classList.remove('d-none');
             return;
         }
-        
+
         if (newPass !== confirmPass) {
             passError.textContent = "Passwords do not match.";
             passError.classList.remove('d-none');
@@ -821,25 +378,26 @@ document.addEventListener('DOMContentLoaded', function() {
         const username = localStorage.getItem('temp_user');
 
         try {
-            const res = await fetch(`${apiBase.replace('/api/v1', '')}/portal/api/change-password/`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    old_password: oldPass,
-                    new_password: newPass
-                })
-            });
-            
+            const res = await fetch(
+                `${apiBase.replace('/api/v1', '')}/portal/api/change-password/`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        old_password: oldPass,
+                        new_password: newPass
+                    })
+                });
+
             if (res.ok) {
                 // Password changed! Now log them in properly
                 localStorage.removeItem('temp_old_pass');
                 localStorage.removeItem('temp_token');
                 localStorage.setItem('portal_access_token', token);
                 localStorage.setItem('portal_user', username);
-                
+
                 toggleModal('password-modal', false);
                 updateAuthUI();
                 fetchNotices();
@@ -871,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function() {
         li.addEventListener('click', (e) => {
             e.preventDefault();
             document.querySelectorAll('.sc-cat-item').forEach(l => l.classList.remove(
-            'active'));
+                'active'));
             li.classList.add('active');
             currentCat = li.dataset.cat;
             render();
