@@ -10,7 +10,8 @@ get_header();
 <!-- YOUR EXISTING BANNER -->
 <?php get_template_part('banners/about-banner'); ?>
 
-<div class="container-fluid py-5 page-bg">
+<section class="container-fluid page-bg page-template-about-bg py-5 overflow-hidden">
+    <?php get_template_part('template-parts/breadcrumb'); ?>
 
     <div class="container">
         <h2 class="text-center mb-4">Gallery</h2>

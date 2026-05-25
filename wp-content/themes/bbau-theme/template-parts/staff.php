@@ -4,6 +4,8 @@ get_header();
 ?>
 
 <?php get_template_part('banners/about-banner'); ?>
+<section class="container-fluid page-bg page-template-about-bg py-5 overflow-hidden">
+    <?php get_template_part('template-parts/breadcrumb'); ?>
 
 <div class="staff-page">
     <div class="container"> <!-- ✅ OPEN CONTAINER -->
