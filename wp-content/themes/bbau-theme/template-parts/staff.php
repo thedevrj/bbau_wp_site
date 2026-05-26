@@ -11,7 +11,6 @@ get_header();
 <?php get_template_part('template-parts/breadcrumb'); ?>
 
 <div class="staff-page">
-
 <div class="container">
 
 <!-- MENU -->
@@ -19,7 +18,6 @@ get_header();
 
 <!-- TITLE -->
 <h2 class="staff-title">
-
 <?php
 if(get_field('heading')){
 the_field('heading');
@@ -27,98 +25,59 @@ the_field('heading');
 the_title();
 }
 ?>
-
 </h2>
-
 
 <!-- GRID -->
 <div class="staff-grid">
 
 <?php if(have_rows('staff_list')): ?>
-
 <?php while(have_rows('staff_list')): the_row(); ?>
 
 <div class="staff-card">
 
-<!-- IMAGE -->
-<div class="staff-left">
+<!-- BAND -->
+<div class="staff-band"></div>
 
+<!-- AVATAR -->
+<div class="staff-avatar-wrap">
 <?php
-
-$photo=get_sub_field('image');
-
+$photo = get_sub_field('image');
 if($photo):
-
-if(is_array($photo)){
-
-$img_url=$photo['url'];
-
-}else{
-
-$img_url=$photo;
-
-}
-
+$img_url = is_array($photo) ? $photo['url'] : $photo;
 ?>
-
+<div class="staff-circle">
 <img src="<?php echo esc_url($img_url); ?>" alt="">
-
+</div>
 <?php else: ?>
-
-<div class="staff-avatar">
-
-<?php echo strtoupper(substr(get_sub_field('name'),0,1)); ?>
-
+<div class="staff-circle staff-circle-av">
+<?php echo strtoupper(substr(get_sub_field('name'), 0, 1)); ?>
 </div>
-
 <?php endif; ?>
-
 </div>
 
-
-<!-- CONTENT -->
-
-<div class="staff-right">
+<!-- BODY -->
+<div class="staff-body">
 
 <div class="staff-name">
-
 <?php the_sub_field('name'); ?>
-
 </div>
 
-<div class="staff-designation">
-
+<div class="staff-badge">
 <?php the_sub_field('designation'); ?>
-
 </div>
 
-<div class="staff-info email pt-2">
-
+<div class="staff-info">
 <i class="fa-solid fa-envelope"></i>
-
-<a
-class="link-new"
-href="mailto:<?php the_sub_field('email'); ?>">
-
+<a class="link-new" href="mailto:<?php the_sub_field('email'); ?>">
 <?php the_sub_field('email'); ?>
-
 </a>
-
 </div>
 
-
-<div class="staff-info phone">
-
+<div class="staff-info">
 <i class="fa-solid fa-phone"></i>
-
-<a
-class="link-new"
-href="tel:<?php the_sub_field('phone'); ?>">
-
+<a class="link-new" href="tel:<?php the_sub_field('phone'); ?>">
 <?php the_sub_field('phone'); ?>
-
 </a>
-
 </div>
 
 </div>
@@ -126,25 +85,14 @@ href="tel:<?php the_sub_field('phone'); ?>">
 </div>
 
 <?php endwhile; ?>
-
 <?php else: ?>
-
-<p style="text-align:center;">
-
-No staff added yet
-
-</p>
-
+<p style="text-align:center;">No staff added yet</p>
 <?php endif; ?>
 
 </div>
-
 </div>
-
 </div>
-
 </section>
-
 
 <style>
 
@@ -166,90 +114,109 @@ padding-right:15px;
 
 .staff-title{
 color:#853030;
-margin-bottom:35px;
+margin-bottom:30px;
 }
 
 /* GRID */
 
 .staff-grid{
 display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:25px;
+grid-template-columns:repeat(5,1fr);
+gap:20px;
 }
 
 /* CARD */
 
 .staff-card{
-display:flex;
 background:#fff;
-border-radius:18px;
-overflow:hidden;
+border-radius:14px;
 border:1px solid #eee;
-transition:.3s;
-min-height:220px;
+overflow:hidden;
+transition:transform .2s,box-shadow .2s;
 }
 
 .staff-card:hover{
-transform:translateY(-5px);
-box-shadow:0 10px 25px rgba(0,0,0,.08);
+transform:translateY(-4px);
+box-shadow:0 8px 22px rgba(0,0,0,.08);
 }
 
-/* IMAGE */
+/* BAND */
 
-.staff-left{
-width:45%;
-flex-shrink:0;
+.staff-band{
+height:70px;
+background:#853030;
 }
 
-.staff-left img{
+/* AVATAR WRAP */
+
+.staff-avatar-wrap{
+display:flex;
+justify-content:center;
+margin-top:-30px;
+margin-bottom:8px;
+}
+
+/* CIRCLE */
+
+.staff-circle{
+width:100px;
+height:100px;
+border-radius:50%;
+overflow:hidden;
+border:3px solid #fff;
+}
+
+.staff-circle img{
 width:100%;
 height:100%;
 object-fit:cover;
 display:block;
 }
 
-.staff-avatar{
-width:100%;
-height:100%;
+/* AVATAR FALLBACK */
+
+.staff-circle-av{
+width:60px;
+height:60px;
+border-radius:50%;
 background:#8b3a1c;
+border:3px solid #fff;
 display:flex;
 align-items:center;
 justify-content:center;
 color:#fff;
-font-size:28px;
+font-size:22px;
+font-weight:600;
 }
 
-/* RIGHT */
+/* BODY */
 
-.staff-right{
-width:55%;
-padding:18px;
+.staff-body{
+padding:0 16px 18px;
 display:flex;
 flex-direction:column;
-justify-content:center;
-gap:10px;
-overflow:hidden;
-min-width:0;
+align-items:center;
+gap:6px;
+text-align:center;
 }
 
 /* NAME */
 
 .staff-name{
-font-size:18px;
+font-size:15px;
 font-weight:700;
-line-height:1.4;
 color:#1b1b1b;
-word-break:break-word;
+line-height:1.3;
 }
 
-/* DESIGNATION */
+/* BADGE */
 
-.staff-designation{
-padding:8px 16px;
+.staff-badge{
+padding:4px 14px;
 background:#fbe7df;
 color:#8b3a1c;
 border-radius:30px;
-font-size:13px;
+font-size:12px;
 width:fit-content;
 max-width:100%;
 }
@@ -258,111 +225,54 @@ max-width:100%;
 
 .staff-info{
 display:flex;
-align-items:flex-start;
-gap:10px;
-font-size:14px;
-min-width:0;
+align-items:center;
+gap:7px;
+font-size:13px;
 }
 
 /* ICON */
 
 .staff-info i{
 color:#853030;
-margin-top:4px;
+font-size:13px;
 flex-shrink:0;
 }
 
-/* LINKS */
+/* LINK */
 
 .staff-info a{
 text-decoration:none;
 color:#004aad;
-display:block;
-max-width:100%;
-overflow-wrap:anywhere;
-word-break:break-word;
-line-height:1.5;
+word-break:break-all;
+line-height:1.4;
 }
 
 .staff-info a:hover{
 text-decoration:underline;
 }
 
-/* DESKTOP */
+/* 1300px */
 
 @media(max-width:1300px){
-
 .staff-grid{
 grid-template-columns:repeat(3,1fr);
 }
-
 }
 
 /* TABLET */
 
 @media(max-width:992px){
-
 .staff-grid{
 grid-template-columns:repeat(2,1fr);
 }
-
 }
 
 /* MOBILE */
 
-@media(max-width:600px){
-
+@media(max-width:540px){
 .staff-grid{
 grid-template-columns:1fr;
 }
-
-.staff-card{
-flex-direction:column;
-}
-
-.staff-left,
-.staff-right{
-width:100%;
-}
-
-.staff-left{
-height:260px;
-}
-
-.staff-right{
-padding:20px;
-}
-
-.staff-name{
-font-size:20px;
-}
-
-.staff-info{
-font-size:14px;
-}
-
-}
-
-/* SMALL */
-
-@media(max-width:420px){
-
-.staff-right{
-padding:16px;
-}
-
-.staff-name{
-font-size:18px;
-}
-
-.staff-designation{
-font-size:12px;
-}
-
-.staff-info{
-font-size:13px;
-}
-
 }
 
 </style>
