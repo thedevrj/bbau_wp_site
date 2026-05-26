@@ -115,7 +115,7 @@ function format_designation($designation) {
                 </div>
 
                 <!-- Minutes List Tab Panel -->
-                <div id="auth-minutes" class="auth-tab-panel" data-api-url="<?php echo esc_attr($minutes_url); ?>">
+                <div id="auth-minutes" class="auth-tab-panel">
                     <div id="minutes-container">
                         <div style="padding:40px; text-align:center;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>
                     </div>
@@ -150,7 +150,7 @@ function switchAuthorityTab(evt, panelId) {
 <?php get_template_part('template-parts/portal-auth-modal'); ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const minutesApiUrl = document.getElementById('auth-minutes').getAttribute('data-api-url');
+    const minutesApiUrl = "<?php echo esc_js($minutes_url); ?>";
     const mediaBase = "<?php echo rtrim(getenv('DJANGO_MEDIA_URL'), '/'); ?>";
     
     const btnLogin = document.getElementById('auth-btn-login');

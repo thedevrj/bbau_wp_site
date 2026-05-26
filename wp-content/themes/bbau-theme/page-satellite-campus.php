@@ -443,42 +443,42 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
         margin: 10px 0 15px;
     }
 
-    /* ANIMATIONS */
-    @keyframes fadeInScale {
-        from {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
+@media (max-width: 991px) {
+    .sc-osd-card {
+        margin: 0 10px;
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        padding: 20px 10px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
     }
 
-    @media (max-width: 991px) {
-        .sc-osd-card {
-            margin: 0 10px;
-            background: #fff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-            padding: 20px 10px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
+    .sc-osd-photo {
+        width: 140px !important;
+        height: 140px !important;
+    }
 
-        .sc-osd-photo {
-            width: 140px !important;
-            height: 140px !important;
-        }
+    .sc-osd-body h3 {
+        font-size: 1.1rem !important;
+    }
 
-        .sc-osd-body h3 {
-            font-size: 1.1rem !important;
-        }
+    .sc-hero-card h1 {
+        font-size: 2rem;
+    }
+}
+}
 
-        .sc-hero-card h1 {
-            font-size: 2rem;
-        }
+/* ANIMATIONS */
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
     }
 }
 </style>

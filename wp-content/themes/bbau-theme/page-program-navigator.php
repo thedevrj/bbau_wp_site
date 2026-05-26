@@ -7,40 +7,28 @@ get_header();
 
 $api_base = getenv('DJANGO_API_URL');
 
-$query_params = array();
-if (!empty($_GET['page_num']))        $query_params['page'] = intval($_GET['page_num']);
-
-$schools_url = $api_base . '/api/v1/schools/';
+$dept_url = $api_base . '/api/v1/departments/';
 $programs_url = $api_base . '/api/v1/programs/?page_size=500' ;
-$programs_url_pagination = $api_base . '/api/v1/programs/?'. http_build_query($query_params);
 
-// Fetch Schools for the filter
-$schools_res = wp_remote_get($schools_url, array('timeout' => 10));
-$schools = array();
-if (!is_wp_error($schools_res) && wp_remote_retrieve_response_code($schools_res) === 200) {
-    $schools = json_decode(wp_remote_retrieve_body($schools_res), true);
+// Fetch Department for the filter
+$dept_res = wp_remote_get($dept_url, array('timeout' => 10));
+$Departments = array();
+if (!is_wp_error($dept_res) && wp_remote_retrieve_response_code($dept_res) === 200) {
+    $Departments = json_decode(wp_remote_retrieve_body($dept_res), true);
 }
 
 // Fetch All Programs
-$programs_res = wp_remote_get($programs_url_pagination, array('timeout' => 15));
+$programs_res = wp_remote_get($programs_url, array('timeout' => 15));
 $programs = array();
-$total_count = 0;
-$next_page = null;
-$prev_page = null;
 if (!is_wp_error($programs_res) && wp_remote_retrieve_response_code($programs_res) === 200) {
     $decoded = json_decode(wp_remote_retrieve_body($programs_res), true);
     $programs = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
-    $total_count = isset($decoded['count']) ? $decoded['count'] : count($programs);
-    $next_page = isset($decoded['next']) ? $decoded['next'] : null;
-    $prev_page = isset($decoded['previous']) ? $decoded['previous'] : null;
 }
-$current_page = isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1;
-$total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
 ?>
 
 <?php get_template_part('banners/about-banner'); ?>
 
-<div class="admissions-portal py-lg-5">
+<div class="admissions-portal py-5">
     <div class="container">
 
         <!-- HEADER SECTION -->
@@ -64,11 +52,12 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
             </div>
 
             <div class="filter-group">
-                <label>Filter by School</label>
+                <label>Filter by Department</label>
                 <select id="school-select" class="adm-select">
-                    <option value="all">All Schools</option>
-                    <?php foreach($schools as $school): ?>
-                    <option value="<?php echo esc_attr($school['name']); ?>"><?php echo esc_html($school['name']); ?>
+                    <option value="all">All Departments</option>
+                    <?php foreach($Departments as $department): ?>
+                    <option value="<?php echo esc_attr($department['id'] ?? ''); ?>">
+                        <?php echo esc_html(get_dept_display_name($department)); ?>
                     </option>
                     <?php endforeach; ?>
                 </select>
@@ -86,11 +75,11 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
             <div class="row g-4">
                 <?php foreach($programs as $prog): ?>
                 <div class="col-md-6 col-lg-4 prog-card-wrapper" data-level="<?php echo esc_attr($prog['level']); ?>"
-                    data-school="<?php echo esc_attr($prog['school_name'] ?? ''); ?>"
+                    data-dept="<?php echo esc_attr($prog['department'] ?? ''); ?>"
                     data-name="<?php echo esc_attr(strtolower($prog['name'])); ?>">
                     <?php 
                             set_query_var('prog_data', $prog);
-                            get_template_part('template-parts/admission-card'); 
+                            get_template_part('template-parts/program-card'); 
                             ?>
                 </div>
                 <?php endforeach; ?>
@@ -107,37 +96,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
         </div>
 
         <!-- Pagination -->
-        <?php if ($total_pages > 1): ?>
-        <div class="faculty-pagination animate-fac-up" style="animation-delay: 0.3s;">
-            <?php if ($current_page > 1): ?>
-            <a href="<?php echo esc_url(add_query_arg('page_num', $current_page - 1)); ?>" class="page-btn prev-next">
-                <i class="fas fa-chevron-left me-2"></i> Previous
-            </a>
-            <?php endif; ?>
-
-            <?php 
-            // Simple logic for showing page numbers
-            for ($i = 1; $i <= $total_pages; $i++): 
-                if ($i == 1 || $i == $total_pages || ($i >= $current_page - 1 && $i <= $current_page + 1)):
-            ?>
-            <a href="<?php echo esc_url(add_query_arg('page_num', $i)); ?>"
-                class="page-btn <?php echo ($i === $current_page) ? 'active' : ''; ?>">
-                <?php echo $i; ?>
-            </a>
-            <?php 
-                elseif ($i == $current_page - 2 || $i == $current_page + 2):
-                    echo '<span class="px-2 text-muted">...</span>';
-                endif;
-            endfor; 
-            ?>
-
-            <?php if ($current_page < $total_pages): ?>
-            <a href="<?php echo esc_url(add_query_arg('page_num', $current_page + 1)); ?>" class="page-btn prev-next">
-                Next <i class="fas fa-chevron-right ms-2"></i>
-            </a>
-            <?php endif; ?>
-        </div>
-        <?php endif; ?>
+        <div id="prog-pagination" class="adm-pagination mt-5"></div>
 
     </div>
 </div>
@@ -216,13 +175,17 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
     color: #fff;
 }
 
+#prog-search,
 .adm-select,
 .adm-input {
     width: 100%;
     padding: 10px 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
+    border: 1px solid #e2d9cc;
+    border-radius: 10px;
     font-size: 0.95rem;
+    background-color: #fff;
+    color: #444;
+    transition: all 0.3s ease;
 }
 
 .adm-select:focus,
@@ -239,6 +202,56 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
         flex-direction: column;
         align-items: stretch;
     }
+    
+    .level-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .level-tab {
+        flex: 1 1 auto;
+    }
+}
+
+/* PAGINATION */
+.adm-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.adm-pagination .page-btn {
+    background: #fff;
+    border: 1px solid #e2d9cc;
+    color: #5c1010;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.adm-pagination .page-btn:hover {
+    background: #fdfaf6;
+    border-color: #5c1010;
+}
+
+.adm-pagination .page-btn.active {
+    background: #5c1010;
+    color: #fff;
+    border-color: #5c1010;
+}
+
+.adm-pagination .page-btn.prev-next {
+    background: transparent;
+    border: none;
+}
+
+.adm-pagination .page-btn.prev-next:hover {
+    color: #8B1A1A;
+    background: transparent;
 }
 </style>
 
@@ -251,30 +264,197 @@ document.addEventListener('DOMContentLoaded', function() {
     const noResults = document.getElementById('no-results');
 
     let currentLevel = 'all';
-    let currentSchool = 'all';
+    let currentDept = 'all';
     let currentSearch = '';
 
-    function filterPrograms() {
-        let visibleCount = 0;
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = urlParams.has('page_num') ? parseInt(urlParams.get('page_num')) : 1;
+    if (isNaN(currentPage) || currentPage < 1) currentPage = 1;
+
+    const itemsPerPage = 12;
+
+    function updateURL() {
+        const url = new URL(window.location);
+        if (currentPage === 1) {
+            url.searchParams.delete('page_num');
+        } else {
+            url.searchParams.set('page_num', currentPage);
+        }
+        // Only push if URL actually changed
+        if (window.location.search !== url.search) {
+            window.history.pushState({}, '', url);
+        }
+    }
+
+    window.addEventListener('popstate', function() {
+        const params = new URLSearchParams(window.location.search);
+        currentPage = params.has('page_num') ? parseInt(params.get('page_num')) : 1;
+        if (isNaN(currentPage) || currentPage < 1) currentPage = 1;
+
+        // We shouldn't call updateURL() inside popstate because the URL is already updated
+        executeFilter(false);
+    });
+
+    function executeFilter(pushUrl = true) {
+        let filteredCards = [];
 
         cards.forEach(card => {
             const level = card.dataset.level;
-            const school = card.dataset.school;
+            const dept = card.dataset.dept;
             const name = card.dataset.name;
 
             const levelMatch = (currentLevel === 'all' || level === currentLevel);
-            const schoolMatch = (currentSchool === 'all' || school === currentSchool);
+            const deptMatch = (currentDept === 'all' || dept === currentDept);
             const searchMatch = (currentSearch === '' || name.includes(currentSearch));
 
-            if (levelMatch && schoolMatch && searchMatch) {
-                card.style.display = 'block';
-                visibleCount++;
+            if (levelMatch && deptMatch && searchMatch) {
+                filteredCards.push(card);
             } else {
                 card.style.display = 'none';
             }
         });
 
-        noResults.style.display = (visibleCount === 0) ? 'block' : 'none';
+        // Ensure currentPage isn't out of bounds after filtering
+        const maxPages = Math.ceil(filteredCards.length / itemsPerPage);
+        if (maxPages > 0 && currentPage > maxPages) {
+            currentPage = maxPages;
+        }
+
+        noResults.style.display = (filteredCards.length === 0) ? 'block' : 'none';
+
+        renderPagination(filteredCards.length);
+        showPage(filteredCards, currentPage);
+
+        if (pushUrl) {
+            updateURL();
+        }
+    }
+
+    function filterPrograms() {
+        executeFilter(true);
+    }
+
+    function showPage(filteredCards, page) {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
+        filteredCards.forEach((card, index) => {
+            if (index >= startIndex && index < endIndex) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        equalizeCardHeights();
+    }
+
+    function equalizeCardHeights() {
+        // Reset all min-heights first
+        cards.forEach(cardWrapper => {
+            const card = cardWrapper.querySelector('.adm-card');
+            if(card) card.style.minHeight = '0px';
+        });
+        
+        const visibleCards = Array.from(cards).filter(c => c.style.display !== 'none');
+        if (visibleCards.length === 0) return;
+        
+        let maxHeight = 0;
+        
+        // Calculate max base height
+        visibleCards.forEach(cardWrapper => {
+            const card = cardWrapper.querySelector('.adm-card');
+            const details = card.querySelector('.adm-card-details');
+            const wasOpen = details.style.display === 'block';
+            
+            // Hide details temporarily to measure true base height
+            if (wasOpen) details.style.display = 'none';
+            
+            const cardHeight = card.offsetHeight;
+            if (cardHeight > maxHeight) {
+                maxHeight = cardHeight;
+            }
+            
+            if (wasOpen) details.style.display = 'block';
+        });
+
+        // Apply max height to visible cards
+        visibleCards.forEach(cardWrapper => {
+            const card = cardWrapper.querySelector('.adm-card');
+            card.style.minHeight = maxHeight + 'px';
+        });
+    }
+
+    // Recalculate on window resize
+    window.addEventListener('resize', () => {
+        equalizeCardHeights();
+    });
+
+    function renderPagination(totalItems) {
+        const paginationContainer = document.getElementById('prog-pagination');
+        if (!paginationContainer) return;
+
+        paginationContainer.innerHTML = '';
+
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        if (totalPages <= 1) return;
+
+        // Previous button
+        if (currentPage > 1) {
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'page-btn prev-next';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left me-2"></i> Previous';
+            prevBtn.onclick = () => {
+                currentPage--;
+                filterPrograms();
+                scrollToGrid();
+            };
+            paginationContainer.appendChild(prevBtn);
+        }
+
+        // Page buttons
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+                pageBtn.textContent = i;
+                pageBtn.onclick = () => {
+                    currentPage = i;
+                    filterPrograms();
+                    scrollToGrid();
+                };
+                paginationContainer.appendChild(pageBtn);
+            } else if (i === currentPage - 2 || i === currentPage + 2) {
+                const dots = document.createElement('span');
+                dots.className = 'px-2 text-muted';
+                dots.textContent = '...';
+                paginationContainer.appendChild(dots);
+            }
+        }
+
+        // Next button
+        if (currentPage < totalPages) {
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'page-btn prev-next';
+            nextBtn.innerHTML = 'Next <i class="fas fa-chevron-right ms-2"></i>';
+            nextBtn.onclick = () => {
+                currentPage++;
+                filterPrograms();
+                scrollToGrid();
+            };
+            paginationContainer.appendChild(nextBtn);
+        }
+    }
+
+    function scrollToGrid() {
+        const grid = document.getElementById('prog-grid');
+        if (grid) {
+            const offset = grid.getBoundingClientRect().top + window.scrollY - 120;
+            window.scrollTo({
+                top: offset,
+                behavior: 'smooth'
+            });
+        }
     }
 
     tabs.forEach(tab => {
@@ -282,19 +462,25 @@ document.addEventListener('DOMContentLoaded', function() {
             tabs.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
             currentLevel = this.dataset.level;
+            currentPage = 1; // reset to first page on filter change
             filterPrograms();
         });
     });
 
     schoolSelect.addEventListener('change', function() {
-        currentSchool = this.value;
+        currentDept = this.value;
+        currentPage = 1; // reset to first page on filter change
         filterPrograms();
     });
 
     searchInput.addEventListener('input', function() {
         currentSearch = this.value.toLowerCase().trim();
+        currentPage = 1; // reset to first page on filter change
         filterPrograms();
     });
+
+    // Initial load
+    filterPrograms();
 });
 </script>
 

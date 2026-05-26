@@ -26,23 +26,24 @@ $syllabus_url = $prog['syllabus'] ?? '';
 
         <div class="prog-stats mt-3">
             <div class="stat-row">
-                <span class="stat-label"><i class="fa-solid fa-users"></i>Intake:</span>
-                <span class="stat-value"><?php echo esc_html($prog['intake'] ?? 'Not Disclosed'); ?></span>
+                <span class="stat-label"><i class="fa-solid fa-users"></i> Intake:</span>
+                <div class="stat-value"><?php echo !empty($prog['intake']) ? str_replace(array('<p>', '</p>'), array('', '<br>'), wp_kses_post($prog['intake'])) : 'Not Disclosed'; ?></div>
             </div>
             <div class="stat-row">
                 <span class="stat-label"><i class="fa-solid fa-indian-rupee-sign"></i> Fees:</span>
-                <span class="stat-value"><?php echo esc_html($prog['fees'] ?? 'As per University norms'); ?></span>
+                <div class="stat-value"><?php echo !empty($prog['fees']) ? str_replace(array('<p>', '</p>'), array('', '<br>'), wp_kses_post($prog['fees'])) : 'As per University norms'; ?></div>
             </div>
         </div>
     </div>
 
     <!-- CARD FOOTER -->
     <div class="adm-card-footer">
-        <button class="btn-details" onclick="toggleAdmDetail(this)">View Eligibility <i class="fa-solid fa-chevron-down"></i></button>
+        <button class="btn-details" onclick="toggleAdmDetail(this)">View Eligibility <i
+                class="fa-solid fa-chevron-down"></i></button>
         <?php if(!empty($syllabus_url)): ?>
-            <a href="<?php echo esc_url($syllabus_url); ?>" target="_blank" class="btn-syllabus" title="Download Syllabus">
-                <i class="fa-solid fa-file-pdf"></i>
-            </a>
+        <a href="<?php echo esc_url($syllabus_url); ?>" target="_blank" class="btn-syllabus" title="Download Syllabus">
+            <i class="fa-solid fa-file-pdf"></i>
+        </a>
         <?php endif; ?>
     </div>
 
@@ -51,14 +52,13 @@ $syllabus_url = $prog['syllabus'] ?? '';
         <div class="details-inner">
             <h5>Eligibility Criteria</h5>
             <div class="eligibility-content">
-                <?php echo wp_kses_post($prog['eligibility'] ?? 'Contact department for details.'); ?>
+                <?php echo wp_kses_post(!empty($prog['eligibility']) ? $prog['eligibility'] : 'Contact department for details.'); ?>
             </div>
-            
             <?php if(!empty($prog['admission_process'])): ?>
-                <h5 class="mt-3">Admission Process</h5>
-                <div class="process-content">
-                    <?php echo wp_kses_post($prog['admission_process']); ?>
-                </div>
+            <h5 class="mt-3">Admission Process</h5>
+            <div class="process-content">
+                <?php echo wp_kses_post($prog['admission_process']); ?>
+            </div>
             <?php endif; ?>
         </div>
     </div>
@@ -70,11 +70,11 @@ $syllabus_url = $prog['syllabus'] ?? '';
     border: 1px solid #e2d9cc;
     border-radius: 12px;
     overflow: hidden;
-    height: 100%;
     display: flex;
     flex-direction: column;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    align-self: flex-start;
 }
 
 .adm-card:hover {
@@ -126,8 +126,14 @@ $syllabus_url = $prog['syllabus'] ?? '';
     font-size: 0.85rem;
     color: #666;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
+    line-height: 1.4;
+}
+
+.dept-info i {
+    margin-top: 3px;
+    color: #8B1A1A;
 }
 
 .prog-stats {
@@ -140,25 +146,43 @@ $syllabus_url = $prog['syllabus'] ?? '';
 .stat-row {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     font-size: 0.85rem;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    gap: 12px;
 }
 
-.stat-row:last-child { margin-bottom: 0; }
+.stat-row:last-child {
+    margin-bottom: 0;
+}
 
 .stat-label {
     color: #666;
     font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .stat-label i {
-    width: 18px;
     color: #8B1A1A;
+    width: 22px;
+    text-align: center;
+    margin-top: 3px;
 }
 
 .stat-value {
     color: #111;
     font-weight: 700;
+    text-align: right;
+    word-break: break-word;
+    line-height: 1.4;
+}
+
+.stat-value p {
+    margin-bottom: 0;
 }
 
 .adm-card-footer {
@@ -190,7 +214,7 @@ $syllabus_url = $prog['syllabus'] ?? '';
     width: 40px;
     height: 38px;
     background: #f3f4f6;
-    color: #8B1A1A;
+    color: #8B1A1A !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -201,7 +225,7 @@ $syllabus_url = $prog['syllabus'] ?? '';
 
 .btn-syllabus:hover {
     background: #8B1A1A;
-    color: #fff;
+    color: #fff !important;
 }
 
 .adm-card-details {
@@ -222,7 +246,8 @@ $syllabus_url = $prog['syllabus'] ?? '';
     padding-bottom: 5px;
 }
 
-.eligibility-content, .process-content {
+.eligibility-content,
+.process-content {
     font-size: 0.85rem;
     color: #444;
     line-height: 1.6;
@@ -239,15 +264,25 @@ if (typeof toggleAdmDetail !== 'function') {
     window.toggleAdmDetail = function(btn) {
         const card = btn.closest('.adm-card');
         const details = card.querySelector('.adm-card-details');
-        const icon = btn.querySelector('i');
-        
-        if (details.style.display === 'none') {
+
+        // Close other open cards
+        const allOpenDetails = document.querySelectorAll('.adm-card-details');
+        allOpenDetails.forEach(openDetail => {
+            if (openDetail !== details && openDetail.style.display === 'block') {
+                openDetail.style.display = 'none';
+                const otherCard = openDetail.closest('.adm-card');
+                const otherBtn = otherCard.querySelector('.btn-details');
+                if (otherBtn) {
+                    otherBtn.innerHTML = 'View Eligibility <i class="fa-solid fa-chevron-down"></i>';
+                }
+            }
+        });
+
+        if (details.style.display === 'none' || details.style.display === '') {
             details.style.display = 'block';
-            icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
             btn.innerHTML = 'Hide Details <i class="fa-solid fa-chevron-up"></i>';
         } else {
             details.style.display = 'none';
-            icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
             btn.innerHTML = 'View Eligibility <i class="fa-solid fa-chevron-down"></i>';
         }
     };

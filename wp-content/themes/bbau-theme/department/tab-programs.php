@@ -27,7 +27,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
                 <tr>
                     <th style="width: 25%">Programme Name</th>
                     <th style="width: 8%">Level</th>
-                    <th style="width: 10%">Duration</th>
+                    <th style="width: 18%">Duration</th>
                     <th>Intake & Fees</th>
                     <th>Details</th>
                 </tr>
@@ -40,8 +40,8 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
                     </td>
                     <td><?php echo esc_html($prog['duration'] ?? '-'); ?></td>
                     <td>
-                        <strong>Intake:</strong> <?php echo esc_html($prog['intake'] ?? '-'); ?><br>
-                        <strong>Fees:</strong> <?php echo esc_html($prog['fees'] ?? '-'); ?>
+                        <strong>Intake:</strong> <?php echo str_replace(array('<p>', '</p>'),  array('', '<br>'), wp_kses_post($prog['intake'] ?? '-')); ?><br>
+                        <strong>Fees:</strong> <?php echo str_replace(array('<p>', '</p>'),  array('', '<br>'), wp_kses_post($prog['fees'] ?? '-')); ?>
                     </td>
                     <td>
                         <div style="display:flex; flex-direction:column; gap:8px;">
@@ -80,7 +80,9 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
                             <div class="sem-tabs">
                                 <?php foreach($semesters as $sem => $s_courses): ?>
                                 <div class="sem-box">
+                                    <?php if(!empty($sem)): ?>
                                     <h5 class="sem-title">Semester <?php echo esc_html($sem); ?></h5>
+                                    <?php endif; ?>
                                     <table class="course-mini-table">
                                         <thead>
                                             <tr>
@@ -282,6 +284,15 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
 <script>
 function toggleCurriculum(id) {
     const row = document.getElementById(id);
+    
+    // Close other open curriculum rows
+    const allRows = document.querySelectorAll('.curriculum-row');
+    allRows.forEach(r => {
+        if (r.id !== id && r.style.display === 'table-row') {
+            r.style.display = 'none';
+        }
+    });
+
     if (row.style.display === 'none') {
         row.style.display = 'table-row';
     } else {
