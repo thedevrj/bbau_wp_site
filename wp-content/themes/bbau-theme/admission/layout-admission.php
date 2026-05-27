@@ -120,7 +120,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 
 /* hero banner css */
 .sc-hero {
-    height: 350px;
+    height: 300px;
     background-size: cover;
     background-position: center;
     position: relative;
