@@ -309,6 +309,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                                     <thead>
                                         <tr>
                                             <th>Course Name</th>
+                                            <th>Description</th>
                                             <th>Level</th>
                                         </tr>
                                     </thead>
@@ -317,8 +318,10 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                                         <tr>
                                             <td class="fw-bold" data-label="Course">
                                                 <?php echo esc_html($course['course_name']); ?>
-                                                <?php if (!empty($course['description'])): ?>
-                                                <div class="text-muted mt-1 small" style="font-weight:normal;"><?php echo wp_kses_post($course['description']); ?></div>
+                                            </td>
+                                            <td class="fw-bold" data-label="Description">
+                                            <?php if (!empty($course['description'])): ?>
+                                                <div><?php echo wp_kses_post($course['description']); ?></div>
                                                 <?php endif; ?>
                                             </td>
                                             <td data-label="Level">
