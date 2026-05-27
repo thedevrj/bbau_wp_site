@@ -135,7 +135,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                 </div>
 
                 <div class="fac-card-premium p-4">
-                    <h4 class="faculty-small-title">Academic Experience</h4>
+                    <h4 class="faculty-small-title">Experience</h4>
                     <div class="mt-2">
                         <?php if (!empty($fac['teaching_exp'])): ?>
                         <div class="exp-item mb-3">
@@ -159,9 +159,10 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                 <div class="portfolio-tabs">
                     <button class="portfolio-tab-btn active" data-tab="overview">Overview</button>
                     <button class="portfolio-tab-btn" data-tab="publications" data-load="true">Publications</button>
-                    <button class="portfolio-tab-btn" data-tab="patents" data-load="true">Patents</button>
                     <button class="portfolio-tab-btn" data-tab="projects" data-load="true">Projects</button>
-                    <button class="portfolio-tab-btn" data-tab="scholars" data-load="true">Scholars</button>
+                    <button class="portfolio-tab-btn" data-tab="scholars" data-load="true">Research Supervision</button>
+                    <button class="portfolio-tab-btn" data-tab="talks">Invited Talks</button>
+                    <button class="portfolio-tab-btn" data-tab="others" data-load="true">Others</button>
                 </div>
 
                 <!-- Tab Panes -->
@@ -202,16 +203,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                         </div>
                     </div>
 
-                    <div class="portfolio-pane" id="patents">
-                        <div class="fac-card-premium">
-                            <h3 class="rd-section-title">Innovations & Patents</h3>
-                            <div class="dynamic-feed-container" data-api="patents">
-                                <div class="rd-loader-wrap text-center py-5">
-                                    <div class="fac-loader"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="portfolio-pane" id="projects">
                         <div class="fac-card-premium">
@@ -234,6 +226,162 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                             </div>
                         </div>
                     </div>
+
+                    <!-- Talks Pane (Pre-loaded via PHP) -->
+                    <div class="portfolio-pane" id="talks">
+                        <div class="fac-card-premium">
+                            <h3 class="rd-section-title">Invited Talks & Lectures</h3>
+                            <?php if (!empty($fac['invited_talks'])): ?>
+                            <div class="table-responsive">
+                                <table class="fac-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Talk Title</th>
+                                            <th>Event / Venue</th>
+                                            <th>Role</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($fac['invited_talks'] as $talk): ?>
+                                        <tr>
+                                            <td class="fw-bold" data-label="Title">
+                                                <?php echo esc_html($talk['title']); ?>
+                                                <?php if (!empty($talk['link'])): ?>
+                                                <a href="<?php echo esc_url($talk['link']); ?>" target="_blank" class="ms-1" title="View Link"><i class="fas fa-external-link-alt" style="font-size:0.8rem; color:#b91c1c;"></i></a>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td data-label="Event">
+                                                <?php echo esc_html($talk['event_name']); ?>
+                                                <?php if (!empty($talk['venue'])): ?>
+                                                <br><small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i><?php echo esc_html($talk['venue']); ?></small>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td data-label="Role">
+                                                <?php if (!empty($talk['role'])): ?>
+                                                    <span class="fac-status-badge active"><?php echo esc_html($talk['role']); ?></span>
+                                                <?php else: ?>
+                                                    -
+                                                <?php endif; ?>
+                                            </td>
+                                            <td data-label="Date">
+                                                <?php echo !empty($talk['date']) ? date('M d, Y', strtotime($talk['date'])) : '-'; ?>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <?php else: ?>
+                            <div class="empty-state">
+                                <i class="fas fa-microphone-alt mb-3" style="font-size: 2rem; opacity: 0.1;"></i>
+                                <p class="text-muted">No invited talks found for this faculty member.</p>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Others Pane (Courses pre-loaded, Patents dynamic) -->
+                    <div class="portfolio-pane" id="others">
+                        <div class="fac-card-premium mb-4">
+                            <h3 class="rd-section-title">Innovations & Patents</h3>
+                            <div class="dynamic-feed-container" data-api="others">
+                                <div class="rd-loader-wrap text-center py-5">
+                                    <div class="fac-loader"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fac-card-premium mb-4">
+                            <h3 class="rd-section-title">Consultancy</h3>
+                            <div class="dynamic-feed-container" data-api="consultancies">
+                                <div class="rd-loader-wrap text-center py-5">
+                                    <div class="fac-loader"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fac-card-premium mb-4">
+                            <h3 class="rd-section-title">Courses Designed & Developed</h3>
+                            <?php if (!empty($fac['course_designs'])): ?>
+                            <div class="table-responsive">
+                                <table class="fac-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Course Name</th>
+                                            <th>Level</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($fac['course_designs'] as $course): ?>
+                                        <tr>
+                                            <td class="fw-bold" data-label="Course">
+                                                <?php echo esc_html($course['course_name']); ?>
+                                                <?php if (!empty($course['description'])): ?>
+                                                <div class="text-muted mt-1 small" style="font-weight:normal;"><?php echo wp_kses_post($course['description']); ?></div>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td data-label="Level">
+                                                <?php if (!empty($course['course_level'])): ?>
+                                                    <span class="fac-status-badge active"><?php echo esc_html($course['course_level']); ?></span>
+                                                <?php else: ?>
+                                                    -
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <?php else: ?>
+                            <div class="empty-state">
+                                <i class="fas fa-book-open mb-3" style="font-size: 2rem; opacity: 0.1;"></i>
+                                <p class="text-muted">No courses designed by this faculty member.</p>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="fac-card-premium mb-4">
+                            <h3 class="rd-section-title">Memberships / Experts</h3>
+                            <?php if (!empty($fac['memberships'])): ?>
+                            <div class="table-responsive">
+                                <table class="fac-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Membership Name</th>
+                                            <th>Order No.</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($fac['memberships'] as $mem): ?>
+                                        <tr>
+                                            <td class="fw-bold" data-label="Name">
+                                                <?php echo esc_html($mem['name']); ?>
+                                            </td>
+                                            <td data-label="Order No.">
+                                                <?php echo !empty($mem['order_no']) ? esc_html($mem['order_no']) : '-'; ?>
+                                            </td>
+                                            <td data-label="Start Date">
+                                                <?php echo !empty($mem['start_date']) ? date('M d, Y', strtotime($mem['start_date'])) : '-'; ?>
+                                            </td>
+                                            <td data-label="End Date">
+                                                <?php echo !empty($mem['end_date']) ? date('M d, Y', strtotime($mem['end_date'])) : '-'; ?>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <?php else: ?>
+                            <div class="empty-state">
+                                <i class="fas fa-users mb-3" style="font-size: 2rem; opacity: 0.1;"></i>
+                                <p class="text-muted">No memberships found for this faculty member.</p>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,7 +401,6 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     </div>
 </main>
 
-<?php include_once(get_template_directory() . '/styles-faculty.php'); ?>
 <?php include_once(get_template_directory() . '/research/styles-research.php'); ?>
 
 
@@ -277,15 +424,20 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById(target).classList.add('active');
 
             if (tab.dataset.load === 'true') {
-                loadTabData(target);
+                if (target === 'others') {
+                    loadTabData('patents', document.querySelector('.dynamic-feed-container[data-api="others"]'));
+                    loadTabData('consultancies', document.querySelector('.dynamic-feed-container[data-api="consultancies"]'));
+                } else {
+                    loadTabData(target);
+                }
                 tab.dataset.load = 'false'; // Load only once
             }
         });
     });
 
     // DYNAMIC DATA LOADER
-    async function loadTabData(type) {
-        const container = document.querySelector(`#${type} .dynamic-feed-container`);
+    async function loadTabData(type, customContainer = null) {
+        const container = customContainer || document.querySelector(`#${type} .dynamic-feed-container`);
         let endpoint = '';
         let filterParam = 'faculty__slug'; // Default filter param
 
@@ -296,6 +448,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
             case 'patents':
                 endpoint = '/api/v1/patents/';
+                filterParam = 'faculty__slug';
+                break;
+            case 'consultancies':
+                endpoint = '/api/v1/consultancies/';
                 filterParam = 'faculty__slug';
                 break;
             case 'projects':
@@ -310,7 +466,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const url =
-                `${apiBase}${endpoint}?${filterParam}=${encodeURIComponent(facultySlug)}&page_size=100`;
+                `${apiBase}${endpoint}?${filterParam}=${encodeURIComponent(facultySlug)}&page_size=250`;
             const response = await fetch(url);
             const data = await response.json();
             const records = data.results || data;
@@ -338,6 +494,8 @@ document.addEventListener('DOMContentLoaded', function() {
             html += '<th>Title</th><th>Journal</th><th>Year</th>';
         } else if (type === 'patents') {
             html += '<th>Innovation</th><th>Patent ID</th><th>Status</th>';
+        } else if (type === 'consultancies') {
+            html += '<th>Nature of Consultancy</th><th>Agency/Organization</th><th>Amount</th>';
         } else if (type === 'projects') {
             html += '<th>Project Title</th><th>Agency</th><th>Amount sanctioned</th><th>Status</th>';
         } else if (type === 'scholars') {
@@ -356,6 +514,9 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (type === 'patents') {
                 html +=
                     `<td class="fw-bold" data-label="Innovation">${r.title}</td><td data-label="Patent ID">${r.patent_number || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
+            } else if (type === 'consultancies') {
+                html +=
+                    `<td class="fw-bold" data-label="Nature">${r.nature_of_consultancy}</td><td data-label="Agency">${r.name_of_awarding_agency_organization || '-'}</td><td data-label="Amount">${r.amount ? '₹'+r.amount : '-'}</td>`;
             } else if (type === 'projects') {
                 html +=
                     `<td class="fw-bold" data-label="Project Title">${r.title}</td><td data-label="Agency">${r.funding_agency || '-'}</td><td data-label="Amount">${r.amount_sanctioned || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;

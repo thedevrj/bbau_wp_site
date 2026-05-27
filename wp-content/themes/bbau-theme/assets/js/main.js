@@ -50,12 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const progress = Math.min((now - startTime) / duration, 1);
         const value = Math.floor(progress * target);
 
-        counter.textContent = value.toLocaleString() + suffix;
+        counter.textContent = value + suffix;
 
         if (progress < 1) {
           requestAnimationFrame(update);
         } else {
-          counter.textContent = target.toLocaleString() + suffix;
+          counter.textContent = target + suffix;
         }
       };
 

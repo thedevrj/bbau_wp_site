@@ -8,6 +8,7 @@
 @import url("404-design.css");
 @import url("authorities.css");
 @import url("notice-portal.css");
+@import url("faculty.css");
 
 p:empty {
     display: none;
