@@ -118,8 +118,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
                     <button type="submit" class="btn-fac-profile" style="padding: 12px 30px;">Apply Filters</button>
                     <a href="<?php echo esc_url(get_permalink()); ?>"
                         class="text-muted small fw-bold text-decoration-none">Clear All</a>
-                    <span class="ms-auto small fw-bold text-muted"><?php echo intval($total_count); ?> Faculty Experts
-                        found</span>
+                    <span class="ms-auto small fw-bold text-muted"><?php echo intval($total_count); ?> Faculty found</span>
                 </div>
             </form>
         </div>

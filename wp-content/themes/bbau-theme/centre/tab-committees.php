@@ -1,5 +1,5 @@
 <?php
-// Inherited variables: $api_base, $slug
+// Inherited variables: $api_base, $slug, $media_base
 $api_base = getenv('DJANGO_API_URL');
 $committees_url = $api_base . '/api/v1/dept-committees/?centre_slug=' . urlencode($slug);
 $minutes_url = $api_base . '/api/v1/dept-minutes/?centre_slug=' . urlencode($slug);
@@ -28,18 +28,19 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
                 <div class="committee-card">
                     <div class="committee-header">
                         <h4><?php echo esc_html($committee['name']); ?></h4>
+
+                        <?php if(!empty($committee['notification_document'])): ?>
+                        <p>Committee Notification:<a class="link-new"
+                                href=<?php echo ($committee['notification_document']); ?>> &nbsp; View
+                                Notification </a></p>
+                        <?php endif; ?>
+
                     </div>
                     <div class="committee-body">
                         <?php if(!empty($committee['description'])): ?>
                         <div class="committee-desc"><?php echo wp_kses_post($committee['description']); ?>
-                            <?php endif; ?>
-                            <?php if(!empty($committee['notification_document'])): ?>
-                            <p>Committee Notification:<a class="link-new"
-                                    href=<?php echo ($committee['notification_document']); ?>> &nbsp; View
-                                    Notification </a></p>
-                            <?php endif; ?>
                         </div>
-
+                        <?php endif; ?>
                         <?php if(!empty($committee['members'])): ?>
                         <table class="members-table">
                             <thead>
@@ -76,7 +77,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
             <div class="section-card">
                 <div class="minutes-list-modern">
                     <?php foreach ($minutes_list as $min) : ?>
-                    <a href="<?php echo esc_url( $min['minutes']); ?>" class="minute-row" target="_blank">
+                    <a href="<?php echo esc_url( $min['date_of_meeting']); ?>" class="minute-row" target="_blank">
                         <div class="min-date">
                             <span class="d"><?php echo date('d', strtotime($min['date_of_meeting'])); ?></span>
                             <span class="m"><?php echo date('M', strtotime($min['date_of_meeting'])); ?></span>
@@ -90,28 +91,6 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
                 </div>
             </div>
             <?php endif; ?>
-
-
-            <!-- <div class="committees-wrap">
-                <?php foreach($minutes_list as $minute): ?>
-                <div class="committee-card">
-                    <div class="committee-header">
-                        <h4><?php echo esc_html($minute['meeting_title']); ?></h4>
-                    </div>
-                    <div class="committee-body">
-                        <?php if(!empty($minute['date_of_meeting'])): ?>
-                        <div class="committee-desc"><?php echo ($minute['date_of_meeting']); ?>
-                        <?php endif; ?>
-                        <?php if(!empty($minute['minutes_of_meeting'])): ?>
-                        <p>Meeting Minutes:<a class="btn link-new" href=<?php echo ($minute['minutes_of_meeting']); ?>>
-                                View Minutes </a></p>
-                        <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-            </?php endif; ?> -->
         </div>
     </div>
 

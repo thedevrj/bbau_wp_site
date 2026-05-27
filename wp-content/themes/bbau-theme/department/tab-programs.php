@@ -3,6 +3,8 @@
 $prog_url = $api_base . '/api/v1/programs/?department__slug=' . urlencode($slug);
 $prog_res = wp_remote_get($prog_url, array('timeout' => 10));
 $programs_list = array();
+$media_base = getenv('DJANGO_MEDIA_URL');
+
 
 if (!is_wp_error($prog_res) && wp_remote_retrieve_response_code($prog_res) === 200) {
     $decoded = json_decode(wp_remote_retrieve_body($prog_res), true);
@@ -40,23 +42,26 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
                     </td>
                     <td><?php echo esc_html($prog['duration'] ?? '-'); ?></td>
                     <td>
-                        <strong>Intake:</strong> <?php echo str_replace(array('<p>', '</p>'),  array('', '<br>'), wp_kses_post($prog['intake'] ?? '-')); ?><br>
-                        <strong>Fees:</strong> <?php echo str_replace(array('<p>', '</p>'),  array('', '<br>'), wp_kses_post($prog['fees'] ?? '-')); ?>
+                        <strong>Intake:</strong>
+                        <?php echo str_replace(array('<p>', '</p>'),  array('', '<br>'), wp_kses_post($prog['intake'] ?? '-')); ?><br>
+                        <strong>Fees:</strong>
+                        <?php echo str_replace(array('<p>', '</p>'),  array('', '<br>'), wp_kses_post($prog['fees'] ?? '-')); ?>
                     </td>
                     <td>
                         <div style="display:flex; flex-direction:column; gap:8px;">
-                            <?php if(!empty($prog['syllabus'])): ?>
-                            <a href="<?php echo esc_url($prog['syllabus']); ?>" target="_blank" class="syllabus-btn"><i
-                                    class="fas fa-file-alt"></i>
-                                Syllabus</a>
-                            <?php endif; ?>
-
                             <button class="curriculum-btn"
                                 onclick="toggleCurriculum('prog-<?php echo esc_attr($prog['id']); ?>')">📚 Course
                                 Structure</button>
-                            <?php if(!empty($prog['notification_or_document_file'])): ?>
-                            <a href="<?php echo esc_url($prog['notification_or_document_file']); ?>" target="_blank"
+
+                            <?php if(!empty($prog['syllabus'])): ?>
+                            <a href="<?php echo $media_base .  esc_url($prog['syllabus']); ?>" target="_blank"
                                 class="syllabus-btn"><i class="fas fa-file-alt"></i>
+                                Syllabus</a>
+                            <?php endif; ?>
+
+                            <?php if(!empty($prog['notification_or_document_file'])): ?>
+                            <a href="<?php echo $media_base . esc_url($prog['notification_or_document_file']); ?>"
+                                target="_blank" class="syllabus-btn"><i class="fas fa-file-alt"></i>
                                 Course Notification</a>
                             <?php endif; ?>
                         </div>
@@ -213,7 +218,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
 
 .syllabus-btn {
     background: #c9a84c;
-    color: #5c1010;
+    color: #5c1010 !important;
 }
 
 .syllabus-btn:hover {
@@ -227,7 +232,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
 }
 
 .curriculum-btn:hover {
-    background: #5c1010;
+    background: #5c1010 !important;
     color: #fff;
 }
 
@@ -284,7 +289,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
 <script>
 function toggleCurriculum(id) {
     const row = document.getElementById(id);
-    
+
     // Close other open curriculum rows
     const allRows = document.querySelectorAll('.curriculum-row');
     allRows.forEach(r => {

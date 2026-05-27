@@ -211,7 +211,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
 
 .syllabus-btn {
     background: #c9a84c;
-    color: #5c1010;
+    color: #5c1010 !important;
 }
 
 .syllabus-btn:hover {
@@ -225,7 +225,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
 }
 
 .curriculum-btn:hover {
-    background: #5c1010;
+    background: #5c1010 !important;
     color: #fff;
 }
 

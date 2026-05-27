@@ -21,24 +21,27 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
     <?php if(!empty($faculty_list)): ?>
     <div class="faculty-grid">
         <?php foreach($faculty_list as $fac): ?>
-        <div class="faculty-card">
-            <img src="<?php echo $media_base . esc_url($fac['photo'] ); ?>" alt="photo" class="faculty-photo">
-            <div class="faculty-info">
-                <h4>
-                    <?php echo esc_html($fac['name']); ?>
-                    <?php if(($fac['campus'] ?? '') === 'Satellite Campus Amethi'): ?>
+        <a href="<?php echo esc_url(home_url('/faculty/' . ($fac['slug'] ?? ''))); ?>">
+
+            <div class="faculty-card">
+                <img src="<?php echo $media_base . esc_url($fac['photo'] ); ?>" alt="photo" class="faculty-photo">
+                <div class="faculty-info">
+                    <h4>
+                        <?php echo esc_html($fac['name']); ?>
+                        <?php if(($fac['campus'] ?? '') === 'Satellite Campus Amethi'): ?>
                         <small style="color: #9d174d; font-size: 0.8rem; font-weight: 700;">(Amethi)</small>
+                        <?php endif; ?>
+                    </h4>
+                    <p><?php echo esc_html($fac['designation']); ?></p>
+                    <?php if(!empty($fac['insti_email'])): ?>
+                    <div class="faculty-sub">✉️ <?php echo esc_html($fac['insti_email']); ?></div>
                     <?php endif; ?>
-                </h4>
-                <p><?php echo esc_html($fac['designation']); ?></p>
-                <?php if(!empty($fac['insti_email'])): ?>
-                <div class="faculty-sub">✉️ <?php echo esc_html($fac['insti_email']); ?></div>
-                <?php endif; ?>
-                <?php if(!empty($fac['other_email'])): ?>
-                <div class="faculty-sub">✉️ <?php echo esc_html($fac['other_email']); ?></div>
-                <?php endif; ?>
+                    <?php if(!empty($fac['other_email'])): ?>
+                    <div class="faculty-sub">✉️ <?php echo esc_html($fac['other_email']); ?></div>
+                    <?php endif; ?>
+                </div>
             </div>
-        </div>
+        </a>
         <?php endforeach; ?>
     </div>
     <?php else: ?>
@@ -88,7 +91,7 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
 }
 
 .faculty-info p {
-    margin:0px 5px 10px;
+    margin: 0px 5px 10px;
     font-size: 0.95rem;
     color: #8B1A1A;
     font-weight: 600;
