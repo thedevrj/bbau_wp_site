@@ -62,7 +62,7 @@
 #dept-search {
   width: 100%;
   max-width: 320px;
-  padding: 12px 22px 12px 44px;
+  padding: 12px 22px 12px 44px !important;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b6880' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 16px center;
@@ -80,7 +80,6 @@
 }
 
 #school-filter {
-  padding: 12px 42px 12px 20px;
   min-width: 200px;
   background-repeat: no-repeat;
   background-position: calc(100% - 16px) center;
@@ -115,6 +114,8 @@
   height: 44px;
   font-size: 14px;
   display: inline-block;
+  padding: 10px;
+  background-color: #fff;
 }
 
 /* SAME VISUAL SIZE */

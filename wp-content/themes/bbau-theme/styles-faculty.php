@@ -179,6 +179,19 @@ body {
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    position: relative;
+}
+
+.fac-card-premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 130px;
+    background: linear-gradient(135deg, #8B1A1A, #5c1010);
+    z-index: 0;
+    border-radius: 24px 24px 0 0;
 }
 
 .fac-card-premium:hover {
@@ -188,36 +201,47 @@ body {
 }
 
 .fac-image-wrap {
-    height: 300px;
+    width: 200px;
+    height: 200px;
+    margin: 30px auto 15px;
     position: relative;
-    overflow: hidden;
-    background: #f8fafc;
+    background: #f1f5f9;
+    border-radius: 50%;
+    box-shadow: 0 10px 25px rgba(30, 27, 75, 0.08);
+    z-index: 1;
+    border: 6px solid white;
 }
 
 .fac-image-wrap img {
     width: 100%;
     height: 100%;
+    object-fit: inherit;
+    border-radius: 50%;
     transition: transform 0.6s;
 }
 
 .fac-card-premium:hover .fac-image-wrap img {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 .fac-no-photo {
+    width: 100%;
     height: 100%;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 4rem;
-    color: #e2e8f0;
+    color: #cbd5e1;
 }
 
 .fac-overlay-info {
     position: absolute;
-    bottom: 15px;
-    right: 15px;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 5;
+    width: max-content;
 }
 
 .campus-pill {
@@ -243,6 +267,7 @@ body {
 
 .fac-info-body {
     padding: 25px;
+    padding-bottom: 0px;
     flex-grow: 1;
 }
 
