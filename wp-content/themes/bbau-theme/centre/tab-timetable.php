@@ -2,6 +2,7 @@
 // Inherited variables: $api_base, $slug
 $timetables_url = $api_base . '/api/v1/timetables/?centre_slug=' . urlencode($slug);
 $timetables_res = wp_remote_get($timetables_url, array('timeout' => 10));
+$media_base=getenv('DJANGO_MEDIA_URL');
 $timetables_list = array();
 
 if (!is_wp_error($timetables_res) && wp_remote_retrieve_response_code($timetables_res) === 200) {
@@ -28,9 +29,9 @@ if (!is_wp_error($materials_res) && wp_remote_retrieve_response_code($materials_
             <div class="tt-icon"><i class="fa-solid fa-calendar-days"></i></div>
             <div class="tt-info">
                 <h4><?php echo esc_html($tt['title']); ?></h4>
-                <p>Uploaded on: <?php echo date('d M Y', strtotime($tt['uploaded_at'])); ?></p>
+                <!-- <p>Uploaded on: <?php echo date('d M Y', strtotime($tt['uploaded_at'])); ?></p> -->
             </div>
-            <a href="<?php echo esc_url($tt['attachment']); ?>" target="_blank" class="tt-download">Download</a>
+            <a href="<?php echo $media_base . esc_url($tt['attachment']); ?>" target="_blank" class="tt-download">Download</a>
         </div>
         <?php endforeach; ?>
     </div>
@@ -50,7 +51,7 @@ if (!is_wp_error($materials_res) && wp_remote_retrieve_response_code($materials_
                 <h4><?php echo esc_html($sm['title']); ?></h4>
                 <p>Uploaded on: <?php echo date('d M Y', strtotime($sm['uploaded_at'])); ?></p>
             </div>
-            <a href="<?php echo esc_url($sm['attachment']); ?>" target="_blank" class="tt-download">Download</a>
+            <a href="<?php echo $media_base . esc_url($sm['attachment']); ?>" target="_blank" class="tt-download">Download</a>
         </div>
         <?php endforeach; ?>
     </div>
@@ -108,7 +109,7 @@ if (!is_wp_error($materials_res) && wp_remote_retrieve_response_code($materials_
 .tt-download {
     background: #fdfaf6;
     border: 1px solid #c9a84c;
-    color: #5c1010;
+    color: #5c1010 !important;
     padding: 6px 15px;
     border-radius: 6px;
     font-size: 0.8rem;

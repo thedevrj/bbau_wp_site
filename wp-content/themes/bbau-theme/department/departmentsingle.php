@@ -11,6 +11,7 @@ if (empty($slug)) {
 $tab  = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'about';
 
 $api_base = getenv('DJANGO_API_URL');
+$media_base = getenv('DJANGO_MEDIA_URL');
 $dept_data = array();
 
 // Fetch base department profile

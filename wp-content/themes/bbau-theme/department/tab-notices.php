@@ -1,5 +1,5 @@
 <?php
-// Inherited variables: $api_base, $slug
+// Inherited variables: $api_base, $slug, $media_base
 $notices_url = $api_base . '/api/v1/notices/?department__slug=' . urlencode($slug) . '&page_size=100';
 $notices_res = wp_remote_get($notices_url, array('timeout' => 10));
 $notices_list = array();
@@ -26,7 +26,7 @@ if (!is_wp_error($notices_res) && wp_remote_retrieve_response_code($notices_res)
                     <?php echo wp_kses_post($notice['content']); ?>
                 </div>
                 <?php if(!empty($notice['attachment'])): ?>
-                <a href="<?php echo esc_url($notice['attachment']); ?>" target="_blank" class="notice-download">
+                <a href="<?php echo $media_base . esc_url($notice['attachment']); ?>" target="_blank" class="notice-download">
                     <i class="fa-solid fa-file-pdf"></i> Download Attachment
                 </a>
                 <?php endif; ?>
