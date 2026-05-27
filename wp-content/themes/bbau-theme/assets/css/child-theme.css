@@ -51,7 +51,7 @@ h1 {
 /* ================= PAGE BACKGROUND ================= */
 .page-template-about-bg {
   background: var(--s-bg) !important;
-  min-height: 100vh;
+  min-height: 55vh;
 }
 
 /* ================= REMOVE OLD IMAGE BACKGROUND ================= */

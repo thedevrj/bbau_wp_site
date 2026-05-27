@@ -154,7 +154,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
                         ?>
                     </div>
 
-                    <?php if (!empty($fac['insti_email'])): ?>
+                    <!-- <?php if (!empty($fac['insti_email'])): ?>
                     <div class="fac-email-new">
                         <i class="far fa-envelope"></i> <?php echo esc_html($fac['insti_email']); ?>
                     </div>
@@ -163,7 +163,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
                     <div class="fac-email-new">
                         <i class="far fa-envelope"></i> <?php echo esc_html($fac['other_email']); ?>
                     </div>
-                    <?php endif; ?>
+                    <?php endif; ?> -->
                 </div>
                 <div class="fac-card-footer">
                     <span>View Portfolio</span>
