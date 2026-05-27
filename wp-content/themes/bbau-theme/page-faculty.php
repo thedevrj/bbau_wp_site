@@ -215,6 +215,5 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
     </div>
 </main>
 
-<?php include_once(get_template_directory() . '/styles-faculty.php'); ?>
 
 <?php get_footer(); ?>

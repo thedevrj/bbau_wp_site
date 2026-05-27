@@ -141,7 +141,7 @@ if (!is_wp_error($patents_res) && wp_remote_retrieve_response_code($patents_res)
                     <div class="pub-type-mini"><?php echo esc_html($pub['publication_type']); ?></div>
                     <strong><?php echo esc_html($pub['title']); ?></strong>
                     <div class="pub-meta-mini"><?php echo esc_html($pub['faculty_name']); ?> |
-                        <?php echo esc_html($pub['publication_date']); ?></div>
+                        <?php echo date('d M Y', strtotime($pub['publication_date'])); ?></div>
                 </li>
                 <?php endforeach; ?>
             </ul>

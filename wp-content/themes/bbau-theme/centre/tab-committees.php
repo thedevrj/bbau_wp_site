@@ -106,7 +106,15 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
     margin-top: 20px;
 }
 
-
+.minutes-list-modern .minute-row {
+    width: calc(50% - 12px) !important;
+    flex: 0 0 calc(50% - 12px) !important;
+}
+@media (max-width: 768px) {
+    .minutes-list-modern .minute-row {
+        flex: 0 0 100% !important;
+    }
+}
 .minute-row {
     display: flex;
     align-items: center;

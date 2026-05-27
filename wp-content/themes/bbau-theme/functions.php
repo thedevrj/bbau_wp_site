@@ -380,7 +380,6 @@ function get_dept_display_name($dept) {
     $campus = $dept['campus'] ?? 'BBAU';
     
     // Check if we are on the Dedicated Satellite Campus Page
-    // We assume the page using 'page-satellite-campus.php' template is the context
     if (is_page_template('page-satellite-campus.php')) {
         return $name;
     }
