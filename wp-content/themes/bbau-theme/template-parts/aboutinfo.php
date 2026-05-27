@@ -62,7 +62,7 @@ $page_Id = get_the_ID();
                     <?php endif; ?>
                 </div>
 
-                <!-- ================= PAGE CONTENT (wraps beside card, then full width) ================= -->
+                <!-- ================= PAGE CONTENT ================= -->
                 <?php if ( have_posts() ) : ?>
                     <?php while ( have_posts() ) : the_post(); ?>
                         <?php the_content(); ?>
@@ -124,7 +124,7 @@ $page_Id = get_the_ID();
     display: block;
 }
 
-/* ================= CONTENT FLOWS BESIDE + BELOW CARD ================= */
+/* ================= CONTENT TEXT ================= */
 .profile-page .content-wrap > h1,
 .profile-page .content-wrap > h2,
 .profile-page .content-wrap > h3,
@@ -137,7 +137,6 @@ $page_Id = get_the_ID();
 .profile-page .content-wrap > div:not(.cards-column):not(.clearfix),
 .profile-page .content-wrap > table,
 .profile-page .content-wrap > figure {
-    /* these elements naturally flow beside the float, then wrap below */
     line-height: 1.8;
     font-size: 15px;
     color: #444;
@@ -178,7 +177,6 @@ $page_Id = get_the_ID();
     color: #1a7abf;
     text-decoration: none;
 }
-
 
 /* ================= PROFILE CARD ================= */
 .profile-page .profile-card {
@@ -290,211 +288,82 @@ $page_Id = get_the_ID();
     color: #8B0000;
 }
 
-/* ================= LAPTOP 993–1200px ================= */
+/* ================= LAPTOP 1200px ================= */
 @media (max-width: 1200px) {
     .profile-page .container {
         padding: 0 15px;
     }
 
     .profile-page .cards-column {
-        width: 300px;
-        margin-right: 28px;
-    }
-
-    /* Card goes vertical so 300px column is enough */
-    .profile-page .profile-card {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 16px;
-        gap: 12px;
-    }
-
-    .profile-page .profile-photo img {
-        width: 100%;
-        height: 160px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-
-    .profile-page .profile-content {
-        width: 100%;
-        padding-top: 0;
-        min-width: 0;
-    }
-
-    .profile-page .profile-name {
-        font-size: 16px;
-        word-break: break-word;
-    }
-
-    .profile-page .profile-designation {
-        font-size: 13px;
-    }
-
-    .profile-page .contact-value,
-    .profile-page .contact-value p {
-        font-size: 13px;
-        word-break: break-word;
-        overflow-wrap: break-word;
+        width: 320px;
+        margin-right: 30px;
     }
 }
-/* ================= TABLET 769–992px ================= */
+
+/* ================= TABLET 992px — float STAYS ON ================= */
 @media (max-width: 992px) {
     .profile-page .cards-column {
-        float: left;           /* keep float ON — don't stack */
-        width: auto;           /* shrink to fit card content */
+        float: left;
+        width: 260px;
         margin-right: 24px;
         margin-bottom: 20px;
     }
 
     .profile-page .profile-card {
         flex-direction: column;
-        align-items: flex-start;
-        width: 220px;          /* fixed compact width — adjust to taste */
-        padding: 14px;
-        gap: 10px;
-        max-width: none;
-    }
-
-    .profile-page .profile-photo img {
-        width: 100%;
-        height: 140px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-
-    .profile-page .profile-content {
-        width: 100%;
-        padding-top: 0;
-        min-width: 0;
-    }
-
-    .profile-page .profile-name {
-        font-size: 15px;
-        word-break: break-word;
-    }
-
-    .profile-page .profile-designation {
-        font-size: 12px;
-    }
-
-    .profile-page .contact-value,
-    .profile-page .contact-value p {
-        font-size: 12px;
-        word-break: break-word;
-        overflow-wrap: break-word;
-    }
-}
-
-/* ================= LARGE MOBILE 577–768px ================= */
-@media (max-width: 768px) {
-    .profile-page .page-body {
-        padding: 24px 0 36px;
-    }
-
-    .profile-page .container {
-        padding: 0 14px;
-    }
-
-    .profile-page .cards-column {
-        float: left;           /* keep float ON */
-        width: auto;
-        margin-right: 16px;
-        margin-bottom: 16px;
-    }
-
-    .profile-page .profile-card {
-        flex-direction: column;
-        align-items: flex-start;
-        width: 160px;          /* compact on mobile — adjust to taste */
-        padding: 12px;
-        gap: 10px;
-        max-width: none;
-    }
-
-    .profile-page .profile-photo img {
-        width: 100%;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-
-    .profile-page .profile-content {
-        width: 100%;
-        padding-top: 0;
-        min-width: 0;
-    }
-
-    .profile-page .profile-name {
-        font-size: 14px;
-        word-break: break-word;
-    }
-
-    .profile-page .profile-designation {
-        font-size: 12px;
-    }
-
-    .profile-page .contact-value,
-    .profile-page .contact-value p {
-        font-size: 11px;
-        word-break: break-word;
-        overflow-wrap: break-word;
-    }
-
-    .profile-page .page-body-content h2,
-    .profile-page .content-wrap > h2 {
-        font-size: 20px;
-    }
-}
-/* ================= MOBILE ≤576px — card goes vertical ================= */
-@media (max-width: 576px) {
-    .profile-page .profile-card {
-        flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: 18px 14px;
+        padding: 16px;
+        gap: 12px;
     }
 
     .profile-page .profile-photo img {
-        width: 100%;
-        max-width: 200px;
-        height: auto;
-        max-height: 230px;
-        margin: 0 auto;
+        width: 110px;
+        height: 125px;
+        border-radius: 8px;
     }
 
     .profile-page .profile-content {
-        padding-top: 8px;
+        padding-top: 0;
         width: 100%;
+    }
+
+    .profile-page .profile-name {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 13px;
+        text-align: center;
     }
 
     .profile-page .contact-item {
         justify-content: center;
     }
 
-    .profile-page .profile-name {
-        font-size: 16px;
+    .profile-page .contact-value {
+        font-size: 12.5px;
+        text-align: center;
     }
 
-    .profile-page .page-body-content h2,
-    .profile-page .content-wrap > h2 {
-        font-size: 20px;
+    .profile-page .contact-value p {
+        font-size: 12.5px;
+        text-align: center;
     }
 }
 
-/* ================= SMALL MOBILE ≤480px ================= */
-@media (max-width: 480px) {
-    .profile-page .container {
-        padding: 0 10px;
+/* ================= iPad Mini 820px — float STAYS ON ================= */
+@media (max-width: 820px) {
+    .profile-page .cards-column {
+        float: left;
+        width: 230px;
+        margin-right: 20px;
     }
 
-    .profile-page .page-body {
-        padding: 16px 0 28px;
-    }
-
-    .profile-page .profile-card {
-        padding: 14px 12px;
-        border-radius: 10px;
+    .profile-page .profile-photo img {
+        width: 100px;
+        height: 115px;
     }
 
     .profile-page .profile-name {
@@ -510,29 +379,142 @@ $page_Id = get_the_ID();
         font-size: 12px;
     }
 
-    .profile-page .page-body-content h2,
     .profile-page .content-wrap > h2 {
-        font-size: 18px;
-    }
-
-    .profile-page .page-body-content p,
-    .profile-page .page-body-content li {
-        font-size: 14px;
+        font-size: 22px;
     }
 }
 
-/* ================= VERY SMALL ≤360px ================= */
+/* ================= MOBILE 600px — float OFF, photo top content bottom ================= */
+@media (max-width: 600px) {
+    .profile-page .cards-column {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 24px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .profile-page .profile-card {
+        width: calc(50% - 6px);
+        flex: 0 0 calc(50% - 6px);
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0;
+        gap: 0;
+        border-left: none;
+        border-top: 4px solid #8B0000;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .profile-page .profile-photo {
+        width: 100%;
+    }
+
+    .profile-page .profile-photo img {
+        width: 100%;
+        height: 120px;
+        border-radius: 0;
+        object-fit: cover;
+        object-position: top center;
+    }
+
+    .profile-page .profile-content {
+        padding: 10px 10px 12px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-page .profile-name {
+        font-size: 13px;
+        text-align: center;
+        color: #8B0000;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .profile-page .contact-item {
+        justify-content: center;
+    }
+
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .profile-page .content-wrap > h2 {
+        font-size: 20px;
+    }
+}
+
+/* ================= SMALL MOBILE 480px ================= */
+@media (max-width: 480px) {
+    .profile-page .container {
+        padding: 0 10px;
+    }
+
+    .profile-page .profile-card {
+        width: calc(50% - 6px);
+        flex: 0 0 calc(50% - 6px);
+    }
+
+    .profile-page .profile-photo img {
+        height: 110px;
+    }
+
+    .profile-page .profile-name {
+        font-size: 12px;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 10px;
+    }
+
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 10px;
+    }
+
+    .profile-page .content-wrap > h2 {
+        font-size: 18px;
+    }
+}
+
+/* ================= VERY SMALL 360px ================= */
 @media (max-width: 360px) {
     .profile-page .container {
         padding: 0 8px;
     }
 
     .profile-page .profile-card {
-        padding: 12px 10px;
+        width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .profile-page .profile-photo img {
+        height: 160px;
     }
 
     .profile-page .profile-name {
         font-size: 14px;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 11px;
+    }
+
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 11px;
     }
 }
 

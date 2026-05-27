@@ -243,7 +243,8 @@ h1 {
 ===================================================== */
 @media (max-width: 767px) {
   .subpage-hero-text {
-    top: 13%;
+    top: 30%;
+    font-size: 15px !important;
     left: 1.25rem;
     transform: none;
     animation: none;
