@@ -182,7 +182,27 @@ body {
     position: relative;
 }
 
-.fac-card-premium::before {
+
+.fac-card-premium:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px rgba(30, 58, 138, 0.1);
+    border-color: var(--fac-gold);
+}
+
+.fac-card-premium1 {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid #f1f5f9;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none !important;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    position: relative;
+}
+
+.fac-card-premium1::before {
     content: '';
     position: absolute;
     top: 0;
@@ -194,7 +214,7 @@ body {
     border-radius: 24px 24px 0 0;
 }
 
-.fac-card-premium:hover {
+.fac-card-premium1:hover {
     transform: translateY(-12px);
     box-shadow: 0 25px 50px rgba(30, 58, 138, 0.1);
     border-color: var(--fac-gold);
@@ -221,6 +241,9 @@ body {
 }
 
 .fac-card-premium:hover .fac-image-wrap img {
+    transform: scale(1.08);
+}
+.fac-card-premium1:hover .fac-image-wrap img {
     transform: scale(1.08);
 }
 
@@ -319,6 +342,11 @@ body {
 }
 
 .fac-card-premium:hover .fac-card-footer {
+    background: var(--fac-indigo);
+    color: white;
+}
+
+.fac-card-premium1:hover .fac-card-footer {
     background: var(--fac-indigo);
     color: white;
 }
@@ -807,6 +835,10 @@ body {
     }
 
     .fac-card-premium {
+        padding: 20px !important;
+        border-radius: 16px;
+    }
+    .fac-card-premium1 {
         padding: 20px !important;
         border-radius: 16px;
     }
