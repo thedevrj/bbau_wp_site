@@ -152,7 +152,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
 /* --- HERO --- */
 .sc-hero {
-    height: 350px;
+    height: 300px;
     background-size: contain;
     background-position: center;
     position: relative;

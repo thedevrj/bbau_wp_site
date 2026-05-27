@@ -26,13 +26,14 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
             <div class="committees-wrap">
                 <?php foreach($committees_list as $committee): ?>
                 <div class="committee-card">
-                    <div class="committee-header">
-                        <h4><?php echo esc_html($committee['name']); ?></h4>
+                    <div class="committee-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <h4 class="mb-0"><?php echo esc_html($committee['name']); ?></h4>
 
                         <?php if(!empty($committee['notification_document'])): ?>
-                        <p>Committee Notification:<a class="link-new"
-                                href=<?php echo ($committee['notification_document']); ?>> &nbsp; View
-                                Notification </a></p>
+                        <a class="btn-committee-doc" target="_blank"
+                                href="<?php echo esc_url($media_base . $committee['notification_document']); ?>">
+                                <i class="fa-solid fa-file-pdf"></i> View Notification
+                        </a>
                         <?php endif; ?>
 
                     </div>
@@ -177,7 +178,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
 
 .committee-header {
     background: linear-gradient(135deg, #5c1010, #8B1A1A);
-    padding: 15px 40px;
+    padding: 20px 25px;
     color: #fff;
 }
 
@@ -185,6 +186,26 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
     margin: 0;
     font-size: 1.25rem;
     font-weight: 700;
+}
+
+.btn-committee-doc {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-committee-doc:hover {
+    background: #fff;
+    color: #8B1A1A !important;
 }
 
 .committee-body {

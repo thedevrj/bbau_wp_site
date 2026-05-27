@@ -134,13 +134,13 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
         <table class="prog-table">
             <thead>
                 <tr>
-                    <th style="width: 15%">Course Code</th>
-                    <th style="width: 50%">Title</th>
+                    <th style="width: 25%">Course Code</th>
+                    <th style="width: 40%">Title</th>
                     <th style="width: 15%">Semester</th>
                     <th style="width: 20%">Credits</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="text-align:center;">
                 <?php foreach($cbcs_list as $cc): ?>
                 <tr>
                     <td><code><?php echo esc_html($cc['course_code']); ?></code></td>
