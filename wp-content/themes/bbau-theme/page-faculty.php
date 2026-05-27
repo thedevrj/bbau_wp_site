@@ -128,7 +128,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
         <?php if (!empty($faculty_list)): ?>
         <div class="faculty-dir-grid">
             <?php foreach ($faculty_list as $fac): ?>
-            <a href="<?php echo esc_url(home_url('/faculty/' . ($fac['slug'] ?? ''))); ?>" class="fac-card-premium">
+            <a href="<?php echo esc_url(home_url('/faculty/' . ($fac['slug'] ?? ''))); ?>" class="fac-card-premium1">
                 <div class="fac-image-wrap">
                     <?php if (!empty($fac['photo'])): ?>
                     <img src="<?php echo esc_url($media_base . $fac['photo']); ?>"
