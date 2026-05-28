@@ -209,7 +209,7 @@
 
 .ranking-value {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.35rem;
+  font-size: 1.0rem;
   font-weight: 800;
   color: #005C83;
   line-height: 1.1;
@@ -243,7 +243,7 @@
   height: 42px;
 }
 .ranking-value {
-  font-size: 1.2rem;
+  font-size: 1.0rem;
 }
 }
 
@@ -286,7 +286,7 @@
   letter-spacing: 0.1em;
 }
 .ranking-value {
-  font-size: 1.05rem;
+  font-size: 1.0rem;
 }
 .ranking-sub {
   font-size: 0.6rem;

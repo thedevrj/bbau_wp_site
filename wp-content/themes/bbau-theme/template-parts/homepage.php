@@ -72,7 +72,7 @@ function get_notice_href($notice) {
         <a href="/about-us/accreditation/" class="ranking-card naac-card">
             <img src="/wp-content/themes/bbau-theme/assets/img/IQAC/naac_logo.png" alt="NAAC Logo">
             <div class="ranking-info">
-                <span class="ranking-title">NAAC Accredited</span>
+                <span class="ranking-title">NAAC </span>
                 <span class="ranking-value">Grade A++</span>
                 <span class="ranking-sub">CGPA 3.72</span>
             </div>
