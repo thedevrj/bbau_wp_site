@@ -116,7 +116,7 @@ get_header();
             <a href="<?php echo school_tab_url($slug, 'school_board'); ?>"
                 class="<?php echo ($tab === 'school_board') ? 'active' : ''; ?>">School Board</a>
             <a href="<?php echo school_tab_url($slug, 'minutes'); ?>"
-                class="<?php echo ($tab === 'minutes') ? 'active' : ''; ?>">School Minutes</a>
+                class="<?php echo ($tab === 'minutes') ? 'active' : ''; ?>">School Board Minutes</a>
 
             <a href="<?php echo school_tab_url($slug, 'departments'); ?>"
                 class="<?php echo ($tab === 'departments') ? 'active' : ''; ?>">Departments</a>
