@@ -60,6 +60,25 @@ function get_notice_href($notice) {
 
     <div class="hero-overlay"></div>
 
+    <div class="hero-rankings">
+        <a href="/about-us/accreditation/" class="ranking-card nirf-card">
+            <img src="/wp-content/themes/bbau-theme/assets/img/IQAC/nirf_logo.png" alt="NIRF Logo">
+            <div class="ranking-info">
+                <span class="ranking-title">NIRF </span>
+                <span class="ranking-value">Rank 37</span>
+                <!-- <span class="ranking-sub">University Category</span> -->
+            </div>
+        </a>
+        <a href="/about-us/accreditation/" class="ranking-card naac-card">
+            <img src="/wp-content/themes/bbau-theme/assets/img/IQAC/naac_logo.png" alt="NAAC Logo">
+            <div class="ranking-info">
+                <span class="ranking-title">NAAC Accredited</span>
+                <span class="ranking-value">Grade A++</span>
+                <span class="ranking-sub">CGPA 3.72</span>
+            </div>
+        </a>
+    </div>
+
     <div class="hero-caption">
         <p>
             ““It is the education which is the right weapon to cut the social slavery and it is the
