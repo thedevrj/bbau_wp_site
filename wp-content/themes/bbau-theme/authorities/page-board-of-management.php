@@ -257,19 +257,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 const month = d.toLocaleString('en-US', { month: 'short' });
                 const title = min.meeting_title || 'Authority Meeting';
                 
-                const privateBadge = min.is_private ? '<span class="badge" style="background:#c9a84c; color:#0f172a; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Confidential</span>' : '';
-
-                html += `
-                <a href="${fileUrl}" class="minute-row" target="_blank" style="${min.is_private ? 'border-left:4px solid #c9a84c; background:#fffdf9;' : ''}">
-                    <div class="min-date">
-                        <span class="d">${day}</span>
-                        <span class="m">${month}</span>
-                    </div>
-                    <div class="min-info">
-                        <strong>${title} ${privateBadge}</strong>
-                        <span>Download PDF <i class="fa-solid fa-file-pdf"></i></span>
-                    </div>
-                </a>`;
+                const privateBadge = min.is_private ? '<span class="badge" style="background:#8B1A1A; color:#fff; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Private</span>' : '';
+                const isLoggedIn = !!localStorage.getItem('portal_access_token');
+                
+                if (min.is_private && !isLoggedIn) {
+                    html += `
+                    <a href="javascript:void(0);" onclick="toggleModal('login-modal', true)" class="minute-row" style="border-left:4px solid #8B1A1A; background:#fffdf9;">
+                        <div class="min-date">
+                            <span class="d">${day}</span>
+                            <span class="m">${month}</span>
+                        </div>
+                        <div class="min-info">
+                            <strong>${title} ${privateBadge}</strong>
+                            <span>Login to view PDF <i class="fa-solid fa-lock"></i></span>
+                        </div>
+                    </a>`;
+                } else {
+                    html += `
+                    <a href="${fileUrl}" class="minute-row" target="_blank" style="${min.is_private ? 'border-left:4px solid #8B1A1A; background:#fffdf9;' : ''}">
+                        <div class="min-date">
+                            <span class="d">${day}</span>
+                            <span class="m">${month}</span>
+                        </div>
+                        <div class="min-info">
+                            <strong>${title} ${privateBadge}</strong>
+                            <span>View PDF <i class="fa-solid fa-file-pdf"></i></span>
+                        </div>
+                    </a>`;
+                }
             });
             html += '</div>';
             minutesContainer.innerHTML = html;
