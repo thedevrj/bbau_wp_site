@@ -46,8 +46,8 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
                         <table class="members-table">
                             <thead>
                                 <tr>
-                                    <th>Member Name</th>
-                                    <th>Role in Committee</th>
+                                    <th style="width: 65%">Member Name</th>
+                                    <th style="width: 35%">Role in Committee</th>
                                 </tr>
                             </thead>
                             <tbody>

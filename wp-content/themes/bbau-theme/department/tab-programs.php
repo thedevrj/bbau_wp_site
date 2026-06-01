@@ -141,18 +141,18 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
         <table class="prog-table">
             <thead>
                 <tr>
-                    <th style="width: 15%">Course Code</th>
-                    <th style="width: 50%">Title</th>
+                    <th style="width: 20%">Course Code</th>
+                    <th style="width: 45%">Title</th>
                     <th style="width: 15%">Semester</th>
                     <th style="width: 20%">Credits</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="text-align:center;">
                 <?php foreach($cbcs_list as $cc): ?>
                 <tr>
                     <td><code><?php echo esc_html($cc['course_code']); ?></code></td>
                     <td style="font-weight:700; color:#5c1010;"><?php echo esc_html($cc['course_title']); ?></td>
-                    <td>Semester <?php echo esc_html($cc['semester']); ?></td>
+                    <td style="font-weight:700">Semester <?php echo esc_html($cc['semester']); ?></td>
                     <td><?php echo esc_html($cc['credits']); ?></td>
                 </tr>
                 <?php endforeach; ?>
