@@ -55,7 +55,7 @@ get_header();
 
                 <!-- ===== OBJECTIVES / PAGE CONTENT ===== -->
                 <?php if (get_field('objectives_title')) : ?>
-                    <h3><?php the_field('objectives_title'); ?></h3>
+                    <h2><?php the_field('objectives_title'); ?></h2>
                 <?php endif; ?>
 
                 <?php
