@@ -136,7 +136,7 @@ get_header();
                     <div>
 
                         <div class="year-badge">
-                            Chief Guest
+                           Guest of Honour
                         </div>
 
                         <div class="year-name">
