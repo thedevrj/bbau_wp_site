@@ -46,11 +46,7 @@ $colors = [
 
     <div class="container">
 
-        <!-- Hero -->
         <div class="pd-hero__inner">
-            <div class="pd-hero__badge">
-               
-            </div>
             <h2 class="pd-hero__title">
                 <?php echo esc_html($page_heading); ?>
             </h2>
@@ -59,7 +55,6 @@ $colors = [
             <?php endif; ?>
         </div>
 
-        <!-- Grid -->
         <?php if ($portals) : ?>
             <div class="pd-grid mt-4">
                 <?php foreach ($portals as $i => $item) :
@@ -67,17 +62,19 @@ $colors = [
                     $name = esc_html($item['portal_name']);
                     $url  = esc_url($item['portal_link']);
                 ?>
-                    <div class="pd-card" style="background:<?php echo $c['bg']; ?>; border-color:<?php echo $c['border']; ?>;">
+                    <div class="pd-card" style="background:<?php echo $c['bg']; ?> !important; border-color:<?php echo $c['border']; ?> !important;">
 
-                        <div class="pd-card__icon" style="background:<?php echo $c['icon_bg']; ?>;">
+                        <div class="pd-card__icon" style="background:<?php echo $c['icon_bg']; ?> !important;">
                             <i class="ti ti-world"></i>
                         </div>
 
-                        <p class="pd-card__name" style="color:<?php echo $c['name']; ?>;">
+                        <p class="pd-card__name" style="color:<?php echo $c['name']; ?> !important;">
                             <?php echo $name; ?>
                         </p>
 
-                        <a href="<?php echo $url; ?>" class="pd-card__btn" style="background:<?php echo $c['btn']; ?>;">
+                        <a href="<?php echo $url; ?>"
+                           class="pd-card__btn"
+                           style="background:<?php echo $c['btn']; ?> !important; color:#fff !important;">
                             View More
                         </a>
 
@@ -92,95 +89,115 @@ $colors = [
     </div>
 </section>
 
-
-
 <style>
 .pd-hero__title {
-    font-size: 32px;
-    font-weight: 700;
-    color: #fff;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
     letter-spacing: -0.5px;
     margin-bottom: 0.4rem;
 }
 .pd-hero__sub {
-    font-size: 15px;
-    color: rgba(255,255,255,0.72);
+    font-size: 15px !important;
+    color: #666 !important;
 }
 .pd-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 16px !important;
 }
 .pd-card {
-    border-radius: 14px;
-    border: 1px solid transparent;
-    padding: 1.5rem 1rem 1.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-    transition: transform 0.18s, box-shadow 0.18s;
+    border-radius: 14px !important;
+    border: 1px solid transparent !important;
+    padding: 1.5rem 1rem 1.2rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    text-align: center !important;
+    transition: transform 0.18s, box-shadow 0.18s !important;
+    height: 100% !important;
 }
 .pd-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10) !important;
 }
 .pd-card__icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
 }
 .pd-card__icon i {
-    font-size: 24px;
-    color: #fff;
+    font-size: 24px !important;
+    color: #fff !important;
 }
 .pd-card__name {
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.4;
-    min-height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+/* Button — all states locked */
+.pd-card__btn,
+.pd-card__btn:link,
+.pd-card__btn:visited,
+.pd-card__btn:hover,
+.pd-card__btn:focus,
+.pd-card__btn:active {
+    color: #fff !important;
+    text-decoration: none !important;
 }
 .pd-card__btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 7px 0;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #fff;
-    text-decoration: none;
-    transition: opacity 0.15s;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    padding: 7px 0 !important;
+    border-radius: 8px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    outline: none !important;
+    flex-shrink: 0 !important;
+    margin-top: auto !important;
+    opacity: 1 !important;
+    transition: opacity 0.15s !important;
 }
-.pd-card__btn:hover {
-    opacity: 0.85;
-    text-decoration: none;
-    color: #fff;
+.pd-card__btn:hover,
+.pd-card__btn:focus,
+.pd-card__btn:active {
+    opacity: 0.85 !important;
 }
+
 .pd-empty {
-    text-align: center;
-    color: #999;
-    font-size: 14px;
-    padding: 3rem 0;
+    text-align: center !important;
+    color: #999 !important;
+    font-size: 14px !important;
+    padding: 3rem 0 !important;
 }
+
 @media (max-width: 1100px) {
-    .pd-grid { grid-template-columns: repeat(4, 1fr); }
+    .pd-grid { grid-template-columns: repeat(4, 1fr) !important; }
 }
 @media (max-width: 820px) {
-    .pd-grid { grid-template-columns: repeat(3, 1fr); }
-    .pd-hero__title { font-size: 26px; }
+    .pd-grid { grid-template-columns: repeat(3, 1fr) !important; }
+    .pd-hero__title { font-size: 22px !important; }
 }
 @media (max-width: 560px) {
-    .pd-grid { grid-template-columns: repeat(2, 1fr); }
-    .pd-hero__title { font-size: 22px; }
+    .pd-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .pd-hero__title { font-size: 18px !important; }
 }
 </style>
+
 <?php get_footer(); ?>
