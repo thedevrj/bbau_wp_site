@@ -227,16 +227,29 @@ document.addEventListener('DOMContentLoaded', function() {
                             <span>Login to view PDF <i class="fa-solid fa-lock"></i></span>
                         </div>
                     </a>`;
-                } else {
+                } else if (min.is_private && isLoggedIn && !min.file) {
                     html += `
-                    <a href="${fileUrl}" class="minute-row" target="_blank" style="${min.is_private ? 'border-left:4px solid #8B1A1A; background:#fffdf9;' : ''}">
+                    <a href="javascript:void(0);" onclick="alert('Unauthorized: You do not have permission to view these minutes.')" class="minute-row" style="border-left:4px solid #dc3545; background:#fffaf9; opacity: 0.8; cursor: not-allowed;">
+                        <div class="min-date" style="background:#dc3545;">
+                            <span class="d">${day}</span>
+                            <span class="m">${month}</span>
+                        </div>
+                        <div class="min-info">
+                            <strong>${title} ${privateBadge}</strong>
+                            <span style="color:#dc3545;">Not Authorized <i class="fa-solid fa-ban"></i></span>
+                        </div>
+                    </a>`;
+                } else {
+                    let badgeStyles = min.is_private ? 'border-left:4px solid #8B1A1A; background:#fffdf9;' : '';
+                    html += `
+                    <a href="${fileUrl}" class="minute-row" target="_blank" style="${badgeStyles}">
                         <div class="min-date">
                             <span class="d">${day}</span>
                             <span class="m">${month}</span>
                         </div>
                         <div class="min-info">
                             <strong>${title} ${privateBadge}</strong>
-                            <span>View PDF <i class="fa-solid fa-file-pdf"></i></span>
+                            <span>Download PDF <i class="fa-solid fa-file-pdf"></i></span>
                         </div>
                     </a>`;
                 }
