@@ -75,10 +75,12 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                 <div id="tab-counselling" class="admission-tab-content d-none">
                     <h2 class="sc-section-title mb-4 text-center d-block">Counselling Phases & Merit Lists</h2>
                     
-                    <ul class="nav nav-pills mb-4 justify-content-center phase-tabs gap-2" id="phase-tabs" role="tablist">
-                    </ul>
-
-                    <div class="tab-content" id="phase-tabs-content">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10 col-xl-9">
+                            <div class="accordion sc-accordion" id="counsellingAccordion">
+                                <!-- Accordion items injected via JS -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -94,6 +96,12 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     --sc-gold: #c9a84c;
     --sc-gold-light: #e2d9cc;
     --sc-bg: #fdfaf6;
+    
+    /* University Inspired Colors */
+    --sc-navy: #1e3a5f;
+    --sc-saffron: #a23c1e;
+    --sc-light-bg: #f8fafc;
+    --sc-light-border: #e2e8f0;
 }
 
 .admission-portal-brand {
@@ -110,7 +118,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 /* hero banner css */
 .sc-hero {
     height: 300px;
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     position: relative;
     display: flex;
@@ -224,6 +232,165 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     border-color: var(--sc-midnight);
 }
 
+/* Modern Accordion Styles */
+#counsellingAccordion .accordion-item {
+    border: none !important;
+    border-radius: 12px !important;
+    margin-bottom: 1.25rem !important;
+    overflow: hidden !important;
+    background-color: transparent !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+#counsellingAccordion .accordion-header {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+#counsellingAccordion .accordion-header::before,
+#counsellingAccordion .accordion-header::after {
+    display: none !important;
+}
+
+#counsellingAccordion .sc-accordion-header-btn {
+    background-color: #fff !important;
+    color: var(--sc-navy) !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    padding: 1.25rem 1.75rem !important;
+    border: 1px solid var(--sc-light-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    text-align: left !important;
+    text-decoration: none !important;
+    margin: 0 !important;
+    transition: all 0.3s ease !important;
+}
+
+#counsellingAccordion .sc-accordion-header-btn:not(.collapsed) {
+    background: linear-gradient(135deg, var(--sc-midnight), var(--sc-navy)) !important;
+    color: #fff !important;
+    border: 1px solid transparent !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15) !important;
+}
+
+#counsellingAccordion .sc-accordion-header-btn::after {
+    content: "";
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: auto;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%231e3a5f'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    transition: transform .3s ease-in-out;
+}
+#counsellingAccordion .sc-accordion-header-btn:not(.collapsed):after {
+    transform: rotate(-180deg);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+}
+
+#counsellingAccordion .accordion-body {
+    padding: 1.5rem !important;
+    background-color: var(--sc-light-bg) !important;
+    border: 1px solid var(--sc-light-border) !important;
+    border-top: none !important;
+    border-bottom-left-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+}
+
+
+
+/* Removed to use ID styling instead */
+
+/* Modern List Style */
+.sc-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(0,0,0,0.04);
+    border-radius: 10px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+}
+
+.sc-list-item:hover {
+    border-color: var(--sc-gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.04);
+}
+
+.sc-list-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.sc-list-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--sc-light-bg);
+    border-radius: 6px;
+    padding: 0.35rem 0.6rem;
+    min-width: 50px;
+}
+
+.sc-list-date span:first-child {
+    font-size: 0.65rem;
+    color: var(--sc-slate);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.sc-list-date span:last-child {
+    font-size: 1.1rem;
+    color: var(--sc-saffron);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.sc-list-title {
+    font-weight: 600;
+    color: var(--sc-slate);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.sc-list-action {
+    color: var(--sc-navy);
+    font-size: 1rem;
+    background: var(--sc-light-bg);
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.sc-list-item:hover .sc-list-action {
+    background: var(--sc-navy);
+    color: #fff;
+}
+
 /* SECTION TITLES */
 .sc-section-title {
     font-family: 'Merriweather', serif;
@@ -248,69 +415,130 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 /* CARDS GRID */
 .sc-notice-card {
     background: #fff;
-    border: 1px solid var(--sc-gold-light);
-    padding: 25px;
-    border-radius: 18px;
+    border: none;
+    border-left: 4px solid var(--sc-saffron);
+    padding: 20px 25px;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
     text-decoration: none !important;
     transition: all 0.3s ease;
     color: var(--sc-slate);
     height: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    text-align: left;
 }
 
 .sc-notice-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-    border-color: var(--sc-gold);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border-left-color: var(--sc-navy);
+}
+
+.sc-notice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
 }
 
 .sc-notice-icon {
-    width: 50px;
-    height: 50px;
-    background: #fdfaf6;
-    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    background: var(--sc-light-bg);
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
-    color: var(--sc-gold);
-    margin-bottom: 5px;
+    font-size: 1.1rem;
+    color: var(--sc-navy);
+    transition: all 0.3s ease;
 }
 
-.sc-notice-info h3 {
+.sc-notice-card:hover .sc-notice-icon {
+    background: var(--sc-navy);
+    color: #fff;
+}
+
+.sc-notice-date {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--sc-slate);
+    background: var(--sc-light-bg);
+    padding: 4px 10px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sc-notice-title {
     font-family: 'Merriweather', serif;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     color: var(--sc-midnight);
-    margin-bottom: 10px;
-}
-
-.sc-notice-meta {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #64748b;
+    line-height: 1.5;
+    margin: 0;
 }
 
 /* DOC CARDS */
 .sc-doc-card {
     background: #fff;
-    border: 1px solid var(--sc-gold-light);
-    padding: 25px;
-    border-radius: 18px;
+    border: none;
+    padding: 30px 20px;
+    border-radius: 16px;
     text-align: center;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-decoration: none !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
 }
 
 .sc-doc-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+.sc-doc-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: rgba(30, 58, 95, 0.05);
+    color: var(--sc-navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.sc-doc-card:hover .sc-doc-icon-wrapper {
+    background: var(--sc-navy);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.sc-doc-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--sc-midnight);
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.sc-doc-meta {
+    font-size: 0.8rem;
+    color: var(--sc-slate);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
     border-color: var(--sc-gold);
     box-shadow: 0 10px 20px rgba(201, 168, 76, 0.15);
 }
@@ -351,10 +579,119 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
         opacity: 0;
         transform: scale(0.95);
     }
-
     100% {
         opacity: 1;
         transform: scale(1);
+    }
+}
+
+/* =========================================
+   RESPONSIVE DESIGN 
+   ========================================= */
+@media (max-width: 768px) {
+    /* Hero Section */
+    .sc-hero {
+        height: auto;
+        min-height: 220px;
+        padding: 40px 0;
+    }
+    .sc-hero-card {
+        padding: 20px 15px;
+        border-radius: 20px;
+    }
+    .sc-hero-card h1 {
+        font-size: 1.5rem;
+    }
+    .sc-hero-card p {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    /* Filter Nav (Scrollable row) */
+    .sc-filter-nav {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        border-radius: 16px;
+        padding: 10px;
+        /* Hide scrollbar */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .sc-filter-nav::-webkit-scrollbar {
+        display: none;
+    }
+    .sc-pill {
+        flex: 0 0 auto; /* Prevent shrinking */
+        font-size: 0.9rem;
+        padding: 10px 18px;
+    }
+
+    /* Section Titles */
+    .sc-section-title {
+        font-size: 1.3rem;
+    }
+
+    /* Notice Cards */
+    .sc-notice-card {
+        padding: 15px 20px;
+    }
+    .sc-notice-header {
+        margin-bottom: 12px;
+    }
+    .sc-notice-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 0.95rem;
+    }
+    .sc-notice-title {
+        font-size: 1rem;
+    }
+
+    /* Doc Cards */
+    .sc-doc-card {
+        padding: 20px 15px;
+    }
+    .sc-doc-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    .sc-doc-title {
+        font-size: 1rem;
+    }
+
+    /* Accordions */
+    #counsellingAccordion .sc-accordion-header-btn {
+        padding: 1rem 1.25rem !important;
+        font-size: 1rem !important;
+    }
+    #counsellingAccordion .accordion-body {
+        padding: 1.25rem 1rem !important;
+    }
+
+    /* Merit List Items */
+    .sc-list-item {
+        padding: 0.85rem 1rem;
+    }
+    .sc-list-title {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Stack Merit List Items */
+    .sc-list-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .sc-list-meta {
+        width: 100%;
+    }
+    .sc-list-action {
+        align-self: flex-end;
     }
 }
 </style>
@@ -365,6 +702,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const apiBase = isLocal ? 'http://localhost:8001/api/v1/admission' : `${mediaBase}/api/v1/admission`;
     const category = '<?php echo esc_js($admission_category ?? "UG"); ?>';
+
+    function getFullMediaUrl(url) {
+        if (!url) return '#';
+        if (url.startsWith('http://') || url.startsWith('https://')) return url;
+        // Ensure single slash between mediaBase and url
+        const base = mediaBase.endsWith('/') ? mediaBase.slice(0, -1) : mediaBase;
+        const path = url.startsWith('/') ? url : '/' + url;
+        return base + path;
+    }
 
     const tabs = document.querySelectorAll('.sc-pill');
     const contents = document.querySelectorAll('.admission-tab-content');
@@ -395,7 +741,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     async function fetchTabData(tab) {
-        const containerId = tab === 'counselling' ? 'phase-tabs-content' : `${tab}-list`;
+        const containerId = tab === 'counselling' ? 'counsellingAccordion' : `${tab}-list`;
         const container = document.getElementById(containerId);
         
         loader.classList.remove('d-none');
@@ -425,7 +771,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderTabData(tab, data) {
-        const container = document.getElementById(`${tab}-list`);
+        const container = tab === 'counselling' ? document.getElementById('counsellingAccordion') : document.getElementById(`${tab}-list`);
         
         if (!data || data.length === 0) {
             const emptyHtml = `
@@ -434,41 +780,46 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h4>No data available</h4>
                     <p class="text-muted mb-0">Check back later for updates.</p>
                 </div>`;
-            if (tab === 'counselling') {
-                document.getElementById('phase-tabs').innerHTML = '';
-                document.getElementById('phase-tabs-content').innerHTML = emptyHtml;
-            } else {
-                container.innerHTML = emptyHtml;
-            }
+            container.innerHTML = emptyHtml;
             return;
         }
 
         let html = '';
         if (tab === 'notices') {
-            html = data.map(item => `
+            html = data.map(item => {
+                const isClickable = !!item.file;
+                const WrapperTag = isClickable ? 'a' : 'div';
+                const hrefAttr = isClickable ? `href="${getFullMediaUrl(item.file)}" target="_blank"` : '';
+                
+                return `
                 <div class="col-md-6 col-lg-4">
-                    <a href="${item.file || '#'}" target="_blank" class="sc-notice-card">
-                        <div class="d-flex align-items-center gap-3 mb-2">
-                            <div class="sc-notice-icon"><i class="fa-solid ${item.file ? 'fa-file-pdf' : 'fa-bullhorn'}"></i></div>
-                            <div class="sc-notice-meta">
-                                <div><i class="fa-regular fa-calendar me-1"></i> ${new Date(item.date_posted).toLocaleDateString('en-GB')}</div>
+                    <${WrapperTag} ${hrefAttr} class="sc-notice-card">
+                        <div class="sc-notice-header">
+                            <div class="sc-notice-icon">
+                                <i class="fa-solid ${item.file ? 'fa-file-pdf' : 'fa-bullhorn'}"></i>
+                            </div>
+                            <div class="sc-notice-date">
+                                <i class="fa-regular fa-calendar"></i>
+                                ${new Date(item.date_posted).toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'})}
                             </div>
                         </div>
-                        <div class="sc-notice-info flex-grow-1">
-                            <h3>${item.title}</h3>
-                            ${item.description ? `<p class="text-muted small mt-2 mb-0">${item.description}</p>` : ''}
-                        </div>
-                    </a>
+                        <h3 class="sc-notice-title">${item.title}</h3>
+                    </${WrapperTag}>
                 </div>
-            `).join('');
+                `;
+            }).join('');
             container.innerHTML = html;
         } else if (tab === 'prospectuses') {
             html = data.map(item => `
                 <div class="col-md-4 col-lg-3">
-                    <a href="${item.file}" target="_blank" class="sc-doc-card">
-                        <i class="fa-solid fa-file-pdf sc-doc-icon"></i>
-                        <h4>${item.title}</h4>
-                        <span class="text-muted small mt-2 d-block"><i class="fa-regular fa-calendar me-1"></i> ${new Date(item.upload_date).toLocaleDateString('en-GB')}</span>
+                    <a href="${getFullMediaUrl(item.file)}" target="_blank" class="sc-doc-card">
+                        <div class="sc-doc-icon-wrapper">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <h4 class="sc-doc-title">${item.title}</h4>
+                        <div class="sc-doc-meta">
+                            <i class="fa-regular fa-calendar"></i> ${new Date(item.upload_date).toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'})}
+                        </div>
                     </a>
                 </div>
             `).join('');
@@ -476,10 +827,12 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (tab === 'registration') {
             html = data.map(item => `
                 <div class="col-md-4 col-lg-3">
-                    <a href="${item.url}" target="_blank" class="sc-doc-card" style="border-color: #2563eb;">
-                        <i class="fa-solid fa-arrow-up-right-from-square sc-doc-icon" style="color: #2563eb;"></i>
-                        <h4>${item.portal_name}</h4>
-                        ${item.registration_end ? `<span class="badge bg-danger mt-2">Deadline: ${new Date(item.registration_end).toLocaleDateString('en-GB')}</span>` : ''}
+                    <a href="${item.url}" target="_blank" class="sc-doc-card">
+                        <div class="sc-doc-icon-wrapper" style="color: #2563eb; background: rgba(37, 99, 235, 0.05);">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                        <h4 class="sc-doc-title">${item.portal_name}</h4>
+                        ${item.registration_end ? `<span class="badge bg-danger mt-2">Deadline: ${new Date(item.registration_end).toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'})}</span>` : ''}
                     </a>
                 </div>
             `).join('');
@@ -490,46 +843,66 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderCounsellingPhases(phases) {
-        const tabsHtml = phases.map((phase, index) => `
-            <li class="nav-item" role="presentation">
-                <button class="nav-link sc-pill-sm phase-pill-btn ${index === 0 ? 'active' : ''}" data-target-phase="${phase.id}" type="button" role="tab">
-                    ${phase.phase_name}
-                </button>
-            </li>
-        `).join('');
+        if (!phases || phases.length === 0) {
+            document.getElementById('counsellingAccordion').innerHTML = `<div class="empty-state"><i class="fa-solid fa-folder-open"></i><h4>No Phases Found</h4></div>`;
+            return;
+        }
 
-        const contentHtml = phases.map((phase, index) => `
-            <div class="tab-pane fade phase-content-pane ${index === 0 ? 'show active' : ''}" id="phase-content-${phase.id}" role="tabpanel">
-                <div class="text-center py-4 d-none phase-loader" id="loader-phase-${phase.id}">
-                    <div class="spinner-border text-gold" role="status"><span class="visually-hidden">Loading...</span></div>
+        const accordionHtml = phases.map((phase, index) => {
+            const isExpanded = index === 0 ? 'true' : 'false';
+            const collapseClass = index === 0 ? 'show' : '';
+            const buttonClass = index === 0 ? '' : 'collapsed';
+
+            return `
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-${phase.id}">
+                    <div class="sc-accordion-header-btn sc-accordion-button ${buttonClass}" role="button" data-target-collapse="collapse-${phase.id}" aria-expanded="${isExpanded}" aria-controls="collapse-${phase.id}">
+                        ${phase.phase_name}
+                    </div>
+                </h2>
+                <div id="collapse-${phase.id}" class="accordion-collapse collapse ${collapseClass}" aria-labelledby="heading-${phase.id}" data-bs-parent="#counsellingAccordion">
+                    <div class="accordion-body">
+                        <div class="text-center py-4 d-none phase-loader" id="loader-phase-${phase.id}">
+                            <div class="spinner-border text-gold" role="status"><span class="visually-hidden">Loading...</span></div>
+                        </div>
+                        <div class="phase-results-container" id="results-phase-${phase.id}"></div>
+                    </div>
                 </div>
-                <div class="row g-4 justify-content-center" id="results-phase-${phase.id}"></div>
             </div>
-        `).join('');
+            `;
+        }).join('');
 
-        document.getElementById('phase-tabs').innerHTML = tabsHtml;
-        document.getElementById('phase-tabs-content').innerHTML = contentHtml;
+        document.getElementById('counsellingAccordion').innerHTML = accordionHtml;
 
-        document.querySelectorAll('.phase-pill-btn').forEach(btn => {
+        // Use vanilla JS to handle toggling to avoid Bootstrap dynamic DOM issues
+        document.querySelectorAll('.sc-accordion-button').forEach(btn => {
             btn.addEventListener('click', function() {
-                // Remove active class from all pills
-                document.querySelectorAll('.phase-pill-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
+                const targetId = this.getAttribute('data-target-collapse');
+                const targetPane = document.getElementById(targetId);
+                const isCurrentlyOpen = targetPane.classList.contains('show');
 
-                // Hide all panes
-                document.querySelectorAll('.phase-content-pane').forEach(pane => {
-                    pane.classList.remove('show', 'active');
+                // Close all
+                document.querySelectorAll('.accordion-collapse').forEach(pane => {
+                    pane.classList.remove('show');
+                });
+                document.querySelectorAll('.sc-accordion-button').forEach(b => {
+                    b.classList.add('collapsed');
+                    b.setAttribute('aria-expanded', 'false');
                 });
 
-                // Show target pane
-                const targetId = this.getAttribute('data-target-phase');
-                document.getElementById(`phase-content-${targetId}`).classList.add('show', 'active');
+                // Toggle clicked
+                if (!isCurrentlyOpen) {
+                    targetPane.classList.add('show');
+                    this.classList.remove('collapsed');
+                    this.setAttribute('aria-expanded', 'true');
 
-                // Load data
-                loadPhaseResults(targetId);
+                    const phaseId = targetId.replace('collapse-', '');
+                    loadPhaseResults(phaseId);
+                }
             });
         });
 
+        // Load the first phase by default
         if (phases.length > 0) {
             loadPhaseResults(phases[0].id);
         }
@@ -548,24 +921,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const results = Array.isArray(data) ? data : (data.results || []);
 
             if (results.length === 0) {
-                container.innerHTML = `<div class="empty-state"><i class="fa-solid fa-folder-open"></i><h4>No Merit Lists Yet</h4><p class="text-muted mb-0">Merit lists for this phase will be published soon.</p></div>`;
+                container.innerHTML = `<div class="empty-state py-4"><i class="fa-solid fa-folder-open mb-3" style="font-size: 2rem; color: var(--sc-gold);"></i><h4>No Merit Lists Yet</h4><p class="text-muted mb-0">Merit lists for this phase will be published soon.</p></div>`;
                 return;
             }
 
             container.innerHTML = results.map(result => `
-                <div class="col-md-6 col-lg-4">
-                    <a href="${result.pdf_file}" target="_blank" class="sc-notice-card">
-                        <div class="d-flex align-items-center gap-3 mb-2">
-                            <div class="sc-notice-icon"><i class="fa-solid fa-list-check"></i></div>
-                            <div class="sc-notice-meta">
-                                <div><i class="fa-regular fa-calendar me-1"></i> ${new Date(result.upload_date).toLocaleDateString('en-GB')}</div>
+                <a href="${getFullMediaUrl(result.pdf_file)}" target="_blank" class="text-decoration-none d-block">
+                    <div class="sc-list-item">
+                        <div class="sc-list-meta">
+                            <div class="sc-list-meta-info d-flex flex-column" style="gap: 6px;">
+                                <h3 class="sc-list-title mb-0">${result.department_name}</h3>
+                                <div class="text-muted fw-medium" style="font-size: 0.85rem;">
+                                    <i class="fa-regular fa-calendar-alt me-2" style="color: var(--sc-saffron);"></i>
+                                    ${new Date(result.upload_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                </div>
                             </div>
                         </div>
-                        <div class="sc-notice-info">
-                            <h3 class="mb-0 text-gold">${result.department_name}</h3>
+                        <div class="sc-list-action">
+                            <i class="fa-solid fa-download"></i>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             `).join('');
 
         } catch (e) {
