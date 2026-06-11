@@ -16,4 +16,4 @@ echo "→ Restarting containers"
 docker-compose down
 docker-compose up -d
 
-echo "✅ PROD deployment complete"
+echo " PROD deployment complete"

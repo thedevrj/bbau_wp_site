@@ -186,6 +186,7 @@ require_once get_template_directory() . '/inc/class-bbau-nav-walker.php';
 function theme_register_custom_menus() {
 	register_nav_menus(array(
 		'announcement_bar' => ('Announcement Bar Menu'),
+		'announcement_bar_mobile' => ('Announcement Bar Menu Mobile'),
 		'footer_university_menu' => ('Footer University Menu'),
 		'quick_links_1' => ('Footer Quick links Menu 1'),
 		'quick_links_2' => ('Footer Quick links Menu 2'),
@@ -300,3 +301,96 @@ function vc_speech_post_type() {
 		));
 }
 add_action('init','vc_speech_post_type');
+
+
+//rewrite rules for school detail page and faculty profile
+function add_custom_query_vars($vars) {
+    $vars[] = 'school_slug';
+    $vars[] = 'dept_slug';
+    $vars[] = 'centre_slug';
+    $vars[] = 'faculty_slug';
+    return $vars;
+}
+add_filter('query_vars', 'add_custom_query_vars');
+
+function add_school_rewrite_rule() {
+
+	//school rewrite rule
+    add_rewrite_rule(
+        '^schools/([^/]+)/?$',
+        'index.php?pagename=school-detail&school_slug=$matches[1]',
+        'top'
+    );
+    
+    // centre rewrite rule (only for specific centres acting as departments)
+    $dept_centres = 'centre-of-post-graduate-legal-studies|centre-for-the-study-of-social-inclusion-cssi';
+    add_rewrite_rule(
+        '^centres/(' . $dept_centres . ')/?$',
+        'index.php?pagename=centre&centre_slug=$matches[1]',
+        'top'
+    );
+    // department rewrite rule
+    add_rewrite_rule(
+        '^departments/([^/]+)/?$',
+        'index.php?pagename=department&dept_slug=$matches[1]',
+        'top'
+    );
+    // faculty profile rewrite rule
+    add_rewrite_rule(
+        '^faculty/([^/]+)/?$',
+        'index.php?pagename=faculty-profile&faculty_slug=$matches[1]',
+        'top'
+    );
+}
+add_action('init', 'add_school_rewrite_rule');
+
+// ACF Options Page for Sidebar Menus
+if (function_exists('acf_add_options_page')) {
+
+    acf_add_options_page(array(
+        'page_title' => 'Sidebar Menus',
+        'menu_title' => 'Sidebar Menus',
+        'menu_slug'  => 'sidebar-menus',
+        'capability' => 'edit_posts',
+        'redirect'   => false
+    ));
+}
+
+function custom_menu_rewrite_rule() {
+    add_rewrite_rule(
+        '^(.+?)/menu/([^/]+)/?$',
+        'index.php?pagename=$matches[1]&menu=$matches[2]',
+        'top'
+    );
+}
+add_action('init', 'custom_menu_rewrite_rule');
+
+function custom_menu_query_var($vars) {
+    $vars[] = 'menu';
+    return $vars;
+}
+add_filter('query_vars', 'custom_menu_query_var');
+
+//  Smart Labeling for Departments by Campus
+
+function get_dept_display_name($dept) {
+    if (empty($dept)) return '';
+    
+    $name = $dept['name'] ?? '';
+    $campus = $dept['campus'] ?? 'BBAU';
+    
+    // Check if we are on the Dedicated Satellite Campus Page
+    if (is_page_template('page-satellite-campus.php')) {
+        return $name;
+    }
+    
+    if ($campus === 'Satellite Campus Amethi') {
+        return $name . ' (Amethi)';
+    }
+    
+    return $name;
+}
+function get_centre_display_name($centre) {
+    if (empty($centre)) return '';
+    return $centre['name'] ?? '';
+}

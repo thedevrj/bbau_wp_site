@@ -4,6 +4,52 @@ Template name: Homepage Template
 */  
 get_header();
 defined( 'ABSPATH' ) || exit;
+
+// === Fetch Global Notices ===
+$api_base   = getenv('DJANGO_API_URL');
+$media_base = getenv('DJANGO_MEDIA_URL');
+$api_url = $api_base . "/api/v1/global-notices/?page_size=100";
+$response = wp_remote_get($api_url, array('timeout' => 10));
+$notices_data = array();
+
+if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
+    $body = wp_remote_retrieve_body( $response );
+    $decoded = json_decode( $body, true );
+    $notices_data = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
+}
+
+$marquee_notices = array();
+$announcement_notices = array();
+$event_notices = array();
+$appointment_notices = array();
+$tender_notices = array();
+
+foreach ( $notices_data as $notice ) {
+    if ( !empty($notice['show_in_marquee']) ) {
+        $marquee_notices[] = $notice;
+    }
+    
+    $cats = isset($notice['categories']) && is_array($notice['categories']) ? $notice['categories'] : array();
+    foreach ( $cats as $cat_raw ) {
+        $cat = strtolower($cat_raw ?? '');
+        if ( $cat === 'announcement' ) {
+            $announcement_notices[] = $notice;
+        } elseif ( $cat === 'event' ) {
+            $event_notices[] = $notice;
+        } elseif ( $cat === 'appointment' ) {
+            $appointment_notices[] = $notice;
+        } elseif ( $cat === 'tenders' || $cat === 'tender' ) {
+            $tender_notices[] = $notice;
+        }
+    }
+}
+
+function get_notice_href($notice) {
+    if (!empty($notice['attachment'])) return $notice['attachment'];
+    if (!empty($notice['link'])) return $notice['link'];
+    return '#';
+}
+// =====================================
 ?>
 
 <!-- ================= HERO SECTION ================= -->
@@ -14,6 +60,25 @@ defined( 'ABSPATH' ) || exit;
 
     <div class="hero-overlay"></div>
 
+    <div class="hero-rankings">
+        <a href="/about-us/accreditation/" class="ranking-card nirf-card">
+            <img src="/wp-content/themes/bbau-theme/assets/img/IQAC/nirf_logo.png" alt="NIRF Logo">
+            <div class="ranking-info">
+                <span class="ranking-title">NIRF </span>
+                <span class="ranking-value">Rank 37</span>
+                <!-- <span class="ranking-sub">University Category</span> -->
+            </div>
+        </a>
+        <a href="/about-us/accreditation/" class="ranking-card naac-card">
+            <img src="/wp-content/themes/bbau-theme/assets/img/IQAC/naac_logo.png" alt="NAAC Logo">
+            <div class="ranking-info">
+                <span class="ranking-title">NAAC </span>
+                <span class="ranking-value">Grade A++</span>
+                <span class="ranking-sub">CGPA 3.72</span>
+            </div>
+        </a>
+    </div>
+
     <div class="hero-caption">
         <p>
             ““It is the education which is the right weapon to cut the social slavery and it is the
@@ -23,19 +88,32 @@ defined( 'ABSPATH' ) || exit;
         <p class="author">Dr. B. R. Ambedkar, Bharat Ratna</p>
     </div>
 </section>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const video = document.querySelector(".hero-video");
 
+    if (video) {
+        video.muted = true;
+        video.play().catch(() => {
+            video.muted = true;
+            video.play();
+        });
+    }
+});
+</script>
 
 <!-- ================= ANNOUNCEMENT BAR ================= -->
-<div class="announce-bar">
+<div id="main-content" class="announce-bar">
     <div class="announce-container">
         <div class="announce-track">
-            <?php   if(have_rows('notice_file')):
-                    while(have_rows('notice_file')): the_row(); ?>
-                <span><a target="_blank"
-                    href="<?php echo get_sub_field('files_upload'); ?>"><?php echo get_sub_field('file_text'); ?></a></span>
-            <?php 
-                    endwhile; 
-                endif; ?> 
+            <?php if ( !empty($marquee_notices) ) : ?>
+            <?php foreach ( $marquee_notices as $mn ) : ?>
+            <span><a target="_blank"
+                    href="<?php echo $media_base . esc_url(get_notice_href($mn)); ?>"><?php echo esc_html($mn['title']); ?></a></span>
+            <?php endforeach; ?>
+            <?php else: ?>
+            <span><a href="#">No new marquee updates at this time.</a></span>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -65,9 +143,9 @@ defined( 'ABSPATH' ) || exit;
                     </div>
                     <div class="stat-text">
                         <span class="num count"
-                         data-target="<?php echo preg_replace('/[^0-9]/', '', get_sub_field('stats_number')); ?>"
-                         data-suffix="<?php echo strpos(get_sub_field('stats_number'), '+') !== false ? '+' : ''; ?>">
-                         0
+                            data-target="<?php echo preg_replace('/[^0-9]/', '', get_sub_field('stats_number')); ?>"
+                            data-suffix="<?php echo strpos(get_sub_field('stats_number'), '+') !== false ? '+' : ''; ?>">
+                            0
                         </span>
 
                         <span class="label"><?php echo get_sub_field('stats_label');?></span>
@@ -84,31 +162,6 @@ defined( 'ABSPATH' ) || exit;
 <!-- ================= VICE CHANCELLOR DESK ================= -->
 <section class="vc-section">
     <div class="vc-container">
-
-        <style>
-        .vc-slider {
-            width: 100%;
-            overflow: hidden
-        }
-
-        .vc-slider-track {
-            display: flex;
-            transition: transform .6s ease
-        }
-
-        .vc-slide {
-            min-width: 100%;
-            box-sizing: border-box
-        }
-
-        .vc-slide img {
-            width: 100%;
-            height: 360px;
-            object-fit: cover;
-            display: block
-        }
-        </style>
-
         <!-- LEFT IMAGE (Slider) -->
         <div class="vc-image">
             <div class="vc-slider" aria-roledescription="carousel">
@@ -152,73 +205,107 @@ defined( 'ABSPATH' ) || exit;
     <div class="info-container">
 
         <!-- ================= CARD 1 ================= -->
-        <div class="info-card">
-            <h3 class="info-title">Announcement</h3>
-
-            <div class="info-scroll">
-                <a href="#" class="info-item">Walk in interview For Staff</a>
-                <a href="#" class="info-item">CUET – PG 2026 Info Bulletin</a>
-                <a href="#" class="info-item">CUET-PG 2026 Mapping-Eligibility</a>
-                <a href="#" class="info-item">Advertisement For Vacant Non Teaching Post</a>
-                <a href="#" class="info-item">Syllabus for CUET – 2026</a>
-                <a href="#" class="info-item">Examination Notice Update</a>
-                <a href="#" class="info-item">Hostel Admission Notice</a>
+        <div class="info-col">
+            <div class="info-card">
+                <h3 class="info-title">Announcement</h3>
+                <div class="info-scroll">
+                    <?php if ( !empty($announcement_notices) ) : ?>
+                        <?php foreach ( $announcement_notices as $an ) : ?>
+                            <a href="<?php echo $media_base . esc_url(get_notice_href($an)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($an['title']); ?></a>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="info-item" style="color:#777;">No announcements found.</span>
+                    <?php endif; ?>
+                </div>
             </div>
-
-            <a href="#" class="info-btn orange">View All Announcement</a>
+            <a href="/notices/?category=Announcement" class="info-btn orange">
+                View All Announcements
+                <span class="arrow-icon">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </span>
+            </a>
         </div>
 
         <!-- ================= CARD 2 ================= -->
-        <div class="info-card">
-            <h3 class="info-title">Events</h3>
-
-            <div class="info-scroll">
-                <a href="#" class="info-item">National Seminar on AI</a>
-                <a href="#" class="info-item">International Conference 2025</a>
-                <a href="#" class="info-item">Sports Meet Registration</a>
-                <a href="#" class="info-item">Cultural Fest “Abhivyakti”</a>
-                <a href="#" class="info-item">Workshop on Cyber Security</a>
-                <a href="#" class="info-item">Startup Awareness Program</a>
+        <div class="info-col">
+            <div class="info-card">
+                <h3 class="info-title">Events</h3>
+                <div class="info-scroll">
+                    <?php if ( !empty($event_notices) ) : ?>
+                        <?php foreach ( $event_notices as $en ) : ?>
+                            <a href="<?php echo $media_base . esc_url(get_notice_href($en)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($en['title']); ?></a>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="info-item" style="color:#777;">No events found.</span>
+                    <?php endif; ?>
+                </div>
             </div>
-
-            <a href="#" class="info-btn dark">View All Events</a>
+            <a href="/notices/?category=Event" class="info-btn dark">
+                View All Events
+                <span class="arrow-icon">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </span>
+            </a>
         </div>
 
         <!-- ================= CARD 3 ================= -->
-        <div class="info-card">
-            <h3 class="info-title">Appointments</h3>
-
-            <div class="info-scroll">
-                <a href="#" class="info-item">Appointment of Registrar</a>
-                <a href="#" class="info-item">New Dean – Academics</a>
-                <a href="#" class="info-item">Controller of Examination</a>
-                <a href="#" class="info-item">Head of Department – CS</a>
-                <a href="#" class="info-item">Finance Officer Appointment</a>
-                <a href="#" class="info-item">Proctor Committee Update</a>
+        <div class="info-col">
+            <div class="info-card">
+                <h3 class="info-title">Appointments</h3>
+                <div class="info-scroll">
+                    <?php if ( !empty($appointment_notices) ) : ?>
+                        <?php foreach ( $appointment_notices as $ap ) : ?>
+                            <a href="<?php echo $media_base . esc_url(get_notice_href($ap)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($ap['title']); ?></a>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="info-item" style="color:#777;">No appointments found.</span>
+                    <?php endif; ?>
+                </div>
             </div>
-
-            <a href="#" class="info-btn orange">View All Appointments</a>
+            <a href="/notices/?category=Appointment" class="info-btn orange">
+                View All Appointments
+                <span class="arrow-icon">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </span>
+            </a>
         </div>
 
         <!-- ================= CARD 4 ================= -->
-        <div class="info-card">
-            <h3 class="info-title">Tender</h3>
-
-            <div class="info-scroll">
-                <a href="#" class="info-item">Tender for Hostel Maintenance</a>
-                <a href="#" class="info-item">Library Automation Tender</a>
-                <a href="#" class="info-item">Security Services Tender</a>
-                <a href="#" class="info-item">Campus Landscaping Tender</a>
-                <a href="#" class="info-item">Electrical Works Tender</a>
-                <a href="#" class="info-item">IT Infrastructure Tender</a>
+        <div class="info-col">
+            <div class="info-card">
+                <h3 class="info-title">Tenders</h3>
+                <div class="info-scroll">
+                    <?php if ( !empty($tender_notices) ) : ?>
+                        <?php foreach ( $tender_notices as $tn ) : ?>
+                            <a href="<?php echo $media_base .  esc_url(get_notice_href($tn)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($tn['title']); ?></a>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="info-item" style="color:#777;">No tenders found.</span>
+                    <?php endif; ?>
+                </div>
             </div>
-
-            <a href="#" class="info-btn dark">View All Tenders</a>
+            <a href="/notices/?category=Tenders" class="info-btn dark">
+                View All Tenders
+                <span class="arrow-icon">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </span>
+            </a>
         </div>
 
     </div>
 </section>
-
 
 <section class="auto-slider">
     <div class="auto-slider-container">

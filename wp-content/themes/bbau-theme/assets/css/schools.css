@@ -1,0 +1,266 @@
+/* ============================================================
+   SCHOOLS PAGE (UPDATED - UNIFORM GRID)
+   ============================================================ */
+
+.schools-section {
+    width: 100%;
+    background: #ffffff;
+    padding: 0 0 60px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ── PAGE TITLE ── */
+.schools-page-title {
+    max-width: 1400px;
+    margin: 0 auto 20px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.schools-page-title .title-bar {
+    width: 4px;
+    height: 36px;
+    background: #e4cf10;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+/* ── SEARCH ── */
+.schools-search-wrap {
+    max-width: 1400px;
+    margin: 0 auto 20px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.schools-search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1.5px solid #d0dce3;
+    border-radius: 50px;
+    padding: 10px 18px;
+    width: 360px;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.schools-search-box:focus-within {
+    border-color: #1f6f8b;
+    box-shadow: 0 0 0 3px rgba(31, 111, 139, .12);
+}
+
+.schools-search-box svg {
+    width: 18px;
+    height: 18px;
+    color: #888;
+    flex-shrink: 0;
+}
+
+.schools-search-box input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    color: #1a1a1a;
+    background: transparent;
+    flex: 1;
+}
+
+.schools-search-box input::placeholder {
+    color: #aaa;
+}
+
+#schoolSearchClear {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #aaa;
+    font-size: 14px;
+    display: none;
+    transition: color .2s;
+}
+
+#schoolSearchClear:hover {
+    color: #1f6f8b;
+}
+
+.schools-count {
+    font-size: 13px;
+    color: #888;
+    white-space: nowrap;
+}
+
+/* ============================================================
+   GRID (FIXED 3 PER ROW)
+   ============================================================ */
+.schools-masonry {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* ============================================================
+   CARD
+   ============================================================ */
+.school-tile {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    background: #1f6f8b;
+
+    height: 240px; /* SAME HEIGHT */
+    border-radius: 14px;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* REMOVE MASONRY EFFECT */
+.school-tile.tall,
+.school-tile.wide {
+    grid-row: auto !important;
+    grid-column: auto !important;
+}
+
+/* HOVER EFFECT */
+.school-tile:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+
+.school-tile.hidden {
+    display: none;
+}
+
+/* IMAGE */
+.school-tile__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s ease;
+}
+
+.school-tile:hover .school-tile__img {
+    transform: scale(1.08);
+}
+
+/* OVERLAY */
+.school-tile__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+        rgba(0,0,0,.85) 0%,
+        rgba(0,0,0,.2) 60%,
+        transparent 100%);
+    transition: background .3s;
+}
+
+.school-tile:hover .school-tile__overlay {
+    background: linear-gradient(to top,
+        rgba(8,55,75,.9) 0%,
+        rgba(8,55,75,.3) 60%,
+        transparent 100%);
+}
+
+.school-tile.no-img .school-tile__overlay {
+    background: rgba(8,55,75,.75);
+}
+
+/* CONTENT */
+.school-tile__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 18px 20px;
+}
+
+.school-tile__bar {
+    width: 30px;
+    height: 3px;
+    background: #e4cf10;
+    border-radius: 2px;
+    margin-bottom: 9px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s ease;
+}
+
+.school-tile:hover .school-tile__bar {
+    transform: scaleX(1);
+}
+
+.school-tile__name {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-shadow: 0 2px 12px rgba(0,0,0,.9);
+    margin: 0;
+}
+
+/* ============================================================
+   NO RESULTS
+   ============================================================ */
+.schools-no-results {
+    display: none;
+    grid-column: 1 / -1;
+    padding: 60px 20px;
+    text-align: center;
+    color: #555;
+    font-size: 16px;
+}
+
+.schools-no-results svg {
+    width: 48px;
+    height: 48px;
+    stroke: rgba(0,0,0,.3);
+    fill: none;
+    stroke-width: 1.5;
+    margin-bottom: 14px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+    .schools-masonry {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .schools-masonry {
+        grid-template-columns: repeat(1, 1fr);
+        padding: 0 16px;
+    }
+
+    .schools-page-title,
+    .schools-search-wrap {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .schools-search-box {
+        width: 100%;
+    }
+
+    .schools-search-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .school-tile__name {
+        font-size: 14px;
+    }
+}

@@ -50,12 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const progress = Math.min((now - startTime) / duration, 1);
         const value = Math.floor(progress * target);
 
-        counter.textContent = value.toLocaleString() + suffix;
+        counter.textContent = value + suffix;
 
         if (progress < 1) {
           requestAnimationFrame(update);
         } else {
-          counter.textContent = target.toLocaleString() + suffix;
+          counter.textContent = target + suffix;
         }
       };
 
@@ -72,81 +72,155 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer.observe(document.querySelector(".glance-section"));
 });
-
-
-//homepage vc section js
-
+/* ================= VC SECTION SLIDER ================= */
 document.addEventListener('DOMContentLoaded', () => {
-    const vcTrack = document.querySelector('.vc-slider-track');
-    if (!vcTrack) return;
-    const slides = Array.from(vcTrack.children);
-    let idx = 0;
-    const total = slides.length;
-    let isPaused = false;
+  const vcTrack = document.querySelector('.vc-slider-track');
+  if (!vcTrack) return;
 
-    function goTo(i) {
-        vcTrack.style.transform = `translateX(${-i * 100}%)`;
+  const origSlides = Array.from(vcTrack.children);
+  if (origSlides.length < 2) return;
+
+  /* Clone all slides for seamless loop */
+  origSlides.forEach(slide => {
+    const clone = slide.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    vcTrack.appendChild(clone);
+  });
+
+  const total = origSlides.length;
+  let idx = 0;
+  let isAnimating = false;
+  const SPEED = 600;
+  const PAUSE = 3500;
+
+  function goTo(i, animate) {
+    vcTrack.style.transition = animate ? `transform ${SPEED}ms ease` : 'none';
+    vcTrack.style.transform = `translateX(${-i * 100}%)`;
+  }
+
+  vcTrack.addEventListener('transitionend', () => {
+    isAnimating = false;
+    /* Silently snap back when on cloned set */
+    if (idx >= total) {
+      idx = idx - total;
+      goTo(idx, false);
     }
+  });
 
-    const interval = 3500;
-    let timer = setInterval(() => {
-        if (!isPaused) {
-            idx = (idx + 1) % total;
-            goTo(idx);
-        }
-    }, interval);
+  function next() {
+    if (isAnimating) return;
+    isAnimating = true;
+    idx++;
+    goTo(idx, true);
+  }
 
-    const slider = vcTrack.closest('.vc-slider');
-    slider.addEventListener('mouseenter', () => {
-        isPaused = true
-    });
-    slider.addEventListener('mouseleave', () => {
-        isPaused = false
-    });
+  goTo(0, false);
+  let timer = setInterval(next, PAUSE);
+
+  const vcSlider = vcTrack.closest('.vc-slider');
+  vcSlider.addEventListener('mouseenter', () => clearInterval(timer));
+  vcSlider.addEventListener('mouseleave', () => { timer = setInterval(next, PAUSE); });
 });
 
-//homepage slider section js
-document.addEventListener("DOMContentLoaded", () => {
 
-    const track = document.querySelector(".slider-track");
-    let cards = Array.from(track.children);
 
-    /* 🔁 Duplicate cards once for seamless loop */
-    cards.forEach(card => {
-        const clone = card.cloneNode(true);
-        track.appendChild(clone);
-    });
+//inner menu js to store cookies
 
-    let position = 0;
-    let speed = 0.35; // 🔥 slow speed
-    let isPaused = false;
+document.addEventListener('DOMContentLoaded', function () {
 
-    function animate() {
-        if (!isPaused) {
-            position -= speed;
+  const url = new URL(window.location.href);
+  const menu = url.searchParams.get('menu');
 
-            /* reset when half scrolled */
-            if (Math.abs(position) >= track.scrollWidth / 2) {
-                position = 0;
-            }
+  /*      STEP 1: Store menu + clean URL  */
 
-            track.style.transform = `translateX(${position}px)`;
-        }
+  if (menu) {
+      document.cookie = "current_menu=" + menu + "; path=/";
 
-        requestAnimationFrame(animate);
+      // remove ?menu from URL
+      url.searchParams.delete('menu');
+      window.history.replaceState({}, document.title, url.pathname);
+  }
+
+  /*      STEP 2: Store menu pages on click  */
+
+  document.querySelectorAll('.common-menu-link').forEach(function(link) {
+
+      link.addEventListener('click', function() {
+
+          const menu = this.getAttribute('data-menu');
+          const pages = this.getAttribute('data-pages');
+
+          document.cookie = "current_menu=" + menu + "; path=/";
+          document.cookie = "menu_pages=" + pages + "; path=/";
+      });
+
+  });
+
+  /*      STEP 3: Auto reset when leaving menu  */
+
+  function getCookie(name) {
+      const value = document.cookie.split('; ').find(row => row.startsWith(name + '='));
+      return value ? value.split('=')[1] : null;
+  }
+  const currentUrl = window.location.href.split('?')[0];
+  const storedPages = getCookie('menu_pages');
+
+  if (storedPages) {
+      try {
+          const pages = JSON.parse(decodeURIComponent(storedPages));
+          const isInsideMenu = pages.some(page => page === currentUrl);
+          if (!isInsideMenu) {
+              // reset cookies
+              document.cookie = "current_menu=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+              document.cookie = "menu_pages=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          }
+
+      } catch (e) {
+          console.log('Menu reset error:', e);
+      }
+  }
+});
+
+
+
+/* ================= HOMEPAGE SLIDER (MARQUEE) ================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.querySelector('.slider-track');
+  if (!track) return;
+
+  /* Clone once for seamless loop */
+  Array.from(track.children).forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+
+  let pos = 0;
+  const speed = 0.35;
+  let paused = false;
+  let halfWidth = 0;
+
+  function getHalf() {
+    /* Half of total scrollWidth = one full original set width */
+    halfWidth = track.scrollWidth / 2;
+  }
+
+  getHalf();
+  window.addEventListener('resize', getHalf);
+
+  function animate() {
+    if (!paused) {
+      pos -= speed;
+      if (pos <= -halfWidth) pos = 0; /* Snap back invisibly */
+      track.style.transform = `translateX(${pos}px)`;
     }
+    requestAnimationFrame(animate);
+  }
 
-    animate();
+  animate();
 
-    /* ⏸ PAUSE ON HOVER */
-    track.addEventListener("mouseenter", () => {
-        isPaused = true;
-    });
-
-    track.addEventListener("mouseleave", () => {
-        isPaused = false;
-    });
-
+  track.addEventListener('mouseenter', () => { paused = true; });
+  track.addEventListener('mouseleave', () => { paused = false; });
 });
 
 

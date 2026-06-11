@@ -16,18 +16,16 @@ get_header();
     <!-- End Banner -->
 
     <div class="container-fluid py-lg-5 page-bg page-template-about-bg">
-        
+
         <?php get_template_part('template-parts/breadcrumb'); ?>
 
+
         <div class="container px-lg-3 px-0 max_xl_w_1280 position-relative">
+            <div class="menu-wrapper">
+                <?php get_template_part('menu/menu'); ?>
+            </div>
             <div class="row py-lg-2 py-3">
                 <div class="col-lg-12">
-
-                    <!-- Page Title -->
-                    <h3 class="section-heading mb-3">
-                        <?php the_title(); ?>
-                    </h3>
-
                     <!-- Page Content -->
                     <?php 
                     if ( have_posts() ) : 
