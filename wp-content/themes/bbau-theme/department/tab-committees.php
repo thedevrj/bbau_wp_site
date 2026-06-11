@@ -1,6 +1,7 @@
 <?php
 // Inherited variables: $api_base, $slug
 $api_base = getenv('DJANGO_API_URL');
+$media_base = getenv('DJANGO_MEDIA_URL');
 $committees_url = $api_base . '/api/v1/dept-committees/?department__slug=' . urlencode($slug);
 $minutes_url = $api_base . '/api/v1/dept-minutes/?department__slug=' . urlencode($slug);
 $committees_res = wp_remote_get($committees_url, array('timeout' => 10));
@@ -26,26 +27,27 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
             <div class="committees-wrap">
                 <?php foreach($committees_list as $committee): ?>
                 <div class="committee-card">
-                    <div class="committee-header">
-                        <h4><?php echo esc_html($committee['name']); ?></h4>
+                    <div class="committee-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <h4 class="mb-0"><?php echo esc_html($committee['name']); ?></h4>
+                        <?php if(!empty($committee['notification_document'])): ?>
+                        <a class="btn-committee-doc" target="_blank"
+                                href="<?php echo esc_url($media_base . $committee['notification_document']); ?>">
+                                <i class="fa-solid fa-file-pdf"></i> View Notification
+                        </a>
+                        <?php endif; ?>
                     </div>
                     <div class="committee-body">
                         <?php if(!empty($committee['description'])): ?>
                         <div class="committee-desc"><?php echo wp_kses_post($committee['description']); ?>
-                            <?php endif; ?>
-                            <?php if(!empty($committee['notification_document'])): ?>
-                            <p>Committee Notification:<a class="link-new"
-                                    href=<?php echo ($committee['notification_document']); ?>> &nbsp; View
-                                    Notification </a></p>
-                            <?php endif; ?>
                         </div>
+                        <?php endif; ?>
 
                         <?php if(!empty($committee['members'])): ?>
                         <table class="members-table">
                             <thead>
                                 <tr>
-                                    <th>Member Name</th>
-                                    <th>Role in Committee</th>
+                                    <th style="width: 65%">Member Name</th>
+                                    <th style="width: 35%">Role in Committee</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,7 +78,8 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
             <div class="section-card">
                 <div class="minutes-list-modern">
                     <?php foreach ($minutes_list as $min) : ?>
-                    <a href="<?php echo esc_url( $min['minutes']); ?>" class="minute-row" target="_blank">
+                    <a href="<?php echo $media_base . esc_url( $min['minutes_of_meeting']); ?>" class="minute-row"
+                        target="_blank">
                         <div class="min-date">
                             <span class="d"><?php echo date('d', strtotime($min['date_of_meeting'])); ?></span>
                             <span class="m"><?php echo date('M', strtotime($min['date_of_meeting'])); ?></span>
@@ -89,29 +92,9 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
                     <?php endforeach; ?>
                 </div>
             </div>
+            <?php else: ?>
+            <p style="margin-top:20px; color:#555;">No Minutes is available for this department.</p>
             <?php endif; ?>
-
-
-            <!-- <div class="committees-wrap">
-                <?php foreach($minutes_list as $minute): ?>
-                <div class="committee-card">
-                    <div class="committee-header">
-                        <h4><?php echo esc_html($minute['meeting_title']); ?></h4>
-                    </div>
-                    <div class="committee-body">
-                        <?php if(!empty($minute['date_of_meeting'])): ?>
-                        <div class="committee-desc"><?php echo ($minute['date_of_meeting']); ?>
-                        <?php endif; ?>
-                        <?php if(!empty($minute['minutes_of_meeting'])): ?>
-                        <p>Meeting Minutes:<a class="btn link-new" href=<?php echo ($minute['minutes_of_meeting']); ?>>
-                                View Minutes </a></p>
-                        <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-            </?php endif; ?> -->
         </div>
     </div>
 
@@ -126,6 +109,15 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
     margin-top: 20px;
 }
 
+.minutes-list-modern .minute-row {
+    width: calc(50% - 12px) !important;
+    flex: 0 0 calc(50% - 12px) !important;
+}
+@media (max-width: 768px) {
+    .minutes-list-modern .minute-row {
+        flex: 0 0 100% !important;
+    }
+}
 
 .minute-row {
     display: flex;
@@ -158,7 +150,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
 }
 
 .min-date .d {
-    font-weight: 900;
+    font-weight: 800;
     font-size: 20px;
     line-height: 1;
 }
@@ -198,7 +190,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
 
 .committee-header {
     background: linear-gradient(135deg, #5c1010, #8B1A1A);
-    padding: 15px 40px;
+    padding: 20px 25px;
     color: #fff;
 }
 
@@ -206,6 +198,26 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
     margin: 0;
     font-size: 1.25rem;
     font-weight: 700;
+}
+
+.btn-committee-doc {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-committee-doc:hover {
+    background: #fff;
+    color: #8B1A1A !important;
 }
 
 .committee-body {
@@ -232,7 +244,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
     font-size: 0.85rem;
     text-transform: uppercase;
     color: #8B1A1A;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .members-table td {

@@ -23,7 +23,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     
     <!-- <div class="leadership-header py-5 text-center" style="background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff;">
         <div class="container">
-            <h1 style="font-family: 'Merriweather', serif; font-weight: 800; font-size: 3rem;">Heads of Departments</h1>
+            <h1 style="font-family: 'Merriweather', serif; font-weight: 700; font-size: 3rem;">Heads of Departments</h1>
             <p style="font-size: 1.2rem; opacity: 0.9;">The Academic Pillars leading our Departmental Excellence</p>
         </div>
     </div> -->
@@ -95,6 +95,19 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     transition: 0.3s;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.leader-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(135deg, #1e293b, #475569);
+    z-index: 0;
+    border-radius: 15px 15px 0 0;
 }
 
 .leader-card:hover {
@@ -104,24 +117,33 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 }
 
 .leader-photo-wrap {
-    height: 280px;
-    overflow: hidden;
+    height: 180px;
+    width: 180px;
+    margin: 30px auto 15px;
+    position: relative;
     background: #f1f5f9;
+    border-radius: 50%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    z-index: 1;
+    border: 5px solid white;
 }
 
 .leader-photo-wrap img {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
     object-fit: inherit;
     transition: 0.5s;
 }
 
 .leader-card:hover .leader-photo-wrap img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .no-photo-placeholder {
+    width: 100%;
     height: 100%;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -130,8 +152,11 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 }
 
 .leader-info {
+    position: relative;
+    z-index: 1;
     padding: 20px;
     text-align: center;
+    padding-bottom: 10px;
     flex-grow: 1;
 }
 
@@ -153,7 +178,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     font-size: 1.2rem;
     color: #1e293b;
     margin-bottom: 5px;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .school-name {

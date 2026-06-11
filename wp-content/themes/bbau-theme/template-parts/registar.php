@@ -134,15 +134,17 @@ Tenure of Registrar
 
 <?php 
 $link = get_sub_field('section_link');
-if( $link && isset($link['url']) ): ?>
-<a href="<?php echo esc_url($link['url']); ?>" class="rg-visit-btn" target="_blank">
-Visit page
-<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12">
-<path d="M5 12h14M12 5l7 7-7 7"/>
-</svg>
-</a>
-<?php endif; ?>
+$url = ( $link && isset($link['url']) && !empty($link['url']) ) 
+    ? esc_url($link['url']) 
+    : site_url('/404'); // fallback to 404 page
+?>
 
+<a href="<?php echo $url; ?>" class="rg-visit-btn" target="_blank">
+    Visit page
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+</a>
 </div><!-- /.rg-card-inner -->
 </div><!-- /.rg-card -->
 

@@ -62,7 +62,7 @@ $page_Id = get_the_ID();
                     <?php endif; ?>
                 </div>
 
-                <!-- ================= PAGE CONTENT (wraps beside card, then full width) ================= -->
+                <!-- ================= PAGE CONTENT ================= -->
                 <?php if ( have_posts() ) : ?>
                     <?php while ( have_posts() ) : the_post(); ?>
                         <?php the_content(); ?>
@@ -124,7 +124,7 @@ $page_Id = get_the_ID();
     display: block;
 }
 
-/* ================= CONTENT FLOWS BESIDE + BELOW CARD ================= */
+/* ================= CONTENT TEXT ================= */
 .profile-page .content-wrap > h1,
 .profile-page .content-wrap > h2,
 .profile-page .content-wrap > h3,
@@ -137,7 +137,6 @@ $page_Id = get_the_ID();
 .profile-page .content-wrap > div:not(.cards-column):not(.clearfix),
 .profile-page .content-wrap > table,
 .profile-page .content-wrap > figure {
-    /* these elements naturally flow beside the float, then wrap below */
     line-height: 1.8;
     font-size: 15px;
     color: #444;
@@ -178,7 +177,6 @@ $page_Id = get_the_ID();
     color: #1a7abf;
     text-decoration: none;
 }
-
 
 /* ================= PROFILE CARD ================= */
 .profile-page .profile-card {
@@ -233,11 +231,50 @@ $page_Id = get_the_ID();
     font-weight: 600;
 }
 
-/* ================= CONTACTS ================= */
+/* ================= CONTACTS WRAPPER ================= */
 .profile-page .profile-contacts {
-    margin-top: 0;
+    margin-top: 8px;
 }
 
+/* ================= CONTACT LINE ================= */
+.profile-page .contact-line {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 8px !important;
+    margin-top: 0 !important;
+    padding: 0 !important;
+    flex-wrap: nowrap !important;
+}
+
+.profile-page .contact-line i {
+    color: #8B0000;
+    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: #f5f0e8;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.profile-page .contact-line .link-new {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    word-break: break-all;
+    display: inline !important;
+}
+
+.profile-page .contact-line .link-new:hover {
+    color: #8B0000;
+    text-decoration: underline;
+}
+
+/* ================= LEGACY CONTACT ITEM (fallback) ================= */
 .profile-page .contact-item {
     display: flex;
     gap: 8px;
@@ -246,26 +283,20 @@ $page_Id = get_the_ID();
 }
 
 .profile-page .contact-icon {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
     background: #f5f0e8;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    margin-top: 2px;
 }
 
 .profile-page .contact-icon i {
     font-size: 11px;
     color: #8B0000;
-}
-
-.profile-page .contact-label {
-    font-weight: 600;
-    margin-right: 4px;
-    color: #555;
 }
 
 .profile-page .contact-value {
@@ -290,7 +321,7 @@ $page_Id = get_the_ID();
     color: #8B0000;
 }
 
-/* ================= LAPTOP ================= */
+/* ================= LAPTOP 1200px ================= */
 @media (max-width: 1200px) {
     .profile-page .container {
         padding: 0 15px;
@@ -302,40 +333,92 @@ $page_Id = get_the_ID();
     }
 }
 
-/* ================= TABLET ================= */
+/* ================= TABLET 992px — float STAYS ON ================= */
 @media (max-width: 992px) {
     .profile-page .cards-column {
-        float: none;
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 24px;
+        float: left;
+        width: 260px;
+        margin-right: 24px;
+        margin-bottom: 20px;
     }
 
-    .profile-page .profile-photo img {
-        width: 130px;
-        height: 150px;
-    }
-}
-
-/* ================= MOBILE ================= */
-@media (max-width: 768px) {
     .profile-page .profile-card {
         flex-direction: column;
+        align-items: center;
         text-align: center;
+        padding: 16px;
+        gap: 12px;
     }
 
     .profile-page .profile-photo img {
+        width: 110px;
+        height: 125px;
+        border-radius: 8px;
+    }
+
+    .profile-page .profile-content {
+        padding-top: 0;
         width: 100%;
-        height: auto;
-        max-height: 260px;
     }
 
     .profile-page .profile-name {
-        font-size: 18px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .profile-page .contact-line {
+        justify-content: center;
+    }
+
+    .profile-page .contact-line .link-new {
+        font-size: 12.5px;
     }
 
     .profile-page .contact-item {
         justify-content: center;
+    }
+
+    .profile-page .contact-value {
+        font-size: 12.5px;
+        text-align: center;
+    }
+
+    .profile-page .contact-value p {
+        font-size: 12.5px;
+        text-align: center;
+    }
+}
+
+/* ================= iPad Mini 820px — float STAYS ON ================= */
+@media (max-width: 820px) {
+    .profile-page .cards-column {
+        float: left;
+        width: 230px;
+        margin-right: 20px;
+    }
+
+    .profile-page .profile-photo img {
+        width: 100px;
+        height: 115px;
+    }
+
+    .profile-page .profile-name {
+        font-size: 15px;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 12px;
+    }
+
+    .profile-page .contact-line .link-new,
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 12px;
     }
 
     .profile-page .content-wrap > h2 {
@@ -343,26 +426,184 @@ $page_Id = get_the_ID();
     }
 }
 
-/* ================= SMALL MOBILE ================= */
+/* ================= MOBILE 600px — float OFF, centered ================= */
+@media (max-width: 600px) {
+    .profile-page .cards-column {
+        float: none;
+        margin: 0 auto 24px auto;
+        flex-direction: column;
+        gap: 12px;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+
+    .profile-page .profile-card {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        gap: 0;
+        border-left: 5px solid #8B0000;
+        border-top: none;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .profile-page .profile-photo {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+
+    .profile-page .profile-photo img {
+        width: 120px;
+        height: 140px;
+        border-radius: 10px;
+        object-fit: cover;
+        object-position: top center;
+    }
+
+    .profile-page .profile-content {
+        padding-top: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-page .profile-name {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .profile-page .contact-line {
+        justify-content: center;
+    }
+
+    .profile-page .contact-line .link-new {
+        font-size: 12px;
+    }
+
+    .profile-page .contact-item {
+        justify-content: center;
+    }
+
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .profile-page .content-wrap > h2 {
+        font-size: 20px;
+    }
+}
+
+/* ================= SMALL MOBILE 480px ================= */
 @media (max-width: 480px) {
     .profile-page .container {
         padding: 0 10px;
     }
 
+    .profile-page .cards-column {
+        float: none;              /* ← ADD */
+        margin: 0 auto 24px auto; /* ← ADD */
+        padding: 0 12px;
+        box-sizing: border-box;   /* ← ADD */
+    }
+
     .profile-page .profile-card {
-        padding: 15px;
+        width: 100%;              /* ← ADD */
+        flex-direction: column;   /* ← ADD */
+        align-items: center;      /* ← ADD */
+        text-align: center;       /* ← ADD */
+    }
+
+    .profile-page .profile-photo {
+        display: flex;            /* ← ADD */
+        justify-content: center;  /* ← ADD */
+        width: 100%;              /* ← ADD */
+        margin-bottom: 12px;      /* ← ADD */
+    }
+
+    .profile-page .profile-photo img {
+        width: 110px;
+        height: 125px;
+    }
+
+    .profile-page .profile-content {
+        width: 100%;              /* ← ADD */
+        display: flex;            /* ← ADD */
+        flex-direction: column;   /* ← ADD */
+        align-items: center;      /* ← ADD */
     }
 
     .profile-page .profile-name {
-        font-size: 16px;
+        font-size: 14px;
+        text-align: center;       /* ← ADD */
     }
 
     .profile-page .profile-designation {
-        font-size: 13px;
+        font-size: 11px;
+        text-align: center;       /* ← ADD */
+    }
+
+    .profile-page .contact-line,
+    .profile-page .info-line {
+        justify-content: center;  /* ← ADD */
+    }
+
+    .profile-page .contact-line .link-new,
+    .profile-page .info-line .link-new,
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 11px;
     }
 
     .profile-page .content-wrap > h2 {
-        font-size: 20px;
+        font-size: 18px;
+    }
+}
+/* ================= VERY SMALL 360px ================= */
+@media (max-width: 360px) {
+    .profile-page .container {
+        padding: 0 8px;
+    }
+
+    .profile-page .cards-column {
+        padding: 0 10px;
+        justify-content: center;
+    }
+
+    .profile-page .profile-card {
+        width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .profile-page .profile-photo img {
+        width: 100px;
+        height: 115px;
+    }
+
+    .profile-page .profile-name {
+        font-size: 13px;
+    }
+
+    .profile-page .profile-designation {
+        font-size: 11px;
+    }
+
+    .profile-page .contact-line .link-new,
+    .profile-page .contact-value,
+    .profile-page .contact-value p {
+        font-size: 11px;
     }
 }
 

@@ -118,8 +118,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
                     <button type="submit" class="btn-fac-profile" style="padding: 12px 30px;">Apply Filters</button>
                     <a href="<?php echo esc_url(get_permalink()); ?>"
                         class="text-muted small fw-bold text-decoration-none">Clear All</a>
-                    <span class="ms-auto small fw-bold text-muted"><?php echo intval($total_count); ?> Faculty Experts
-                        found</span>
+                    <span class="ms-auto small fw-bold text-muted"><?php echo intval($total_count); ?> Faculty found</span>
                 </div>
             </form>
         </div>
@@ -128,7 +127,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
         <?php if (!empty($faculty_list)): ?>
         <div class="faculty-dir-grid">
             <?php foreach ($faculty_list as $fac): ?>
-            <a href="<?php echo esc_url(home_url('/faculty/' . ($fac['slug'] ?? ''))); ?>" class="fac-card-premium">
+            <a href="<?php echo esc_url(home_url('/faculty/' . ($fac['slug'] ?? ''))); ?>" class="fac-card-premium1">
                 <div class="fac-image-wrap">
                     <?php if (!empty($fac['photo'])): ?>
                     <img src="<?php echo esc_url($media_base . $fac['photo']); ?>"
@@ -154,7 +153,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
                         ?>
                     </div>
 
-                    <?php if (!empty($fac['insti_email'])): ?>
+                    <!-- <?php if (!empty($fac['insti_email'])): ?>
                     <div class="fac-email-new">
                         <i class="far fa-envelope"></i> <?php echo esc_html($fac['insti_email']); ?>
                     </div>
@@ -163,7 +162,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
                     <div class="fac-email-new">
                         <i class="far fa-envelope"></i> <?php echo esc_html($fac['other_email']); ?>
                     </div>
-                    <?php endif; ?>
+                    <?php endif; ?> -->
                 </div>
                 <div class="fac-card-footer">
                     <span>View Portfolio</span>
@@ -216,6 +215,5 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
     </div>
 </main>
 
-<?php include_once(get_template_directory() . '/styles-faculty.php'); ?>
 
 <?php get_footer(); ?>

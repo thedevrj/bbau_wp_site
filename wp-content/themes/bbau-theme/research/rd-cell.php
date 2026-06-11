@@ -370,19 +370,17 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
                         });
 
                         // Show/hide no results message if all rows are hidden
-                        if (noResults) {
-                            if (visibleCount === 0 && rows.length > 0) {
-                                if (!document.getElementById('tempNoResults')) {
-                                    const tbody = document.querySelector('#consTable tbody');
-                                    const tr = document.createElement('tr');
-                                    tr.id = 'tempNoResults';
-                                    tr.innerHTML = '<td colspan="5" class="text-center py-5" style="color: #64748b;">No matching records found.</td>';
-                                    tbody.appendChild(tr);
-                                }
-                            } else {
-                                const temp = document.getElementById('tempNoResults');
-                                if (temp) temp.remove();
+                        if (visibleCount === 0 && rows.length > 0) {
+                            if (!document.getElementById('tempNoResults')) {
+                                const tbody = document.querySelector('#consTable tbody');
+                                const tr = document.createElement('tr');
+                                tr.id = 'tempNoResults';
+                                tr.innerHTML = '<td colspan="5" class="text-center py-5"><div class="empty-state"><i class="fas fa-search-minus mb-3" style="font-size: 2rem; opacity: 0.2;"></i><p style="color: #64748b; margin:0;">No matching records found.</p></div></td>';
+                                tbody.appendChild(tr);
                             }
+                        } else {
+                            const temp = document.getElementById('tempNoResults');
+                            if (temp) temp.remove();
                         }
                     }
 
@@ -409,7 +407,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 /* HERO SECTION */
 .premium-hero-rd {
-    height: 310px;
+    height: 300px;
     background: url('/wp-content/uploads/2026/04/rd-cell-image.png') center/cover no-repeat;
     position: relative;
     display: flex;
@@ -440,7 +438,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     padding: 6px 16px;
     border-radius: 30px;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 20px;
@@ -586,7 +584,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 }
 
 .obj-card h4 {
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
     margin-bottom: 10px;
 }
@@ -615,7 +613,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 .rd-checklist li::before {
     content: '\f058';
     font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
+    font-weight: 700;
     position: absolute;
     left: 0;
     color: #10b981;
@@ -648,7 +646,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 .dir-top h4 {
     margin: 0;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
 }
 
@@ -749,7 +747,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 .team-details-rd h3 {
     font-size: 1.25rem;
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 5px;
     color: var(--rd-indigo);
 }
@@ -814,14 +812,14 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 
 .policy-info h4 {
     margin: 0 0 5px 0;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
     font-size: 25px;
 }
 
 .policy-info p {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 18px;
     color: #64748b;
 }
 
@@ -966,7 +964,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     background: #f1f5f9;
     color: #475569;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     border: none;
@@ -999,12 +997,12 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
 }
 
 .bold-cell {
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
 }
 
 .amount {
-    font-weight: 800;
+    font-weight: 700;
     color: #10b981;
 }
 
@@ -1047,12 +1045,38 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
     .rd-links-grid {
         grid-template-columns: 1fr;
     }
+
+    .policy-item {
+        display: grid;
+        grid-template-columns: 60px 1fr;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .policy-icon {
+        grid-column: 1;
+    }
+
+    .policy-info {
+        grid-column: 2;
+    }
+
+    .policy-info h4 {
+        font-size: 20px;
+    }
+
+    .btn-rd-download {
+        grid-column: 1 / -1;
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
+    }
     
     .data-table thead { display: none; }
     .data-table tr { display: block; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 15px; overflow: hidden; }
     .data-table td { display: block; width: 100% !important; text-align: left; padding: 15px 20px; border: none; border-bottom: 1px solid #f1f5f9; }
     .data-table td:last-child { border-bottom: none; }
-    .data-table td::before { content: attr(data-label); font-weight: 800; color: #94a3b8; display: block; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 4px; }
+    .data-table td::before { content: attr(data-label); font-weight: 700; color: #94a3b8; display: block; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 4px; }
 }
 </style>
 

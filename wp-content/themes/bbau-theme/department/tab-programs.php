@@ -3,6 +3,8 @@
 $prog_url = $api_base . '/api/v1/programs/?department__slug=' . urlencode($slug);
 $prog_res = wp_remote_get($prog_url, array('timeout' => 10));
 $programs_list = array();
+$media_base = getenv('DJANGO_MEDIA_URL');
+
 
 if (!is_wp_error($prog_res) && wp_remote_retrieve_response_code($prog_res) === 200) {
     $decoded = json_decode(wp_remote_retrieve_body($prog_res), true);
@@ -27,7 +29,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
                 <tr>
                     <th style="width: 25%">Programme Name</th>
                     <th style="width: 8%">Level</th>
-                    <th style="width: 10%">Duration</th>
+                    <th style="width: 18%">Duration</th>
                     <th>Intake & Fees</th>
                     <th>Details</th>
                 </tr>
@@ -40,23 +42,26 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
                     </td>
                     <td><?php echo esc_html($prog['duration'] ?? '-'); ?></td>
                     <td>
-                        <strong>Intake:</strong> <?php echo esc_html($prog['intake'] ?? '-'); ?><br>
-                        <strong>Fees:</strong> <?php echo esc_html($prog['fees'] ?? '-'); ?>
+                        <strong>Intake:</strong>
+                        <?php echo str_replace(array('<p>', '</p>'),  array('', '<br>'), wp_kses_post($prog['intake'] ?? '-')); ?><br>
+                        <strong>Fees:</strong>
+                        <?php echo str_replace(array('<p>', '</p>'),  array('', '<br>'), wp_kses_post($prog['fees'] ?? '-')); ?>
                     </td>
                     <td>
                         <div style="display:flex; flex-direction:column; gap:8px;">
-                            <?php if(!empty($prog['syllabus'])): ?>
-                            <a href="<?php echo esc_url($prog['syllabus']); ?>" target="_blank" class="syllabus-btn"><i
-                                    class="fas fa-file-alt"></i>
-                                Syllabus</a>
-                            <?php endif; ?>
-
                             <button class="curriculum-btn"
                                 onclick="toggleCurriculum('prog-<?php echo esc_attr($prog['id']); ?>')">📚 Course
                                 Structure</button>
-                            <?php if(!empty($prog['notification_or_document_file'])): ?>
-                            <a href="<?php echo esc_url($prog['notification_or_document_file']); ?>" target="_blank"
+
+                            <?php if(!empty($prog['syllabus'])): ?>
+                            <a href="<?php echo $media_base .  esc_url($prog['syllabus']); ?>" target="_blank"
                                 class="syllabus-btn"><i class="fas fa-file-alt"></i>
+                                Syllabus</a>
+                            <?php endif; ?>
+
+                            <?php if(!empty($prog['notification_or_document_file'])): ?>
+                            <a href="<?php echo $media_base . esc_url($prog['notification_or_document_file']); ?>"
+                                target="_blank" class="syllabus-btn"><i class="fas fa-file-alt"></i>
                                 Course Notification</a>
                             <?php endif; ?>
                         </div>
@@ -80,7 +85,9 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
                             <div class="sem-tabs">
                                 <?php foreach($semesters as $sem => $s_courses): ?>
                                 <div class="sem-box">
+                                    <?php if(!empty($sem)): ?>
                                     <h5 class="sem-title">Semester <?php echo esc_html($sem); ?></h5>
+                                    <?php endif; ?>
                                     <table class="course-mini-table">
                                         <thead>
                                             <tr>
@@ -134,18 +141,18 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
         <table class="prog-table">
             <thead>
                 <tr>
-                    <th style="width: 15%">Course Code</th>
-                    <th style="width: 50%">Title</th>
+                    <th style="width: 20%">Course Code</th>
+                    <th style="width: 45%">Title</th>
                     <th style="width: 15%">Semester</th>
                     <th style="width: 20%">Credits</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="text-align:center;">
                 <?php foreach($cbcs_list as $cc): ?>
                 <tr>
                     <td><code><?php echo esc_html($cc['course_code']); ?></code></td>
                     <td style="font-weight:700; color:#5c1010;"><?php echo esc_html($cc['course_title']); ?></td>
-                    <td>Semester <?php echo esc_html($cc['semester']); ?></td>
+                    <td style="font-weight:700">Semester <?php echo esc_html($cc['semester']); ?></td>
                     <td><?php echo esc_html($cc['credits']); ?></td>
                 </tr>
                 <?php endforeach; ?>
@@ -211,7 +218,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
 
 .syllabus-btn {
     background: #c9a84c;
-    color: #5c1010;
+    color: #5c1010 !important;
 }
 
 .syllabus-btn:hover {
@@ -225,7 +232,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
 }
 
 .curriculum-btn:hover {
-    background: #5c1010;
+    background: #5c1010 !important;
     color: #fff;
 }
 
@@ -235,7 +242,7 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
 
 .sem-title {
     color: #8B1A1A;
-    font-weight: 800;
+    font-weight: 700;
     border-bottom: 2px solid #e2d9cc;
     padding-bottom: 5px;
     margin-bottom: 15px;
@@ -282,6 +289,15 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
 <script>
 function toggleCurriculum(id) {
     const row = document.getElementById(id);
+
+    // Close other open curriculum rows
+    const allRows = document.querySelectorAll('.curriculum-row');
+    allRows.forEach(r => {
+        if (r.id !== id && r.style.display === 'table-row') {
+            r.style.display = 'none';
+        }
+    });
+
     if (row.style.display === 'none') {
         row.style.display = 'table-row';
     } else {

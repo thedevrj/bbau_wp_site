@@ -101,7 +101,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         <div class="premium-modal-content">
             <span class="close-modal">&times;</span>
             <div class="modal-badge mb-3" id="modal-status-badge">PATENT</div>
-            <h2 id="modal-title" class="mb-4" style="font-size: 1.8rem; font-weight: 800; color: var(--rd-indigo);">
+            <h2 id="modal-title" class="mb-4" style="font-size: 1.8rem; font-weight: 700; color: var(--rd-indigo);">
                 Patent Title</h2>
 
             <div class="modal-grid mb-4">
@@ -121,7 +121,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
             <div class="modal-desc-section">
                 <label class="d-block mb-2"
-                    style="font-weight: 800; text-transform: uppercase; font-size: 0.75rem; color: #64748b;">Detailed
+                    style="font-weight: 700; text-transform: uppercase; font-size: 0.75rem; color: #64748b;">Detailed
                     Abstract</label>
                 <div id="modal-description" class="modal-abstract"></div>
             </div>
@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 6px 16px;
     border-radius: 30px;
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     background: #f1f5f9;
     color: #475569;
@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .modal-info-item label {
     display: block;
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #94a3b8;
     margin-bottom: 5px;

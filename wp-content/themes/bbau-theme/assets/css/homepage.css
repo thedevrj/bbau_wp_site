@@ -2,72 +2,76 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;600&family=Cinzel:wght@400;600&display=swap');
 
 /* ================= CSS VARIABLES ================= */
-:root{
-  --gold:#B8963E;
-  --gold-light:#DDB96A;
-  --gold-shine:#F5E098;
-  --gold-glow:rgba(184,150,62,0.4);
-  --deep:rgba(6,4,18,0.88);
-  --cream:rgba(255,250,235,0.95);
-  --cream-dim:rgba(255,245,220,0.65);
+:root {
+  --gold: #B8963E;
+  --gold-light: #DDB96A;
+  --gold-shine: #F5E098;
+  --gold-glow: rgba(184, 150, 62, 0.4);
+  --deep: rgba(6, 4, 18, 0.88);
+  --cream: rgba(255, 250, 235, 0.95);
+  --cream-dim: rgba(255, 245, 220, 0.65);
 }
 
 /* ================= HERO ================= */
-.hero{
-  position:relative;
-  width:100%;
-  height:calc(100vh - 139px);
-  overflow:hidden;
+.hero {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 139px);
+  overflow: hidden;
 }
 
 /* ================= HERO VIDEO ================= */
-.hero-video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:0;
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 
   /* BRIGHT + RICH LOOK */
   filter: brightness(1.1) contrast(1.0) saturate(1.0);
 }
 
 /* ================= LIGHTER OVERLAY ================= */
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background:
-    radial-gradient(ellipse 70% 60% at 72% 62%,rgba(3,2,12,0.45) 0%,transparent 65%),
-    radial-gradient(ellipse 90% 80% at 50% 50%,transparent 30%,rgba(3,2,12,0.25) 100%),
-    linear-gradient(160deg,rgba(3,2,12,0.05) 0%,rgba(3,2,12,0.25) 100%);
-  z-index:1;
+    radial-gradient(ellipse 70% 60% at 72% 62%,
+      rgba(3, 2, 12, 0.35) 0%,
+      transparent 65%),
+    radial-gradient(ellipse 90% 80% at 50% 50%,
+      transparent 30%,
+      rgba(3, 2, 12, 0.18) 100%),
+    linear-gradient(160deg,
+      rgba(3, 2, 12, 0.03) 0%,
+      rgba(3, 2, 12, 0.18) 100%);
+  z-index: 1;
 }
 
 /* ================= POPUP CAPTION ================= */
-.hero-caption{
-  position:absolute;
-  right:52px;
-  bottom:60px;
-  z-index:10;
-  width:min(380px,86vw);
+.hero-caption {
+  position: absolute;
+  right: 52px;
+  bottom: 60px;
+  z-index: 10;
+  width: min(380px, 86vw);
 
-  background:linear-gradient(
-    145deg,
-    rgba(18,12,40,0.92) 0%,
-    rgba(8,5,22,0.96) 100%
-  );
+  background: linear-gradient(145deg,
+      rgba(18, 12, 40, 0.92) 0%,
+      rgba(8, 5, 22, 0.96) 100%);
 
-  border-radius:1px;
-  outline:1px solid rgba(184,150,62,0.15);
-  border:1px solid rgba(184,150,62,0.38);
+  border-radius: 1px;
+  outline: 1px solid rgba(184, 150, 62, 0.15);
+  border: 1px solid rgba(184, 150, 62, 0.38);
 
-  backdrop-filter:blur(24px) saturate(1.6) brightness(1.05);
+  backdrop-filter: blur(24px) saturate(1.6) brightness(1.05);
 
   box-shadow:
-    0 0 0 4px rgba(184,150,62,0.04),
-    0 40px 80px rgba(0,0,0,0.7);
+    0 0 0 4px rgba(184, 150, 62, 0.04),
+    0 40px 80px rgba(0, 0, 0, 0.7);
 
   /* SHOW FOR 60 SECONDS */
   animation:
@@ -76,30 +80,30 @@
 }
 
 /* PROGRESS BAR */
-.hero-caption::after{
-  content:"";
-  position:absolute;
-  bottom:0;
-  left:0;
-  height:2px;
-  width:100%;
-  background:linear-gradient(to right,var(--gold),var(--gold-shine),var(--gold));
+.hero-caption::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(to right, var(--gold), var(--gold-shine), var(--gold));
   animation: drain 58s linear 1.5s both;
 }
 
 /* QUOTE TEXT */
-.hero-caption > p:not(.author){
-  padding:28px 24px 6px;
-  margin:0;
+.hero-caption>p:not(.author) {
+  padding: 28px 24px 6px;
+  margin: 0;
 
-  font-family:'Cormorant Upright',serif;
-  font-size:1.1rem;
-  font-style:italic;
-  font-weight:500;
-  line-height:1.8;
-  color:var(--cream);
+  font-family: 'Cormorant Upright', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.8;
+  color: var(--cream);
 
-  text-shadow:0 2px 15px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
 
   animation:
     fadeUp 1s ease 1.2s forwards,
@@ -107,16 +111,16 @@
 }
 
 /* AUTHOR */
-.hero-caption .author{
-  padding:10px 24px 18px;
-  margin:0;
+.hero-caption .author {
+  padding: 10px 24px 18px;
+  margin: 0;
 
-  font-family:'Cinzel',serif;
-  font-size:0.7rem;
-  font-weight:600;
-  color:var(--gold-shine);
-  letter-spacing:0.2em;
-  text-transform:uppercase;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--gold-shine);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 
   animation:
     fadeUp 1s ease 1.5s forwards,
@@ -124,41 +128,206 @@
 }
 
 /* ================= ANIMATIONS ================= */
-@keyframes popIn{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes popOut{
-  from{opacity:1;}
-  to{opacity:0;}
+@keyframes popOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes drain{
-  from{transform:scaleX(1);}
-  to{transform:scaleX(0);}
+@keyframes drain {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* ================= HERO RANKINGS ================= */
+/* nirf ranking css on hero banner */
+
+.hero-rankings {
+  position: absolute;
+  left: 52px;
+  bottom: 60px;
+  z-index: 10;
+  display: flex;
+  gap: 20px;
+  animation: popIn 2s ease 0.5s both;
+}
+
+.ranking-card {
+  text-decoration: none !important;
+  color: inherit !important;
+  background: linear-gradient(135deg,
+      #ffffff 0%,
+      #f9f9fb 100%);
+  border-radius: 8px;
+  border: 2px solid #B8963E;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.25);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.ranking-card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.35);
+  border-color: #A41F7F;
+}
+
+.ranking-card img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.15));
+}
+
+.ranking-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ranking-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #A41F7F;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.ranking-value {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.0rem;
+  font-weight: 800;
+  color: #005C83;
+  line-height: 1.1;
+}
+
+.ranking-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-top: 1px;
+  line-height: 1.2;
 }
 
 /* ================= RESPONSIVE ================= */
-@media (max-width:1199px){
-.hero-caption{
-  right:28px;
-  bottom:36px;
-}
+@media (max-width:1199px) {
+  .hero-caption {
+    right: 28px;
+    bottom: 36px;
+  }
+
+  .hero-rankings {
+    left: 28px;
+    bottom: 36px;
+    gap: 15px;
+  }
+
+  .ranking-card {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .ranking-card img {
+    height: 42px;
+  }
+
+  .ranking-value {
+    font-size: 1.0rem;
+  }
 }
 
-@media (max-width:767px){
-.hero-caption{
-  right:14px;
-  left:14px;
-  bottom:20px;
+@media (max-width: 991px) {
+  .hero-rankings {
+    flex-direction: column;
+    gap: 10px;
+    bottom: 36px;
+    left: 28px;
+  }
 }
+
+@media (max-width:767px) {
+  .hero-caption {
+    right: 14px;
+    left: 14px;
+    bottom: 20px;
+  }
+
+  /* nirf ranking css on hero banner */
+
+  .hero-rankings {
+    left: 14px;
+    right: 14px;
+    bottom: 220px;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .ranking-card {
+    flex: 1;
+    padding: 8px 12px;
+    gap: 10px;
+  }
+
+  .ranking-card img {
+    height: 32px;
+  }
+
+  .ranking-title {
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+  }
+
+  .ranking-value {
+    font-size: 1.0rem;
+  }
+
+  .ranking-sub {
+    font-size: 0.6rem;
+  }
 }
+
 /* ================= ANNOUNCEMENT BAR ================= */
 .announce-bar {
   width: 100%;
@@ -357,8 +526,10 @@
 
 .glance-overlay {
   background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(2px);          /* 🔥 blur effect */
-  -webkit-backdrop-filter: blur(6px);  /* Safari support */
+  backdrop-filter: blur(2px);
+  /* 🔥 blur effect */
+  -webkit-backdrop-filter: blur(6px);
+  /* Safari support */
 
   display: flex;
   justify-content: center;
@@ -449,7 +620,7 @@
 .stat-text .num {
   font-family: "Poppins", sans-serif;
   font-size: 2.8rem;
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1;
 
 }
@@ -567,9 +738,11 @@
   width: 100%;
   display: flex;
   gap: 22px;
-  padding: 0 40px;  /* side spacing */
+  padding: 0 40px;
+  /* side spacing */
   box-sizing: border-box;
-  align-items: stretch;  /* 🔥 image & content same height */
+  align-items: stretch;
+  /* 🔥 image & content same height */
 }
 
 /* ================= LEFT IMAGE ================= */
@@ -579,8 +752,9 @@
   flex-shrink: 0;
   transition: all 0.3s ease;
 }
+
 .vc-image:hover {
-  transform: translateY(-6px) scale(1.02) ;
+  transform: translateY(-6px) scale(1.02);
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
 }
 
@@ -592,27 +766,28 @@
   border-radius: 45px;
   display: block;
 }
+
 .vc-slider {
-            width: 100%;
-            overflow: hidden
-        }
+  width: 100%;
+  overflow: hidden
+}
 
-        .vc-slider-track {
-            display: flex;
-            transition: transform .6s ease
-        }
+.vc-slider-track {
+  display: flex;
+  transition: transform .6s ease
+}
 
-        .vc-slide {
-            min-width: 100%;
-            box-sizing: border-box
-        }
+.vc-slide {
+  min-width: 100%;
+  box-sizing: border-box
+}
 
-        .vc-slide img {
-            width: 100%;
-            height: 360px;
-            object-fit: cover;
-            display: block
-        }
+.vc-slide img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display: block
+}
 
 /* ================= RIGHT CONTENT ================= */
 
@@ -632,7 +807,7 @@
 }
 
 .vc-content:hover {
-  transform: translateY(-6px) ;
+  transform: translateY(-6px);
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
 }
 
@@ -746,6 +921,7 @@
     font-size: 13px;
   }
 }
+
 /* ================= TABLET & SMALL LAPTOP (768px to 1199px) ================= */
 @media (min-width: 768px) and (max-width: 1199px) {
 
@@ -790,6 +966,7 @@
     padding-top: 20px;
   }
 }
+
 /* ================= MOBILE VIEW (767px and below) ================= */
 @media (max-width: 767px) {
   .vc-container {
@@ -800,8 +977,8 @@
   .vc-content {
     border-radius: 32px;
     /* CHANGE: Use min-height or remove height entirely to let content grow */
-    min-height: 260px; 
-    height: auto !important; 
+    min-height: 260px;
+    height: auto !important;
   }
 
   .vc-content {
@@ -817,6 +994,7 @@
     width: 100%;
   }
 }
+
 /* ================= INFO / NOTICE SECTION ================= */
 /* ================= GOOGLE FONTS ================= */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
@@ -844,14 +1022,16 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  gap: 10px; /* ← gap between card and button */
+  gap: 10px;
+  /* ← gap between card and button */
 }
 
 /* ================= CARD ================= */
 .info-card {
   background: #ffffff;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;          /* ← full radius all sides */
+  border-radius: 8px;
+  /* ← full radius all sides */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -931,7 +1111,8 @@
 /* ================= BUTTON ================= */
 .info-btn {
   height: 52px;
-  border-radius: 8px;          /* ← full radius all sides, fully separate */
+  border-radius: 8px;
+  /* ← full radius all sides, fully separate */
   border: none;
   padding: 0 20px;
   display: flex;
@@ -1190,6 +1371,7 @@
     height: 15px;
   }
 }
+
 /* ================= AUTO SLIDER ================= */
 /* ================= AUTO IMAGE SLIDER ================= */
 

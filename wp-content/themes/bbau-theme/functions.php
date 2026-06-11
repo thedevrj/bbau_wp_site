@@ -307,6 +307,7 @@ add_action('init','vc_speech_post_type');
 function add_custom_query_vars($vars) {
     $vars[] = 'school_slug';
     $vars[] = 'dept_slug';
+    $vars[] = 'centre_slug';
     $vars[] = 'faculty_slug';
     return $vars;
 }
@@ -320,6 +321,14 @@ function add_school_rewrite_rule() {
         'index.php?pagename=school-detail&school_slug=$matches[1]',
         'top'
     );
+    
+    // centre rewrite rule (only for specific centres acting as departments)
+    $dept_centres = 'centre-of-post-graduate-legal-studies|centre-for-the-study-of-social-inclusion-cssi';
+    add_rewrite_rule(
+        '^centres/(' . $dept_centres . ')/?$',
+        'index.php?pagename=centre&centre_slug=$matches[1]',
+        'top'
+    );
     // department rewrite rule
     add_rewrite_rule(
         '^departments/([^/]+)/?$',
@@ -329,7 +338,7 @@ function add_school_rewrite_rule() {
     // faculty profile rewrite rule
     add_rewrite_rule(
         '^faculty/([^/]+)/?$',
-        'index.php?pagename=faculty-single&faculty_slug=$matches[1]',
+        'index.php?pagename=faculty-profile&faculty_slug=$matches[1]',
         'top'
     );
 }
@@ -371,7 +380,6 @@ function get_dept_display_name($dept) {
     $campus = $dept['campus'] ?? 'BBAU';
     
     // Check if we are on the Dedicated Satellite Campus Page
-    // We assume the page using 'page-satellite-campus.php' template is the context
     if (is_page_template('page-satellite-campus.php')) {
         return $name;
     }
@@ -381,4 +389,8 @@ function get_dept_display_name($dept) {
     }
     
     return $name;
+}
+function get_centre_display_name($centre) {
+    if (empty($centre)) return '';
+    return $centre['name'] ?? '';
 }

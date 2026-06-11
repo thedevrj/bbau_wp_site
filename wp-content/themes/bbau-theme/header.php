@@ -150,20 +150,20 @@
             <!-- LEFT BRAND -->
             <div class="d-flex align-items-center">
 
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/bbau_logo.png"
-                    class="logo me-2" alt="University Logo">
+                <a href="/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/header/bbau_logo.png"
+                    class="logo me-2" alt="University Logo"></a>
 
                 <div class="univ-name">
                     <div class="univ-hindi">
-                        बाबासाहेब भीमराव अम्बेडकर विश्वविद्यालय
+                        <a href="/"> बाबासाहेब भीमराव अम्बेडकर विश्वविद्यालय</a>
                     </div>
 
                     <div class="univ-english">
-                        BABASAHEB BHIMRAO AMBEDKAR UNIVERSITY
+                    <a href="/"> BABASAHEB BHIMRAO AMBEDKAR UNIVERSITY</a>
                     </div>
 
                     <div class="univ-subtitle">
-                        (A CENTRAL UNIVERSITY)
+                    <a href="/"> (A CENTRAL UNIVERSITY)</a>
                     </div>
                 </div>
             </div>

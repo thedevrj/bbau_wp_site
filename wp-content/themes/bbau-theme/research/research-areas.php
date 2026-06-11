@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .filter-item label {
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #64748b;
     letter-spacing: 0.5px;
@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
     background: #f1f5f9;
     color: #475569;
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     padding: 5px 12px;
     border-radius: 30px;
     text-transform: uppercase;
@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .ra-title {
     font-size: 1.4rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--rd-indigo);
     line-height: 1.3;
     margin-bottom: 15px;

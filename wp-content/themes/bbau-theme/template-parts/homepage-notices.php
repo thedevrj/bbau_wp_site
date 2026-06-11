@@ -237,7 +237,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
 /* TITLE */
 .ntl-title {
     font-size: 1.9rem;
-    font-weight: 800;
+    font-weight: 700;
     color: #1c1917;
     line-height: 1.1;
 }
@@ -263,7 +263,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
 
 .ntl-hdr-num {
     font-size: 1.4rem;
-    font-weight: 800;
+    font-weight: 700;
     color: #c2410c;
 }
 

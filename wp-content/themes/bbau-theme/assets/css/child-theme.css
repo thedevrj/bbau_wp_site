@@ -51,7 +51,7 @@ h1 {
 /* ================= PAGE BACKGROUND ================= */
 .page-template-about-bg {
   background: var(--s-bg) !important;
-  min-height: 100vh;
+  min-height: 55vh;
 }
 
 /* ================= REMOVE OLD IMAGE BACKGROUND ================= */
@@ -243,7 +243,8 @@ h1 {
 ===================================================== */
 @media (max-width: 767px) {
   .subpage-hero-text {
-    top: 13%;
+    top: 30%;
+    font-size: 15px !important;
     left: 1.25rem;
     transform: none;
     animation: none;
@@ -2049,7 +2050,7 @@ h2::after {
 .rg-dept-name {
   font-family: 'Outfit', sans-serif;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 700;
   color: #0f2557;
   line-height: 1.35;
   margin: 0;
