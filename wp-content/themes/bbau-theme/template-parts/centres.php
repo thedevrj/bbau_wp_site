@@ -276,22 +276,22 @@ fetchCentres();
 
 /* HEADER COLORS */
 .centres-page .centre-card:nth-child(6n+1) .card-header {
-    background: linear-gradient(135deg, #6c63ff, #8f87ff);
+    background: linear-gradient(135deg, #581010, #581010);
 }
 .centres-page .centre-card:nth-child(6n+2) .card-header {
-    background: linear-gradient(135deg, #e85d8a, #f094b0);
+    background: linear-gradient(135deg, #0c413b, #0c413b);
 }
 .centres-page .centre-card:nth-child(6n+3) .card-header {
-    background: linear-gradient(135deg, #2a9d8f, #52c5b8);
+    background: linear-gradient(135deg, #960533, #960533);
 }
 .centres-page .centre-card:nth-child(6n+4) .card-header {
-    background: linear-gradient(135deg, #f4a261, #f7c48a);
+    background: linear-gradient(135deg, #f18731, #f18731);
 }
 .centres-page .centre-card:nth-child(6n+5) .card-header {
-    background: linear-gradient(135deg, #4361ee, #7b9cff);
+    background: linear-gradient(135deg, #5a1f42, #5a1f42);
 }
 .centres-page .centre-card:nth-child(6n+6) .card-header {
-    background: linear-gradient(135deg, #9d4edd, #c77dff);
+    background: linear-gradient(135deg, #e1b618, #e1b618);
 }
 
 /* HEADER */
