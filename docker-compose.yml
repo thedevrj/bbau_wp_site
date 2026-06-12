@@ -25,7 +25,7 @@ services:
       - ./wp-content:/var/www/html/wp-content
       - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     environment:
-      WORDPRESS_DEBUG: 1
+      WORDPRESS_DEBUG: ${WORDPRESS_DEBUG}
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

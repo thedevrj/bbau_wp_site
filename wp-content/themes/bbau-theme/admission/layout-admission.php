@@ -416,6 +416,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 .sc-notice-card {
     background: #fff;
     border: none;
+    gap: 0px;
     border-left: 4px solid var(--sc-saffron);
     padding: 20px 25px;
     border-radius: 12px;
