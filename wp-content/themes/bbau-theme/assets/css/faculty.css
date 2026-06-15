@@ -1,4 +1,3 @@
-
 /* PREMIUM FACULTY DESIGN SYSTEM */
 :root {
     --fac-indigo: #1e1b4b;
@@ -181,6 +180,7 @@ body {
     flex-direction: column;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     position: relative;
+    height: 100%;
 }
 
 
@@ -201,6 +201,7 @@ body {
     flex-direction: column;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     position: relative;
+    height: 100%;
 }
 
 .fac-card-premium1::before {
@@ -244,6 +245,7 @@ body {
 .fac-card-premium:hover .fac-image-wrap img {
     transform: scale(1.08);
 }
+
 .fac-card-premium1:hover .fac-image-wrap img {
     transform: scale(1.08);
 }
@@ -399,7 +401,8 @@ body {
     text-decoration: none;
     font-weight: 600;
 }
-.premium-rich-text a:hover{
+
+.premium-rich-text a:hover {
     text-decoration: underline;
 }
 
@@ -839,6 +842,7 @@ body {
         padding: 20px !important;
         border-radius: 16px;
     }
+
     .fac-card-premium1 {
         padding: 20px !important;
         border-radius: 16px;
