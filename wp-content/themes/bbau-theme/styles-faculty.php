@@ -180,6 +180,7 @@ body {
     flex-direction: column;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     position: relative;
+    height: 100%;
 }
 
 
@@ -200,6 +201,7 @@ body {
     flex-direction: column;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     position: relative;
+    height: 100%;
 }
 
 .fac-card-premium1::before {

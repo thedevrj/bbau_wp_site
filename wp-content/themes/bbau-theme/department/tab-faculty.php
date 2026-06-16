@@ -11,6 +11,9 @@ $media_base = getenv('DJANGO_MEDIA_URL');
 if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200) {
     $decoded = json_decode(wp_remote_retrieve_body($fac_res), true);
     $faculty_list = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
+    usort($faculty_list, function($a, $b) {
+        return strcasecmp($a['name'] ?? '', $b['name'] ?? '');
+    });
 }
 ?>
 
@@ -56,6 +59,12 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
     margin-top: 20px;
 }
 
+.fac-card-premium1 {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+}
+
 .faculty-card {
     background: #fff;
     border: 1px solid #e2d9cc;
@@ -67,6 +76,7 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
     text-align: center;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .faculty-card::before {
@@ -89,7 +99,7 @@ if (!is_wp_error($fac_res) && wp_remote_retrieve_response_code($fac_res) === 200
 .faculty-photo {
     width: 160px;
     height: 160px;
-    object-fit: cover;
+    object-fit: inherit;
     border-radius: 50%;
     border: 4px solid white;
     margin: 25px auto 10px;
