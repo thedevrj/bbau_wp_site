@@ -10,6 +10,7 @@ wp-content/upgrade/
 # Allow themes only
 !wp-content/themes/
 !wp-content/themes/**
+wp-content/themes/twenty*/
 
 # Logs & OS
 *.log
