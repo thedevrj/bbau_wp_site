@@ -244,7 +244,7 @@ $media_base = getenv('DJANGO_MEDIA_URL');
     width: 55px;
     height: 55px;
     border-radius: 50%;
-    object-fit: cover;
+    object-fit: inherit;
     border: 2px solid #e2d9cc;
     margin-bottom: 12px;
 }
