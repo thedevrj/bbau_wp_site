@@ -132,7 +132,10 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- DYNAMIC FILTERS ---
+    // Parse department from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const deptParam = urlParams.get('department') || urlParams.get('department_slug') || '';
+
     async function loadDynamicFilters() {
         try {
             const apiBase = "<?php echo esc_js($api_base); ?>";
@@ -147,6 +150,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         const displayName = d.campus === 'Satellite Campus Amethi' ? `${d.name} (Amethi)` : d.name;
                         deptFilter.innerHTML += `<option value="${d.slug}">${displayName}</option>`;
                     });
+                    if (deptParam) {
+                        deptFilter.value = deptParam;
+                    }
                 }
             }
         } catch (e) {
@@ -174,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchPatents(url = null) {
         if (!url) {
             const query = searchInput.value.toLowerCase().trim();
-            const dept = deptFilter.value;
+            const dept = (deptFilter && deptFilter.options.length > 1) ? deptFilter.value : deptParam;
             const status = statusFilter.value;
             const start = startDate.value;
             const end = endDate.value;
