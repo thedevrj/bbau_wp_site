@@ -151,7 +151,7 @@ if (!is_wp_error($patents_res) && wp_remote_retrieve_response_code($patents_res)
                     <li>
                         <div class="pub-type-mini"><?php echo esc_html($pub['publication_type']); ?></div>
                         <strong><?php echo esc_html($pub['title']); ?></strong>
-                        <div class="pub-meta-mini"><?php echo esc_html($pub['faculty_name']); ?> |
+                        <div class="pub-meta-mini"><?php echo esc_html($pub['full_author_list']); ?> |
                             <?php echo date('d M Y', strtotime($pub['publication_date'])); ?></div>
                     </li>
                     <?php endforeach; ?>
@@ -183,8 +183,10 @@ if (!is_wp_error($patents_res) && wp_remote_retrieve_response_code($patents_res)
                             <?php if(!empty($pat['patent_number'])): ?>
                                 <strong style="color: #475569;">No:</strong> <?php echo esc_html($pat['patent_number']); ?> |
                             <?php endif; ?>
-                            <?php echo esc_html($pat['faculty_name']); ?>
-                            (<?php echo esc_html($pat['date_of_filing']); ?>)
+                            <?php echo esc_html($pat['full_inventor_list']); ?>
+                            <?php if(!empty($pat['date_of_filing'])): ?>
+                                | (<?php echo esc_html($pat['date_of_filing']); ?>)
+                            <?php endif; ?>
                         </div>
                     </li>
                     <?php endforeach; ?>

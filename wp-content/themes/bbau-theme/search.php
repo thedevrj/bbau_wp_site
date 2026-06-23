@@ -471,7 +471,7 @@ function renderPublications(list) {
                 <a href="/research-hub/publications" class="search-card">
                     <span class="card-label">${p.publication_type} &bull; ${p.publication_year}</span>
                     <h4 class="card-title">${p.title}</h4>
-                    <p class="card-meta">${p.faculty_name ?? ''}</p>
+                    <p class="card-meta">${p.full_author_list ?? ''}</p>
                 </a>
             </div>`;
     });
@@ -487,7 +487,7 @@ function renderPatents(list) {
                 <a href="/research-hub/patents" class="search-card">
                     <span class="card-label">${p.status} &bull; ${p.year}</span>
                     <h4 class="card-title">${p.title}</h4>
-                    <p class="card-meta">Inventor: ${p.faculty_name ?? ''}</p>
+                    <p class="card-meta">Inventors: ${p.full_inventor_list ?? ''}</p>
                 </a>
             </div>`;
     });

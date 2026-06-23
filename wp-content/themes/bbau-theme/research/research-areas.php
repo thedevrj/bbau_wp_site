@@ -100,6 +100,18 @@ document.addEventListener('DOMContentLoaded', function() {
     let nextUrl = null;
     let prevUrl = null;
 
+
+            // Update the URL with the new department slug
+            if (typeof dept !== 'undefined') {
+                const currentUrl = new URL(window.location);
+                if (dept) {
+                    currentUrl.searchParams.set('department', dept);
+                } else {
+                    currentUrl.searchParams.delete('department');
+                }
+                window.history.pushState({}, '', currentUrl);
+            }
+
     function fetchAreas(url = `${apiBase}/api/v1/research-areas/?page_size=12`) {
         const query = searchInput.value.toLowerCase().trim();
         const dept = deptFilter.value;
