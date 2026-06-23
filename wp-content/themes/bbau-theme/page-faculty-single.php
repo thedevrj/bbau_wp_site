@@ -525,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     `<td class="fw-bold" data-label="Project Title">${r.title}</td><td data-label="Agency">${r.funding_agency || '-'}</td><td data-label="Amount">${r.amount_sanctioned || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
             } else if (type === 'scholars') {
                 html +=
-                    `<td data-label="Enroll No.">${r.enrollment_no || '-'}</td><td class="fw-bold" data-label="Scholar Name">${r.scholar_name}</td><td data-label="Topic">${r.research_topic || '-'}</td><td data-label="Topic">${r.registration_year || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
+                    `<td data-label="Enroll No.">${r.enrollment_no || '-'}</td><td class="fw-bold" data-label="Scholar Name">${r.scholar_name}</td><td data-label="Topic">${r.subject || '-'}</td><td data-label="Topic">${r.registration_year || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
             }
             html += '</tr>';
         });

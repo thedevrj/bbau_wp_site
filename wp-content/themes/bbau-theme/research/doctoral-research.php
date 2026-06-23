@@ -28,7 +28,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         <div class="ra-glass-filters animate-up mt-4" style="animation-delay: 0.1s;">
             <div class="ra-search-box">
                 <i class="fas fa-search ra-search-icon"></i>
-                <input type="text" id="scholar-search" placeholder="Search by name, topic, or enrollment..."
+                <input type="text" id="scholar-search" placeholder="Search by name, topic, or enrollment no, supervisior.."
                     autocomplete="off">
             </div>
 
@@ -150,7 +150,26 @@ document.addEventListener('DOMContentLoaded', function() {
             const start = startDate.value;
             const end = endDate.value;
 
+
+            // Update the URL with the new department slug
+            if (typeof dept !== 'undefined') {
+                const currentUrl = new URL(window.location);
+                if (dept) {
+                    currentUrl.searchParams.set('department', dept);
+                } else {
+                    currentUrl.searchParams.delete('department');
+                }
+                
+                // Reset page on filter change
+                currentUrl.searchParams.delete('page');
+                window.history.pushState({}, '', currentUrl);
+            }
+
             url = `${apiBase}/api/v1/research-scholars/?page_size=10&`;
+            const browserUrl = new URL(window.location);
+            if (browserUrl.searchParams.has('page')) {
+                url += `page=${browserUrl.searchParams.get('page')}&`;
+            }
             if (query) url += `search=${encodeURIComponent(query)}&`;
             if (dept) url += `department_slug=${encodeURIComponent(dept)}&`;
             if (status) url += `status=${encodeURIComponent(status)}&`;
