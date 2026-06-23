@@ -346,22 +346,22 @@ foreach($textarea as $area):
 
 /* ===== PAGE ===== */
 
-body{
+body {
 
-background:#efeaf7;
+    background: #efeaf7;
 
-font-family:'Inter',sans-serif;
+    font-family: 'Inter', sans-serif;
 
 }
 
 
-.parents-feedback{
+.parents-feedback {
 
-max-width:820px;
+    max-width: 820px;
 
-margin:40px auto;
+    margin: 40px auto;
 
-font-family:'Inter',sans-serif;
+    font-family: 'Inter', sans-serif;
 
 }
 
@@ -369,47 +369,47 @@ font-family:'Inter',sans-serif;
 
 /* ===== HEADER ===== */
 
-.pf-header{
+.pf-header {
 
-background:#fff;
+    background: #fff;
 
-padding:42px;
+    padding: 42px;
 
-border-radius:12px;
+    border-radius: 12px;
 
-border-top:10px solid #673ab7;
+    border-top: 10px solid #673ab7;
 
-margin-bottom:16px;
+    margin-bottom: 16px;
 
-box-shadow:0 2px 8px rgba(0,0,0,.06);
-
-}
-
-
-.pf-header h1{
-
-font-size:32px;
-
-font-weight:600;
-
-color:#202124;
-
-line-height:1.2;
-
-margin-bottom:18px;
-
-letter-spacing:-1px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
 
 }
 
 
-.pf-header p{
+.pf-header h1 {
 
-font-size:20px;
+    font-size: 32px;
 
-color:#5f6368;
+    font-weight: 600;
 
-font-weight:400;
+    color: #202124;
+
+    line-height: 1.2;
+
+    margin-bottom: 18px;
+
+    letter-spacing: -1px;
+
+}
+
+
+.pf-header p {
+
+    font-size: 20px;
+
+    color: #5f6368;
+
+    font-weight: 400;
 
 }
 
@@ -417,69 +417,70 @@ font-weight:400;
 
 /* ===== ACCOUNT ===== */
 
-.account-box{
+.account-box {
 
-background:#fff;
+    background: #fff;
 
-padding:26px 40px;
+    padding: 26px 40px;
 
-border-radius:12px;
+    border-radius: 12px;
 
-display:flex;
+    display: flex;
 
-justify-content:space-between;
+    justify-content: space-between;
 
-align-items:center;
+    align-items: center;
 
-margin-bottom:16px;
-
-}
-
-
-.account-mail{
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-font-size:18px;
-
-font-weight:600;
-
-color:#202124;
+    margin-bottom: 16px;
 
 }
 
 
-.account-mail a{
+.account-mail {
 
-font: size 16px;px;
+    display: flex;
 
-font-weight:500;
+    align-items: center;
 
-text-decoration:none;
+    gap: 12px;
 
-}
+    font-size: 18px;
 
+    font-weight: 600;
 
-.account-status{
-
-margin-top:12px;
-
-font-size:16px;
-
-color:#5f6368;
+    color: #202124;
 
 }
 
 
-.draft{
+.account-mail a {
 
-font-size:15px;
+    font: size 16px;
+    px;
 
-color:#5f6368;
+    font-weight: 500;
+
+    text-decoration: none;
+
+}
+
+
+.account-status {
+
+    margin-top: 12px;
+
+    font-size: 16px;
+
+    color: #5f6368;
+
+}
+
+
+.draft {
+
+    font-size: 15px;
+
+    color: #5f6368;
 
 }
 
@@ -487,21 +488,21 @@ color:#5f6368;
 
 /* ===== REQUIRED ===== */
 
-.required{
+.required {
 
-background:#fff;
+    background: #fff;
 
-padding:22px 40px;
+    padding: 22px 40px;
 
-border-radius:12px;
+    border-radius: 12px;
 
-font-size:16px;
+    font-size: 16px;
 
-font-weight:500;
+    font-weight: 500;
 
-color:#d93025;
+    color: #d93025;
 
-margin-bottom:18px;
+    margin-bottom: 18px;
 
 }
 
@@ -509,39 +510,39 @@ margin-bottom:18px;
 
 /* ===== QUESTION ===== */
 
-.question-card{
+.question-card {
 
-background:#fff;
+    background: #fff;
 
-padding:40px;
+    padding: 40px;
 
-margin-bottom:18px;
+    margin-bottom: 18px;
 
-border-radius:12px;
+    border-radius: 12px;
 
-box-shadow:0 2px 8px rgba(0,0,0,.05);
-
-}
-
-
-.question-card h3{
-
-font-size:20px;
-
-font-weight:500;
-
-color:#202124;
-
-margin-bottom:35px;
-
-line-height:1.6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
 
 }
 
 
-.question-card span{
+.question-card h3 {
 
-color:#d93025;
+    font-size: 20px;
+
+    font-weight: 500;
+
+    color: #202124;
+
+    margin-bottom: 35px;
+
+    line-height: 1.6;
+
+}
+
+
+.question-card span {
+
+    color: #d93025;
 
 }
 
@@ -553,54 +554,54 @@ color:#d93025;
 
 .form-input,
 
-textarea{
+textarea {
 
-width:100%;
+    width: 100%;
 
-border:none;
+    border: none;
 
-border-bottom:2px solid #dadce0;
+    border-bottom: 2px solid #dadce0;
 
-padding:14px 0;
+    padding: 14px 0;
 
-font-size:14px;
+    font-size: 14px;
 
-font-family:'Inter';
+    font-family: 'Inter';
 
-color:#202124;
+    color: #202124;
 
-background:none;
+    background: none;
 
-outline:none;
+    outline: none;
 
 }
 
 
 .question-input::placeholder,
 
-textarea::placeholder{
+textarea::placeholder {
 
-color:#80868b;
+    color: #80868b;
 
-font-size:14px;
+    font-size: 14px;
 
 }
 
 
 .question-input:focus,
 
-textarea:focus{
+textarea:focus {
 
-border-color:#673ab7;
+    border-color: #673ab7;
 
 }
 
 
-textarea{
+textarea {
 
-min-height:90px;
+    min-height: 90px;
 
-resize:vertical;
+    resize: vertical;
 
 }
 
@@ -608,28 +609,28 @@ resize:vertical;
 
 /* ===== RADIO ===== */
 
-.radio{
+.radio {
 
-display:block;
+    display: block;
 
-font-size:16px;
+    font-size: 16px;
 
-font-weight:400;
+    font-weight: 400;
 
-margin-bottom:24px;
+    margin-bottom: 24px;
 
-color:#202124;
+    color: #202124;
 
-cursor:pointer;
+    cursor: pointer;
 
 }
 
 
-.radio input{
+.radio input {
 
-transform:scale(1.6);
+    transform: scale(1.6);
 
-margin-right:18px;
+    margin-right: 18px;
 
 }
 
@@ -637,64 +638,64 @@ margin-right:18px;
 
 /* ===== BUTTON ===== */
 
-.form-action{
+.form-action {
 
-display:flex;
+    display: flex;
 
-justify-content:space-between;
+    justify-content: space-between;
 
-align-items:center;
+    align-items: center;
 
-padding:10px 0 40px;
-
-}
-
-
-.submit-btn{
-
-background:#673ab7;
-
-color:#fff !important;
-
-border:none;
-
-padding:14px 34px;
-
-border-radius:6px;
-
-font-size:18px;
-
-font-weight:600;
-
-cursor:pointer;
-
-text-decoration:none;
-
-display:inline-block;
+    padding: 10px 0 40px;
 
 }
 
 
-.submit-btn:hover{
+.submit-btn {
 
-background:#5b30b0;
+    background: #673ab7;
+
+    color: #fff !important;
+
+    border: none;
+
+    padding: 14px 34px;
+
+    border-radius: 6px;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    display: inline-block;
 
 }
 
 
-.clear-btn{
+.submit-btn:hover {
 
-background:none;
+    background: #5b30b0;
 
-border:none;
+}
 
-color:#673ab7;
 
-font-size:18px;
+.clear-btn {
 
-font-weight:500;
+    background: none;
 
-cursor:pointer;
+    border: none;
+
+    color: #673ab7;
+
+    font-size: 18px;
+
+    font-weight: 500;
+
+    cursor: pointer;
 
 }
 
@@ -702,46 +703,46 @@ cursor:pointer;
 
 /* ===== SUBMITTED ===== */
 
-.submitted-box{
+.submitted-box {
 
-background:#fff;
+    background: #fff;
 
-padding:80px;
+    padding: 80px;
 
-border-radius:12px;
+    border-radius: 12px;
 
-text-align:center;
-
-}
-
-
-.submitted-box i{
-
-font-size:90px;
-
-color:#34a853;
+    text-align: center;
 
 }
 
 
-.submitted-box h2{
+.submitted-box i {
 
-font-size:42px;
+    font-size: 90px;
 
-font-weight:600;
-
-margin:20px 0;
+    color: #34a853;
 
 }
 
 
-.submitted-box p{
+.submitted-box h2 {
 
-font-size:20px;
+    font-size: 42px;
 
-color:#5f6368;
+    font-weight: 600;
 
-margin-bottom:35px;
+    margin: 20px 0;
+
+}
+
+
+.submitted-box p {
+
+    font-size: 20px;
+
+    color: #5f6368;
+
+    margin-bottom: 35px;
 
 }
 
@@ -749,17 +750,17 @@ margin-bottom:35px;
 
 /* ===== FOOTER ===== */
 
-.google-footer{
+.google-footer {
 
-text-align:center;
+    text-align: center;
 
-font-size:15px;
+    font-size: 15px;
 
-color:#5f6368;
+    color: #5f6368;
 
-padding:40px 0;
+    padding: 40px 0;
 
-line-height:2;
+    line-height: 2;
 
 }
 
@@ -767,71 +768,71 @@ line-height:2;
 
 /* ===== MOBILE ===== */
 
-@media(max-width:768px){
+@media(max-width:768px) {
 
-.parents-feedback{
+    .parents-feedback {
 
-padding:12px;
+        padding: 12px;
 
-}
+    }
 
-.pf-header{
+    .pf-header {
 
-padding:30px;
+        padding: 30px;
 
-}
+    }
 
-.pf-header h1{
+    .pf-header h1 {
 
-font-size:34px;
+        font-size: 34px;
 
-}
+    }
 
-.pf-header p{
+    .pf-header p {
 
-font-size:16px;
+        font-size: 16px;
 
-}
+    }
 
-.question-card{
+    .question-card {
 
-padding:28px;
+        padding: 28px;
 
-}
+    }
 
-.question-card h3{
+    .question-card h3 {
 
-font-size:22px;
+        font-size: 22px;
 
-}
+    }
 
-.question-input,
+    .question-input,
 
-textarea{
+    textarea {
 
-font-size:17px;
+        font-size: 17px;
 
-}
+    }
 
-.radio{
+    .radio {
 
-font-size:17px;
+        font-size: 17px;
 
-}
+    }
 
-.account-box{
+    .account-box {
 
-display:block;
+        display: block;
 
-}
+    }
 
-.form-action{
+    .form-action {
 
-flex-direction:column;
+        flex-direction: column;
 
-gap:20px;
+        gap: 20px;
 
-}
+    }
 
 }
 </style>
