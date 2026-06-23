@@ -138,17 +138,17 @@ $menu_urls_json = htmlspecialchars(json_encode($menu_urls), ENT_QUOTES, 'UTF-8')
   max-width: 100%;
   width: auto;
 
-  background: #5A6A7A;
+  background: #5c1010;
 
   border-radius: 12px;
 
-  /* ✅ PREMIUM BORDER */
-  border: 1px solid rgba(228, 244, 14, 0.94);
+  /* ✅ PREMIUM BORDER 
+  border: 1px solid rgba(228, 244, 14, 0.94);*/
 
-  /* ✅ ENHANCED SHADOW */
+  /* ✅ ENHANCED SHADOW
   box-shadow: 
     0 6px 20px rgba(251, 93, 25, 0.41),
-    0 0 0 1px rgba(57, 7, 15, 0.82);
+    0 0 0 1px rgba(57, 7, 15, 0.82); */
 
   margin: 20px auto;
   overflow: hidden;
@@ -185,7 +185,7 @@ $menu_urls_json = htmlspecialchars(json_encode($menu_urls), ENT_QUOTES, 'UTF-8')
   justify-content: center;
   gap: 6px;
 
-  padding: 14px 20px;
+  padding: 12px 20px;
 
   font-size: 16px;
   font-weight: 700;
@@ -209,7 +209,7 @@ $menu_urls_json = htmlspecialchars(json_encode($menu_urls), ENT_QUOTES, 'UTF-8')
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #f26f1e;
+  background: #efbe1d;
   transition: all .25s ease;
 }
 
@@ -232,11 +232,11 @@ $menu_urls_json = htmlspecialchars(json_encode($menu_urls), ENT_QUOTES, 'UTF-8')
 /* ================= HOVER ================= */
 .common-menu-link:hover {
   background: #f5fafc;
-  color: #1a2e3b !important;
+  color: #441608 !important;
 }
 
 .common-menu-link:hover .dot {
-  background: #1a2e3b !important;
+  background: #541c10 !important;
 }
 
 .common-menu-link:hover::after {
@@ -246,12 +246,12 @@ $menu_urls_json = htmlspecialchars(json_encode($menu_urls), ENT_QUOTES, 'UTF-8')
 /* ================= ACTIVE ================= */
 .common-menu-link.active {
   background: #eef6fa;
-  color: #1a2e3b !important;
+  color: #5a170f !important;
   font-weight: 600;
 }
 
 .common-menu-link.active .dot {
-  background: #1a2e3b !important;
+  background: #5e1212 !important;
 }
 
 .common-menu-link.active::after {
@@ -264,7 +264,7 @@ $menu_urls_json = htmlspecialchars(json_encode($menu_urls), ENT_QUOTES, 'UTF-8')
 }
 
 .common-menu-nav::-webkit-scrollbar-thumb {
-  background: #c90b38;
+  background: #c9800b;
   border-radius: 10px;
 }
 
