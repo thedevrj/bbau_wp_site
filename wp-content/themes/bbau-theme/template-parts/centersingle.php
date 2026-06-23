@@ -16,6 +16,7 @@ get_header();
 <div class="ciie-page">
     <div class="page-body">
         <div class="container">
+            <?php get_template_part('template-parts/breadcrumb'); ?>
 
             <div class="menu-wrapper">
                 <?php get_template_part('menu/menu'); ?>
