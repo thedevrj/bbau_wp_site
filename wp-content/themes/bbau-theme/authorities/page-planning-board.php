@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="min-info">
                             <strong>${title} ${privateBadge}</strong>
-                            <span>Download PDF <i class="fa-solid fa-file-pdf"></i></span>
+                            <span>View PDF <i class="fa-solid fa-file-pdf"></i></span>
                         </div>
                     </a>`;
                 }

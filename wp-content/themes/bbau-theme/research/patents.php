@@ -185,6 +185,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const start = startDate.value;
             const end = endDate.value;
 
+
+            // Update the URL with the new department slug
+            if (typeof dept !== 'undefined') {
+                const currentUrl = new URL(window.location);
+                if (dept) {
+                    currentUrl.searchParams.set('department', dept);
+                } else {
+                    currentUrl.searchParams.delete('department');
+                }
+                
+                // Reset page on filter change
+                currentUrl.searchParams.delete('page');
+                window.history.pushState({}, '', currentUrl);
+            }
+
             url = `${apiBase}/api/v1/patents/?page_size=10&`;
             if (query) url += `search=${encodeURIComponent(query)}&`;
             if (dept) url += `department_slug=${encodeURIComponent(dept)}&`;
@@ -214,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderTable(patents) {
         if (patents.length === 0) {
             tbody.innerHTML =
-                `<tr><td colspan="5" class="text-center py-5 text-muted">No innovations found.</td></tr>`;
+                `<tr><td colspan="5" class="text-center py-5 text-muted">No records found.</td></tr>`;
             return;
         }
 
@@ -223,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return `
                 <tr class="animate-up" style="animation-delay: ${index * 0.05}s">
                     <td class="fw-bold" data-label="Innovation Title" style="color: var(--rd-royal); max-width: 400px;">${p.title}</td>
-                    <td data-label="Lead Inventor">${p.faculty_name || 'N/A'}</td>
+                    <td data-label="Inventors">${p.full_inventor_list || 'N/A'}</td>
                     <td class="font-monospace small" data-label="Patent ID">${p.patent_number || '-'}</td>
                     <td data-label="Status"><span class="status-badge ${statusClass}">${p.status}</span></td>
                     <td class="text-center" data-label="Action">
@@ -236,29 +251,111 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderPagination(data) {
         paginationControls.innerHTML = '';
-        if (!data.next && !data.previous) return;
+        if (!data.count) return;
 
-        if (data.previous) {
-            const btn = document.createElement('button');
-            btn.className = 'btn-rd-profile';
-            btn.innerHTML = '<i class="fas fa-chevron-left"></i> Previous';
-            btn.onclick = () => fetchPatents(data.previous);
-            paginationControls.appendChild(btn);
-        }
-
+        let pageSizeNum = 10;
         if (data.next) {
-            const btn = document.createElement('button');
-            btn.className = 'btn-rd-profile';
-            btn.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
-            btn.onclick = () => fetchPatents(data.next);
-            paginationControls.appendChild(btn);
+            const u = new URL(data.next);
+            if (u.searchParams.has('page_size')) pageSizeNum = parseInt(u.searchParams.get('page_size'));
+        } else if (data.previous) {
+            const u = new URL(data.previous);
+            if (u.searchParams.has('page_size')) pageSizeNum = parseInt(u.searchParams.get('page_size'));
+        } else if (window.location.href.includes('areas')) {
+            pageSizeNum = 12; 
         }
-    }
 
+        const totalPages = Math.ceil(data.count / pageSizeNum);
+        if (totalPages <= 1) return;
+
+        let currentPage = 1;
+        const browserUrl = new URL(window.location);
+        if (browserUrl.searchParams.has('page')) {
+            currentPage = parseInt(browserUrl.searchParams.get('page')) || 1;
+        }
+
+        const paginationWrapper = document.createElement('div');
+        paginationWrapper.className = 'd-flex justify-content-center gap-2 mt-4 flex-wrap';
+
+        const generatePageUrl = (pageNum) => {
+            let base = data.next || data.previous;
+            const urlObj = new URL(base);
+            urlObj.searchParams.set('page', pageNum);
+            return urlObj.toString();
+        };
+
+        const fetchPage = (pageNum, targetUrl) => {
+            const currentUrl = new URL(window.location);
+            if (pageNum === 1) currentUrl.searchParams.delete('page');
+            else currentUrl.searchParams.set('page', pageNum);
+            window.history.pushState({}, '', currentUrl);
+            fetchPatents(targetUrl);
+        };
+
+        const prevBtn = document.createElement('button');
+        prevBtn.className = `btn-rd-profile ${currentPage === 1 ? 'disabled' : ''}`;
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        if (currentPage > 1) {
+            prevBtn.onclick = () => fetchPage(currentPage - 1, generatePageUrl(currentPage - 1));
+        }
+        paginationWrapper.appendChild(prevBtn);
+
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, currentPage + 2);
+        
+        if (startPage > 1) {
+            const firstBtn = document.createElement('button');
+            firstBtn.className = 'btn-rd-profile';
+            firstBtn.innerText = '1';
+            firstBtn.onclick = () => fetchPage(1, generatePageUrl(1));
+            paginationWrapper.appendChild(firstBtn);
+            if (startPage > 2) {
+                const dots = document.createElement('span');
+                dots.innerText = '...';
+                dots.className = 'px-2 align-self-center text-muted';
+                paginationWrapper.appendChild(dots);
+            }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            const pageBtn = document.createElement('button');
+            pageBtn.className = `btn-rd-profile ${i === currentPage ? 'active' : ''}`;
+            if (i === currentPage) {
+                pageBtn.style.background = 'var(--rd-royal)';
+                pageBtn.style.color = 'white';
+            }
+            pageBtn.innerText = i;
+            pageBtn.onclick = () => fetchPage(i, generatePageUrl(i));
+            paginationWrapper.appendChild(pageBtn);
+        }
+
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                const dots = document.createElement('span');
+                dots.innerText = '...';
+                dots.className = 'px-2 align-self-center text-muted';
+                paginationWrapper.appendChild(dots);
+            }
+            const lastBtn = document.createElement('button');
+            lastBtn.className = 'btn-rd-profile';
+            lastBtn.innerText = totalPages;
+            lastBtn.onclick = () => fetchPage(totalPages, generatePageUrl(totalPages));
+            paginationWrapper.appendChild(lastBtn);
+        }
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = `btn-rd-profile ${currentPage === totalPages ? 'disabled' : ''}`;
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        if (currentPage < totalPages) {
+            nextBtn.onclick = () => fetchPage(currentPage + 1, generatePageUrl(currentPage + 1));
+        }
+        paginationWrapper.appendChild(nextBtn);
+
+        paginationControls.appendChild(paginationWrapper);
+    }
     window.openPatentModal = function(index) {
         const pat = patentsData[index];
         document.getElementById('modal-title').textContent = pat.title;
-        document.getElementById('modal-inventor').textContent = pat.faculty_name || 'N/A';
+        document.getElementById('modal-inventor').textContent = pat.full_inventor_list || 'N/A';
         document.getElementById('modal-number').textContent = pat.patent_number || 'N/A';
         document.getElementById('modal-date').textContent = pat.date_of_filing || 'N/A';
         document.getElementById('modal-status-badge').textContent = pat.status || 'PATENT';

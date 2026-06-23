@@ -22,7 +22,7 @@
     align-items: center;
     overflow: hidden;
     background: var(--rd-indigo) url('/wp-content/uploads/2026/04/rd-cell-image.png') center/cover no-repeat;
-    min-height: 310px;
+    min-height: 300px;
     padding: 40px 0;
     color: white;
 }
@@ -226,7 +226,7 @@ input[type="date"].ra-select::-webkit-calendar-picker-indicator {
 }
 
 .premium-table td {
-    padding: 20px;
+    padding: 20px 11px;
     background: white;
     border-top: 1px solid #f1f5f9;
     border-bottom: 1px solid #f1f5f9;
