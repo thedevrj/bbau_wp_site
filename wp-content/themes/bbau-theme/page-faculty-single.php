@@ -248,20 +248,24 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                                             <td class="fw-bold" data-label="Title">
                                                 <?php echo esc_html($talk['title']); ?>
                                                 <?php if (!empty($talk['link'])): ?>
-                                                <a href="<?php echo esc_url($talk['link']); ?>" target="_blank" class="ms-1" title="View Link"><i class="fas fa-external-link-alt" style="font-size:0.8rem; color:#b91c1c;"></i></a>
+                                                <a href="<?php echo esc_url($talk['link']); ?>" target="_blank"
+                                                    class="ms-1" title="View Link"><i class="fas fa-external-link-alt"
+                                                        style="font-size:0.8rem; color:#b91c1c;"></i></a>
                                                 <?php endif; ?>
                                             </td>
                                             <td data-label="Event">
                                                 <?php echo esc_html($talk['event_name']); ?>
                                                 <?php if (!empty($talk['venue'])): ?>
-                                                <br><small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i><?php echo esc_html($talk['venue']); ?></small>
+                                                <br><small class="text-muted"><i
+                                                        class="fas fa-map-marker-alt me-1"></i><?php echo esc_html($talk['venue']); ?></small>
                                                 <?php endif; ?>
                                             </td>
                                             <td data-label="Role">
                                                 <?php if (!empty($talk['role'])): ?>
-                                                    <span class="fac-status-badge active"><?php echo esc_html($talk['role']); ?></span>
+                                                <span
+                                                    class="fac-status-badge active"><?php echo esc_html($talk['role']); ?></span>
                                                 <?php else: ?>
-                                                    -
+                                                -
                                                 <?php endif; ?>
                                             </td>
                                             <td data-label="Date">
@@ -320,15 +324,16 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                                                 <?php echo esc_html($course['course_name']); ?>
                                             </td>
                                             <td class="fw-bold" data-label="Description">
-                                            <?php if (!empty($course['description'])): ?>
+                                                <?php if (!empty($course['description'])): ?>
                                                 <div><?php echo wp_kses_post($course['description']); ?></div>
                                                 <?php endif; ?>
                                             </td>
                                             <td data-label="Level">
                                                 <?php if (!empty($course['course_level'])): ?>
-                                                    <span class="fac-status-badge active"><?php echo esc_html($course['course_level']); ?></span>
+                                                <span
+                                                    class="fac-status-badge active"><?php echo esc_html($course['course_level']); ?></span>
                                                 <?php else: ?>
-                                                    -
+                                                -
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -428,8 +433,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (tab.dataset.load === 'true') {
                 if (target === 'others') {
-                    loadTabData('patents', document.querySelector('.dynamic-feed-container[data-api="others"]'));
-                    loadTabData('consultancies', document.querySelector('.dynamic-feed-container[data-api="consultancies"]'));
+                    loadTabData('patents', document.querySelector(
+                        '.dynamic-feed-container[data-api="others"]'));
+                    loadTabData('consultancies', document.querySelector(
+                        '.dynamic-feed-container[data-api="consultancies"]'));
                 } else {
                     loadTabData(target);
                 }
@@ -459,7 +466,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
             case 'projects':
                 endpoint = '/api/v1/research-projects/';
-                filterParam = 'principal_investigator__slug';
+                filterParam = 'pi__slug';
                 break;
             case 'scholars':
                 endpoint = '/api/v1/research-scholars/';
@@ -545,6 +552,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .empty-state {
     padding: 0 40px;
+}
 
+.portfolio-contact-list .contact-item span,
+.portfolio-contact-list .contact-item {
+    word-break: break-all;
+    overflow-wrap: break-word;
+    flex: 1;
 }
 </style>

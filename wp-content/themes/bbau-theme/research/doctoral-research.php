@@ -75,8 +75,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                         <tr>
                             <th>Scholar Details</th>
                             <th>Enrollment</th>
-                            <th>Research Focus</th>
-                            <th>Supervisor</th>
+                            <th>Title</th>
+                            <th>Supervisor(s)</th>
                             <th>Status</th>
                             <th class="text-center">Year</th>
                         </tr>
