@@ -5,6 +5,7 @@
 $api_base = getenv('DJANGO_MEDIA_URL');
 $api_url = $api_base . '/api/v1/departments/';
 $cbcs = $api_base . '/api/v1/cbcs/';
+$page_id = get_the_ID();
 define('BBAU_DEPARTMENTS_API', $api_url);
 define('BBAU_CBCS_API',  $cbcs);
 define('BBAU_CBCS_MAX_PAGES',  6);
@@ -116,7 +117,7 @@ $ajax_url = admin_url('admin-ajax.php');
 ?>
 
 
-    <div class="sc-hero" style="background-image: url('<?php echo esc_url($banner); ?>');">
+    <div class="sc-hero" style="background-image: url('<?php echo get_field('desktop_1x', $page_id); ?>');">
         <div class="sc-hero-overlay">
             <div class="sc-hero-card">
                 <span class="sc-badge">Choice Based Credit System</span>
