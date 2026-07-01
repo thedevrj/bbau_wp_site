@@ -1,38 +1,54 @@
 <?php
-$gallery = $dept_data['gallery_images'] ?? [];
+$events = $dept_data['gallery_events'] ?? [];
 $media_base = getenv('DJANGO_MEDIA_URL');
 
 // PAGINATION
-$per_page = 16;
-$total_images = count($gallery);
-$total_pages = ceil($total_images / $per_page);
+$per_page = 5; 
+$total_events = count($events);
+$total_pages = ceil($total_events / $per_page);
 
 $current_page = isset($_GET['pg']) ? max(1, intval($_GET['pg'])) : 1;
 $offset = ($current_page - 1) * $per_page;
 
-$gallery_page = array_slice($gallery, $offset, $per_page);
+$events_page = array_slice($events, $offset, $per_page);
 ?>
 
 <div class="section">
     <h3>Department Gallery</h3>
 
-    <?php if (!empty($gallery_page)): ?>
-    <div class="gallery-grid">
-        <?php foreach ($gallery_page as $index => $item): ?>
-        <div class="gallery-item" data-index="<?php echo $index; ?>" data-image="<?php echo esc_url($media_base . $item['image']); ?>"
-            data-caption="<?php echo esc_attr($item['caption'] ?? ''); ?>">
+    <?php if (!empty($events_page)): ?>
+    <?php foreach ($events_page as $event_index => $event): ?>
+    <div class="gallery-event-block" style="margin-bottom: 40px;">
+        <h4 style="margin-bottom: 5px; color: #8b1a1a;"><?php echo esc_html($event['title']); ?></h4>
+        <?php if (!empty($event['date_of_event'])): ?>
+        <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+            <i class="fa-regular fa-calendar"></i> <?php echo date('d M Y', strtotime($event['date_of_event'])); ?>
+        </p>
+        <?php endif; ?>
 
-            <img src="<?php echo esc_url($media_base . $item['image']); ?>"
-                alt="<?php echo esc_attr($item['caption'] ?? 'Gallery Image'); ?>" loading="lazy">
+        <?php if (!empty($event['images'])): ?>
+        <div class="gallery-grid">
+            <?php foreach ($event['images'] as $img_index => $item): ?>
+            <div class="gallery-item" data-index="<?php echo $event_index . '-' . $img_index; ?>"
+                data-image="<?php echo esc_url($media_base . $item['image']); ?>"
+                data-caption="<?php echo esc_attr($item['caption'] ?? ''); ?>">
 
-            <?php if (!empty($item['caption'])): ?>
-            <div class="gallery-caption">
-                <?php echo esc_html($item['caption']); ?>
+                <img src="<?php echo esc_url($media_base . $item['image']); ?>"
+                    alt="<?php echo esc_attr($item['caption'] ?? 'Gallery Image'); ?>" loading="lazy">
+
+                <?php if (!empty($item['caption'])): ?>
+                <div class="gallery-caption">
+                    <?php echo esc_html($item['caption']); ?>
+                </div>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
+            <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
+        <?php else: ?>
+        <p style="color: #888; font-size: 14px;">No images uploaded for this event.</p>
+        <?php endif; ?>
     </div>
+    <?php endforeach; ?>
 
     <!-- PAGINATION -->
     <div class="pagination">
@@ -55,7 +71,7 @@ $gallery_page = array_slice($gallery, $offset, $per_page);
 
     <?php else: ?>
     <p style="margin-top:20px; color:#555;">
-        No gallery images available.
+        No gallery events available.
     </p>
     <?php endif; ?>
 </div>
@@ -115,7 +131,7 @@ $gallery_page = array_slice($gallery, $offset, $per_page);
 .gallery-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: inherit;
     transition: 0.4s;
 }
 
