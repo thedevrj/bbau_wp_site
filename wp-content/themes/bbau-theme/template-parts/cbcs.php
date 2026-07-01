@@ -2,9 +2,11 @@
 /**
  * Template Name: CBCS Centralized Page
  */
-
-define('BBAU_DEPARTMENTS_API', 'http://192.168.0.8/api/v1/departments/');
-define('BBAU_CBCS_API',        'http://192.168.0.8/api/v1/cbcs/');
+$api_base = getenv('DJANGO_MEDIA_URL');
+$api_url = $api_base . '/api/v1/departments/';
+$cbcs = $api_base . '/api/v1/cbcs/';
+define('BBAU_DEPARTMENTS_API', '$api_url');
+define('BBAU_CBCS_API',  '$cbcs');
 define('BBAU_CBCS_MAX_PAGES',  6);
 
 /* ── Fetch departments server-side (now cached — was hitting API on every load) ── */
