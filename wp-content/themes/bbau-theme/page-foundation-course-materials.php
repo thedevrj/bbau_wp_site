@@ -105,7 +105,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
                             <!-- Syllabus Download Link -->
                             <div class="mt-4" id="syllabus-btn-container">
                                 <a href="#" target="_blank" class="fc-syllabus-download-btn" id="detail-syllabus-link">
-                                    <i class="fa-solid fa-file-pdf me-2"></i> Download Official Syllabus
+                                    <i class="fa-solid fa-file-pdf me-2"></i> View Syllabus
                                 </a>
                                 <span class="fc-syllabus-download-btn disabled" id="detail-syllabus-disabled" style="display: none;">
                                     <i class="fa-solid fa-file-pdf me-2"></i> No Syllabus Uploaded
@@ -383,7 +383,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
     align-items: center;
     padding: 12px 24px;
     background: var(--fc-maroon);
-    color: #fff;
+    color: #fff !important;
     border-radius: 12px;
     font-weight: 700;
     text-decoration: none;
@@ -394,13 +394,13 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 
 .fc-syllabus-download-btn:hover {
     background: var(--fc-maroon-dark);
-    color: #fff;
+    color: #fff !important;
     transform: translateY(-1px);
 }
 
 .fc-syllabus-download-btn.disabled {
     background: #f1f5f9;
-    color: #94a3b8;
+    color: #94a3b8 !important;
     cursor: not-allowed;
     box-shadow: none;
 }

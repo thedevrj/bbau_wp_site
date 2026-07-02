@@ -21,6 +21,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 
 <div class="admissions-portal py-5">
     <div class="container">
+    <?php get_template_part('template-parts/breadcrumb'); ?>
 
         <!-- INTRO & STATS -->
         <div class="row align-items-center mb-5 g-4">
@@ -32,7 +33,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
                     </p>
                 </div>
             </div>
-            <div class="col-lg-4 text-lg-end">
+            <div class="col-lg-4 text-lg-end d-none d-md-block">
                 <div class="fc-stats-badge">
                     <span class="fc-stats-number" id="courses-count"><?php echo count($courses); ?></span>
                     <span class="fc-stats-label">Total Courses</span>
@@ -410,7 +411,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 .fc-btn-syllabus {
     background: #fff;
     border: 1px solid var(--fc-gold);
-    color: var(--fc-maroon);
+    color: var(--fc-maroon) !important;
 }
 
 .fc-btn-syllabus:hover {
