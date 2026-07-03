@@ -21,7 +21,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 
 <div class="admissions-portal py-5">
     <div class="container">
-    <?php get_template_part('template-parts/breadcrumb'); ?>
+        <?php get_template_part('template-parts/breadcrumb'); ?>
 
         <!-- INTRO & STATS -->
         <div class="row align-items-center mb-5 g-4">
@@ -29,7 +29,9 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
                 <div class="fc-section-intro">
                     <h2 class="fc-main-title">Foundation Courses</h2>
                     <p class="fc-lead-text">
-                        Foundation courses are designed to provide students with a broad and interdisciplinary academic base, bridging foundational knowledge with advanced fields of study. Explore course syllabi and access curated study materials for each course.
+                        Foundation courses are designed to provide students with a broad and interdisciplinary academic
+                        base, bridging foundational knowledge with advanced fields of study. Explore course syllabi and
+                        access curated study materials for each course.
                     </p>
                 </div>
             </div>
@@ -74,15 +76,16 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
             <?php if(!empty($courses)): ?>
             <div class="row g-4">
                 <?php foreach($courses as $course): ?>
-                <div class="col-md-6 col-lg-4 course-card-wrapper" 
-                     data-level="<?php echo esc_attr($course['level'] ?? ''); ?>"
-                     data-semester="<?php echo esc_attr($course['semester'] ?? ''); ?>"
-                     data-name="<?php echo esc_attr(strtolower($course['course_title'] ?? '')); ?> <?php echo esc_attr(strtolower($course['course_code'] ?? '')); ?>">
-                    
+                <div class="col-md-6 col-lg-4 course-card-wrapper"
+                    data-level="<?php echo esc_attr($course['level'] ?? ''); ?>"
+                    data-semester="<?php echo esc_attr($course['semester'] ?? ''); ?>"
+                    data-name="<?php echo esc_attr(strtolower($course['course_title'] ?? '')); ?> <?php echo esc_attr(strtolower($course['course_code'] ?? '')); ?>">
+
                     <div class="fc-card">
                         <!-- Top Meta Header -->
                         <div class="fc-card-header">
-                            <span class="fc-badge badge-level <?php echo esc_attr(strtolower($course['level'] ?? '')); ?>">
+                            <span
+                                class="fc-badge badge-level <?php echo esc_attr(strtolower($course['level'] ?? '')); ?>">
                                 <?php echo esc_html($course['level'] ?? ''); ?>
                             </span>
                             <span class="fc-badge badge-semester">
@@ -103,18 +106,21 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
                         <div class="fc-card-footer">
                             <div class="fc-action-row">
                                 <?php if (!empty($course['syllabus_file'])): ?>
-                                    <a href="<?php echo esc_url($course['syllabus_file']); ?>" target="_blank" class="fc-btn fc-btn-syllabus">
-                                        <i class="fa-solid fa-file-pdf me-2"></i> Syllabus
-                                    </a>
+                                <a href="<?php echo esc_url($course['syllabus_file']); ?>" target="_blank"
+                                    class="fc-btn fc-btn-syllabus">
+                                    <i class="fa-solid fa-file-pdf me-2"></i> Syllabus
+                                </a>
                                 <?php else: ?>
-                                    <span class="fc-btn fc-btn-disabled" title="Syllabus not uploaded yet">
-                                        <i class="fa-solid fa-file-pdf me-2"></i> No Syllabus
-                                    </span>
+                                <span class="fc-btn fc-btn-disabled" title="Syllabus not uploaded yet">
+                                    <i class="fa-solid fa-file-pdf me-2"></i> No Syllabus
+                                </span>
                                 <?php endif; ?>
 
-                                <a href="/foundation-course-materials/?course_id=<?php echo esc_attr($course['id']); ?>" class="fc-btn fc-btn-materials">
-                                    <i class="fa-solid fa-book-open me-2"></i> Materials 
-                                    <span class="materials-count"><?php echo count($course['materials'] ?? []); ?></span>
+                                <a href="/foundation-course-materials/?course_id=<?php echo esc_attr($course['id']); ?>"
+                                    class="fc-btn fc-btn-materials">
+                                    <i class="fa-solid fa-book-open me-2"></i> Materials
+                                    <span
+                                        class="materials-count"><?php echo count($course['materials'] ?? []); ?></span>
                                 </a>
                             </div>
                         </div>
@@ -122,7 +128,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
                 </div>
                 <?php endforeach; ?>
             </div>
-            
+
             <div id="no-results" class="text-center py-5" style="display:none;">
                 <div class="no-results-icon mb-3">
                     <i class="fa-regular fa-folder-open fa-3x text-muted"></i>
@@ -148,9 +154,6 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 </div>
 
 <style>
-/* ============================================
-   FOUNDATION COURSES - PREMIUM MODERN STYLING
-   ============================================ */
 
 :root {
     --fc-maroon: #8B1A1A;
@@ -222,9 +225,6 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
     margin-top: 5px;
 }
 
-/* ============================================
-   FILTER BAR (MATCHING PROGRAM NAVIGATOR EXACTLY)
-   ============================================ */
 .adm-filter-bar {
     background: #fff;
     padding: 20px;
@@ -234,7 +234,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
     flex-wrap: wrap;
     gap: 30px;
     align-items: flex-end;
-    margin-top: 0px; /* Changed from -40px because intro text is above the filter bar now */
+    margin-top: 0px;
     z-index: 1000;
     border: 1px solid #e2d9cc;
 }
@@ -449,7 +449,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
     background: #fff;
     border-radius: 12px;
     border: 1px solid var(--fc-gold-light);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
     overflow: hidden;
     animation: slideDown 0.3s ease-out;
 }
@@ -571,22 +571,19 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
         opacity: 0;
         transform: translateY(-8px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* ============================================
-   RESPONSIVENESS AND COLLAPSIBILITY OVERRIDES
-   ============================================ */
-
-/* Large screens and down (e.g., standard laptops) */
 @media (max-width: 1200px) {
     .fc-action-row {
         flex-direction: column;
         gap: 8px;
     }
+
     .fc-btn {
         width: 100%;
     }
@@ -597,27 +594,33 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
     .fc-section-intro {
         text-align: center;
     }
+
     .fc-main-title::after {
         left: 50%;
         transform: translateX(-50%);
     }
+
     .fc-stats-badge {
         display: flex;
         max-width: 250px;
         margin: 15px auto 0;
     }
+
     .admissions-portal .text-lg-end {
         text-align: center !important;
     }
+
     .adm-filter-bar {
         margin-top: 0;
         flex-direction: column;
         align-items: stretch;
         gap: 15px;
     }
+
     .level-tabs {
         flex-wrap: wrap;
     }
+
     .level-tab {
         flex: 1 1 auto;
     }
@@ -629,15 +632,19 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
         flex-direction: row;
         justify-content: flex-start;
     }
+
     .badge-credits {
         margin-left: 0;
     }
+
     .fc-card-body {
         padding: 10px 16px 15px;
     }
+
     .fc-card-footer {
         padding: 15px 16px;
     }
+
     .fc-main-title {
         font-size: 2.2rem;
     }
@@ -702,7 +709,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Update count dynamically
-        if(coursesCountEl) {
+        if (coursesCountEl) {
             coursesCountEl.textContent = filteredCards.length;
         }
 
