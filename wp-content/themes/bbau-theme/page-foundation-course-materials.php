@@ -6,9 +6,6 @@ defined('ABSPATH') || exit;
 get_header();
 
 $api_base = getenv('DJANGO_API_URL');
-if (!$api_base) {
-    $api_base = 'http://django-dev:8000';
-}
 
 // Fetch all courses with nested materials preloaded
 $courses_url = $api_base . '/api/v1/foundation-courses/?page_size=500';
@@ -25,7 +22,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 
 <div class="materials-hub-portal py-5">
     <div class="container">
-        
+
         <!-- BREADCRUMB / GENERAL NAVIGATION -->
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
             <div class="breadcrumb-wrap">
@@ -37,121 +34,128 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
         </div>
 
         <?php if (!empty($courses)): ?>
-            <div class="row g-4">
-                
-                <!-- LEFT SIDEBAR (Master Course List) -->
-                <div class="col-lg-4 d-none d-lg-block">
-                    <div class="hub-sidebar-card">
-                        <div class="sidebar-header mb-3">
-                            <h4 class="sidebar-title">Courses List</h4>
-                            <p class="sidebar-subtitle text-muted small">Select a course to view materials</p>
-                            
-                            <!-- Search and Filters inside Sidebar -->
-                            <div class="sidebar-search-box mt-3">
-                                <input type="text" id="sidebar-course-search" placeholder="Search course..." class="form-control sidebar-input">
-                            </div>
+        <div class="row g-4">
+
+            <!-- LEFT SIDEBAR (Master Course List) -->
+            <div class="col-lg-4 d-none d-lg-block">
+                <div class="hub-sidebar-card">
+                    <div class="sidebar-header mb-3">
+                        <h4 class="sidebar-title">Courses List</h4>
+                        <p class="sidebar-subtitle text-muted small">Select a course to view materials</p>
+
+                        <!-- Search and Filters inside Sidebar -->
+                        <div class="sidebar-search-box mt-3">
+                            <input type="text" id="sidebar-course-search" placeholder="Search course..."
+                                class="form-control sidebar-input">
+                        </div>
+                    </div>
+
+                    <!-- Desktop Course Sidebar Menu (Hidden on Mobile) -->
+                    <div class="desktop-sidebar-menu">
+                        <!-- UG Section -->
+                        <div class="sidebar-section-group" id="group-ug">
+                            <div class="group-header">Undergraduate (UG)</div>
+                            <div class="group-list" id="list-ug"></div>
                         </div>
 
-                        <!-- Desktop Course Sidebar Menu (Hidden on Mobile) -->
-                        <div class="desktop-sidebar-menu">
-                            <!-- UG Section -->
-                            <div class="sidebar-section-group" id="group-ug">
-                                <div class="group-header">Undergraduate (UG)</div>
-                                <div class="group-list" id="list-ug"></div>
-                            </div>
-                            
-                            <!-- PG Section -->
-                            <div class="sidebar-section-group mt-3" id="group-pg">
-                                <div class="group-header">Postgraduate (PG)</div>
-                                <div class="group-list" id="list-pg"></div>
-                            </div>
+                        <!-- PG Section -->
+                        <div class="sidebar-section-group mt-3" id="group-pg">
+                            <div class="group-header">Postgraduate (PG)</div>
+                            <div class="group-list" id="list-pg"></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- RIGHT CONTENT AREA (Detail View of Selected Course) -->
-                <div class="col-lg-8 col-12">
-                    
-                    <!-- Mobile Course Dropdown (Visible only on Mobile/Tablet) -->
-                    <div class="mobile-course-dropdown-card mb-4 d-lg-none">
-                        <div class="mb-3">
-                            <label for="mobile-course-search" class="form-label fw-bold small text-uppercase text-maroon mb-2">Search Course</label>
-                            <input type="text" id="mobile-course-search" placeholder="Type course code or title..." class="form-control sidebar-input">
-                        </div>
-                        <div>
-                            <label for="mobile-course-select" class="form-label fw-bold small text-uppercase text-maroon mb-2">Select Course</label>
-                            <select id="mobile-course-select" class="form-select mobile-select">
-                                <?php foreach ($courses as $c): ?>
-                                    <option value="<?php echo esc_attr($c['id']); ?>">
-                                        [<?php echo esc_html($c['level'] ?? ''); ?> - Sem <?php echo esc_html($c['semester'] ?? ''); ?>] <?php echo esc_html($c['course_code'] ?? ''); ?>: <?php echo esc_html($c['course_title'] ?? ''); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="hub-main-content-card">
-                        
-                        <!-- Course Title & Metadata Banner -->
-                        <div class="selected-course-header mb-4 pb-4 border-bottom">
-                            <div class="d-flex flex-wrap gap-2 mb-3">
-                                <span class="fc-badge badge-level" id="detail-level">UG</span>
-                                <span class="fc-badge badge-semester" id="detail-semester">Semester 1</span>
-                                <span class="fc-badge badge-credits" id="detail-credits">0 Credits</span>
-                            </div>
-                            <span class="course-code-sub" id="detail-code">AEC-101</span>
-                            <h2 class="course-main-title mt-1" id="detail-title">Loading Course...</h2>
-                            
-                            <!-- Syllabus Download Link -->
-                            <div class="mt-4" id="syllabus-btn-container">
-                                <a href="#" target="_blank" class="fc-syllabus-download-btn" id="detail-syllabus-link">
-                                    <i class="fa-solid fa-file-pdf me-2"></i> View Syllabus
-                                </a>
-                                <span class="fc-syllabus-download-btn disabled" id="detail-syllabus-disabled" style="display: none;">
-                                    <i class="fa-solid fa-file-pdf me-2"></i> No Syllabus Uploaded
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- Materials Section -->
-                        <div class="materials-hub-section">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <h3 class="materials-section-title mb-0">Syllabus & Materials</h3>
-                                <span class="materials-count-badge" id="detail-materials-count">0 Files Available</span>
-                            </div>
-
-                            <div class="row g-4" id="detail-materials-grid">
-                                <!-- Dynamic Materials Cards Rendered by JS -->
-                            </div>
-
-                            <!-- Empty State for Materials -->
-                            <div class="text-center py-5 no-materials-box" id="detail-empty-state" style="display: none;">
-                                <i class="fa-regular fa-folder-open fa-3x text-muted mb-3"></i>
-                                <h4>No study materials uploaded yet.</h4>
-                                <p class="text-muted">Please check back later or contact your faculty member for reference notes.</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
             </div>
+
+            <!-- RIGHT CONTENT AREA (Detail View of Selected Course) -->
+            <div class="col-lg-8 col-12">
+
+                <!-- Mobile Course Dropdown (Visible only on Mobile/Tablet) -->
+                <div class="mobile-course-dropdown-card mb-4 d-lg-none">
+                    <div class="mb-3">
+                        <label for="mobile-course-search"
+                            class="form-label fw-bold small text-uppercase text-maroon mb-2">Search Course</label>
+                        <input type="text" id="mobile-course-search" placeholder="Type course code or title..."
+                            class="form-control sidebar-input">
+                    </div>
+                    <div>
+                        <label for="mobile-course-select"
+                            class="form-label fw-bold small text-uppercase text-maroon mb-2">Select Course</label>
+                        <select id="mobile-course-select" class="form-select mobile-select">
+                            <?php foreach ($courses as $c): ?>
+                            <option value="<?php echo esc_attr($c['id']); ?>">
+                                [<?php echo esc_html($c['level'] ?? ''); ?> - Sem
+                                <?php echo esc_html($c['semester'] ?? ''); ?>]
+                                <?php echo esc_html($c['course_code'] ?? ''); ?>:
+                                <?php echo esc_html($c['course_title'] ?? ''); ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="hub-main-content-card">
+
+                    <!-- Course Title & Metadata Banner -->
+                    <div class="selected-course-header mb-4 pb-4 border-bottom">
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="fc-badge badge-level" id="detail-level">UG</span>
+                            <span class="fc-badge badge-semester" id="detail-semester">Semester 1</span>
+                            <span class="fc-badge badge-credits" id="detail-credits">0 Credits</span>
+                        </div>
+                        <span class="course-code-sub" id="detail-code">AEC-101</span>
+                        <h2 class="course-main-title mt-1" id="detail-title">Loading Course...</h2>
+
+                        <!-- Syllabus Download Link -->
+                        <div class="mt-4" id="syllabus-btn-container">
+                            <a href="#" target="_blank" class="fc-syllabus-download-btn" id="detail-syllabus-link">
+                                <i class="fa-solid fa-file-pdf me-2"></i> View Syllabus
+                            </a>
+                            <span class="fc-syllabus-download-btn disabled" id="detail-syllabus-disabled"
+                                style="display: none;">
+                                <i class="fa-solid fa-file-pdf me-2"></i> No Syllabus Uploaded
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Materials Section -->
+                    <div class="materials-hub-section">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="materials-section-title mb-0">Syllabus & Materials</h3>
+                            <span class="materials-count-badge" id="detail-materials-count">0 Files Available</span>
+                        </div>
+
+                        <div class="row g-4" id="detail-materials-grid">
+                            <!-- Dynamic Materials Cards Rendered by JS -->
+                        </div>
+
+                        <!-- Empty State for Materials -->
+                        <div class="text-center py-5 no-materials-box" id="detail-empty-state" style="display: none;">
+                            <i class="fa-regular fa-folder-open fa-3x text-muted mb-3"></i>
+                            <h4>No study materials uploaded yet.</h4>
+                            <p class="text-muted">Please check back later or contact your faculty member for reference
+                                notes.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
         <?php else: ?>
-            <!-- EMPTY DIRECTORY STATE -->
-            <div class="text-center py-5 error-box">
-                <i class="fa-solid fa-circle-exclamation fa-3x text-danger mb-3"></i>
-                <h3>No Courses Found</h3>
-                <p class="text-muted">There are no courses loaded in the system to view materials for. Please verify backend configurations.</p>
-            </div>
+        <!-- EMPTY DIRECTORY STATE -->
+        <div class="text-center py-5 error-box">
+            <i class="fa-solid fa-circle-exclamation fa-3x text-danger mb-3"></i>
+            <h3>No Courses Found</h3>
+            <p class="text-muted">There are no courses loaded in the system to view materials for. Please verify backend
+                configurations.</p>
+        </div>
         <?php endif; ?>
 
     </div>
 </div>
 
 <style>
-/* ============================================
-   MATERIALS HUB - PREMIUM MOD-DOCS STYLE
-   ============================================ */
 
 :root {
     --fc-maroon: #8B1A1A;
@@ -234,14 +238,17 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 .desktop-sidebar-menu::-webkit-scrollbar {
     width: 6px;
 }
+
 .desktop-sidebar-menu::-webkit-scrollbar-track {
     background: #f1f5f9;
     border-radius: 10px;
 }
+
 .desktop-sidebar-menu::-webkit-scrollbar-thumb {
     background: var(--fc-gold-light);
     border-radius: 10px;
 }
+
 .desktop-sidebar-menu::-webkit-scrollbar-thumb:hover {
     background: var(--fc-gold);
 }
@@ -317,6 +324,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
     white-space: nowrap;
     overflow: hidden;
 }
+
 .mobile-select:focus {
     border-color: var(--fc-maroon);
     box-shadow: 0 0 0 3px rgba(139, 26, 26, 0.15);
@@ -536,12 +544,13 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 }
 
 /* ERROR STATE / BOXES */
-.error-box, .no-materials-box {
+.error-box,
+.no-materials-box {
     background: #fff;
     border: 1px solid var(--fc-border);
     border-radius: 20px;
     padding: 50px 30px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.01);
 }
 
 /* ============================================
@@ -554,10 +563,12 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
         top: 0;
         max-height: none;
     }
+
     .hub-main-content-card {
         padding: 24px;
         min-height: auto;
     }
+
     .course-main-title {
         font-size: 1.7rem;
     }
@@ -573,7 +584,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 
 <!-- Preload the PHP courses array into JS -->
 <script>
-    const coursesData = <?php echo json_encode($courses); ?>;
+const coursesData = <?php echo json_encode($courses); ?>;
 </script>
 
 <script>
@@ -618,7 +629,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const level = course.level || 'UG';
-            
+
             // Create sidebar link
             const a = document.createElement('a');
             a.href = '#';
@@ -664,7 +675,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const option = document.createElement('option');
             option.value = course.id;
-            option.textContent = `[${course.level || ''} - Sem ${course.semester || ''}] ${code}: ${title}`;
+            option.textContent =
+                `[${course.level || ''} - Sem ${course.semester || ''}] ${code}: ${title}`;
             if (course.id === activeCourseId) {
                 option.selected = true;
             }
@@ -675,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. Select a course and update Detail view
     function selectCourse(courseId) {
         activeCourseId = parseInt(courseId);
-        
+
         // Find course data
         const course = coursesData.find(c => parseInt(c.id) === activeCourseId);
         if (!course) return;
@@ -732,20 +744,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Materials grid rendering
         const materials = course.materials || [];
-        detailMaterialsCount.textContent = `${materials.length} File${materials.length !== 1 ? 's' : ''} Available`;
-        
+        detailMaterialsCount.textContent =
+            `${materials.length} File${materials.length !== 1 ? 's' : ''} Available`;
+
         detailMaterialsGrid.innerHTML = '';
 
         if (materials.length > 0) {
             detailEmptyState.style.display = 'none';
-            
+
             materials.forEach(material => {
                 const col = document.createElement('div');
                 col.className = 'col-md-6';
-                
+
                 const type = material.material_type || 'Document';
                 const typeLower = type.toLowerCase();
-                
+
                 let iconHtml = '<i class="fa-solid fa-file-pdf"></i>';
                 if (type === 'Video') {
                     iconHtml = '<i class="fa-solid fa-play"></i>';
@@ -787,7 +800,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                 `;
-                
+
                 detailMaterialsGrid.appendChild(col);
             });
         } else {
@@ -798,14 +811,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // 4. Initial Selection & URL Routing
     const urlParams = new URLSearchParams(window.location.search);
     let initId = urlParams.get('course_id');
-    
+
     // Default to first course if no query var is set
     if (!initId && coursesData.length > 0) {
         initId = coursesData[0].id;
     }
 
     activeCourseId = parseInt(initId);
-    
+
     // First render & selection
     renderSidebar();
     renderMobileSelect();

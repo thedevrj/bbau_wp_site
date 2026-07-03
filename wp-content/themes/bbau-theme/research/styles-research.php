@@ -63,7 +63,7 @@
 }
 
 .hero-content-glass1 h1 {
-    font-weight: 800 !important;
+    font-weight: 700 !important;
     margin-bottom: 15px;
     color: white;
     letter-spacing: -0.03em;
