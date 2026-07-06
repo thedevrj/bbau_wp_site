@@ -9,7 +9,6 @@ define('BBAU_DEPARTMENTS_API', '$api_url');
 define('BBAU_CBCS_API',  '$cbcs');
 define('BBAU_CBCS_MAX_PAGES',  6);
 
-/* ── Fetch departments server-side (now cached — was hitting API on every load) ── */
 function bbau_get_departments() {
     $cached = get_transient('bbau_all_departments');
     if (is_array($cached)) return $cached;
@@ -25,7 +24,6 @@ function bbau_get_departments() {
     return $result;
 }
 
-/* ── Fetch all CBCS courses, paginated (now stops early instead of always looping MAX_PAGES) ── */
 function bbau_get_all_cbcs() {
     $cached = get_transient('bbau_all_cbcs_courses');
     if (is_array($cached)) return $cached;
@@ -39,18 +37,14 @@ function bbau_get_all_cbcs() {
         $data    = json_decode(wp_remote_retrieve_body($response), true);
         $results = is_array($data) ? (isset($data['results']) ? $data['results'] : $data) : array();
 
-        // No results on this page -> no point requesting further pages
         if (!is_array($results) || empty($results)) break;
 
         foreach ($results as $course) {
             $all[] = $course;
         }
 
-        // DRF-style pagination: if API says there's no next page, stop early
         if (isset($data['next']) && !$data['next']) break;
     }
-
-    // Short TTL on failure so a downed API isn't hammered on every page load
     $ttl = empty($all) ? 2 * MINUTE_IN_SECONDS : 30 * MINUTE_IN_SECONDS;
     set_transient('bbau_all_cbcs_courses', $all, $ttl);
 
@@ -162,9 +156,7 @@ $ajax_url = admin_url('admin-ajax.php');
             </div>
         </div>
 
-    </div><!-- /.cbcs-filter-bar -->
-
-    <!-- ── Department cards grid ── -->
+    </div>
     <?php if (empty($departments)): ?>
         <p class="cbcs-no-data">No departments found. Check that <code><?php echo esc_html(BBAU_DEPARTMENTS_API); ?></code> is reachable.</p>
     <?php else: ?>
@@ -175,13 +167,14 @@ $ajax_url = admin_url('admin-ajax.php');
                 $dept_name   = isset($dept['name'])            ? $dept['name']             : '';
                 $school_name = isset($dept['school_name'])     ? $dept['school_name']      : '';
                 $campus      = isset($dept['campus'])          ? $dept['campus']           : '';
-                $hod_name    = isset($dept['hod']['name'])     ? $dept['hod']['name']      : '';
 
                 if (!$dept_id || !$dept_name) continue;
 
-                $dept_courses = isset($courses_by_dept[$dept_id]) ? $courses_by_dept[$dept_id] : array();
-                $course_count = count($dept_courses);
-                $level        = isset($level_by_dept[$dept_id]) ? $level_by_dept[$dept_id] : ''; // ug / pg / mixed / ''
+               $dept_courses = isset($courses_by_dept[$dept_id]) ? $courses_by_dept[$dept_id] : array();
+               $course_count = count($dept_courses);
+               if ($course_count === 0) continue;
+
+               $level        = isset($level_by_dept[$dept_id]) ? $level_by_dept[$dept_id] : '';
 
                 if ($level === 'mixed') {
                     $data_level_attr = 'ug pg';
@@ -210,13 +203,6 @@ $ajax_url = admin_url('admin-ajax.php');
                                 <?php echo esc_html($campus); ?>
                             </p>
                         <?php endif; ?>
-                        <?php if ($hod_name): ?>
-                            <p class="cbcs-meta-row">
-                                <i class="fa-solid fa-user-tie"></i>
-                                <?php echo esc_html($hod_name); ?>
-                            </p>
-                        <?php endif; ?>
-
                         <p class="cbcs-meta-row">
                             <i class="fa-solid fa-book"></i>
                             <?php echo (int) $course_count; ?> course<?php echo $course_count === 1 ? '' : 's'; ?>
@@ -228,9 +214,6 @@ $ajax_url = admin_url('admin-ajax.php');
                             <?php endif; ?>
                             <?php if ($level === 'pg' || $level === 'mixed'): ?>
                                 <span class="cbcs-level-badge badge-pg">PG</span>
-                            <?php endif; ?>
-                            <?php if (!$level): ?>
-                                <span class="cbcs-level-badge badge-na">Unclassified</span>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -413,17 +396,12 @@ $ajax_url = admin_url('admin-ajax.php');
     }
 
     function openInlinePanel(btn, deptId, deptName) {
-        // Close any existing panel first
         closeInlinePanel();
 
         const card = btn.closest('.cbcs-dept-card');
         if (!card) return;
-
-        // Clone template
         const tpl   = document.getElementById('cbcs-inline-tpl');
         const panel = tpl.content.cloneNode(true).querySelector('.cbcs-inline-wrap');
-
-        // Set title
         panel.querySelector('.cbcs-inline-title').textContent = deptName + ' — CBCS Courses';
 
         const spanDiv = document.createElement('div');
@@ -439,8 +417,6 @@ $ajax_url = admin_url('admin-ajax.php');
         if (!panelState[deptId]) {
             panelState[deptId] = { page: 1, keyword: '' };
         }
-
-        // Smooth scroll
         setTimeout(function () {
             spanDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 60);
@@ -453,7 +429,6 @@ $ajax_url = admin_url('admin-ajax.php');
             activePanel.remove();
             activePanel  = null;
         }
-        // Reset all btn labels
         allViewBtns.forEach(function (b) {
             b.innerHTML = 'View CBCS <i class="fa-solid fa-chevron-down cbcs-btn-icon"></i>';
             b.classList.remove('open');
@@ -468,8 +443,6 @@ $ajax_url = admin_url('admin-ajax.php');
         const pagDiv  = panel.querySelector('.cbcs-inline-pagination');
 
         const deptCourses = coursesByDept[deptId] || [];
-
-        // Client-side keyword filter
         const kw   = (st.keyword || '').toLowerCase();
         const filtered = deptCourses.filter(function (r) {
             if (!kw) return true;
@@ -485,8 +458,6 @@ $ajax_url = admin_url('admin-ajax.php');
             pagDiv.style.display = 'none';
             return;
         }
-
-        // Pagination math
         const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
         if (st.page > totalPages) st.page = totalPages;
         const start = (st.page - 1) * PAGE_SIZE;
@@ -552,22 +523,16 @@ $ajax_url = admin_url('admin-ajax.php');
             });
         });
     }
-
-    /* ─── Card button clicks ──────────────────────────────────────────── */
     document.getElementById('cbcs-dept-grid').addEventListener('click', function (e) {
         const btn = e.target.closest('.cbcs-view-btn');
         if (!btn || btn.disabled) return;
 
         const deptId   = parseInt(btn.dataset.deptId, 10);
         const deptName = btn.dataset.deptName || '';
-
-        // Toggle: clicking same btn closes
         if (activeDeptId === deptId) {
             closeInlinePanel();
             return;
         }
-
-        // Reset btn labels, mark this one open
         allViewBtns.forEach(function (b) {
             if (!b.disabled) b.innerHTML = 'View CBCS <i class="fa-solid fa-chevron-down cbcs-btn-icon"></i>';
             b.classList.remove('open');
@@ -577,8 +542,6 @@ $ajax_url = admin_url('admin-ajax.php');
 
         openInlinePanel(btn, deptId, deptName);
     });
-
-    // Level buttons
     document.querySelectorAll('.cbcs-level-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
             document.querySelectorAll('.cbcs-level-btn').forEach(function (b) { b.classList.remove('active'); });
@@ -588,15 +551,11 @@ $ajax_url = admin_url('admin-ajax.php');
             applyCardFilters();
         });
     });
-
-    // Department dropdown
     document.getElementById('cbcs-dept-select').addEventListener('change', function () {
         gState.deptFilter = parseInt(this.value, 10) || 0;
         cardPage = 1;
         applyCardFilters();
     });
-
-    // Keyword search (matches department name, course code, or course title)
     let gKwTimer;
     document.getElementById('cbcs-keyword').addEventListener('input', function () {
         clearTimeout(gKwTimer);
@@ -607,8 +566,6 @@ $ajax_url = admin_url('admin-ajax.php');
             applyCardFilters();
         }, 240);
     });
-
-    // Initial render: paginate to 16 cards on page load
     applyCardFilters();
 
 })();
@@ -619,8 +576,6 @@ $ajax_url = admin_url('admin-ajax.php');
    CBCS PAGE — BBAU
    Palette: #5c1010 · #8B1A1A · #c9a84c · #fdfaf6 · #fff
    ═══════════════════════════════════════════════════════════ */
-
-/* ── Filter bar ── */
 .cbcs-filter-bar {
     display: flex;
     flex-wrap: wrap;
@@ -698,8 +653,6 @@ $ajax_url = admin_url('admin-ajax.php');
     font-size: .75rem;
     pointer-events: none;
 }
-
-/* Search */
 .cbcs-search-wrap { position: relative; }
 .cbcs-search-icon {
     position: absolute;
@@ -723,8 +676,6 @@ $ajax_url = admin_url('admin-ajax.php');
 }
 .cbcs-search-input:focus { border-color: #c9a84c; }
 .cbcs-search-input::placeholder { color: #bbb; }
-
-/* ══ Department card grid ══════════════════════════════════ */
 .cbcs-dept-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -732,8 +683,6 @@ $ajax_url = admin_url('admin-ajax.php');
     gap: 18px;
     align-items: start;
 }
-
-/* The inline panel spans full grid width */
 .cbcs-inline-row {
     grid-column: 1 / -1;
     grid-row: auto;
@@ -843,8 +792,6 @@ $ajax_url = admin_url('admin-ajax.php');
     cursor: not-allowed;
 }
 .cbcs-view-btn[disabled]:hover { background: #fdfaf6; color: #5c1010; }
-
-/* ══ Inline table panel ════════════════════════════════════ */
 .cbcs-inline-wrap {
     background: #fff;
     border: 2px solid #c9a84c;
@@ -905,9 +852,6 @@ $ajax_url = admin_url('admin-ajax.php');
     transition: color .15s;
 }
 .cbcs-inline-close:hover { color: #8B1A1A; }
-
-/* Inline search bar */
-/* ══ Table ════════════════════════════════════════════════ */
 .cbcs-table-scroll { overflow-x: auto; }
 .cbcs-table {
     width: 100%;
@@ -971,8 +915,6 @@ $ajax_url = admin_url('admin-ajax.php');
     border-radius: 20px;
     border: 1px solid rgba(201,168,76,.4);
 }
-
-/* State rows */
 .cbcs-state-row {
     text-align: center;
     color: #aaa;
@@ -981,8 +923,6 @@ $ajax_url = admin_url('admin-ajax.php');
     font-style: italic;
 }
 .cbcs-empty { color: #ccc; }
-
-/* Spinner */
 .cbcs-spinner {
     display: inline-block;
     width: 15px; height: 15px;
@@ -994,8 +934,6 @@ $ajax_url = admin_url('admin-ajax.php');
     margin-right: 7px;
 }
 @keyframes cbcs-spin { to { transform: rotate(360deg); } }
-
-/* ══ Pagination ═══════════════════════════════════════════ */
 .cbcs-pagination {
     display: flex;
     align-items: center;
@@ -1039,11 +977,7 @@ $ajax_url = admin_url('admin-ajax.php');
     padding: 0 4px;
     line-height: 36px;
 }
-
-/* ── No data ── */
 .cbcs-no-data { color: #888; padding: 20px 0; }
-
-/* ── Responsive ── */
 @media (max-width: 768px) {
     .cbcs-filter-bar { padding: 16px; gap: 16px; }
     .cbcs-dept-grid  { grid-template-columns: 1fr 1fr; gap: 12px; }
