@@ -65,8 +65,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     <thead>
                         <tr>
                             <th style="width: 30%">Publication Title</th>
-                            <th style="width: 20%">Lead Author</th>
-                            <th style="width: 25%">Journal / Publisher</th>
+                            <th style="width: 25%">Lead Author</th>
+                            <th style="width: 20%">Journal / Publisher</th>
                             <th>Type & Indexing</th>
                             <th class="text-center">Action</th>
                         </tr>
