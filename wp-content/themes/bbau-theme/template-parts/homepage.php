@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <?php endif; ?>
                 </div>
             </div>
-            <a href="/notices/?category=Appointment" class="info-btn orange">
+            <a href="/career/" class="info-btn orange">
                 View All Appointments
                 <span class="arrow-icon">
                     <svg viewBox="0 0 24 24">
