@@ -135,9 +135,10 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
             <thead>
                 <tr>
                     <th style="width: 25%">Course Code</th>
-                    <th style="width: 40%">Title</th>
+                    <th style="width: 35%">Title</th>
                     <th style="width: 15%">Semester</th>
                     <th style="width: 20%">Credits</th>
+                    <th style="width: 10%">Course Type</th>
                 </tr>
             </thead>
             <tbody style="text-align:center;">
@@ -147,6 +148,14 @@ if (!is_wp_error($cbcs_res) && wp_remote_retrieve_response_code($cbcs_res) === 2
                     <td style="font-weight:700; color:#5c1010;"><?php echo esc_html($cc['course_title']); ?></td>
                     <td>Semester <?php echo esc_html($cc['semester']); ?></td>
                     <td><?php echo esc_html($cc['credits']); ?></td>
+                    <td>
+                        <?php if(!empty($cc['syllabus'])): ?>
+                        <a href="<?php echo $media_base . esc_url($cc['syllabus']); ?>" target="_blank"
+                            class="syllabus-btn"><i class="fas fa-file-alt"></i> Syllabus</a>
+                        <?php else: ?>
+                        <span style="color:#999;">--</span>
+                        <?php endif; ?>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
