@@ -22,7 +22,7 @@
     align-items: center;
     overflow: hidden;
     background: var(--rd-indigo) url('/wp-content/uploads/2026/04/rd-cell-image.png') center/cover no-repeat;
-    min-height: 310px;
+    min-height: 300px;
     padding: 40px 0;
     color: white;
 }
@@ -63,7 +63,7 @@
 }
 
 .hero-content-glass1 h1 {
-    font-weight: 800 !important;
+    font-weight: 700 !important;
     margin-bottom: 15px;
     color: white;
     letter-spacing: -0.03em;
@@ -226,7 +226,7 @@ input[type="date"].ra-select::-webkit-calendar-picker-indicator {
 }
 
 .premium-table td {
-    padding: 20px;
+    padding: 20px 11px;
     background: white;
     border-top: 1px solid #f1f5f9;
     border-bottom: 1px solid #f1f5f9;

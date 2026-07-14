@@ -31,7 +31,7 @@ if (!is_wp_error($materials_res) && wp_remote_retrieve_response_code($materials_
                 <h4><?php echo esc_html($tt['title']); ?></h4>
                 <!-- <p>Uploaded on: <?php echo date('d M Y', strtotime($tt['uploaded_at'])); ?></p> -->
             </div>
-            <a href="<?php echo $media_base . esc_url($tt['attachment']); ?>" target="_blank" class="tt-download">Download</a>
+            <a href="<?php echo $media_base . esc_url($tt['attachment']); ?>" target="_blank" class="tt-download">View</a>
         </div>
         <?php endforeach; ?>
     </div>
@@ -49,7 +49,7 @@ if (!is_wp_error($materials_res) && wp_remote_retrieve_response_code($materials_
             <div class="tt-icon"><i class="fa-solid fa-book-open"></i></div>
             <div class="tt-info">
                 <h4><?php echo esc_html($sm['title']); ?></h4>
-                <p>Uploaded on: <?php echo date('d M Y', strtotime($sm['uploaded_at'])); ?></p>
+                <!-- <p>Uploaded on: <?php echo date('d M Y', strtotime($sm['uploaded_at'])); ?></p> -->
             </div>
             <a href="<?php echo $media_base . esc_url($sm['attachment']); ?>" target="_blank" class="tt-download">Download</a>
         </div>
@@ -85,7 +85,7 @@ if (!is_wp_error($materials_res) && wp_remote_retrieve_response_code($materials_
 }
 
 .tt-icon {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: #8B1A1A;
 }
 
@@ -129,11 +129,11 @@ if (!is_wp_error($materials_res) && wp_remote_retrieve_response_code($materials_
 
 .material-card .tt-download {
     border-color: #1e40af;
-    color: #1e40af;
+    color: #1e40af !important;
 }
 
 .material-card .tt-download:hover {
     background: #1e40af;
-    color: #fff;
+    color: #fff !important;
 }
 </style>

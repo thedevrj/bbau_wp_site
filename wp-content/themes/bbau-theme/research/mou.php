@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Research Projects
+ * Template Name: MOU Template
  */
 
 get_header();
@@ -15,8 +15,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content-glass1 animate-up">
-                <div class="badge-new-rd1">Collaborative Research</div>
-                <h1 style="font-size: 2.0rem;">Research Projects</h1>
+                <div class="badge-new-rd1">Collaborations</div>
+                <h1 style="font-size: 2rem;">Memorandums of Understanding (MOU)</h1>
             </div>
         </div>
     </section>
@@ -28,31 +28,17 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         <div class="ra-glass-filters animate-up mt-4" style="animation-delay: 0.1s;">
             <div class="ra-search-box">
                 <i class="fas fa-search ra-search-icon"></i>
-                <input type="text" id="project-search" placeholder="Search by project title, PI or agency..."
+                <input type="text" id="mou-search" placeholder="Search by organization name or nature..."
                     autocomplete="off">
             </div>
 
             <div class="ra-filter-group">
                 <div class="filter-item">
-                    <label>Department</label>
-                    <select id="dept-filter" class="ra-select">
-                        <option value="">All Departments</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>Status</label>
-                    <select id="status-filter" class="ra-select">
-                        <option value="">Any Status</option>
-                        <option value="Ongoing">Ongoing</option>
-                        <option value="Completed">Completed</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>From Date</label>
+                    <label>From Signing Date</label>
                     <input type="date" id="start-date" class="ra-select">
                 </div>
                 <div class="filter-item">
-                    <label>To Date</label>
+                    <label>To Signing Date</label>
                     <input type="date" id="end-date" class="ra-select">
                 </div>
             </div>
@@ -60,31 +46,30 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
         <!-- MAIN CONTENT CARD -->
         <div class="rd-card-premium mt-5 animate-up mb-4" style="animation-delay: 0.2s;">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="rd-section-title m-0">Project Registry</h2>
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                <h2 class="rd-section-title m-0"> MOUs</h2>
                 <span class="badge bg-light text-dark px-3 py-2 border rounded-pill" id="record-count"
                     style="font-weight: 700; font-size: 0.8rem;">
-                    Syncing database...
+                    Syncing registry...
                 </span>
             </div>
 
             <div class="table-responsive">
-                <table class="premium-table" id="projects-table">
+                <table class="premium-table" id="mou-table">
                     <thead>
                         <tr>
-                            <th>Project Details</th>
-                            <th>Investigator</th>
-                            <th>Funding Agency</th>
-                            <th>Funding Amt.</th>
-                            <th>Status</th>
+                            <th>Partner / Organization</th>
+                            <th>Nature of Organization</th>
+                            <th>Date of Signing</th>
+                            <th>Valid Till</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="projects-tbody">
+                    <tbody id="mou-tbody">
                         <tr>
-                            <td colspan="6" class="text-center py-5">
+                            <td colspan="5" class="text-center py-5">
                                 <div class="rd-loader"></div>
-                                <p class="mt-3 text-muted">Retrieving institutional projects...</p>
+                                <p class="mt-3 text-muted">Accessing MOU records...</p>
                             </td>
                         </tr>
                     </tbody>
@@ -95,43 +80,40 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         </div>
     </div>
 
-    <!-- ENHANCED PROJECT MODAL -->
-    <div id="projectModal" class="premium-modal">
+    <!-- ENHANCED MOU MODAL -->
+    <div id="mouModal" class="premium-modal">
         <div class="modal-glass-overlay"></div>
         <div class="premium-modal-content">
             <span class="close-modal">&times;</span>
-            <div class="modal-badge mb-3" id="modal-status-badge">PROJECT</div>
-            <h2 id="modal-title" class="mb-4" style="font-size: 1.8rem; font-weight: 700; color: var(--rd-indigo);">
-                Project Title</h2>
+            <div class="modal-badge mb-3">MOU AGREEMENT</div>
+            <h2 id="modal-org-name" class="mb-4" style="font-size: 1.8rem; font-weight: 700; color: var(--rd-indigo);">
+                Organization Name</h2>
 
             <div class="modal-grid mb-4">
                 <div class="modal-info-item">
-                    <label>Principal Investigator</label>
-                    <div id="modal-pi" class="info-val"></div>
+                    <label>Nature of Organization</label>
+                    <div id="modal-nature" class="info-val"></div>
                 </div>
                 <div class="modal-info-item">
-                    <label>Co-Investigators</label>
-                    <div id="modal-copi" class="info-val"></div>
+                    <label>Date of Signing</label>
+                    <div id="modal-date-signing" class="info-val"></div>
                 </div>
                 <div class="modal-info-item">
-                    <label>Funding Agency</label>
-                    <div id="modal-agency" class="info-val"></div>
-                </div>
-                <div class="modal-info-item">
-                    <label>Grants Sanctioned</label>
-                    <div id="modal-amount" class="info-val" style="color: var(--rd-emerald);"></div>
-                </div>
-                <div class="modal-info-item">
-                    <label>Department</label>
-                    <div id="modal-dept" class="info-val"></div>
+                    <label>Valid Till</label>
+                    <div id="modal-valid-till" class="info-val"></div>
                 </div>
             </div>
 
-            <div class="modal-desc-section mt-4 pt-4 border-top">
+            <div class="modal-desc-section">
                 <label class="d-block mb-2"
-                    style="font-weight: 700; text-transform: uppercase; font-size: 0.75rem; color: #94a3b8;">Abstract /
-                    Objectives</label>
+                    style="font-weight: 700; text-transform: uppercase; font-size: 0.75rem; color: #64748b;">Description</label>
                 <div id="modal-description" class="modal-abstract"></div>
+            </div>
+            
+            <div class="mt-4" id="modal-doc-container" style="display: none;">
+                <a href="#" id="modal-doc-btn" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-file-pdf me-2"></i> View Document
+                </a>
             </div>
         </div>
     </div>
@@ -140,124 +122,76 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Parse department from URL query parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const deptParam = urlParams.get('department') || urlParams.get('department_slug') || '';
-
-    async function loadDynamicFilters() {
-        try {
-            const apiBase = "<?php echo esc_js($api_base); ?>";
-            const deptFilter = document.getElementById('dept-filter');
-
-            if (deptFilter) {
-                const dRes = await fetch(`${apiBase}/api/v1/departments/?page_size=500`);
-                if (dRes.ok) {
-                    const depts = await dRes.json();
-                    const dData = depts.results || depts;
-                    dData.forEach(d => {
-                        const displayName = d.campus === 'Satellite Campus Amethi' ? `${d.name} (Amethi)` : d.name;
-                        deptFilter.innerHTML += `<option value="${d.slug}">${displayName}</option>`;
-                    });
-                    if (deptParam) {
-                        deptFilter.value = deptParam;
-                    }
-                }
-            }
-        } catch (e) {
-            console.error("Filter Load Error:", e);
-        }
-    }
-    loadDynamicFilters();
-
-    const searchInput = document.getElementById('project-search');
-    const deptFilter = document.getElementById('dept-filter');
-    const statusFilter = document.getElementById('status-filter');
+    const searchInput = document.getElementById('mou-search');
     const startDate = document.getElementById('start-date');
     const endDate = document.getElementById('end-date');
-    const tbody = document.getElementById('projects-tbody');
+    const tbody = document.getElementById('mou-tbody');
     const recordCount = document.getElementById('record-count');
     const paginationControls = document.getElementById('pagination-controls');
     const apiBase = "<?php echo esc_js($api_base); ?>";
 
-    const modal = document.getElementById('projectModal');
+    const modal = document.getElementById('mouModal');
     const closeBtn = document.querySelector('.close-modal');
 
-    let projectsData = [];
+    let mouData = [];
     let debounceTimer;
 
-    function fetchProjects(url = null) {
+    function fetchMOUs(url = null) {
         if (!url) {
             const query = searchInput.value.toLowerCase().trim();
-            const dept = (deptFilter && deptFilter.options.length > 1) ? deptFilter.value : deptParam;
-            const status = statusFilter.value;
             const start = startDate.value;
             const end = endDate.value;
 
-
-            // Update the URL with the new department slug
-            if (typeof dept !== 'undefined') {
-                const currentUrl = new URL(window.location);
-                if (dept) {
-                    currentUrl.searchParams.set('department', dept);
-                } else {
-                    currentUrl.searchParams.delete('department');
-                }
-                
-                // Reset page on filter change
-                currentUrl.searchParams.delete('page');
-                window.history.pushState({}, '', currentUrl);
-            }
-
-            url = `${apiBase}/api/v1/research-projects/?page_size=10&`;
+            url = `${apiBase}/api/v1/mous/?page_size=10&`;
             if (query) url += `search=${encodeURIComponent(query)}&`;
-            if (dept) url += `department_slug=${encodeURIComponent(dept)}&`;
-            if (status) url += `status=${encodeURIComponent(status)}&`;
-            if (start) url += `project_date_after=${encodeURIComponent(start)}&`;
-            if (end) url += `project_date_before=${encodeURIComponent(end)}&`;
+            if (start) url += `mou_date_after=${encodeURIComponent(start)}&`;
+            if (end) url += `mou_date_before=${encodeURIComponent(end)}&`;
         }
 
         tbody.innerHTML =
-        `<tr><td colspan="6" class="text-center py-5"><div class="rd-loader"></div></td></tr>`;
+        `<tr><td colspan="5" class="text-center py-5"><div class="rd-loader"></div></td></tr>`;
 
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                projectsData = data.results || [];
-                renderTable(projectsData);
+                mouData = data.results || [];
+                renderTable(mouData);
                 renderPagination(data);
                 recordCount.textContent =
-                    `Displaying ${projectsData.length} of ${data.count || projectsData.length} Projects`;
+                    `Displaying ${mouData.length} of ${data.count || mouData.length} MOUs`;
             })
             .catch(err => {
                 tbody.innerHTML =
-                    `<tr><td colspan="6" class="text-danger text-center py-4">Error loading projects.</td></tr>`;
+                    `<tr><td colspan="5" class="text-danger text-center py-4">Error loading records.</td></tr>`;
             });
     }
 
-    function renderTable(projects) {
-        if (projects.length === 0) {
+    function renderTable(mous) {
+        if (mous.length === 0) {
             tbody.innerHTML =
-                `<tr><td colspan="6" class="text-center py-5 text-muted">No projects found.</td></tr>`;
+                `<tr><td colspan="5" class="text-center py-5 text-muted">No records found.</td></tr>`;
             return;
         }
 
-        tbody.innerHTML = projects.map((p, index) => {
-            const statusClass = (p.status || '').toLowerCase().replace(' ', '-');
-            const amount = p.amount_sanctioned ? '₹' + Number(p.amount_sanctioned).toLocaleString(
-                'en-IN') : '-';
-
+        tbody.innerHTML = mous.map((m, index) => {
+            const nature = (m.Nature_of_organization === 'Others' && m.other_nature_of_organization) ? m.other_nature_of_organization : m.Nature_of_organization;
+            
+            // Format dates slightly nicer if possible, otherwise use original
+            let signingDate = m.date_of_signing || '-';
+            let validTill = m.valid_till || '-';
+            
             return `
                 <tr class="animate-up" style="animation-delay: ${index * 0.05}s">
-                    <td class="fw-bold" style="color: var(--rd-royal); max-width: 350px;">${p.title}</td>
-                    <td>
-                        <div class="fw-bold">${p.pi_name || 'N/A'}</div>
-                        ${p.co_investigators_names?.length ? `<div class="small text-muted">Co-PI: ${p.co_investigators_names[0]}${p.co_investigators_names.length > 1 ? '...' : ''}</div>` : ''}
+                    <td class="fw-bold" data-label="Partner / Organization" style="color: var(--rd-royal); max-width: 350px;">
+                        ${m.organization_name}
                     </td>
-                    <td class="small">${p.funding_agency || '-'}</td>
-                    <td class="fw-bold text-success">${amount}</td>
-                    <td><span class="status-badge ${statusClass}">${p.status}</span></td>
-                    <td class="text-center">
-                        <button class="btn-rd-profile" onclick="openProjectModal(${index})"><i class="fas fa-info-circle"></i> Details</button>
+                    <td data-label="Nature">${nature || '-'}</td>
+                    <td data-label="Signed">${signingDate}</td>
+                    <td data-label="Valid Till">${validTill}</td>
+                    <td class="text-center" data-label="Action">
+                        <button class="btn-rd-profile" onclick="openMOUModal(${index})">
+                            <i class="fas fa-search-plus"></i> View Details
+                        </button>
                     </td>
                 </tr>
             `;
@@ -275,8 +209,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (data.previous) {
             const u = new URL(data.previous);
             if (u.searchParams.has('page_size')) pageSizeNum = parseInt(u.searchParams.get('page_size'));
-        } else if (window.location.href.includes('areas')) {
-            pageSizeNum = 12; 
         }
 
         const totalPages = Math.ceil(data.count / pageSizeNum);
@@ -303,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (pageNum === 1) currentUrl.searchParams.delete('page');
             else currentUrl.searchParams.set('page', pageNum);
             window.history.pushState({}, '', currentUrl);
-            fetchProjects(targetUrl);
+            fetchMOUs(targetUrl);
         };
 
         const prevBtn = document.createElement('button');
@@ -367,21 +299,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
         paginationControls.appendChild(paginationWrapper);
     }
-    window.openProjectModal = function(index) {
-        const proj = projectsData[index];
-        document.getElementById('modal-title').textContent = proj.title;
-        document.getElementById('modal-pi').textContent = proj.pi_name || 'N/A';
-        document.getElementById('modal-copi').textContent = proj.co_investigators_names?.join(', ') ||
-            'None';
-        document.getElementById('modal-agency').textContent = proj.funding_agency || 'N/A';
-        document.getElementById('modal-amount').textContent = proj.amount_sanctioned ? '₹' + Number(proj
-            .amount_sanctioned).toLocaleString('en-IN') : 'N/A';
-        document.getElementById('modal-dept').textContent = proj.department_name || 'N/A';
-        document.getElementById('modal-status-badge').textContent = proj.status || 'PROJECT';
-        document.getElementById('modal-status-badge').className =
-            `modal-badge ${(proj.status || '').toLowerCase().replace(' ', '-')}`;
-        document.getElementById('modal-description').innerHTML = proj.description ||
-            '<p class="text-muted">No details available.</p>';
+    
+    window.openMOUModal = function(index) {
+        const m = mouData[index];
+        const nature = (m.Nature_of_organization === 'Others' && m.other_nature_of_organization) ? m.other_nature_of_organization : m.Nature_of_organization;
+        
+        document.getElementById('modal-org-name').textContent = m.organization_name;
+        document.getElementById('modal-nature').textContent = nature || 'N/A';
+        document.getElementById('modal-date-signing').textContent = m.date_of_signing || 'N/A';
+        document.getElementById('modal-valid-till').textContent = m.valid_till || 'N/A';
+        
+        document.getElementById('modal-description').innerHTML = m.description ||
+            '<p class="text-muted">No description available.</p>';
+
+        const docContainer = document.getElementById('modal-doc-container');
+        const docBtn = document.getElementById('modal-doc-btn');
+        if (m.document) {
+            docBtn.href = m.document;
+            docContainer.style.display = 'block';
+        } else {
+            docContainer.style.display = 'none';
+        }
 
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
@@ -397,11 +335,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     searchInput.oninput = () => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => fetchProjects(), 400);
+        debounceTimer = setTimeout(() => fetchMOUs(), 400);
     };
-    [deptFilter, statusFilter, startDate, endDate].forEach(el => el.onchange = () => fetchProjects());
+    
+    [startDate, endDate].forEach(el => el.onchange = () => fetchMOUs());
 
-    fetchProjects();
+    fetchMOUs();
 });
 </script>
 
@@ -432,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
     position: relative;
     background: white;
     width: 90%;
-    max-width: 850px;
+    max-width: 800px;
     padding: 50px;
     border-radius: 32px;
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
@@ -475,25 +414,17 @@ document.addEventListener('DOMContentLoaded', function() {
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
-    background: #f1f5f9;
-    color: #475569;
+    background: #e0e7ff;
+    color: #3730a3;
     letter-spacing: 1px;
-}
-
-.modal-badge.ongoing {
-    background: #e0f2fe;
-    color: #0284c7;
-}
-
-.modal-badge.completed {
-    background: #dcfce7;
-    color: #166534;
 }
 
 .modal-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
+    gap: 20px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 30px;
 }
 
 .modal-info-item label {
@@ -509,7 +440,6 @@ document.addEventListener('DOMContentLoaded', function() {
     font-weight: 700;
     color: var(--rd-indigo);
     font-size: 1rem;
-    line-height: 1.4;
 }
 
 .modal-abstract {
@@ -518,25 +448,23 @@ document.addEventListener('DOMContentLoaded', function() {
     font-size: 1.05rem;
 }
 
-/* REUSE GLOBAL STATUS BADGES */
-.status-badge {
-    padding: 6px 12px;
+.btn-primary {
+    background-color: var(--rd-royal);
+    border: none;
+    padding: 10px 20px;
     border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
+    font-weight: 600;
+    text-decoration: none;
+    color: white !important;
+    transition: all 0.3s ease;
     display: inline-block;
-    white-space: nowrap;
 }
 
-.status-badge.ongoing {
-    background: #e0f2fe;
-    color: #0284c7;
-}
-
-.status-badge.completed {
-    background: #dcfce7;
-    color: #166534;
+.btn-primary:hover {
+    background-color: var(--rd-indigo);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 </style>
 

@@ -232,7 +232,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                         <div class="fac-card-premium">
                             <h3 class="rd-section-title">Invited Talks & Lectures</h3>
                             <?php if (!empty($fac['invited_talks'])): ?>
-                            <div class="table-responsive">
+                            <div class="table-responsive fac-table-scroll">
                                 <table class="fac-table">
                                     <thead>
                                         <tr>
@@ -248,20 +248,24 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                                             <td class="fw-bold" data-label="Title">
                                                 <?php echo esc_html($talk['title']); ?>
                                                 <?php if (!empty($talk['link'])): ?>
-                                                <a href="<?php echo esc_url($talk['link']); ?>" target="_blank" class="ms-1" title="View Link"><i class="fas fa-external-link-alt" style="font-size:0.8rem; color:#b91c1c;"></i></a>
+                                                <a href="<?php echo esc_url($talk['link']); ?>" target="_blank"
+                                                    class="ms-1" title="View Link"><i class="fas fa-external-link-alt"
+                                                        style="font-size:0.8rem; color:#b91c1c;"></i></a>
                                                 <?php endif; ?>
                                             </td>
                                             <td data-label="Event">
                                                 <?php echo esc_html($talk['event_name']); ?>
                                                 <?php if (!empty($talk['venue'])): ?>
-                                                <br><small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i><?php echo esc_html($talk['venue']); ?></small>
+                                                <br><small class="text-muted"><i
+                                                        class="fas fa-map-marker-alt me-1"></i><?php echo esc_html($talk['venue']); ?></small>
                                                 <?php endif; ?>
                                             </td>
                                             <td data-label="Role">
                                                 <?php if (!empty($talk['role'])): ?>
-                                                    <span class="fac-status-badge active"><?php echo esc_html($talk['role']); ?></span>
+                                                <span
+                                                    class="fac-status-badge active"><?php echo esc_html($talk['role']); ?></span>
                                                 <?php else: ?>
-                                                    -
+                                                -
                                                 <?php endif; ?>
                                             </td>
                                             <td data-label="Date">
@@ -304,7 +308,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                         <div class="fac-card-premium mb-4">
                             <h3 class="rd-section-title">Courses Designed & Developed</h3>
                             <?php if (!empty($fac['course_designs'])): ?>
-                            <div class="table-responsive">
+                            <div class="table-responsive fac-table-scroll">
                                 <table class="fac-table">
                                     <thead>
                                         <tr>
@@ -320,15 +324,16 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                                                 <?php echo esc_html($course['course_name']); ?>
                                             </td>
                                             <td class="fw-bold" data-label="Description">
-                                            <?php if (!empty($course['description'])): ?>
+                                                <?php if (!empty($course['description'])): ?>
                                                 <div><?php echo wp_kses_post($course['description']); ?></div>
                                                 <?php endif; ?>
                                             </td>
                                             <td data-label="Level">
                                                 <?php if (!empty($course['course_level'])): ?>
-                                                    <span class="fac-status-badge active"><?php echo esc_html($course['course_level']); ?></span>
+                                                <span
+                                                    class="fac-status-badge active"><?php echo esc_html($course['course_level']); ?></span>
                                                 <?php else: ?>
-                                                    -
+                                                -
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -347,7 +352,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                         <div class="fac-card-premium mb-4">
                             <h3 class="rd-section-title">Memberships / Experts</h3>
                             <?php if (!empty($fac['memberships'])): ?>
-                            <div class="table-responsive">
+                            <div class="table-responsive fac-table-scroll">
                                 <table class="fac-table">
                                     <thead>
                                         <tr>
@@ -428,8 +433,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (tab.dataset.load === 'true') {
                 if (target === 'others') {
-                    loadTabData('patents', document.querySelector('.dynamic-feed-container[data-api="others"]'));
-                    loadTabData('consultancies', document.querySelector('.dynamic-feed-container[data-api="consultancies"]'));
+                    loadTabData('patents', document.querySelector(
+                        '.dynamic-feed-container[data-api="others"]'));
+                    loadTabData('consultancies', document.querySelector(
+                        '.dynamic-feed-container[data-api="consultancies"]'));
                 } else {
                     loadTabData(target);
                 }
@@ -459,7 +466,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
             case 'projects':
                 endpoint = '/api/v1/research-projects/';
-                filterParam = 'principal_investigator__slug';
+                filterParam = 'pi__slug';
                 break;
             case 'scholars':
                 endpoint = '/api/v1/research-scholars/';
@@ -490,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderData(type, records, container) {
-        let html = '<div class="table-responsive"><table class="fac-table"><thead><tr>';
+        let html = '<div class="table-responsive fac-table-scroll"><table class="fac-table"><thead><tr>';
 
         // Dynamic Headers
         if (type === 'publications') {
@@ -525,7 +532,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     `<td class="fw-bold" data-label="Project Title">${r.title}</td><td data-label="Agency">${r.funding_agency || '-'}</td><td data-label="Amount">${r.amount_sanctioned || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
             } else if (type === 'scholars') {
                 html +=
-                    `<td data-label="Enroll No.">${r.enrollment_no || '-'}</td><td class="fw-bold" data-label="Scholar Name">${r.scholar_name}</td><td data-label="Topic">${r.research_topic || '-'}</td><td data-label="Topic">${r.registration_year || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
+                    `<td data-label="Enroll No.">${r.enrollment_no || '-'}</td><td class="fw-bold" data-label="Scholar Name">${r.scholar_name}</td><td data-label="Topic">${r.subject || '-'}</td><td data-label="Topic">${r.registration_year || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
             }
             html += '</tr>';
         });
@@ -545,6 +552,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .empty-state {
     padding: 0 40px;
+}
 
+.portfolio-contact-list .contact-item span,
+.portfolio-contact-list .contact-item {
+    word-break: break-all;
+    overflow-wrap: break-word;
+    flex: 1;
+}
+
+/* Custom Scroll for Tables */
+.fac-table-scroll {
+    max-height: 450px;
+    overflow-y: auto;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.fac-table-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.fac-table-scroll::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+.fac-table-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+.fac-table-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Make headers sticky so they remain visible while scrolling */
+.fac-table-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #f8fafc;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); /* Subtle shadow under header */
 }
 </style>

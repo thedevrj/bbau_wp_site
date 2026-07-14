@@ -18,7 +18,8 @@ $minutes = array();
 $authority_title = "Finance Committee";
 
 if (!is_wp_error($response_members) && wp_remote_retrieve_response_code($response_members) === 200) {
-    $members = json_decode(wp_remote_retrieve_body($response_members), true);
+    $decoded = json_decode(wp_remote_retrieve_body($response_members), true);
+    $members = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
 }
 
 
@@ -180,7 +181,8 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const res = await fetch(minutesApiUrl, { headers });
             if (!res.ok) throw new Error('Failed to fetch');
-            const data = await res.json();
+            const data_raw = await res.json();
+            const data = data_raw.results !== undefined ? data_raw.results : data_raw;
             
             if (data.length === 0) {
                 minutesContainer.innerHTML = `
@@ -248,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="min-info">
                             <strong>${title} ${privateBadge}</strong>
-                            <span>Download PDF <i class="fa-solid fa-file-pdf"></i></span>
+                            <span>View PDF <i class="fa-solid fa-file-pdf"></i></span>
                         </div>
                     </a>`;
                 }

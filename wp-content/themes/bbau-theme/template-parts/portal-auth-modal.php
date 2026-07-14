@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const mediaBase = "<?= $media_base ?>";
     const apiBase = isLocal ? 'http://localhost:8001/api/v1/' :`${mediaBase}/api/v1/`;
-    const authApiBase = apiBase.replace('/api/v1', '');
+    const authApiBase = apiBase.replace('/api/v1/', '');
 
     // Handle Login Submit
     const loginForm = document.getElementById('staff-login-form');

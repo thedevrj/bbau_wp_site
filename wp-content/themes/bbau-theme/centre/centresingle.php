@@ -105,14 +105,13 @@ get_header();
 <?php get_footer(); ?>
 
 
-<!--  CSS -->
 <style>
-/* ================= PAGE BACKGROUND ================= */
+
 .centre-page-wrapper {
     background: #f7f4ef;
 }
 
-/* ================= MENU ================= */
+/*  MENU  */
 .centre-nav {
     background: linear-gradient(90deg, #8B1A1A, #5c1010);
     display: flex;
@@ -150,7 +149,6 @@ get_header();
     border-bottom: 3px solid #c9a84c;
 }
 
-/* ================= TITLE ================= */
 .page-title {
     font-family: 'Merriweather', serif;
     font-size: 26px;
@@ -162,7 +160,6 @@ get_header();
     text-align: left;
 }
 
-/* ================= HOD CARD ================= */
 .head-card {
     background: #fff;
     border: 1px solid #e2d9cc;
@@ -214,7 +211,6 @@ get_header();
 .head-left {
     background: linear-gradient(160deg, #5c1010, #8B1A1A);
     width: 300px;
-    /* 🔥 increased */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -223,7 +219,6 @@ get_header();
     padding: 40px 24px;
 }
 
-/* ================= AVATAR ================= */
 .avatar {
     width: 150px;
     height: 150px;
@@ -232,7 +227,6 @@ get_header();
     overflow: hidden;
 }   
 
-/* ================= BADGE ================= */
 .head-badge {
     background: #c9a84c;
     color: #5c1010;
@@ -243,10 +237,8 @@ get_header();
     border-radius: 20px;
 }
 
-/* ================= RIGHT ================= */
 .head-right {
     padding: 30px 35px;
-    /* 🔥 better spacing */
 }
 
 .head-right .name {
@@ -264,7 +256,6 @@ get_header();
     font-weight: 500;
 }
 
-/* ================= CONTACT ================= */
 /* CONTACT WRAPPER */
 .contacts {
     display: flex;
@@ -281,16 +272,13 @@ get_header();
     color: #555;
 }
 
-/* ICON FIX WIDTH */
 .icon {
     width: 24px;
     text-align: center;
 }
 
-/* LABEL FIX WIDTH */
 .label {
     min-width: 70px;
-    /* 🔥 alignment magic */
     font-weight: 600;
     color: #5c1010;
 }
@@ -310,7 +298,6 @@ get_header();
     text-decoration: underline;
 }
 
-/* ================= SECTIONS ================= */
 .section h3 {
     font-family: 'Merriweather', serif;
     color: #5c1010;
@@ -345,7 +332,6 @@ get_header();
     color: #5c1010;
 }
 
-/* ================= RESPONSIVE ================= */
 @media (max-width: 580px) {
     .head-card {
         flex-direction: column;

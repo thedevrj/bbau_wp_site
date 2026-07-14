@@ -64,9 +64,9 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 <table class="premium-table" id="pubs-table">
                     <thead>
                         <tr>
-                            <th>Publication Title</th>
-                            <th>Lead Author</th>
-                            <th>Journal / Publisher</th>
+                            <th style="width: 30%">Publication Title</th>
+                            <th style="width: 25%">Lead Author</th>
+                            <th style="width: 20%">Journal / Publisher</th>
                             <th>Type & Indexing</th>
                             <th class="text-center">Action</th>
                         </tr>
@@ -129,6 +129,10 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
+    // Parse department from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const deptParam = urlParams.get('department') || urlParams.get('department_slug') || '';
+
     // --- DYNAMIC FILTERS ---
     async function loadDynamicFilters() {
         try {
@@ -144,6 +148,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         const displayName = d.campus === 'Satellite Campus Amethi' ? `${d.name} (Amethi)` : d.name;
                         deptFilter.innerHTML += `<option value="${d.slug}">${displayName}</option>`;
                     });
+                    if (deptParam) {
+                        deptFilter.value = deptParam;
+                    }
                 }
             }
         } catch (e) {
@@ -170,9 +177,24 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchPublications(url = null) {
         if (!url) {
             const query = searchInput.value.toLowerCase().trim();
-            const dept = deptFilter.value;
+            const dept = (deptFilter && deptFilter.options.length > 1) ? deptFilter.value : deptParam;
             const start = startDate.value;
             const end = endDate.value;
+
+
+            // Update the URL with the new department slug
+            if (typeof dept !== 'undefined') {
+                const currentUrl = new URL(window.location);
+                if (dept) {
+                    currentUrl.searchParams.set('department', dept);
+                } else {
+                    currentUrl.searchParams.delete('department');
+                }
+                
+                // Reset page on filter change
+                currentUrl.searchParams.delete('page');
+                window.history.pushState({}, '', currentUrl);
+            }
 
             url = `${apiBase}/api/v1/publications/?page_size=10&`;
             if (query) url += `search=${encodeURIComponent(query)}&`;
@@ -214,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return `
                 <tr class="animate-up" style="animation-delay: ${index * 0.05}s">
                     <td class="fw-bold" data-label="Publication Title" style="color: var(--rd-royal); max-width: 400px;">${p.title}</td>
-                    <td data-label="Lead Author">${p.faculty_name || 'N/A'}</td>
+                    <td data-label="Authors">${p.full_author_list || 'N/A'}</td>
                     <td class="small text-muted" data-label="Journal / Publisher">${p.name_of_journal_or_conference_or_publisher || '-'}</td>
                     <td data-label="Type & Indexing">
                         <span class="status-badge bg-light text-dark border mb-1">${p.publication_type || 'Paper'}</span>
@@ -230,29 +252,111 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderPagination(data) {
         paginationControls.innerHTML = '';
-        if (!data.next && !data.previous) return;
+        if (!data.count) return;
 
-        if (data.previous) {
-            const btn = document.createElement('button');
-            btn.className = 'btn-rd-profile';
-            btn.innerHTML = '<i class="fas fa-chevron-left"></i> Previous';
-            btn.onclick = () => fetchPublications(data.previous);
-            paginationControls.appendChild(btn);
-        }
-
+        let pageSizeNum = 10;
         if (data.next) {
-            const btn = document.createElement('button');
-            btn.className = 'btn-rd-profile';
-            btn.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
-            btn.onclick = () => fetchPublications(data.next);
-            paginationControls.appendChild(btn);
+            const u = new URL(data.next);
+            if (u.searchParams.has('page_size')) pageSizeNum = parseInt(u.searchParams.get('page_size'));
+        } else if (data.previous) {
+            const u = new URL(data.previous);
+            if (u.searchParams.has('page_size')) pageSizeNum = parseInt(u.searchParams.get('page_size'));
+        } else if (window.location.href.includes('areas')) {
+            pageSizeNum = 12; 
         }
-    }
 
+        const totalPages = Math.ceil(data.count / pageSizeNum);
+        if (totalPages <= 1) return;
+
+        let currentPage = 1;
+        const browserUrl = new URL(window.location);
+        if (browserUrl.searchParams.has('page')) {
+            currentPage = parseInt(browserUrl.searchParams.get('page')) || 1;
+        }
+
+        const paginationWrapper = document.createElement('div');
+        paginationWrapper.className = 'd-flex justify-content-center gap-2 mt-4 flex-wrap';
+
+        const generatePageUrl = (pageNum) => {
+            let base = data.next || data.previous;
+            const urlObj = new URL(base);
+            urlObj.searchParams.set('page', pageNum);
+            return urlObj.toString();
+        };
+
+        const fetchPage = (pageNum, targetUrl) => {
+            const currentUrl = new URL(window.location);
+            if (pageNum === 1) currentUrl.searchParams.delete('page');
+            else currentUrl.searchParams.set('page', pageNum);
+            window.history.pushState({}, '', currentUrl);
+            fetchPublications(targetUrl);
+        };
+
+        const prevBtn = document.createElement('button');
+        prevBtn.className = `btn-rd-profile ${currentPage === 1 ? 'disabled' : ''}`;
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        if (currentPage > 1) {
+            prevBtn.onclick = () => fetchPage(currentPage - 1, generatePageUrl(currentPage - 1));
+        }
+        paginationWrapper.appendChild(prevBtn);
+
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, currentPage + 2);
+        
+        if (startPage > 1) {
+            const firstBtn = document.createElement('button');
+            firstBtn.className = 'btn-rd-profile';
+            firstBtn.innerText = '1';
+            firstBtn.onclick = () => fetchPage(1, generatePageUrl(1));
+            paginationWrapper.appendChild(firstBtn);
+            if (startPage > 2) {
+                const dots = document.createElement('span');
+                dots.innerText = '...';
+                dots.className = 'px-2 align-self-center text-muted';
+                paginationWrapper.appendChild(dots);
+            }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            const pageBtn = document.createElement('button');
+            pageBtn.className = `btn-rd-profile ${i === currentPage ? 'active' : ''}`;
+            if (i === currentPage) {
+                pageBtn.style.background = 'var(--rd-royal)';
+                pageBtn.style.color = 'white';
+            }
+            pageBtn.innerText = i;
+            pageBtn.onclick = () => fetchPage(i, generatePageUrl(i));
+            paginationWrapper.appendChild(pageBtn);
+        }
+
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                const dots = document.createElement('span');
+                dots.innerText = '...';
+                dots.className = 'px-2 align-self-center text-muted';
+                paginationWrapper.appendChild(dots);
+            }
+            const lastBtn = document.createElement('button');
+            lastBtn.className = 'btn-rd-profile';
+            lastBtn.innerText = totalPages;
+            lastBtn.onclick = () => fetchPage(totalPages, generatePageUrl(totalPages));
+            paginationWrapper.appendChild(lastBtn);
+        }
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = `btn-rd-profile ${currentPage === totalPages ? 'disabled' : ''}`;
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        if (currentPage < totalPages) {
+            nextBtn.onclick = () => fetchPage(currentPage + 1, generatePageUrl(currentPage + 1));
+        }
+        paginationWrapper.appendChild(nextBtn);
+
+        paginationControls.appendChild(paginationWrapper);
+    }
     window.openPubModal = function(index) {
         const pub = pubsData[index];
         document.getElementById('modal-title').textContent = pub.title;
-        document.getElementById('modal-author').textContent = pub.faculty_name || 'N/A';
+        document.getElementById('modal-author').textContent = pub.full_author_list || 'N/A';
         document.getElementById('modal-venue').textContent = pub
             .name_of_journal_or_conference_or_publisher || 'N/A';
         document.getElementById('modal-date').textContent = pub.publication_date || 'N/A';
