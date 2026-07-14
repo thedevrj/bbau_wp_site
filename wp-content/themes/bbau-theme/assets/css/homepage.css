@@ -288,9 +288,7 @@
 
 @media (max-width:767px) {
   .hero-caption {
-    right: 14px;
-    left: 14px;
-    bottom: 20px;
+    display: none;
   }
 
   /* nirf ranking css on hero banner */
@@ -298,7 +296,7 @@
   .hero-rankings {
     left: 14px;
     right: 14px;
-    bottom: 220px;
+    bottom: 20px;
     flex-direction: row;
     justify-content: space-between;
     gap: 10px;
@@ -1052,48 +1050,51 @@
 /* ================= CARD ================= */
 .info-card {
   background: #ffffff;
-  border: 1px solid #d1d5db; /* Clean, flat grey border */
-  border-radius: 0; /* Sharp corners like IITK */
-  box-shadow: none; /* No drop shadows */
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   min-height: 420px;
   max-height: 420px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .info-card:hover {
-  /* No lifting or shadows on hover */
-  transform: none;
-  box-shadow: none;
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.15);
 }
 
 /* ================= TITLE ================= */
 .info-title {
   font-family: "Poppins", sans-serif;
-  font-size: 18px;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #005C83;
-  background: #ffffff;
+  color: #ffffff;
   text-align: left;
-  padding: 20px 24px;
-  border-bottom: 2px solid #f1f5f9;
+  padding: 18px 20px;
   flex-shrink: 0;
   margin: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.info-title::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 24px;
-  width: 40px;
-  height: 2px;
-  background: #e8871e;
-}
+/* Distinct Header Colors & Icons */
+.info-col:nth-child(1) .info-title { background: linear-gradient(135deg, #005C83, #003b54); }
+.info-col:nth-child(1) .info-title::before { content: "\f0a1"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
+
+.info-col:nth-child(2) .info-title { background: linear-gradient(135deg, #d96f12, #a85207); }
+.info-col:nth-child(2) .info-title::before { content: "\f073"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
+
+.info-col:nth-child(3) .info-title { background: linear-gradient(135deg, #A41F7F, #6e1154); }
+.info-col:nth-child(3) .info-title::before { content: "\f0b1"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
+
+.info-col:nth-child(4) .info-title { background: linear-gradient(135deg, #1f1f1f, #000000); }
+.info-col:nth-child(4) .info-title::before { content: "\f56e"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
 
 /* ================= SCROLL AREA ================= */
 .info-scroll {
@@ -1103,20 +1104,24 @@
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-color: #d94a2c #f1f1f1;
+  scrollbar-color: #cbd5e1 transparent;
 }
 
 .info-scroll::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 .info-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
 }
 
 .info-scroll::-webkit-scrollbar-thumb {
-  background: #d94a2c;
+  background: #cbd5e1;
   border-radius: 10px;
+}
+
+.info-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 /* ================= ITEM ================= */
@@ -1125,44 +1130,89 @@
   align-items: flex-start;
   gap: 12px;
   padding: 16px 20px;
-  font-family: "Arial", "Poppins", sans-serif;
-  font-size: 14.5px;
-  font-weight: 400;
-  color: #333333; /* Standard dark grey text */
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #334155 !important;
   text-decoration: none;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #f1f5f9;
   line-height: 1.5;
+  background: #ffffff;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+/* Base side border - invisible by default */
+.info-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
   background: transparent;
-  transition: all 0.2s ease;
+  transition: background 0.25s ease;
 }
 
 .info-item::before {
-  content: "»"; /* Classic academic double chevron */
-  color: #B33923; /* IITK Red */
-  font-size: 18px;
-  font-weight: bold;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-  line-height: 1.1;
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 13px;
+  color: #94a3b8;
+  margin-top: 3px;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
-/* ── Hover ── */
+/* ── Hover Effects ── */
 .info-item:hover {
-  background: #f9fafb; /* Subtle flat grey */
-  color: #B33923 !important; /* Turns bold IITK red */
-  text-decoration: underline; /* Classic underline */
-  padding-left: 20px; /* No sliding */
+  background: #f8fafc;
+  padding-left: 24px;
 }
 
 .info-item:hover::before {
-  color: #B33923 !important;
   transform: translateX(4px);
+}
+
+/* Color Matching on Hover */
+.info-col:nth-child(1) .info-item:hover { color: #005C83; font-weight: 600; }
+.info-col:nth-child(1) .info-item:hover::before { color: #005C83; }
+.info-col:nth-child(1) .info-item:hover::after { background: #005C83; }
+
+.info-col:nth-child(2) .info-item:hover { color: #d96f12; font-weight: 600; }
+.info-col:nth-child(2) .info-item:hover::before { color: #d96f12; }
+.info-col:nth-child(2) .info-item:hover::after { background: #d96f12; }
+
+.info-col:nth-child(3) .info-item:hover { color: #A41F7F; font-weight: 600; }
+.info-col:nth-child(3) .info-item:hover::before { color: #A41F7F; }
+.info-col:nth-child(3) .info-item:hover::after { background: #A41F7F; }
+
+.info-col:nth-child(4) .info-item:hover { color: #1f1f1f; font-weight: 600; }
+.info-col:nth-child(4) .info-item:hover::before { color: #1f1f1f; }
+.info-col:nth-child(4) .info-item:hover::after { background: #1f1f1f; }
+
+/* Empty state */
+span.info-item {
+  display: block;
+  text-align: center;
+  padding-top: 30px !important;
+  padding-left: 20px !important;
+  color: #94a3b8 !important;
+  border-bottom: none;
+  font-style: italic;
+}
+span.info-item::before, span.info-item::after {
+  display: none !important;
+}
+span.info-item:hover {
+  background: transparent;
+  transform: none;
 }
 
 /* ================= BUTTON ================= */
 .info-btn {
   height: 52px;
-  border-radius: 16px;
+  border-radius: 12px;
   background: #ffffff !important;
   border: 1px solid transparent;
   padding: 0 20px;
