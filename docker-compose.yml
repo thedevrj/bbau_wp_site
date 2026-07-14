@@ -11,7 +11,7 @@ services:
       - db_data:/var/lib/mysql
 
   wordpress:
-    image: wordpress:6.5-php8.2-apache
+    image: wordpress:7.0-php8.2-apache
     container_name: wp-${WP_ENV}
     restart: always
     env_file: .env
@@ -44,6 +44,7 @@ services:
       - "${PMA_PORT}:80"
 
 volumes:
+  wordpress_core:
   db_data:
 
 networks:
