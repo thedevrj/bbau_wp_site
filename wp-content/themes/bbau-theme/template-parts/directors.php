@@ -28,7 +28,7 @@ get_header();
             <div class="tm-grid">
 
                 <?php if( have_rows('team_members') ) : ?>
-                    <?php while( have_rows('team_members') ) : the_row();
+                <?php while( have_rows('team_members') ) : the_row();
 
                         $name        = get_sub_field('name');
                         $image       = get_sub_field('image');
@@ -43,64 +43,60 @@ get_header();
                         }
                     ?>
 
-                    <div class="tm-card">
+                <div class="tm-card">
 
-                        <!-- TOP BAR -->
-                        <div class="tm-top-bar">
-                            <div class="tm-bar-circle"></div>
+                    <!-- TOP BAR -->
+                    <div class="tm-top-bar">
+                        <div class="tm-bar-circle"></div>
+                    </div>
+
+                    <!-- PHOTO -->
+                    <div class="tm-image-wrap">
+                        <?php if( $img_url ): ?>
+                        <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($name); ?>"
+                            class="tm-image">
+                        <?php else: ?>
+                        <div class="tm-avatar">
+                            <?php echo esc_html($initials); ?>
                         </div>
+                        <?php endif; ?>
+                    </div>
 
-                        <!-- PHOTO -->
-                        <div class="tm-image-wrap">
-                            <?php if( $img_url ): ?>
-                                <img src="<?php echo esc_url($img_url); ?>"
-                                     alt="<?php echo esc_attr($name); ?>"
-                                     class="tm-image">
-                            <?php else: ?>
-                                <div class="tm-avatar">
-                                    <?php echo esc_html($initials); ?>
-                                </div>
-                            <?php endif; ?>
+                    <!-- CONTENT -->
+                    <div class="tm-content">
+
+                        <?php if($name): ?>
+                        <p class="tm-name"><?php echo esc_html($name); ?></p>
+                        <?php endif; ?>
+
+                        <?php if($designation): ?>
+                        <span class="tm-designation">
+                            <?php echo esc_html($designation); ?>
+                        </span>
+                        <?php endif; ?>
+
+                        <?php if($center_name): ?>
+                        <div class="tm-center-name">
+                            <i class="fa-solid fa-building-columns"></i>
+                            <?php echo esc_html($center_name); ?>
                         </div>
+                        <?php endif; ?>
 
-                        <!-- CONTENT -->
-                        <div class="tm-content">
-
-                            <?php if($name): ?>
-                                <p class="tm-name"><?php echo esc_html($name); ?></p>
-                            <?php endif; ?>
-
-                            <?php if($designation): ?>
-                                <span class="tm-designation">
-                                    <?php echo esc_html($designation); ?>
-                                </span>
-                            <?php endif; ?>
-
-                            <?php if($center_name): ?>
-                                <div class="tm-center-name">
-                                    <i class="fa-solid fa-building-columns"></i>
-                                    <?php echo esc_html($center_name); ?>
-                                </div>
-                            <?php endif; ?>
-
-                            <?php if($button_link): ?>
-                                <a href="<?php echo esc_url($button_link); ?>"
-                                   class="tm-btn"
-                                   target="_blank"
-                                   rel="noopener noreferrer">
-                                    View Profile
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            <?php endif; ?>
-
-                        </div>
+                        <?php if($button_link): ?>
+                        <a href="<?php echo esc_url($button_link); ?>" class="tm-btn" rel="noopener noreferrer">
+                            View Profile
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <?php endif; ?>
 
                     </div>
 
-                    <?php endwhile; ?>
+                </div>
+
+                <?php endwhile; ?>
 
                 <?php else: ?>
-                    <p class="tm-empty">No team members found.</p>
+                <p class="tm-empty">No team members found.</p>
                 <?php endif; ?>
 
             </div>
@@ -111,7 +107,6 @@ get_header();
 </div>
 
 <style>
-
 /* =========================
 PAGE
 ========================= */
@@ -148,18 +143,32 @@ CARD
 
 .tm-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 18px 40px rgba(0,0,0,0.09);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.09);
 }
 
 /* =========================
 TOP BAR COLOURS — nth-child
 ========================= */
 
-.tm-card:nth-child(5n+1) .tm-top-bar { background: #334a62; }
-.tm-card:nth-child(5n+2) .tm-top-bar { background: #854F0B; }
-.tm-card:nth-child(5n+3) .tm-top-bar { background: #993556; }
-.tm-card:nth-child(5n+4) .tm-top-bar { background: #576017; }
-.tm-card:nth-child(5n+5) .tm-top-bar { background: #993C1D; }
+.tm-card:nth-child(5n+1) .tm-top-bar {
+    background: #334a62;
+}
+
+.tm-card:nth-child(5n+2) .tm-top-bar {
+    background: #854F0B;
+}
+
+.tm-card:nth-child(5n+3) .tm-top-bar {
+    background: #993556;
+}
+
+.tm-card:nth-child(5n+4) .tm-top-bar {
+    background: #576017;
+}
+
+.tm-card:nth-child(5n+5) .tm-top-bar {
+    background: #993C1D;
+}
 
 /* =========================
 TOP BAR
@@ -178,7 +187,7 @@ TOP BAR
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
     top: -25px;
     right: -15px;
 }
@@ -203,7 +212,7 @@ IMAGE WRAP — overlaps bar
     border: 3px solid #ffffff;
     display: block;
     margin: 0 auto;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
 /* =========================
@@ -222,14 +231,28 @@ AVATAR FALLBACK
     font-weight: 700;
     margin: 0 auto;
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
-.tm-card:nth-child(5n+1) .tm-avatar { background: #334a62; }
-.tm-card:nth-child(5n+2) .tm-avatar { background: #854F0B; }
-.tm-card:nth-child(5n+3) .tm-avatar { background: #993556; }
-.tm-card:nth-child(5n+4) .tm-avatar { background: #576017; }
-.tm-card:nth-child(5n+5) .tm-avatar { background: #993C1D; }
+.tm-card:nth-child(5n+1) .tm-avatar {
+    background: #334a62;
+}
+
+.tm-card:nth-child(5n+2) .tm-avatar {
+    background: #854F0B;
+}
+
+.tm-card:nth-child(5n+3) .tm-avatar {
+    background: #993556;
+}
+
+.tm-card:nth-child(5n+4) .tm-avatar {
+    background: #576017;
+}
+
+.tm-card:nth-child(5n+5) .tm-avatar {
+    background: #993C1D;
+}
 
 /* =========================
 CONTENT
@@ -270,11 +293,30 @@ DESIGNATION BADGE
     line-height: 1.5;
 }
 
-.tm-card:nth-child(5n+1) .tm-designation { background: #E1F5EE; color: #334a62; }
-.tm-card:nth-child(5n+2) .tm-designation { background: #FAEEDA; color: #633806; }
-.tm-card:nth-child(5n+3) .tm-designation { background: #FBEAF0; color: #72243E; }
-.tm-card:nth-child(5n+4) .tm-designation { background: #EEEDFE; color: #576017; }
-.tm-card:nth-child(5n+5) .tm-designation { background: #FAECE7; color: #712B13; }
+.tm-card:nth-child(5n+1) .tm-designation {
+    background: #E1F5EE;
+    color: #334a62;
+}
+
+.tm-card:nth-child(5n+2) .tm-designation {
+    background: #FAEEDA;
+    color: #633806;
+}
+
+.tm-card:nth-child(5n+3) .tm-designation {
+    background: #FBEAF0;
+    color: #72243E;
+}
+
+.tm-card:nth-child(5n+4) .tm-designation {
+    background: #EEEDFE;
+    color: #576017;
+}
+
+.tm-card:nth-child(5n+5) .tm-designation {
+    background: #FAECE7;
+    color: #712B13;
+}
 
 /* =========================
 CENTER NAME
@@ -303,11 +345,25 @@ CENTER NAME
     flex-shrink: 0;
 }
 
-.tm-card:nth-child(5n+1) .tm-center-name i { color: #334a62; }
-.tm-card:nth-child(5n+2) .tm-center-name i { color: #854F0B; }
-.tm-card:nth-child(5n+3) .tm-center-name i { color: #993556; }
-.tm-card:nth-child(5n+4) .tm-center-name i { color: #576017; }
-.tm-card:nth-child(5n+5) .tm-center-name i { color: #993C1D; }
+.tm-card:nth-child(5n+1) .tm-center-name i {
+    color: #334a62;
+}
+
+.tm-card:nth-child(5n+2) .tm-center-name i {
+    color: #854F0B;
+}
+
+.tm-card:nth-child(5n+3) .tm-center-name i {
+    color: #993556;
+}
+
+.tm-card:nth-child(5n+4) .tm-center-name i {
+    color: #576017;
+}
+
+.tm-card:nth-child(5n+5) .tm-center-name i {
+    color: #993C1D;
+}
 
 /* =========================
 BUTTON
@@ -343,11 +399,25 @@ BUTTON
     transform: translateX(3px);
 }
 
-.tm-card:nth-child(5n+1) .tm-btn { background: #334a62; }
-.tm-card:nth-child(5n+2) .tm-btn { background: #854F0B; }
-.tm-card:nth-child(5n+3) .tm-btn { background: #993556; }
-.tm-card:nth-child(5n+4) .tm-btn { background: #576017; }
-.tm-card:nth-child(5n+5) .tm-btn { background: #993C1D; }
+.tm-card:nth-child(5n+1) .tm-btn {
+    background: #334a62;
+}
+
+.tm-card:nth-child(5n+2) .tm-btn {
+    background: #854F0B;
+}
+
+.tm-card:nth-child(5n+3) .tm-btn {
+    background: #993556;
+}
+
+.tm-card:nth-child(5n+4) .tm-btn {
+    background: #576017;
+}
+
+.tm-card:nth-child(5n+5) .tm-btn {
+    background: #993C1D;
+}
 
 /* =========================
 EMPTY
@@ -365,7 +435,9 @@ EMPTY
 ========================= */
 
 @media (max-width: 1400px) {
-    .tm-grid { grid-template-columns: repeat(4, 1fr); }
+    .tm-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 /* =========================
@@ -373,7 +445,9 @@ EMPTY
 ========================= */
 
 @media (max-width: 1200px) {
-    .tm-grid { grid-template-columns: repeat(3, 1fr); }
+    .tm-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 /* =========================
@@ -381,7 +455,10 @@ EMPTY
 ========================= */
 
 @media (max-width: 992px) {
-    .tm-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .tm-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
 }
 
 /* =========================
@@ -389,11 +466,28 @@ EMPTY
 ========================= */
 
 @media (max-width: 768px) {
-    .tm-main-heading { font-size: 26px; }
-    .tm-grid { gap: 14px; }
-    .tm-image  { width: 66px; height: 66px; }
-    .tm-avatar { width: 66px; height: 66px; font-size: 20px; }
-    .tm-name   { font-size: 13px; }
+    .tm-main-heading {
+        font-size: 26px;
+    }
+
+    .tm-grid {
+        gap: 14px;
+    }
+
+    .tm-image {
+        width: 66px;
+        height: 66px;
+    }
+
+    .tm-avatar {
+        width: 66px;
+        height: 66px;
+        font-size: 20px;
+    }
+
+    .tm-name {
+        font-size: 13px;
+    }
 }
 
 /* =========================
@@ -406,11 +500,29 @@ EMPTY
         max-width: 300px;
         margin: 0 auto;
     }
-    .tm-main-heading { font-size: 22px; }
-    .tm-image  { width: 70px; height: 70px; }
-    .tm-avatar { width: 70px; height: 70px; font-size: 22px; }
-    .tm-name   { font-size: 14px; }
-    .tm-content { padding: 0 14px 16px; }
+
+    .tm-main-heading {
+        font-size: 22px;
+    }
+
+    .tm-image {
+        width: 70px;
+        height: 70px;
+    }
+
+    .tm-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 22px;
+    }
+
+    .tm-name {
+        font-size: 14px;
+    }
+
+    .tm-content {
+        padding: 0 14px 16px;
+    }
 }
 
 /* =========================
@@ -418,12 +530,25 @@ EMPTY
 ========================= */
 
 @media (max-width: 380px) {
-    .tm-grid   { max-width: 100%; }
-    .tm-image  { width: 62px; height: 62px; }
-    .tm-avatar { width: 62px; height: 62px; font-size: 20px; }
-    .tm-name   { font-size: 13px; }
-}
+    .tm-grid {
+        max-width: 100%;
+    }
 
+    .tm-image {
+        width: 62px;
+        height: 62px;
+    }
+
+    .tm-avatar {
+        width: 62px;
+        height: 62px;
+        font-size: 20px;
+    }
+
+    .tm-name {
+        font-size: 13px;
+    }
+}
 </style>
 
 <?php get_footer(); ?>
