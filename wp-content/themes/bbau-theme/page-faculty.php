@@ -30,6 +30,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     $total_count = isset($decoded['count']) ? $decoded['count'] : count($faculty_list);
     $next_page = isset($decoded['next']) ? $decoded['next'] : null;
     $prev_page = isset($decoded['previous']) ? $decoded['previous'] : null;
+    shuffle($faculty_list);
 }
 
 // Fetch schools and departments for filter dropdowns (fetch all, not paginated)
