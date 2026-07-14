@@ -288,9 +288,7 @@
 
 @media (max-width:767px) {
   .hero-caption {
-    right: 14px;
-    left: 14px;
-    bottom: 20px;
+    display: none;
   }
 
   /* nirf ranking css on hero banner */
@@ -298,7 +296,7 @@
   .hero-rankings {
     left: 14px;
     right: 14px;
-    bottom: 220px;
+    bottom: 20px;
     flex-direction: row;
     justify-content: space-between;
     gap: 10px;
@@ -1017,40 +1015,86 @@
   align-items: start;
 }
 
+/* ================= ANIMATIONS ================= */
+@keyframes fadeInUpBounce {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes breatheGlow {
+  0% { box-shadow: 0 10px 30px rgba(0, 92, 131, 0.04); }
+  100% { box-shadow: 0 18px 45px rgba(0, 92, 131, 0.15); }
+}
+
+@keyframes shimmerBtn {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
 /* ================= COLUMN WRAPPER ================= */
 .info-col {
   display: flex;
   flex-direction: column;
   min-width: 0;
   gap: 10px;
-  /* ← gap between card and button */
+  opacity: 0;
+  animation: fadeInUpBounce 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+.info-col:nth-child(1) { animation-delay: 0.1s; }
+.info-col:nth-child(2) { animation-delay: 0.25s; }
+.info-col:nth-child(3) { animation-delay: 0.4s; }
+.info-col:nth-child(4) { animation-delay: 0.55s; }
 
 /* ================= CARD ================= */
 .info-card {
   background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  /* ← full radius all sides */
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   min-height: 420px;
   max-height: 420px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.15);
 }
 
 /* ================= TITLE ================= */
 .info-title {
   font-family: "Poppins", sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  color: #d94a2c;
-  text-align: center;
-  padding: 14px 16px;
-  border-bottom: 1px solid #e5e5e5;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: left;
+  padding: 18px 20px;
   flex-shrink: 0;
   margin: 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
+
+/* Distinct Header Colors & Icons */
+.info-col:nth-child(1) .info-title { background: linear-gradient(135deg, #005C83, #003b54); }
+.info-col:nth-child(1) .info-title::before { content: "\f0a1"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
+
+.info-col:nth-child(2) .info-title { background: linear-gradient(135deg, #d96f12, #a85207); }
+.info-col:nth-child(2) .info-title::before { content: "\f073"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
+
+.info-col:nth-child(3) .info-title { background: linear-gradient(135deg, #A41F7F, #6e1154); }
+.info-col:nth-child(3) .info-title::before { content: "\f0b1"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
+
+.info-col:nth-child(4) .info-title { background: linear-gradient(135deg, #1f1f1f, #000000); }
+.info-col:nth-child(4) .info-title::before { content: "\f56e"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
 
 /* ================= SCROLL AREA ================= */
 .info-scroll {
@@ -1060,60 +1104,117 @@
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-color: #d94a2c #f1f1f1;
+  scrollbar-color: #cbd5e1 transparent;
 }
 
 .info-scroll::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 .info-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
 }
 
 .info-scroll::-webkit-scrollbar-thumb {
-  background: #d94a2c;
+  background: #cbd5e1;
   border-radius: 10px;
+}
+
+.info-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 /* ================= ITEM ================= */
 .info-item {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 16px;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
   font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  color: #000000 !important;
+  font-size: 16px;
+  font-weight: 500;
+  color: #334155 !important;
   text-decoration: none;
-  border-bottom: 1px solid #e6e6e6;
-  transition: background 0.3s ease, color 0.3s ease;
+  border-bottom: 1px solid #f1f5f9;
+  line-height: 1.5;
+  background: #ffffff;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+/* Base side border - invisible by default */
+.info-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: transparent;
+  transition: background 0.25s ease;
 }
 
 .info-item::before {
-  content: "•";
-  color: #d94a2c;
-  font-size: 18px;
-  flex-shrink: 0;
-  transition: color 0.3s ease;
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 13px;
+  color: #94a3b8;
+  margin-top: 3px;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
-/* ── Hover: red fill, white text ── */
+/* ── Hover Effects ── */
 .info-item:hover {
-  background: #c0391b;
-  color: #ffffff !important;
+  background: #f8fafc;
+  padding-left: 24px;
 }
 
 .info-item:hover::before {
-  color: #ffffff !important;
+  transform: translateX(4px);
+}
+
+/* Color Matching on Hover */
+.info-col:nth-child(1) .info-item:hover { color: #005C83; font-weight: 600; }
+.info-col:nth-child(1) .info-item:hover::before { color: #005C83; }
+.info-col:nth-child(1) .info-item:hover::after { background: #005C83; }
+
+.info-col:nth-child(2) .info-item:hover { color: #d96f12; font-weight: 600; }
+.info-col:nth-child(2) .info-item:hover::before { color: #d96f12; }
+.info-col:nth-child(2) .info-item:hover::after { background: #d96f12; }
+
+.info-col:nth-child(3) .info-item:hover { color: #A41F7F; font-weight: 600; }
+.info-col:nth-child(3) .info-item:hover::before { color: #A41F7F; }
+.info-col:nth-child(3) .info-item:hover::after { background: #A41F7F; }
+
+.info-col:nth-child(4) .info-item:hover { color: #1f1f1f; font-weight: 600; }
+.info-col:nth-child(4) .info-item:hover::before { color: #1f1f1f; }
+.info-col:nth-child(4) .info-item:hover::after { background: #1f1f1f; }
+
+/* Empty state */
+span.info-item {
+  display: block;
+  text-align: center;
+  padding-top: 30px !important;
+  padding-left: 20px !important;
+  color: #94a3b8 !important;
+  border-bottom: none;
+  font-style: italic;
+}
+span.info-item::before, span.info-item::after {
+  display: none !important;
+}
+span.info-item:hover {
+  background: transparent;
+  transform: none;
 }
 
 /* ================= BUTTON ================= */
 .info-btn {
   height: 52px;
-  border-radius: 8px;
-  /* ← full radius all sides, fully separate */
-  border: none;
+  border-radius: 12px;
+  background: #ffffff !important;
+  border: 1px solid transparent;
   padding: 0 20px;
   display: flex;
   align-items: center;
@@ -1121,39 +1222,56 @@
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   font-weight: 600;
-  color: #ffffff !important;
   text-decoration: none;
   flex-shrink: 0;
-  transition: filter 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.info-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transform: skewX(-20deg);
+  animation: shimmerBtn 3.5s infinite;
+  pointer-events: none;
 }
 
 /* ── Button Colours ── */
 .info-btn.orange {
-  background: #e8871e;
+  color: #d96f12 !important;
+  border-color: #d96f12;
 }
 
 .info-btn.dark {
-  background: #1a1a1a;
+  color: #005C83 !important;
+  border-color: #005C83;
 }
 
 .info-btn.red {
-  background: #c0391b;
+  color: #A41F7F !important;
+  border-color: #A41F7F;
 }
 
 /* ── Hover ── */
 .info-btn.orange:hover {
-  filter: brightness(1.1);
-  color: #ffffff;
+  background: #d96f12 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(217, 111, 18, 0.2);
 }
 
 .info-btn.dark:hover {
-  filter: brightness(1.4);
-  color: #ffffff;
+  background: #005C83 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(0, 92, 131, 0.2);
 }
 
 .info-btn.red:hover {
-  filter: brightness(1.1);
-  color: #ffffff;
+  background: #A41F7F !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(164, 31, 127, 0.2);
 }
 
 /* ── Arrow Circle ── */
@@ -1161,32 +1279,31 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.7);
+  border: 2px solid currentColor;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: border-color 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .info-btn .arrow-icon svg {
   width: 17px;
   height: 17px;
   fill: none;
-  stroke: #ffffff;
+  stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ── Arrow moves right on hover ── */
-.info-btn:hover .arrow-icon svg {
-  transform: translateX(4px);
+.info-btn:hover {
+  transform: translateY(-4px);
 }
-
-.info-btn:hover .arrow-icon {
-  border-color: rgba(255, 255, 255, 0.9);
+.info-btn:hover .arrow-icon svg {
+  transform: translateX(5px);
 }
 
 /* ================= VIEW ALL BUTTONS SECTION ================= */
