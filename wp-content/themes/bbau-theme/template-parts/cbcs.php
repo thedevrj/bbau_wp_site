@@ -315,6 +315,12 @@ $ajax_url = admin_url('admin-ajax.php');
             const deptId      = parseInt(card.dataset.deptId, 10);
             const deptName    = (card.dataset.deptName || '').toLowerCase();
 
+            // Toggle individual UG/PG badges based on the active level filter
+            const ugBadge = card.querySelector('.badge-ug');
+            const pgBadge = card.querySelector('.badge-pg');
+            if (ugBadge) ugBadge.style.display = (gState.level === 'all' || gState.level === 'ug') ? '' : 'none';
+            if (pgBadge) pgBadge.style.display = (gState.level === 'all' || gState.level === 'pg') ? '' : 'none';
+
             let visible = true;
             if (gState.level !== 'all' && !cardLevels.includes('all') && !cardLevels.includes(gState.level)) {
                 visible = false;
@@ -477,7 +483,7 @@ $ajax_url = admin_url('admin-ajax.php');
                 '<td class="col-title">' + esc(title) + '</td>' +
                 '<td class="col-level"><span class="cbcs-level-badge ' + levelClass + '">' + levelLabel + '</span></td>' +
                 '<td class="col-sem">Sem&nbsp;' + esc(String(sem)) + '</td>' +
-                '<td class="col-credits"><span class="credit-pill">' + esc(String(credits)) + '&nbsp;cr</span></td>' +
+                '<td class="col-credits"><span class="credit-pill">' + esc(String(credits)) + '&nbsp;</span></td>' +
                 '</tr>';
         }).join('');
 
