@@ -1048,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     '';
 
                 return `
-                <div class="col-md-6 col-lg-4 d-flex">
+                <div class="col-md-6 col-lg-6 d-flex">
                     <${WrapperTag} ${hrefAttr} class="sc-notice-card w-100">
                         <div class="sc-notice-date-box">
                             <span class="day">${new Date(item.date_posted).getDate()}</span>
@@ -1206,7 +1206,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <i class="fa-solid fa-file-lines"></i>
                             </div>
                             <div class="sc-list-meta-info d-flex flex-column" style="gap: 6px;">
-                                <h3 class="sc-list-title mb-0">${result.department_name}</h3>
+                                <h3 class="sc-list-title mb-0">${result.programme_name}</h3>
                                 <div class="sc-list-date">
                                     <i class="fa-regular fa-calendar-alt me-2" style="color: var(--sc-gold);"></i>
                                     ${new Date(result.upload_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}

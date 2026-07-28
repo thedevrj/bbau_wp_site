@@ -154,7 +154,7 @@
                     class="logo me-2" alt="University Logo"></a>
 
                 <div class="univ-name">
-                    <div class="univ-hindi">
+                    <div class="univ-hindi text-center">
                         <a href="/"> बाबासाहेब भीमराव अम्बेडकर विश्वविद्यालय</a>
                     </div>
 
