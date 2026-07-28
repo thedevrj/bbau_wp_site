@@ -630,6 +630,8 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
 
 .cbcs-filter-group-grow .cbcs-search-input {
     width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
 }
 
 .cbcs-filter-label {
