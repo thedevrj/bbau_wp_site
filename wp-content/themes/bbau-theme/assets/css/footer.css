@@ -56,10 +56,7 @@
 /* ==================================================
    CONTACT / ADDRESS COLUMN
 ================================================== */
-.footer-contact h4 {
-  font-size: 20px;
-  margin-bottom: 0;
-}
+
 
 .footer-contact p {
   font-size: 15.5px;
@@ -190,19 +187,85 @@
 /* Mobile */
 @media (max-width: 767px) {
   .footer-main {
-    padding: 45px 20px 35px;
+    padding: 35px 20px 25px;
     text-align: left;
+    gap: 0 !important;
   }
 
-  .footer-col h4 {
+  /* Accordion Styling for top 3 columns */
+  .footer-col:not(.footer-contact) {
+    margin-bottom: 12px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-col:not(.footer-contact) h4 {
     font-size: 18px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.3s ease;
+  }
+
+  .footer-col:not(.footer-contact) h4:hover {
+    color: #FF9933 !important;
+  }
+
+  /* Plus Icon for Accordion */
+  .footer-col:not(.footer-contact) h4::after {
+    content: '+';
+    font-size: 24px;
+    font-weight: 300;
+    color: #FF9933;
+    transition: transform 0.3s ease;
+  }
+
+  /* Active state logic */
+  .footer-col.active:not(.footer-contact) h4::after {
+    transform: rotate(45deg);
+  }
+
+  .footer-col.active:not(.footer-contact) h4 {
+    margin-bottom: 15px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+    padding-bottom: 15px;
+  }
+
+  /* Hide all contents initially on mobile (only for non-contact columns) */
+  .footer-col:not(.footer-contact) > *:not(h4) {
+    display: none;
+    animation: fadeInFooter 0.3s ease forwards;
+  }
+
+  /* Show contents when active */
+  .footer-col.active:not(.footer-contact) > *:not(h4) {
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  /* Contact Column Mobile Styles (No Accordion) */
+  .footer-contact {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
   }
 
   .footer-contact h4 {
-    font-size: 18px;
+    font-size: 20px;
+    margin-bottom: 15px;
   }
 
-  .footer-social {
-    margin-top: 14px;
+  /* Left align the contact info on mobile for better reading */
+  .footer-contact p.text-center {
+    text-align: left !important;
+  }
+
+  @keyframes fadeInFooter {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }

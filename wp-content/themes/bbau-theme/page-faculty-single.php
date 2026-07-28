@@ -232,7 +232,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                         <div class="fac-card-premium">
                             <h3 class="rd-section-title">Invited Talks & Lectures</h3>
                             <?php if (!empty($fac['invited_talks'])): ?>
-                            <div class="table-responsive">
+                            <div class="table-responsive fac-table-scroll">
                                 <table class="fac-table">
                                     <thead>
                                         <tr>
@@ -308,7 +308,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                         <div class="fac-card-premium mb-4">
                             <h3 class="rd-section-title">Courses Designed & Developed</h3>
                             <?php if (!empty($fac['course_designs'])): ?>
-                            <div class="table-responsive">
+                            <div class="table-responsive fac-table-scroll">
                                 <table class="fac-table">
                                     <thead>
                                         <tr>
@@ -352,7 +352,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                         <div class="fac-card-premium mb-4">
                             <h3 class="rd-section-title">Memberships / Experts</h3>
                             <?php if (!empty($fac['memberships'])): ?>
-                            <div class="table-responsive">
+                            <div class="table-responsive fac-table-scroll">
                                 <table class="fac-table">
                                     <thead>
                                         <tr>
@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderData(type, records, container) {
-        let html = '<div class="table-responsive"><table class="fac-table"><thead><tr>';
+        let html = '<div class="table-responsive fac-table-scroll"><table class="fac-table"><thead><tr>';
 
         // Dynamic Headers
         if (type === 'publications') {
@@ -559,5 +559,36 @@ document.addEventListener('DOMContentLoaded', function() {
     word-break: break-all;
     overflow-wrap: break-word;
     flex: 1;
+}
+
+/* Custom Scroll for Tables */
+.fac-table-scroll {
+    max-height: 450px;
+    overflow-y: auto;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.fac-table-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.fac-table-scroll::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+.fac-table-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+.fac-table-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Make headers sticky so they remain visible while scrolling */
+.fac-table-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #f8fafc;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); /* Subtle shadow under header */
 }
 </style>

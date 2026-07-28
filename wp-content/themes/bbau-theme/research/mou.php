@@ -47,7 +47,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         <!-- MAIN CONTENT CARD -->
         <div class="rd-card-premium mt-5 animate-up mb-4" style="animation-delay: 0.2s;">
             <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-                <h2 class="rd-section-title m-0">Collaborative MOUs</h2>
+                <h2 class="rd-section-title m-0"> MOUs</h2>
                 <span class="badge bg-light text-dark px-3 py-2 border rounded-pill" id="record-count"
                     style="font-weight: 700; font-size: 0.8rem;">
                     Syncing registry...
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
     border-radius: 20px;
     font-weight: 600;
     text-decoration: none;
-    color: white;
+    color: white !important;
     transition: all 0.3s ease;
     display: inline-block;
 }
