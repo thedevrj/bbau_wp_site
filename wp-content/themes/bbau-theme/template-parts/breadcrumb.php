@@ -56,7 +56,6 @@
 <style>
 /* Fixed vertical rhythm — same on every screen size, no breakpoint changes this */
 .bcf-wrapper {
-  background: #ede8de !important;
   padding: 20px 0 !important;
   margin: 0 !important;
 }
