@@ -53,8 +53,6 @@ h1 {
   background: var(--s-bg) !important;
   min-height: 55vh;
 }
-
-/* ================= REMOVE OLD IMAGE BACKGROUND ================= */
 .page-template-about-bg {
   background-image: none !important;
 }
@@ -88,13 +86,10 @@ h1 {
     font-size: 26px;
   }
 }
-
 /* =====================================================
    HERO BANNER
 ===================================================== */
-/* =====================================================
-   DESIGN TOKENS
-===================================================== */
+
 :root {
   --navy: #1a2e4a;
   --navy-dark: #0f1e33;
@@ -153,6 +148,14 @@ h1 {
   object-position: center 30%;
 }
 
+/* Tablet: bump the mobile-image height up so text centers correctly
+   in the 768–991px range (Bootstrap's d-lg-none covers this range too) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .img-fluid.d-lg-none.h_sm_204 {
+    height: 250px;
+  }
+}
+
 
 /* =====================================================
    HEIGHT UTILITIES
@@ -165,6 +168,12 @@ h1 {
   height: 204px !important;
 }
 
+@media (min-width: 768px) and (max-width: 991px) {
+  .h_sm_204 {
+    height: 250px !important;
+  }
+}
+
 
 /* =====================================================
    SUBPAGE HERO TEXT
@@ -173,8 +182,11 @@ h1 {
   position: absolute !important;
   z-index: 10;
   top: 50%;
-  left: clamp(1.5rem, 6vw, 5rem);
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 498px;
+  text-align: center;
   animation: slideReveal 0.9s var(--ease-expo) 0.1s both;
 }
 
@@ -200,11 +212,11 @@ h1 {
 }
 
 .text_medium {
-  font-weight: 600 !important;
+  font-weight: 600 !important;;
 }
 
 .text_40 {
-  font-size: 40px !important;
+  font-size: 40px !important;;
 }
 
 .line_height_48 {
@@ -212,11 +224,11 @@ h1 {
 }
 
 .sm_text_32 {
-  font-size: 32px !important;
+  font-size: 32px !important;;
 }
 
 .sm_line_height_38 {
-  line-height: 38px !important;
+  line-height: 38px !important;;
 }
 
 
@@ -226,13 +238,13 @@ h1 {
 @keyframes slideReveal {
   from {
     opacity: 0;
-    transform: translateY(calc(-50% + 18px));
+    transform: translate(-50%, calc(-50% + 18px));
     filter: blur(4px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
     filter: blur(0);
   }
 }
@@ -241,313 +253,42 @@ h1 {
 /* =====================================================
    RESPONSIVE
 ===================================================== */
+
+/* Mobile: under 767px */
 @media (max-width: 767px) {
   .subpage-hero-text {
-    top: 30%;
-    font-size: 15px !important;
-    left: 1.25rem;
-    transform: none;
-    animation: none;
-    opacity: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 92%;
   }
 }
 
-@media only screen and (min-width: 834px) and (orientation: landscape) {
-  .subpage-hero-text {
-    left: 10%;
-  }
-}
-
-@media (min-width: 992px) {
-  .subpage-hero-text {
-    left: 15%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .subpage-hero-text {
-    left: 5%;
-  }
-}
-
-@media (min-width: 1200px) {
+/* Tablet: 768px to 991px */
+@media (min-width: 768px) and (max-width: 991px) {
   .subpage-hero-text {
     top: 50%;
-    transform: translateY(-50%);
-    left: 12%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
   }
 }
 
-@media (min-width: 1536px) {
+/* Desktop: 992px and up */
+@media (min-width: 992px) {
   .subpage-hero-text {
-    left: 15%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 498px;
   }
 }
 
-@media (min-width: 1680px) {
-  .subpage-hero-text {
-    left: 18%;
-  }
-}
 
-@media (min-width: 1920px) {
-  .subpage-hero-text {
-    left: 22%;
-  }
-}
-
-@media (min-width: 2560px) {
-  .subpage-hero-text {
-    left: 29%;
-  }
-}
 
 
 /* =====================================================
-   REDUCED MOTION
-===================================================== */
-@media (prefers-reduced-motion: reduce) {
-  .subpage-hero-text {
-    animation: none;
-  }
-
-  .container-fluid.position-relative.px-0.overflow-hidden:hover .img-fluid.d-lg-block.h_xl_250.object-fit-cover {
-    transform: none;
-  }
-}
-
-/* =====================================================
-   BREADCRUMB SECTION
-===================================================== */
-
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  overflow-x: auto;
-  padding: 0;
-  margin: 0;
-}
-
-/* =====================================================
-   BREADCRUMB ITEM
-===================================================== */
-.breadcrumb-item {
-  display: flex;
-  align-items: center;
-  position: relative;
-  margin-right: -43px;
-}
-
-.breadcrumb-item:last-child {
-  margin-right: 0;
-}
-
-/* =====================================================
-   BREADCRUMB LINK
-===================================================== */
-.breadcrumb-link {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 22px 8px 26px;
-  text-decoration: none;
-  color: #ffffff !important;
-  font-size: 14px;
-  font-weight: 500;
-  background: linear-gradient(135deg, #4a9fb8 0%, #3b8ca3 100%);
-  position: relative;
-  clip-path: polygon(0 0,
-      calc(100% - 22px) 0,
-      100% 50%,
-      calc(100% - 22px) 100%,
-      0 100%,
-      22px 50%);
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  z-index: 1;
-}
-
-/* Code-style symbol before breadcrumb text */
-.breadcrumb-code {
-  font-family: monospace;
-  font-size: 13px;
-  font-weight: 600;
-  color: #ffffff;
-  padding: 1px 0px;
-  border-radius: 4px;
-  line-height: 1;
-}
-
-
-/* =====================================================
-   FIRST ITEM (NO LEFT CHEVRON)
-===================================================== */
-.breadcrumb-item:first-child .breadcrumb-link {
-  padding-left: 8px;
-  clip-path: polygon(0 0,
-      calc(100% - 22px) 0,
-      100% 50%,
-      calc(100% - 22px) 100%,
-      0 100%);
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-
-/* =====================================================
-   LAST ITEM (NO RIGHT CHEVRON + ACTIVE)
-===================================================== */
-.breadcrumb-item:last-child .breadcrumb-link {
-  padding-right: 8px;
-  font-weight: 600;
-  clip-path: polygon(0 0,
-      100% 0,
-      100% 100%,
-      0 100%,
-      22px 50%);
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  background: linear-gradient(135deg, #5eb3cc 0%, #4a9fb8 100%);
-}
-
-/* =====================================================
-   HOVER EFFECT
-===================================================== */
-.breadcrumb-link:hover {
-  background: linear-gradient(135deg, #5eb3cc 0%, #4a9fb8 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(74, 159, 184, 0.3);
-}
-
-/* =====================================================
-   ICON
-===================================================== */
-.breadcrumb-icon {
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.breadcrumb-icon svg {
-  width: 100%;
-  height: 100%;
-  fill: currentColor;
-}
-
-/* =====================================================
-   BREADCRUMB – UNIVERSAL RESPONSIVE FIX
-===================================================== */
-
-/* ---------- Small mobiles (≤ 360px) ---------- */
-@media (max-width: 360px) {
-  .breadcrumb-link {
-    font-size: 11px;
-    padding: 8px 26px 8px 18px;
-  }
-
-  .breadcrumb-item {
-    margin-right: -30px;
-  }
-}
-
-/* ---------- Mobile phones (≤ 480px) ---------- */
-@media (max-width: 480px) {
-  .breadcrumb {
-    gap: 6px;
-    padding-bottom: 4px;
-  }
-
-  .breadcrumb-link {
-    font-size: 12px;
-    padding: 9px 28px 9px 20px;
-  }
-}
-
-/* ---------- Tablets portrait (481px – 768px) ---------- */
-@media (min-width: 481px) and (max-width: 768px) {
-  .breadcrumb-link {
-    font-size: 13px;
-    padding: 9px 30px 9px 22px;
-  }
-
-  .breadcrumb-item {
-    margin-right: -36px;
-  }
-}
-
-/* ---------- Tablets landscape (769px – 1024px) ---------- */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .breadcrumb-link {
-    font-size: 14px;
-    padding: 7px 26px 8px 24px;
-  }
-}
-
-/* ---------- Large desktops (≥ 1440px) ---------- */
-@media (min-width: 1440px) {
-  .breadcrumb-link {
-    font-size: 15px;
-    padding: 8px 30px 9px 28px;
-  }
-}
-
-/* ---------- Touch improvement ---------- */
-@media (hover: none) {
-  .breadcrumb-link:hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-/* ================= MOBILE BREADCRUMB – SIMPLE LINE ================= */
-
-@media (max-width: 576px) {
-
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 2px;
-  }
-
-  .breadcrumb-item {
-    margin: 0 !important;
-  }
-
-  .breadcrumb-link {
-    clip-path: none !important;
-    /* remove zig-zag */
-    background: none !important;
-    /* remove pill bg */
-    color: #003366 !important;
-    padding: 0 !important;
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  /* > separator */
-  .breadcrumb-item+.breadcrumb-item::before {
-    content: ">";
-    margin: 0 2px;
-    color: #555;
-    font-weight: 600;
-  }
-
-  /* hide icons & code on mobile */
-  .breadcrumb-icon,
-  .breadcrumb-code {
-    display: none;
-  }
-}
-
-/* =====================================================
-   ABOUT PAGE – FINAL MAGAZINE WRAP (FIXED)
-===================================================== */
-/* =====================================================
-   ABOUT MAGAZINE LAYOUT
+   ABOUT PAGE – 
 ===================================================== */
 
 .about-section {
