@@ -315,8 +315,14 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
         const matches = [];
         allCards.forEach(function(card) {
             const cardLevels = (card.dataset.level || 'all').split(' ');
-            const deptId = parseInt(card.dataset.deptId, 10);
-            const deptName = (card.dataset.deptName || '').toLowerCase();
+            const deptId      = parseInt(card.dataset.deptId, 10);
+            const deptName    = (card.dataset.deptName || '').toLowerCase();
+
+            // Toggle individual UG/PG badges based on the active level filter
+            const ugBadge = card.querySelector('.badge-ug');
+            const pgBadge = card.querySelector('.badge-pg');
+            if (ugBadge) ugBadge.style.display = (gState.level === 'all' || gState.level === 'ug') ? '' : 'none';
+            if (pgBadge) pgBadge.style.display = (gState.level === 'all' || gState.level === 'pg') ? '' : 'none';
 
             let visible = true;
             if (gState.level !== 'all' && !cardLevels.includes('all') && !cardLevels.includes(gState
@@ -498,7 +504,7 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
                 '</span></td>' +
                 '<td class="col-sem">Sem&nbsp;' + esc(String(sem)) + '</td>' +
                 '<td class="col-credits"><span class="credit-pill">' + esc(String(credits)) +
-                '&nbsp;cr</span></td>' +
+                '&nbsp;</span></td>' +
                 '<td class="col-syllabus">' + (syllabus ? '<a href="'+ (syllabus.startsWith('/') ? mediaBase.replace(/\/$/, '') + syllabus : esc(syllabus)) +'" class="link-new credit-pill" data-code="' + esc(code) + '" target="_blank">View</a>' : '—') + '</td>' +
                 '</tr>';
         }).join('');
