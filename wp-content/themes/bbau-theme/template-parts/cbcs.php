@@ -504,7 +504,7 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
                 '</span></td>' +
                 '<td class="col-sem">Sem&nbsp;' + esc(String(sem)) + '</td>' +
                 '<td class="col-credits"><span class="credit-pill">' + esc(String(credits)) +
-                '&nbsp;cr</span></td>' +
+                '&nbsp;</span></td>' +
                 '<td class="col-syllabus">' + (syllabus ? '<a href="'+ (syllabus.startsWith('/') ? mediaBase.replace(/\/$/, '') + syllabus : esc(syllabus)) +'" class="link-new credit-pill" data-code="' + esc(code) + '" target="_blank">View</a>' : '—') + '</td>' +
                 '</tr>';
         }).join('');
