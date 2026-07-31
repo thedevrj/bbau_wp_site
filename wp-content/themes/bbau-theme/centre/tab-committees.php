@@ -23,47 +23,60 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
         <div class="col-lg-6 mb-3">
             <h3>Centre Committees</h3>
             <?php if(!empty($committees_list)): ?>
-            <div class="committees-wrap">
-                <?php foreach($committees_list as $committee): ?>
-                <div class="committee-card">
-                    <div class="committee-header d-flex justify-content-between align-items-center flex-wrap gap-3">
-                        <h4 class="mb-0"><?php echo esc_html($committee['name']); ?></h4>
+            <div class="committees-wrap accordion" id="committeesAccordion">
+                <?php foreach($committees_list as $index => $committee): ?>
+                <div class="committee-card ">
+                    <div class="committee-header d-flex justify-content-between align-items-center flex-wrap gap-3"
+                        style="cursor: pointer;" data-bs-toggle="collapse"
+                        data-bs-target="#collapseCommittee<?php echo $index; ?>"
+                        aria-expanded="<?php echo $index === 0 ? 'true' : 'false'; ?>">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                            <h4 class="mb-0">
+                                <?php echo esc_html($committee['name']=== 'Others'? $committee['other_name']:$committee['name']); ?>
+                            </h4>
+                        </div>
 
                         <?php if(!empty($committee['notification_document'])): ?>
-                        <a class="btn-committee-doc" target="_blank"
+                        <div onclick="event.stopPropagation();">
+                            <a class="btn-committee-doc" target="_blank"
                                 href="<?php echo esc_url($media_base . $committee['notification_document']); ?>">
-                                <i class="fa-solid fa-file-pdf"></i> View Notification
-                        </a>
-                        <?php endif; ?>
-
-                    </div>
-                    <div class="committee-body">
-                        <?php if(!empty($committee['description'])): ?>
-                        <div class="committee-desc"><?php echo wp_kses_post($committee['description']); ?>
+                                <i class="fa-solid fa-file-pdf"></i> Notification
+                            </a>
                         </div>
                         <?php endif; ?>
-                        <?php if(!empty($committee['members'])): ?>
-                        <table class="members-table">
-                            <thead>
-                                <tr>
-                                    <th>Member Name</th>
-                                    <th>Role in Committee</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach($committee['members'] as $member): ?>
-                                <tr>
-                                    <td><strong><?php echo esc_html($member['name_of_member']); ?></strong></td>
-                                    <td>
-                                        <span class="role-badge">
-                                            <?php echo esc_html($member['designation_in_committee'] === 'Others' ? $member['other_designation'] : $member['designation_in_committee']); ?>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        <?php endif; ?>
+                    </div>
+                    <div id="collapseCommittee<?php echo $index; ?>"
+                        class="accordion-collapse collapse <?php echo $index === 0 ? 'show' : ''; ?>"
+                        data-bs-parent="#committeesAccordion">
+                        <div class="committee-body">
+                            <?php if(!empty($committee['description'])): ?>
+                            <div class="committee-desc"><?php echo wp_kses_post($committee['description']); ?>
+                            </div>
+                            <?php endif; ?>
+                            <?php if(!empty($committee['members'])): ?>
+                            <table class="members-table">
+                                <thead>
+                                    <tr>
+                                        <th>Member Name</th>
+                                        <th>Role in Committee</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($committee['members'] as $member): ?>
+                                    <tr>
+                                        <td><strong><?php echo esc_html($member['name_of_member']); ?></strong></td>
+                                        <td>
+                                            <span class="role-badge">
+                                                <?php echo esc_html($member['designation_in_committee'] === 'Others' ? $member['other_designation'] : $member['designation_in_committee']); ?>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
                 <?php endforeach; ?>
@@ -75,22 +88,59 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
         <div class="col-lg-6 mb-3">
             <h3>Minutes of Meetings</h3>
             <?php if(!empty($minutes_list)): ?>
-            <div class="section-card">
-                <div class="minutes-list-modern">
-                    <?php foreach ($minutes_list as $min) : ?>
-                    <a href="<?php echo esc_url( $min['date_of_meeting']); ?>" class="minute-row" target="_blank">
-                        <div class="min-date">
-                            <span class="d"><?php echo date('d', strtotime($min['date_of_meeting'])); ?></span>
-                            <span class="m"><?php echo date('M', strtotime($min['date_of_meeting'])); ?></span>
+            <?php 
+                $minutes_by_committee = array();
+                foreach ($minutes_list as $min) {
+                    $cid = $min['committee'];
+                    if (!isset($minutes_by_committee[$cid])) {
+                        $minutes_by_committee[$cid] = array(
+                            'committee_name' => isset($min['committee_name']) ? $min['committee_name'] : 'Committee',
+                            'minutes' => array()
+                        );
+                    }
+                    $minutes_by_committee[$cid]['minutes'][] = $min;
+                }
+            ?>
+            <div class="committees-wrap accordion" id="minutesAccordion">
+                <?php $m_index = 0; foreach($minutes_by_committee as $cid => $cdata): ?>
+                <div class="committee-card ">
+                    <div class="committee-header d-flex justify-content-between align-items-center flex-wrap gap-3"
+                        style="cursor: pointer;" data-bs-toggle="collapse"
+                        data-bs-target="#collapseMin<?php echo $m_index; ?>"
+                        aria-expanded="<?php echo $m_index === 0 ? 'true' : 'false'; ?>">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                            <h4 class="mb-0"><?php echo esc_html($cdata['committee_name']); ?>&nbsp;&nbsp;Minutes</h4>
                         </div>
-                        <div class="min-info">
-                            <strong><?php echo esc_html(!empty($min['meeting_title']) ? $min['meeting_title'] : 'Board Meeting'); ?></strong>
-                            <span>Download PDF <i class="fa-solid fa-file-pdf"></i></span>
+                    </div>
+                    <div id="collapseMin<?php echo $m_index; ?>"
+                        class="accordion-collapse collapse <?php echo $m_index === 0 ? 'show' : ''; ?>"
+                        data-bs-parent="#minutesAccordion">
+                        <div class="committee-body" style="background: #fff;">
+                            <div class="minutes-list-modern">
+                                <?php foreach ($cdata['minutes'] as $min) : ?>
+                                <a href="<?php echo $media_base . esc_url( $min['minutes_of_meeting']); ?>"
+                                    class="minute-row" target="_blank">
+                                    <div class="min-date">
+                                        <span
+                                            class="d"><?php echo date('d', strtotime($min['date_of_meeting'])); ?></span>
+                                        <span
+                                            class="m"><?php echo date('M', strtotime($min['date_of_meeting'])); ?></span>
+                                    </div>
+                                    <div class="min-info">
+                                        <strong><?php echo esc_html(!empty($min['meeting_title']) ? $min['meeting_title'] : 'Board Meeting'); ?></strong>
+                                        <span>View PDF <i class="fa-solid fa-file-pdf"></i></span>
+                                    </div>
+                                </a>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
-                    </a>
-                    <?php endforeach; ?>
+                    </div>
                 </div>
+                <?php $m_index++; endforeach; ?>
             </div>
+            <?php else: ?>
+            <p style="margin-top:20px; color:#555;">No Minutes is available for this centre.</p>
             <?php endif; ?>
         </div>
     </div>
@@ -106,15 +156,17 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
     margin-top: 20px;
 }
 
-.minutes-list-modern .minute-row {
+/* .minutes-list-modern .minute-row {
     width: calc(50% - 12px) !important;
     flex: 0 0 calc(50% - 12px) !important;
-}
+} */
+
 @media (max-width: 768px) {
     .minutes-list-modern .minute-row {
         flex: 0 0 100% !important;
     }
 }
+
 .minute-row {
     display: flex;
     align-items: center;
@@ -172,7 +224,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
 .committees-wrap {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 10px;
     margin-top: 20px;
 }
 
@@ -194,26 +246,6 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
     margin: 0;
     font-size: 1.25rem;
     font-weight: 700;
-}
-
-.btn-committee-doc {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff !important;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.btn-committee-doc:hover {
-    background: #fff;
-    color: #8B1A1A !important;
 }
 
 .committee-body {
@@ -260,4 +292,61 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
     border-radius: 20px;
     text-transform: uppercase;
 }
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.committee-header[aria-expanded="true"] .toggle-icon {
+    transform: rotate(180deg);
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleHeaders = document.querySelectorAll('.committee-header[data-bs-toggle="collapse"]');
+    toggleHeaders.forEach(header => {
+        header.addEventListener('click', function(e) {
+            // Prevent toggling if a link or button inside the header was clicked
+            if (e.target.closest('a') || e.target.closest('button') || e.target.closest(
+                    '[onclick]')) {
+                return;
+            }
+
+            const targetId = this.getAttribute('data-bs-target');
+            const target = document.querySelector(targetId);
+            if (!target) return;
+
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+            // Accordion behavior: close others in the same parent
+            const parentSelector = target.getAttribute('data-bs-parent');
+            if (parentSelector) {
+                const parent = document.querySelector(parentSelector);
+                if (parent) {
+                    const allTargets = parent.querySelectorAll('.accordion-collapse.show');
+                    const allHeaders = parent.querySelectorAll(
+                        '.committee-header[aria-expanded="true"]');
+
+                    allTargets.forEach(t => {
+                        if (t !== target) t.classList.remove('show');
+                    });
+
+                    allHeaders.forEach(h => {
+                        if (h !== this) h.setAttribute('aria-expanded', 'false');
+                    });
+                }
+            }
+
+            // Toggle current
+            if (isExpanded) {
+                target.classList.remove('show');
+                this.setAttribute('aria-expanded', 'false');
+            } else {
+                target.classList.add('show');
+                this.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+});
+</script>
