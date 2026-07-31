@@ -2,8 +2,30 @@
 /* Template Name: Centres Page */
 get_header();
 
-$api_base = getenv('DJANGO_MEDIA_URL');
+$api_base = getenv('DJANGO_API_URL');
 $api_url = $api_base . '/api/v1/centres/';
+
+// Fetch data from API
+$response = wp_remote_get($api_url, array('timeout' => 15));
+$all_centres = array();
+
+if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+    $all_centres = json_decode(wp_remote_retrieve_body($response), true);
+    if (isset($all_centres['results'])) {
+        $all_centres = $all_centres['results'];
+    }
+}
+
+// Extract unique schools for filter dropdown
+$schools = array();
+if (is_array($all_centres)) {
+    foreach ($all_centres as $c) {
+        if (!empty($c['school_name'])) {
+            $schools[] = $c['school_name'];
+        }
+    }
+}
+$schools = array_unique($schools);
 ?>
 
 <?php get_template_part('banners/about-banner'); ?>
@@ -11,13 +33,12 @@ $api_url = $api_base . '/api/v1/centres/';
 <div class="centres-page">
     <div class="container-fluid">
         <div class="container">
-        <?php get_template_part('menu/menu'); ?>
+            <?php get_template_part('menu/menu'); ?>
 
             <div class="centres-section">
 
                 <!-- Controls -->
                 <div class="controls-bar">
-
                     <div class="search-wrap">
                         <span class="search-icon">🔍</span>
                         <input type="text" id="search" placeholder="Search centres..." />
@@ -27,13 +48,59 @@ $api_url = $api_base . '/api/v1/centres/';
                         <span class="filter-icon">🎓</span>
                         <select id="schoolFilter">
                             <option value="">Schools</option>
+                            <?php foreach ($schools as $s): ?>
+                                <option value="<?php echo esc_attr($s); ?>">
+                                    <?php echo esc_html($s); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
-
                 </div>
 
                 <!-- Cards -->
-                <div id="centres-list"></div>
+                <div id="centres-list">
+                    <?php if (empty($all_centres)): ?>
+                        <div class="empty-state">No centres found</div>
+                    <?php else: ?>
+                        <?php foreach ($all_centres as $c): ?>
+                            <div class="centre-card" data-school="<?php echo esc_attr($c['school_name'] ?? ''); ?>">
+
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <div class="card-header-name"><?php echo esc_html($c['name']); ?></div>
+                                </div>
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <?php if (!empty($c['school_name'])): ?>
+                                        <div class="info-row">
+                                            <div class="info-icon ii-school">🏫</div>
+                                            <div class="info-text">
+                                                <span class="info-label">School</span>
+                                                <span class="info-val"><?php echo esc_html($c['school_name']); ?></span>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <div class="info-row">
+                                        <div class="info-icon ii-dir">👤</div>
+                                        <div>
+                                            <span class="info-label"><?php echo esc_html($c['head_title'] ?: ($c['head_title_other'] ?: 'Head')); ?></span>
+                                            <span class="info-val"><?php echo esc_html($c['head']['name'] ?? ''); ?></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Footer -->
+                                <div class="card-footer">
+                                    <a href="<?php echo esc_url(home_url('/centres/' . $c['slug'])); ?>" class="view-btn">View</a>
+                                </div>
+
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
 
             </div>
         </div>
@@ -41,104 +108,86 @@ $api_url = $api_base . '/api/v1/centres/';
 </div>
 
 <script>
-const API_URL = "<?php echo $api_url; ?>";
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search');
+    const schoolFilter = document.getElementById('schoolFilter');
+    const container = document.getElementById('centres-list');
 
-let allCentres = [];
+    // Parse initial state from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('search') && searchInput) searchInput.value = urlParams.get('search');
+    if (urlParams.get('school') && schoolFilter) schoolFilter.value = urlParams.get('school');
 
-async function fetchCentres() {
-    const res = await fetch(API_URL);
-    const data = await res.json();
+    function updateURL() {
+        const url = new URL(window.location.href);
 
-    allCentres = data;
+        // Update search query
+        if (searchInput && searchInput.value.trim()) {
+            url.searchParams.set('search', searchInput.value.trim());
+        } else {
+            url.searchParams.delete('search');
+        }
 
-    renderCentres(data);
-    populateSchoolFilter(data);
-}
+        // Update school
+        if (schoolFilter && schoolFilter.value) {
+            url.searchParams.set('school', schoolFilter.value);
+        } else {
+            url.searchParams.delete('school');
+        }
 
-function renderCentres(centres) {
-    const container = document.getElementById("centres-list");
-    container.innerHTML = "";
-
-    if (!centres.length) {
-        container.innerHTML = `<div class="empty-state">No centres found</div>`;
-        return;
+        window.history.replaceState(null, '', url.toString());
     }
 
-    centres.forEach((c, index) => {
-        container.innerHTML += `
-            <div class="centre-card">
+    function applyFilters(shouldUpdateURL = true) {
+        const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+        const school = schoolFilter ? schoolFilter.value : '';
+        const cards = container.querySelectorAll('.centre-card');
+        let visibleCount = 0;
 
-                <!-- Header -->
-                <div class="card-header">
-                    <div class="card-header-name">${c.name}</div>
-                </div>
+        cards.forEach(card => {
+            const name = card.querySelector('.card-header-name').textContent.toLowerCase();
+            const cardSchool = card.dataset.school;
 
-                <!-- Body -->
-                <div class="card-body">
-                  ${c.school_name ? `
-                  <div class="info-row">
-                     <div class="info-icon ii-school">🏫</div>
+            const matchesSearch = !query || name.includes(query);
+            const matchesSchool = !school || cardSchool === school;
 
-                       <div class="info-text">
-                       <span class="info-label">School</span>
-                        <span class="info-val">${c.school_name}</span>
-                  </div>
-                 </div>` : ""}
+            if (matchesSearch && matchesSchool) {
+                card.style.display = '';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
 
-                    <div class="info-row">
-                        <div class="info-icon ii-dir">👤</div>
-                        <div>
-                            <span class="info-label">${c.head_title || c.head_title_other}</span>
-                            <span class="info-val">${c.head?.name}</span>
-                        </div>
-                    </div>
+        // Toggle empty state message
+        let emptyMsg = container.querySelector('.empty-state');
+        if (visibleCount === 0) {
+            if (!emptyMsg) {
+                emptyMsg = document.createElement('div');
+                emptyMsg.className = 'empty-state';
+                emptyMsg.style.cssText = 'grid-column: 1 / -1; text-align: center; padding: 40px;';
+                emptyMsg.textContent = 'No centres found';
+                container.appendChild(emptyMsg);
+            } else {
+                emptyMsg.style.display = '';
+            }
+        } else {
+            if (emptyMsg) {
+                emptyMsg.style.display = 'none';
+            }
+        }
 
-                </div>
+        if (shouldUpdateURL) updateURL();
+    }
 
-                <!-- Footer -->
-                <div class="card-footer">
-                    <a href="${c.slug}" class="view-btn">View</a>
-                </div>
+    if (searchInput) searchInput.addEventListener('input', () => applyFilters());
+    if (schoolFilter) schoolFilter.addEventListener('change', () => applyFilters());
 
-            </div>
-        `;
-    });
-}
-
-function populateSchoolFilter(centres) {
-    const select = document.getElementById("schoolFilter");
-
-    const schools = [...new Set(centres.map(c => c.school_name).filter(Boolean))];
-
-    schools.forEach(s => {
-        select.innerHTML += `<option value="${s}">${s}</option>`;
-    });
-}
-
-/* Search */
-document.getElementById("search").addEventListener("input", function() {
-    const value = this.value.toLowerCase();
-
-    const filtered = allCentres.filter(c =>
-        c.name.toLowerCase().includes(value)
-    );
-
-    renderCentres(filtered);
+    // Initial load
+    applyFilters(false);
 });
-
-/* Filter */
-document.getElementById("schoolFilter").addEventListener("change", function() {
-    const value = this.value;
-
-    const filtered = value ?
-        allCentres.filter(c => c.school_name === value) :
-        allCentres;
-
-    renderCentres(filtered);
-});
-
-fetchCentres();
 </script>
+
 <style>
 /* ============================================================
    CENTRES PAGE - FINAL CSS (FIXED SAME SIZE CARDS)
