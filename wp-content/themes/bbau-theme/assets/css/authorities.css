@@ -1,5 +1,25 @@
 
 /* --- Premium Custom Styling for Authorities --- */
+.btn-committee-doc {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-committee-doc:hover {
+    background: #fff;
+    color: #8B1A1A !important;
+}
+
 .authority-card {
     background: #ffffff;
     border: 1px solid #e2d9cc;
@@ -180,22 +200,18 @@
 }
 
 /* --- Minutes Styling --- */
-.minutes-list-modern{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
 
-.minutes-list-modern .minute-row{
-    width: calc(33% - 12px) !important;
-    flex: 0 0 calc(33% - 12px);
-}
 
 /* iPad / Tablet */
 @media (max-width: 991px){
     .minutes-list-modern .minute-row{
         width: calc(50% - 8px) !important;
         flex: 0 0 calc(50% - 8px);
+    }
+    .minutes-list-modern{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
     }
 }
 
