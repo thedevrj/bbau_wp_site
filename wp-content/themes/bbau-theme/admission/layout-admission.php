@@ -10,7 +10,6 @@
 get_header();
 
 $media_base = getenv('DJANGO_MEDIA_URL');
-// Fallback banner
 $banner_url = "/wp-content/uploads/2026/04/language.png";
 ?>
 
@@ -79,9 +78,8 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                     <h2 class="sc-section-title mb-4 text-center d-block">Counselling Phases & Merit Lists</h2>
 
                     <div class="row justify-content-center">
-                        <div class="col-lg-10 col-xl-9">
+                        <div class="col-lg-10">
                             <div class="accordion sc-accordion" id="counsellingAccordion">
-                                <!-- Accordion items injected via JS -->
                             </div>
                         </div>
                     </div>
@@ -90,6 +88,288 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
         </div>
     </div>
 </div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const mediaBase = "<?= $media_base ?>";
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const apiBase = isLocal ? 'http://localhost:8001/api/v1/admission' : `${mediaBase}/api/v1/admission`;
+    const category = '<?php echo esc_js($admission_category ?? "UG"); ?>';
+
+    function getFullMediaUrl(url) {
+        if (!url) return '#';
+        if (url.startsWith('http://') || url.startsWith('https://')) return url;
+        // Ensure single slash between mediaBase and url
+        const base = mediaBase.endsWith('/') ? mediaBase.slice(0, -1) : mediaBase;
+        const path = url.startsWith('/') ? url : '/' + url;
+        return base + path;
+    }
+
+    const tabs = document.querySelectorAll('.sc-pill[data-target]');
+    const contents = document.querySelectorAll('.admission-tab-content');
+    const loader = document.getElementById('loader');
+
+    function init() {
+        // Initialize with notices tab
+        switchTab('notices');
+    }
+
+    function switchTab(targetId) {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.add('d-none'));
+
+        const activeTab = document.querySelector(`.sc-pill[data-target="${targetId}"]`);
+        if (activeTab) activeTab.classList.add('active');
+
+        const activeContent = document.getElementById(`tab-${targetId}`);
+        if (activeContent) activeContent.classList.remove('d-none');
+
+        fetchTabData(targetId);
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            switchTab(tab.getAttribute('data-target'));
+        });
+    });
+
+    async function fetchTabData(tab) {
+        const containerId = tab === 'counselling' ? 'counsellingAccordion' : `${tab}-list`;
+        const container = document.getElementById(containerId);
+
+        loader.classList.remove('d-none');
+        container.classList.add('d-none');
+
+        try {
+            let endpoint = '';
+            const streamParam = `stream__category=${category}`;
+
+            if (tab === 'notices') endpoint = `/notices/?category=${category}`;
+            if (tab === 'prospectuses') endpoint = `/prospectuses/?category=${category}`;
+            if (tab === 'registration') endpoint = `/registration-portals/?category=${category}`;
+            if (tab === 'counselling') endpoint = `/counselling-phases/?${streamParam}`;
+
+            const res = await fetch(`${apiBase}${endpoint}`);
+            const data = await res.json();
+            const items = Array.isArray(data) ? data : (data.results || []);
+
+            renderTabData(tab, items);
+        } catch (e) {
+            console.error(e);
+            container.innerHTML = `<div class="alert alert-danger">Failed to load data.</div>`;
+        } finally {
+            loader.classList.add('d-none');
+            container.classList.remove('d-none');
+        }
+    }
+
+    function renderTabData(tab, data) {
+        const container = tab === 'counselling' ? document.getElementById('counsellingAccordion') : document
+            .getElementById(`${tab}-list`);
+
+        if (!data || data.length === 0) {
+            const emptyHtml = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <h4>No data available</h4>
+                    <p class="text-muted mb-0">Check back later for updates.</p>
+                </div>`;
+            container.innerHTML = emptyHtml;
+            return;
+        }
+
+        let html = '';
+        if (tab === 'notices') {
+            html = data.map(item => {
+                const isClickable = !!item.file;
+                const WrapperTag = isClickable ? 'a' : 'div';
+                const hrefAttr = isClickable ? `href="${getFullMediaUrl(item.file)}" target="_blank"` :
+                    '';
+
+                return `
+                <div class="col-md-6 col-lg-6 d-flex">
+                    <${WrapperTag} ${hrefAttr} class="sc-notice-card w-100">
+                        <div class="sc-notice-date-box">
+                            <span class="day">${new Date(item.date_posted).getDate()}</span>
+                            <span class="month">${new Date(item.date_posted).toLocaleString('en-US', {month: 'short'})}</span>
+                        </div>
+                        <div class="sc-notice-content">
+                            <h3 class="sc-notice-title">${item.title}</h3>
+                            <div class="sc-notice-meta">
+                                ${item.file 
+                                    ? '<span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1" style="font-size:0.75rem;"><i class="fa-solid fa-file-pdf me-1"></i> View PDF</span>' 
+                                    : '<span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1" style="font-size:0.75rem;"><i class="fa-solid fa-bullhorn me-1"></i> Announcement</span>'}
+                            </div>
+                        </div>
+                        <div class="sc-notice-action">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </${WrapperTag}>
+                </div>
+                `;
+            }).join('');
+            container.innerHTML = html;
+        } else if (tab === 'prospectuses') {
+            html = data.map(item => `
+                <div class="col-md-6 col-lg-4 col-xl-3 d-flex">
+                    <a href="${getFullMediaUrl(item.file)}" target="_blank" class="sc-doc-card w-100">
+                        <div class="sc-doc-icon-wrapper">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <h4 class="sc-doc-title">${item.title}</h4>
+                        <div class="sc-doc-meta mb-2">
+                            <i class="fa-regular fa-calendar text-muted"></i> ${new Date(item.upload_date).toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'})}
+                        </div>
+                        <div class="mt-auto">
+                            <span class="sc-doc-action-btn">Download <i class="fa-solid fa-download ms-1"></i></span>
+                        </div>
+                    </a>
+                </div>
+            `).join('');
+            container.innerHTML = html;
+        } else if (tab === 'registration') {
+            html = data.map(item => `
+                <div class="col-lg-6 mb-4 d-flex">
+                    <a href="${item.url}" target="_blank" class="sc-reg-card w-100">
+                        <div class="reg-card-inner">
+                            <div class="reg-icon-wrapper">
+                                <i class="fa-solid fa-laptop-file"></i>
+                            </div>
+                            <div class="reg-content">
+                                <h4 class="reg-title">${item.portal_name}</h4>
+                                ${item.registration_end ? `<span class="reg-deadline"><i class="fa-regular fa-clock me-1"></i> Deadline: ${new Date(item.registration_end).toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'})}</span>` : '<span class="reg-deadline text-success"><i class="fa-solid fa-circle-check me-1"></i> Open for Registration</span>'}
+                            </div>
+                            <div class="reg-action">
+                                <span class="reg-btn">Apply Now <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `).join('');
+            container.innerHTML = html;
+        } else if (tab === 'counselling') {
+            renderCounsellingPhases(data);
+        }
+    }
+
+    function renderCounsellingPhases(phases) {
+        if (!phases || phases.length === 0) {
+            document.getElementById('counsellingAccordion').innerHTML =
+                `<div class="empty-state"><i class="fa-solid fa-folder-open"></i><h4>No Phases Found</h4></div>`;
+            return;
+        }
+
+        const accordionHtml = phases.map((phase, index) => {
+            const isExpanded = index === 0 ? 'true' : 'false';
+            const collapseClass = index === 0 ? 'show' : '';
+            const buttonClass = index === 0 ? '' : 'collapsed';
+
+            return `
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-${phase.id}">
+                    <div class="sc-accordion-header-btn sc-accordion-button ${buttonClass}" role="button" data-target-collapse="collapse-${phase.id}" aria-expanded="${isExpanded}" aria-controls="collapse-${phase.id}">
+                        ${phase.phase_name}
+                    </div>
+                </h2>
+                <div id="collapse-${phase.id}" class="accordion-collapse collapse ${collapseClass}" aria-labelledby="heading-${phase.id}" data-bs-parent="#counsellingAccordion">
+                    <div class="accordion-body">
+                        <div class="text-center py-4 d-none phase-loader" id="loader-phase-${phase.id}">
+                            <div class="spinner-border text-gold" role="status"><span class="visually-hidden">Loading...</span></div>
+                        </div>
+                        <div class="phase-results-container" id="results-phase-${phase.id}"></div>
+                    </div>
+                </div>
+            </div>
+            `;
+        }).join('');
+
+        document.getElementById('counsellingAccordion').innerHTML = accordionHtml;
+
+        // Use vanilla JS to handle toggling to avoid Bootstrap dynamic DOM issues
+        document.querySelectorAll('.sc-accordion-button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target-collapse');
+                const targetPane = document.getElementById(targetId);
+                const isCurrentlyOpen = targetPane.classList.contains('show');
+
+                // Close all
+                document.querySelectorAll('.accordion-collapse').forEach(pane => {
+                    pane.classList.remove('show');
+                });
+                document.querySelectorAll('.sc-accordion-button').forEach(b => {
+                    b.classList.add('collapsed');
+                    b.setAttribute('aria-expanded', 'false');
+                });
+
+                // Toggle clicked
+                if (!isCurrentlyOpen) {
+                    targetPane.classList.add('show');
+                    this.classList.remove('collapsed');
+                    this.setAttribute('aria-expanded', 'true');
+
+                    const phaseId = targetId.replace('collapse-', '');
+                    loadPhaseResults(phaseId);
+                }
+            });
+        });
+
+        // Load the first phase by default
+        if (phases.length > 0) {
+            loadPhaseResults(phases[0].id);
+        }
+    }
+
+    window.loadPhaseResults = async function(phaseId) {
+        const container = document.getElementById(`results-phase-${phaseId}`);
+        const loader = document.getElementById(`loader-phase-${phaseId}`);
+
+        if (container.innerHTML.trim() !== '') return;
+
+        loader.classList.remove('d-none');
+        try {
+            const res = await fetch(`${apiBase}/merit-lists/?phase=${phaseId}&page_size=100`);
+            const data = await res.json();
+            const results = Array.isArray(data) ? data : (data.results || []);
+
+            if (results.length === 0) {
+                container.innerHTML =
+                    `<div class="empty-state py-4"><i class="fa-solid fa-folder-open mb-3" style="font-size: 2rem; color: var(--sc-gold);"></i><h4>No Merit Lists Yet</h4><p class="text-muted mb-0">Merit lists for this phase will be published soon.</p></div>`;
+                return;
+            }
+
+            container.innerHTML = results.map(result => `
+                <a href="${getFullMediaUrl(result.pdf_file)}" target="_blank" class="text-decoration-none d-block">
+                    <div class="sc-list-item">
+                        <div class="sc-list-meta">
+                            <div class="sc-list-icon">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </div>
+                            <div class="sc-list-meta-info d-flex flex-column" style="gap: 6px;">
+                                <h3 class="sc-list-title mb-0">${result.programme_name}</h3>
+                                <div class="sc-list-date d-none">
+                                    <i class="fa-regular fa-calendar-alt me-2" style="color: var(--sc-gold);"></i>
+                                    ${new Date(result.upload_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sc-list-action">
+                            View PDF <i class="fa-solid fa-download"></i>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+
+        } catch (e) {
+            container.innerHTML = `<div class="alert alert-danger">Failed to load merit lists.</div>`;
+        } finally {
+            loader.classList.add('d-none');
+        }
+    };
+
+    init();
+});
+</script>
 
 <style>
 /* Same CSS as Satellite Campus styling token */
@@ -241,8 +521,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 /* Modern Accordion Styles */
 #counsellingAccordion .accordion-item {
     border: none !important;
-    border-radius: 12px !important;
-    margin-bottom: 1.25rem !important;
+    margin-bottom: 12px !important;
     overflow: hidden !important;
     background-color: transparent !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
@@ -570,7 +849,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     align-items: center;
     justify-content: flex-start;
     text-decoration: none !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
     position: relative;
     overflow: hidden;
 }
@@ -667,7 +946,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     display: flex;
     text-decoration: none !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     position: relative;
     overflow: hidden;
 }
@@ -892,10 +1171,12 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
         text-align: center;
         gap: 16px;
     }
+
     .sc-reg-card::before {
         width: 100%;
         height: 6px;
     }
+
     .sc-doc-card {
         padding: 20px 15px;
     }
@@ -949,286 +1230,5 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
     }
 }
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const mediaBase = "<?= $media_base ?>";
-    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const apiBase = isLocal ? 'http://localhost:8001/api/v1/admission' : `${mediaBase}/api/v1/admission`;
-    const category = '<?php echo esc_js($admission_category ?? "UG"); ?>';
-
-    function getFullMediaUrl(url) {
-        if (!url) return '#';
-        if (url.startsWith('http://') || url.startsWith('https://')) return url;
-        // Ensure single slash between mediaBase and url
-        const base = mediaBase.endsWith('/') ? mediaBase.slice(0, -1) : mediaBase;
-        const path = url.startsWith('/') ? url : '/' + url;
-        return base + path;
-    }
-
-    const tabs = document.querySelectorAll('.sc-pill[data-target]');
-    const contents = document.querySelectorAll('.admission-tab-content');
-    const loader = document.getElementById('loader');
-
-    function init() {
-        // Initialize with notices tab
-        switchTab('notices');
-    }
-
-    function switchTab(targetId) {
-        tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.classList.add('d-none'));
-
-        const activeTab = document.querySelector(`.sc-pill[data-target="${targetId}"]`);
-        if (activeTab) activeTab.classList.add('active');
-
-        const activeContent = document.getElementById(`tab-${targetId}`);
-        if (activeContent) activeContent.classList.remove('d-none');
-
-        fetchTabData(targetId);
-    }
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            switchTab(tab.getAttribute('data-target'));
-        });
-    });
-
-    async function fetchTabData(tab) {
-        const containerId = tab === 'counselling' ? 'counsellingAccordion' : `${tab}-list`;
-        const container = document.getElementById(containerId);
-
-        loader.classList.remove('d-none');
-        container.classList.add('d-none');
-
-        try {
-            let endpoint = '';
-            const streamParam = `stream__category=${category}`;
-
-            if (tab === 'notices') endpoint = `/notices/?category=${category}`;
-            if (tab === 'prospectuses') endpoint = `/prospectuses/?category=${category}`;
-            if (tab === 'registration') endpoint = `/registration-portals/?category=${category}`;
-            if (tab === 'counselling') endpoint = `/counselling-phases/?${streamParam}`;
-
-            const res = await fetch(`${apiBase}${endpoint}`);
-            const data = await res.json();
-            const items = Array.isArray(data) ? data : (data.results || []);
-
-            renderTabData(tab, items);
-        } catch (e) {
-            console.error(e);
-            container.innerHTML = `<div class="alert alert-danger">Failed to load data.</div>`;
-        } finally {
-            loader.classList.add('d-none');
-            container.classList.remove('d-none');
-        }
-    }
-
-    function renderTabData(tab, data) {
-        const container = tab === 'counselling' ? document.getElementById('counsellingAccordion') : document
-            .getElementById(`${tab}-list`);
-
-        if (!data || data.length === 0) {
-            const emptyHtml = `
-                <div class="empty-state">
-                    <i class="fa-solid fa-folder-open"></i>
-                    <h4>No data available</h4>
-                    <p class="text-muted mb-0">Check back later for updates.</p>
-                </div>`;
-            container.innerHTML = emptyHtml;
-            return;
-        }
-
-        let html = '';
-        if (tab === 'notices') {
-            html = data.map(item => {
-                const isClickable = !!item.file;
-                const WrapperTag = isClickable ? 'a' : 'div';
-                const hrefAttr = isClickable ? `href="${getFullMediaUrl(item.file)}" target="_blank"` :
-                    '';
-
-                return `
-                <div class="col-md-6 col-lg-6 d-flex">
-                    <${WrapperTag} ${hrefAttr} class="sc-notice-card w-100">
-                        <div class="sc-notice-date-box">
-                            <span class="day">${new Date(item.date_posted).getDate()}</span>
-                            <span class="month">${new Date(item.date_posted).toLocaleString('en-US', {month: 'short'})}</span>
-                        </div>
-                        <div class="sc-notice-content">
-                            <h3 class="sc-notice-title">${item.title}</h3>
-                            <div class="sc-notice-meta">
-                                ${item.file 
-                                    ? '<span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1" style="font-size:0.75rem;"><i class="fa-solid fa-file-pdf me-1"></i> View PDF</span>' 
-                                    : '<span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1" style="font-size:0.75rem;"><i class="fa-solid fa-bullhorn me-1"></i> Announcement</span>'}
-                            </div>
-                        </div>
-                        <div class="sc-notice-action">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </${WrapperTag}>
-                </div>
-                `;
-            }).join('');
-            container.innerHTML = html;
-        } else if (tab === 'prospectuses') {
-            html = data.map(item => `
-                <div class="col-md-6 col-lg-4 col-xl-3 d-flex">
-                    <a href="${getFullMediaUrl(item.file)}" target="_blank" class="sc-doc-card w-100">
-                        <div class="sc-doc-icon-wrapper">
-                            <i class="fa-solid fa-file-pdf"></i>
-                        </div>
-                        <h4 class="sc-doc-title">${item.title}</h4>
-                        <div class="sc-doc-meta mb-2">
-                            <i class="fa-regular fa-calendar text-muted"></i> ${new Date(item.upload_date).toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'})}
-                        </div>
-                        <div class="mt-auto">
-                            <span class="sc-doc-action-btn">Download <i class="fa-solid fa-download ms-1"></i></span>
-                        </div>
-                    </a>
-                </div>
-            `).join('');
-            container.innerHTML = html;
-        } else if (tab === 'registration') {
-            html = data.map(item => `
-                <div class="col-lg-6 mb-4 d-flex">
-                    <a href="${item.url}" target="_blank" class="sc-reg-card w-100">
-                        <div class="reg-card-inner">
-                            <div class="reg-icon-wrapper">
-                                <i class="fa-solid fa-laptop-file"></i>
-                            </div>
-                            <div class="reg-content">
-                                <h4 class="reg-title">${item.portal_name}</h4>
-                                ${item.registration_end ? `<span class="reg-deadline"><i class="fa-regular fa-clock me-1"></i> Deadline: ${new Date(item.registration_end).toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'})}</span>` : '<span class="reg-deadline text-success"><i class="fa-solid fa-circle-check me-1"></i> Open for Registration</span>'}
-                            </div>
-                            <div class="reg-action">
-                                <span class="reg-btn">Apply Now <i class="fa-solid fa-arrow-right ms-1"></i></span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            `).join('');
-            container.innerHTML = html;
-        } else if (tab === 'counselling') {
-            renderCounsellingPhases(data);
-        }
-    }
-
-    function renderCounsellingPhases(phases) {
-        if (!phases || phases.length === 0) {
-            document.getElementById('counsellingAccordion').innerHTML =
-                `<div class="empty-state"><i class="fa-solid fa-folder-open"></i><h4>No Phases Found</h4></div>`;
-            return;
-        }
-
-        const accordionHtml = phases.map((phase, index) => {
-            const isExpanded = index === 0 ? 'true' : 'false';
-            const collapseClass = index === 0 ? 'show' : '';
-            const buttonClass = index === 0 ? '' : 'collapsed';
-
-            return `
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="heading-${phase.id}">
-                    <div class="sc-accordion-header-btn sc-accordion-button ${buttonClass}" role="button" data-target-collapse="collapse-${phase.id}" aria-expanded="${isExpanded}" aria-controls="collapse-${phase.id}">
-                        ${phase.phase_name}
-                    </div>
-                </h2>
-                <div id="collapse-${phase.id}" class="accordion-collapse collapse ${collapseClass}" aria-labelledby="heading-${phase.id}" data-bs-parent="#counsellingAccordion">
-                    <div class="accordion-body">
-                        <div class="text-center py-4 d-none phase-loader" id="loader-phase-${phase.id}">
-                            <div class="spinner-border text-gold" role="status"><span class="visually-hidden">Loading...</span></div>
-                        </div>
-                        <div class="phase-results-container" id="results-phase-${phase.id}"></div>
-                    </div>
-                </div>
-            </div>
-            `;
-        }).join('');
-
-        document.getElementById('counsellingAccordion').innerHTML = accordionHtml;
-
-        // Use vanilla JS to handle toggling to avoid Bootstrap dynamic DOM issues
-        document.querySelectorAll('.sc-accordion-button').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const targetId = this.getAttribute('data-target-collapse');
-                const targetPane = document.getElementById(targetId);
-                const isCurrentlyOpen = targetPane.classList.contains('show');
-
-                // Close all
-                document.querySelectorAll('.accordion-collapse').forEach(pane => {
-                    pane.classList.remove('show');
-                });
-                document.querySelectorAll('.sc-accordion-button').forEach(b => {
-                    b.classList.add('collapsed');
-                    b.setAttribute('aria-expanded', 'false');
-                });
-
-                // Toggle clicked
-                if (!isCurrentlyOpen) {
-                    targetPane.classList.add('show');
-                    this.classList.remove('collapsed');
-                    this.setAttribute('aria-expanded', 'true');
-
-                    const phaseId = targetId.replace('collapse-', '');
-                    loadPhaseResults(phaseId);
-                }
-            });
-        });
-
-        // Load the first phase by default
-        if (phases.length > 0) {
-            loadPhaseResults(phases[0].id);
-        }
-    }
-
-    window.loadPhaseResults = async function(phaseId) {
-        const container = document.getElementById(`results-phase-${phaseId}`);
-        const loader = document.getElementById(`loader-phase-${phaseId}`);
-
-        if (container.innerHTML.trim() !== '') return;
-
-        loader.classList.remove('d-none');
-        try {
-            const res = await fetch(`${apiBase}/merit-lists/?phase=${phaseId}`);
-            const data = await res.json();
-            const results = Array.isArray(data) ? data : (data.results || []);
-
-            if (results.length === 0) {
-                container.innerHTML =
-                    `<div class="empty-state py-4"><i class="fa-solid fa-folder-open mb-3" style="font-size: 2rem; color: var(--sc-gold);"></i><h4>No Merit Lists Yet</h4><p class="text-muted mb-0">Merit lists for this phase will be published soon.</p></div>`;
-                return;
-            }
-
-            container.innerHTML = results.map(result => `
-                <a href="${getFullMediaUrl(result.pdf_file)}" target="_blank" class="text-decoration-none d-block">
-                    <div class="sc-list-item">
-                        <div class="sc-list-meta">
-                            <div class="sc-list-icon">
-                                <i class="fa-solid fa-file-lines"></i>
-                            </div>
-                            <div class="sc-list-meta-info d-flex flex-column" style="gap: 6px;">
-                                <h3 class="sc-list-title mb-0">${result.programme_name}</h3>
-                                <div class="sc-list-date">
-                                    <i class="fa-regular fa-calendar-alt me-2" style="color: var(--sc-gold);"></i>
-                                    ${new Date(result.upload_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sc-list-action">
-                            View PDF <i class="fa-solid fa-download"></i>
-                        </div>
-                    </div>
-                </a>
-            `).join('');
-
-        } catch (e) {
-            container.innerHTML = `<div class="alert alert-danger">Failed to load merit lists.</div>`;
-        } finally {
-            loader.classList.add('d-none');
-        }
-    };
-
-    init();
-});
-</script>
 
 <?php get_footer(); ?>

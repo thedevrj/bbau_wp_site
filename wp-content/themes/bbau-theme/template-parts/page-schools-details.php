@@ -256,42 +256,48 @@ get_header();
             <div class="committees-wrap">
                 <?php foreach ($committees as $comm) : ?>
                 <div class="committee-card">
-                    <div class="committee-header">
-                        <h4><?php echo esc_html($comm['name']); ?></h4>
+                    <div class="committee-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <div>
+                            <h4><?php echo esc_html($comm['name']); ?></h4>
+                        </div>
+                        <?php if(!empty($comm['notification_or_document'])): ?>
+
+                        <div onclick="event.stopPropagation();">
+                            <a class="btn-committee-doc" target="_blank"
+                                href="<?php echo esc_url($media_base . $comm['notification_or_document']); ?>">
+                                <i class="fa-solid fa-file-pdf"></i> Notification
+                            </a>
+                        </div>
+                        <?php endif;?>
                     </div>
                     <div class="committee-body">
                         <?php if(!empty($comm['description'])): ?>
                         <div class="committee-desc"><?php echo wp_kses_post($comm['description']); ?>
-                            <?php endif; ?>
-                            <?php if(!empty($comm['notification_or_document'])): ?>
-                            <p>Committee Notification:<a class="link-new"
-                                    href=<?php echo ($comm['notification_or_document']); ?>> &nbsp; View
-                                    Notification </a></p>
-                            <?php endif; ?>
                         </div>
-
-                        <?php if(!empty($comm['members'])): ?>
-                        <table class="members-table">
-                            <thead>
-                                <tr>
-                                    <th>Member Name</th>
-                                    <th>Role in Committee</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach($comm['members'] as $member): ?>
-                                <tr>
-                                    <td><strong><?php echo esc_html($member['members']); ?></strong></td>
-                                    <td>
-                                        <span class="role-badge">
-                                            <?php echo esc_html($member['designation'] === 'Others' ? $member['other_designation'] : $member['designation']); ?>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
                         <?php endif; ?>
+
+                            <?php if(!empty($comm['members'])): ?>
+                            <table class="members-table">
+                                <thead>
+                                    <tr>
+                                        <th>Member Name</th>
+                                        <th>Role in Committee</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($comm['members'] as $member): ?>
+                                    <tr>
+                                        <td><strong><?php echo esc_html($member['members']); ?></strong></td>
+                                        <td>
+                                            <span class="role-badge">
+                                                <?php echo esc_html($member['designation'] === 'Others' ? $member['other_designation'] : $member['designation']); ?>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <?php endif; ?>
                     </div>
                 </div>
                 <?php endforeach; ?>
