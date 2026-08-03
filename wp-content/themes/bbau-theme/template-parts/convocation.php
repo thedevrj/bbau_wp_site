@@ -42,9 +42,7 @@ get_header();
 
 <div class="container-fluid page-bg page-template-about-bg py-lg-5">
 
-    <!-- =========================================
-       BREADCRUMB
-    ========================================= -->
+    
 
     <?php get_template_part('template-parts/breadcrumb'); ?>
 
@@ -52,9 +50,7 @@ get_header();
 
         <div class="convocation-wrap">
 
-            <!-- =========================================
-               ABOUT SECTION
-            ========================================= -->
+           
 
             <div class="convocation-section">
 
@@ -90,9 +86,7 @@ get_header();
 
             </div>
 
-            <!-- =========================================
-               REPEATER START
-            ========================================= -->
+           
 
             <?php if( have_rows('convocation_years') ): ?>
 
@@ -118,10 +112,7 @@ get_header();
 
                 ?>
 
-            <!-- =========================================
-                   YEAR SECTION
-                ========================================= -->
-
+            
             <div class="convocation-year-section">
 
                 <!-- YEAR BANNER -->
@@ -151,7 +142,7 @@ get_header();
 
                 </div>
 
-                <!-- STATS -->
+            
                 <div class="stats-row">
 
                     <div class="stat-card">
@@ -192,15 +183,14 @@ get_header();
 
                 </div>
 
-                <!-- HIGHLIGHT -->
+             
                 <div class="highlight-strip">
                     <?php echo esc_html($highlight); ?>
                 </div>
 
-                <!-- IMAGE GRID -->
                 <div class="convocation-grid">
 
-                    <!-- BIG IMAGE -->
+                    
                     <div class="convocation-card big-card">
 
                         <?php if($big_image): ?>
@@ -216,10 +206,10 @@ get_header();
 
                     </div>
 
-                    <!-- SIDE GRID -->
+                  
                     <div class="side-grid">
 
-                        <!-- SMALL IMAGE 1 -->
+                      
                         <div class="convocation-card small-card">
 
                             <?php if($small_image_1): ?>
@@ -235,7 +225,7 @@ get_header();
 
                         </div>
 
-                        <!-- SMALL IMAGE 2 -->
+                        
                         <div class="convocation-card small-card">
 
                             <?php if($small_image_2): ?>
@@ -255,10 +245,9 @@ get_header();
 
                 </div>
 
-                <!-- THIRD GRID -->
+                
                 <div class="three-grid">
 
-                    <!-- THIRD IMAGE 1 -->
                     <div class="convocation-card third-card">
 
                         <?php if($third_image_1): ?>
@@ -274,7 +263,7 @@ get_header();
 
                     </div>
 
-                    <!-- THIRD IMAGE 2 -->
+                   
                     <div class="convocation-card third-card">
 
                         <?php if($third_image_2): ?>
@@ -290,7 +279,7 @@ get_header();
 
                     </div>
 
-                    <!-- THIRD IMAGE 3 -->
+                  
                     <div class="convocation-card third-card">
 
                         <?php if($third_image_3): ?>
@@ -321,11 +310,7 @@ get_header();
 </div>
 
 <style>
-/* ================================================
-   CONVOCATION CHRONICLE – COMPLETE CSS
-================================================ */
 
-/* ===== WRAPPER ===== */
 .convocation-wrap {
     background: #fff;
     border-radius: 20px;
@@ -333,7 +318,7 @@ get_header();
     box-shadow: 0 5px 40px rgba(0, 0, 0, .10);
 }
 
-/* ===== HERO ===== */
+
 .convocation-hero {
     background: linear-gradient(135deg, #061526, #0e2b57);
     padding: 60px 90px;
@@ -384,7 +369,7 @@ get_header();
     letter-spacing: .5px;
 }
 
-/* ===== ABOUT SECTION ===== */
+
 .convocation-section {
     padding: 50px;
 }
@@ -416,13 +401,13 @@ get_header();
     transform: scale(1.03);
 }
 
-/* ===== YEAR SECTION ===== */
+
 .convocation-year-section {
     padding: 50px;
     border-top: 1px solid #f0ece0;
 }
 
-/* ===== YEAR BANNER ===== */
+
 .year-banner {
     background: #0e2b57;
     border-radius: 16px;
@@ -472,7 +457,6 @@ get_header();
     word-break: break-word;
 }
 
-/* ===== STATS ===== */
 .stats-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -506,7 +490,7 @@ get_header();
     text-transform: uppercase;
 }
 
-/* ===== HIGHLIGHT ===== */
+
 .highlight-strip {
     background: #f8f5ed;
     border-left: 4px solid #d4af37;
@@ -519,7 +503,6 @@ get_header();
     word-break: break-word;
 }
 
-/* ===== GRID ===== */
 .convocation-grid {
     display: grid;
     grid-template-columns: 1.6fr 1fr;
@@ -539,7 +522,7 @@ get_header();
     margin-top: 16px;
 }
 
-/* ===== CARD ===== */
+
 .convocation-card {
     position: relative;
     overflow: hidden;
@@ -588,15 +571,13 @@ get_header();
     background: linear-gradient(transparent, rgba(0, 0, 0, .82));
 }
 
-/* ===== EMPTY IMAGE FIX ===== */
+
 .convocation-card img[src=""],
 .convocation-main-image img[src=""] {
     display: none;
 }
 
-/* ================================================
-   TABLET
-================================================ */
+
 @media(max-width:991px) {
 
     .convocation-grid {
@@ -630,9 +611,7 @@ get_header();
 
 }
 
-/* ================================================
-   MOBILE
-================================================ */
+
 @media(max-width:767px) {
 
     .convocation-top {
@@ -696,9 +675,6 @@ get_header();
 
 }
 
-/* ================================================
-   SMALL MOBILE
-================================================ */
 @media(max-width:420px) {
 
     .stats-row {
