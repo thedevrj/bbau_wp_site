@@ -14,7 +14,6 @@ $api_base = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 $centre_data = array();
 
-// Fetch base centre profile
 if (!empty($slug)) {
     $centre_url = $api_base . '/api/v1/centres/' . urlencode($slug) . '/';
     $centre_res = wp_remote_get($centre_url, array('timeout' => 10));
@@ -23,7 +22,7 @@ if (!empty($slug)) {
     }
 }
 
-// Ensure valid tab
+
 $allowed_tabs = ['about','thrust' ,'faculty', 'programs', 'research', 'notices', 'committees', 'gallery', 'timetable'];
 if (!in_array($tab, $allowed_tabs)) {
     $tab = 'about';
@@ -38,7 +37,7 @@ get_header();
         srcset="<?php echo get_field('desktop_1x', $page_id); ?>"
         class="img-fluid d-lg-block d-none h_xl_250 object-fit-cover" alt="<?php the_title();?> Banner" width="100%" height="250">
 
-    <!-- Mobile Image (only show if mobile_1x exists) -->
+    
     <?php if(get_field('mobile_1x', $page_id)) : ?>
     <img src="<?php echo get_field('mobile_1x', $page_id); ?>" srcset="<?php echo get_field('mobile_1x', $page_id); ?> "
         class="img-fluid d-lg-none h_sm_204" alt="<?php the_title();?> Banner" width="100%" height="204">
@@ -62,10 +61,10 @@ get_header();
     </div>
 <?php else: ?>
 
-<!--  PAGE WRAPPER (Scoped Styling) -->
+
 <div class="centre-page-wrapper container-fluid py-lg-5">
 
-    <!--  MENU AFTER BREADCRUMB -->
+   
     <div class="container">
         <div class="centre-nav">
             <?php 
@@ -89,7 +88,7 @@ get_header();
     <div class="container py-4">
 
         <?php 
-        // DYNAMIC INCLUSION OF TAB FILE
+       
         $tab_file = get_stylesheet_directory() . "/centre/tab-{$tab}.php";
         if(file_exists($tab_file)) {
             include($tab_file);
@@ -182,7 +181,7 @@ get_header();
   margin-bottom: 20px;
 }
 
-/*  UNDERLINE */
+
 .centre-page-wrapper .centre-title-gradient::after {
   content: "";
   display: block;
@@ -207,7 +206,6 @@ get_header();
     box-shadow: 0 12px 30px rgba(139, 26, 26, .18);
 }
 
-/* LEFT */
 .head-left {
     background: linear-gradient(160deg, #5c1010, #8B1A1A);
     width: 300px;
@@ -256,7 +254,6 @@ get_header();
     font-weight: 500;
 }
 
-/* CONTACT WRAPPER */
 .contacts {
     display: flex;
     flex-direction: column;
@@ -283,12 +280,10 @@ get_header();
     color: #5c1010;
 }
 
-/* VALUE */
 .value {
     color: #555;
 }
 
-/* LINKS */
 .value a {
     color: #8B1A1A;
     text-decoration: none;

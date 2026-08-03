@@ -24,7 +24,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
 <div class="satellite-campus-portal">
 
-    <!-- HERO SECTION -->
+    
     <div class="sc-hero" style="background-image: url('<?php echo esc_url($banner); ?>');">
         <div class="sc-hero-overlay">
             <div class="sc-hero-card">
@@ -37,7 +37,6 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
     <div class="container py-lg-5">
 
-        <!-- BREADCRUMB -->
         <div class="sc-breadcrumb-wrap mb-5">
             <?php get_template_part('template-parts/breadcrumb'); ?>
         </div>
@@ -80,10 +79,9 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
                 </aside>
             </div>
-            <!-- LEFT: ABOUT & DEPARTMENTS -->
+           
             <div class="col-lg-8">
 
-                <!-- ABOUT SECTION -->
                 <section class="sc-section mb-5">
                     <h2 class="sc-section-title">About the Campus</h2>
                     <div class="sc-content-card">
@@ -93,7 +91,6 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
                     </div>
                 </section>
 
-                <!-- DEPARTMENTS SECTION -->
                 <section class="sc-section">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h2 class="sc-section-title mb-0">Explore Departments</h2>
@@ -122,7 +119,6 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
             </div>
 
-            <!-- RIGHT: OSD SPOTLIGHT -->
 
         </div>
 
@@ -130,9 +126,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 </div>
 
 <style>
-/* ============================================
-   SATELLITE CAMPUS - PREMIUM CSS
-============================================ */
+
 
 :root {
     --sc-midnight: #0f172a;
@@ -150,7 +144,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     font-family: 'Nunito', sans-serif;
 }
 
-/* --- HERO --- */
+
 .sc-hero {
     height: 300px;
     background-size: contain;
@@ -224,7 +218,6 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     border-radius: 2px;
 }
 
-/* --- SECTIONS --- */
 .sc-section-title {
     font-family: 'Merriweather', serif;
     font-size: 1.8rem;
@@ -260,7 +253,6 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     font-size: 0.9rem;
 }
 
-/* --- DEPT GRID --- */
 .sc-dept-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -274,12 +266,12 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     border-radius: 18px;
     display: flex;
     align-items: stretch;
-    /* 🔥 Changed from center to stretch */
+  
     gap: 20px;
     text-decoration: none !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
-    /* 🔥 Ensures card heights are consistent */
+   
 }
 
 .sc-dept-card:hover {
@@ -318,12 +310,12 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     font-weight: 700;
     color: var(--sc-midnight);
     margin: 0 0 15px;
-    /* 🔥 Increased margin */
+   
 }
 
 .sc-view-link {
     font-size: 0.8rem;
-    /* 🔥 Slightly smaller for single line */
+
     font-weight: 700;
     color: var(--sc-gold);
     display: flex;
@@ -332,7 +324,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     opacity: 0.8;
     margin-top: auto;
     white-space: nowrap;
-    /* 🔥 Prevents breaking into two lines */
+  
 }
 
 .sc-count-badge {
@@ -344,7 +336,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     font-weight: 700;
 }
 
-/* --- OSD CARD --- */
+
 .sc-osd-card {
     background: var(--sc-midnight);
     border-radius: 25px;
@@ -365,17 +357,17 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
 .sc-osd-photo {
     width: 180px;
-    /* 🔥 Fixed width for circular shape */
+    
     height: 180px;
-    /* 🔥 Fixed height for circular shape */
+  
     margin: 0 auto 20px;
-    /* 🔥 Centered */
+   
     border-radius: 50%;
-    /* 🔥 CRITICAL: Circular */
+  
     overflow: hidden;
     background: #1e293b;
     border: 3px solid var(--sc-gold);
-    /* 🔥 Premium gold ring */
+    
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -401,14 +393,14 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
 .sc-osd-body {
     padding: 10px 20px 15px;
-    /* 🔥 Refined padding */
+   
     text-align: center;
 }
 
 .sc-osd-body h3 {
     font-family: 'Merriweather', serif;
     font-size: 1.3rem;
-    /* 🔥 More professional size */
+  
     font-weight: 700;
     margin-bottom: 5px;
 }
@@ -469,7 +461,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 }
 }
 
-/* ANIMATIONS */
+
 @keyframes fadeInScale {
     0% {
         opacity: 0;
@@ -500,8 +492,7 @@ jQuery(document).ready(function($) {
                     speed: 300,
                     slidesToShow: 1,
                     centerMode: true,
-                    // variableWidth: true,
-                    // arrows: false
+                    
                 });
             }
         } else {
