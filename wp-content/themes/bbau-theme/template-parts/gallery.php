@@ -52,12 +52,12 @@ get_header();
                 <p class="text-center">No images found.</p>
             <?php endif; ?>
 
-        </div><!-- /.gallery-container -->
+        </div>
 
-    </div><!-- /.container -->
-</section><!-- FIXED: was </div> before -->
+    </div>
+</section>
 
-<!-- LIGHTBOX (outside section, at body level) -->
+
 <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
 
     <span class="close" role="button" aria-label="Close lightbox" tabindex="0">&times;</span>
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let images       = [];
     let currentIndex = 0;
 
-    /* ── Collect all gallery images ── */
+    
     document.querySelectorAll(".gallery-slot img").forEach(function (img, index) {
         images.push({
             full : img.dataset.full,
@@ -93,21 +93,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    /* ── Open lightbox ── */
+    
     function openLightbox() {
         lightbox.style.display = "flex";
         updateImage();
         document.body.style.overflow = "hidden"; // prevent background scroll
     }
 
-    /* ── Close lightbox ── */
+    
     function closeLightbox() {
         lightbox.style.display = "none";
         lightboxImg.src        = "";
         document.body.style.overflow = "";
     }
 
-    /* ── Update displayed image & button states ── */
+    
     function updateImage() {
         lightboxImg.src = images[currentIndex].full;
         lightboxImg.alt = images[currentIndex].alt;
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         nextBtn.disabled = currentIndex === images.length - 1;
     }
 
-    /* ── Navigation ── */
+    
     function showNext() {
         if (currentIndex < images.length - 1) {
             currentIndex++;
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
     nextBtn.addEventListener("click", showNext);
     prevBtn.addEventListener("click", showPrev);
 
-    /* ── Keyboard navigation ── */
+    
     document.addEventListener("keydown", function (e) {
         if (lightbox.style.display !== "flex") return;
         if (e.key === "ArrowRight") showNext();
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (e.key === "Escape")     closeLightbox();
     });
 
-    /* ── Close via button or backdrop click ── */
+    
     closeBtn.addEventListener("click", closeLightbox);
 
     closeBtn.addEventListener("keydown", function (e) {
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (e.target === lightbox) closeLightbox();
     });
 
-    /* ── Swipe support (mobile) ── */
+
     let touchStartX = 0;
 
     lightbox.addEventListener("touchstart", function (e) {
@@ -170,9 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <style>
-/* ===================================================
-   GALLERY GRID
-=================================================== */
+
 
 .gallery-row {
     display: grid;
@@ -181,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
     margin-bottom: 15px;
 }
 
-/* ===== GALLERY ITEM ===== */
+
 .gallery-slot {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -210,33 +208,28 @@ document.addEventListener("DOMContentLoaded", function () {
     transform: scale(1.08);
 }
 
-/* ===================================================
-   RESPONSIVE BREAKPOINTS
-=================================================== */
 
-/* Laptop */
+
+
 @media (max-width: 1200px) {
     .gallery-row { grid-template-columns: repeat(4, 1fr); }
 }
 
-/* Tablet */
+
 @media (max-width: 992px) {
     .gallery-row { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Mobile */
 @media (max-width: 768px) {
     .gallery-row { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Small Mobile */
+
 @media (max-width: 480px) {
     .gallery-row { grid-template-columns: 1fr; }
 }
 
-/* ===================================================
-   LIGHTBOX
-=================================================== */
+
 
 .lightbox {
     display: none;
@@ -258,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
     user-select: none;
 }
 
-/* Close button */
+
 .lightbox .close {
     position: absolute;
     top: 20px;
@@ -275,9 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
     color: #ccc;
 }
 
-/* ===================================================
-   NAV BUTTONS
-=================================================== */
+
 
 .nav-btn {
     position: absolute;
@@ -307,9 +298,7 @@ document.addEventListener("DOMContentLoaded", function () {
 .prev { left: 15px; }
 .next { right: 15px; }
 
-/* ===================================================
-   MOBILE LIGHTBOX
-=================================================== */
+
 
 @media (max-width: 768px) {
     .lightbox-img {

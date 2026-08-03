@@ -1,8 +1,4 @@
-<!-- ============================================================
-     BREADCRUMB — FINAL CORRECTED VERSION
-     (Bordered box + Home icon + "/" separator + maroon active chip)
-     Spacing is FIXED across all screen sizes — no gap jump.
-============================================================ -->
+
 <div class="bcf-wrapper">
     <div class="container">
         <nav aria-label="breadcrumb" class="bcf-nav" id="bcf-nav">
@@ -54,7 +50,7 @@
     </div>
 </div>
 <style>
-/* Fixed vertical rhythm — same on every screen size, no breakpoint changes this */
+
 .bcf-wrapper {
   padding: 20px 0 !important;
   margin: 0 !important;
@@ -124,7 +120,6 @@ a.bcf-link:hover {
   text-underline-offset: 2px;
 }
 
-/* Active page — white chip with maroon text, so it stands out against the maroon bar */
 .bcf-chip {
   background: #ffffff;
   color: #8B1A1A !important;
@@ -134,11 +129,6 @@ a.bcf-link:hover {
   cursor: default;
 }
 
-/* ============================================================
-   MOBILE OVERRIDE — plain text breadcrumb with "/" separators
-   Matches: Home / Academics / Schools & Centres / Current Page
-   Applies only on small screens; desktop keeps the maroon box.
-============================================================ */
 @media (max-width: 576px) {
 
   .bcf-wrapper {
