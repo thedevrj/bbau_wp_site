@@ -6,7 +6,7 @@ defined('ABSPATH') || exit;
 get_header();
 ?>
 
-<!-- ✅ FONT AWESOME (REQUIRED) -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <?php get_template_part('banners/about-banner'); ?>
@@ -20,7 +20,7 @@ get_header();
         </div>
         <h2>Event Gallery</h2>
 
-        <!-- EVENT CARDS -->
+       
         <div id="egCards" class="eg-grid">
             <?php
             $i=0;
@@ -34,7 +34,7 @@ get_header();
             <?php $i++; endwhile; endif; ?>
         </div>
 
-        <!-- DETAILS -->
+       
         <div id="egDetails">
             <?php
             $i=0;
@@ -68,24 +68,23 @@ get_header();
         </div>
     </div>
 
-    <!-- LIGHTBOX -->
+    
     <div id="egLightbox" class="eg-lightbox">
 
-        <!-- CLOSE -->
+        
         <div class="eg-close-btn" onclick="closeImage()">
             <i class="fa-solid fa-xmark"></i>
             <span>Close</span>
         </div>
 
-        <!-- PREV -->
+       
         <div class="eg-prev" onclick="prevImage()">
             <i class="fa-solid fa-chevron-left"></i>
         </div>
 
-        <!-- IMAGE -->
+      
         <img id="egLightboxImg">
 
-        <!-- NEXT -->
         <div class="eg-next" onclick="nextImage()">
             <i class="fa-solid fa-chevron-right"></i>
         </div>
@@ -93,7 +92,7 @@ get_header();
     </div>
 </div>
 
-<!-- ================= CSS ================= -->
+
 <style>
 .eg-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:25px; }
 
@@ -118,7 +117,7 @@ get_header();
 #egDetails { display:none; }
 .eg-event-detail { display:none; }
 
-/* LIGHTBOX */
+
 .eg-lightbox {
     display:none; position:fixed; inset:0;
     background:rgba(0,0,0,0.95);
@@ -126,13 +125,13 @@ get_header();
     z-index:99999;
 }
 
-/* IMAGE */
+
 .eg-lightbox img {
     max-width:90%; max-height:85vh;
     border-radius:10px; transition:.3s;
 }
 
-/* NAV BUTTONS */
+
 .eg-prev, .eg-next {
     position:absolute;
     top:50%;
@@ -147,7 +146,7 @@ get_header();
 .eg-prev { left:15px; }
 .eg-next { right:15px; }
 
-/* CLOSE BUTTON */
+
 .eg-close-btn {
     position:absolute;
     top:20px;
@@ -165,7 +164,7 @@ get_header();
     background:#fff;
     color:#000;
 }
-/* ================= YEAR COLORS FINAL FIX ================= */
+
 .eg-year-title {
   display: inline-block;
   padding: 8px 14px;
@@ -174,7 +173,7 @@ get_header();
   margin-top: 12px;    /* space from image above */
   margin-bottom: 12px; /* space from image below */
 }
-/* target inside each event only */
+
 .eg-event-detail .eg-year-block:nth-of-type(1) .eg-year-title {
   background: #f5f0e8;
   color: #8B0000;
@@ -195,7 +194,7 @@ get_header();
   background: #fff3e0;
   color: #e65100;
 }
-/* BACK BUTTON */
+
 .eg-back-btn {
   display:inline-flex; align-items:center; gap:8px;
   padding:8px 16px; margin-bottom:15px;
@@ -205,7 +204,7 @@ get_header();
 }
 .eg-back-btn:hover { background:#8B0000; color:#fff; }
 
-/* RESPONSIVE */
+
 @media(max-width:992px){
     .eg-grid,.eg-photo-grid { grid-template-columns:repeat(2,1fr); }
 }
@@ -218,7 +217,7 @@ body.lightbox-open { overflow:hidden; }
 body.lightbox-open header { position:static !important; }
 </style>
 
-<!-- ================= JS ================= -->
+
 <script>
 function openEvent(id){
     document.getElementById("egCards").style.display="none";
@@ -255,12 +254,12 @@ function closeImage(){
     document.body.classList.remove("lightbox-open");
 }
 
-/* CLICK OUTSIDE */
+
 document.getElementById("egLightbox").addEventListener("click",function(e){
     if(e.target===this) closeImage();
 });
 
-/* KEYBOARD */
+
 document.addEventListener("keydown",function(e){
     if(document.getElementById("egLightbox").style.display==="flex"){
         if(e.key==="ArrowRight") nextImage();
@@ -269,7 +268,6 @@ document.addEventListener("keydown",function(e){
     }
 });
 
-/* SWIPE */
 let startX=0;
 document.getElementById("egLightbox").addEventListener("touchstart",e=>{
     startX=e.touches[0].clientX;
@@ -279,7 +277,7 @@ document.getElementById("egLightbox").addEventListener("touchend",e=>{
     if(Math.abs(diff)>60) diff>0?nextImage():prevImage();
 });
 
-/* DOUBLE TAP */
+
 let lastTap=0;
 document.getElementById("egLightboxImg").addEventListener("touchend",function(){
     let t=new Date().getTime(),tap=t-lastTap;

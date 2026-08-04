@@ -6,14 +6,13 @@ Template Name: Cell Cards Page
 get_header();
 ?>
 
-<!-- Banner -->
+
 <?php get_template_part('banners/about-banner'); ?>
 
 <section class="container-fluid page-bg page-template-about-bg py-5 overflow-hidden">
 
 <?php get_template_part('template-parts/breadcrumb'); ?>
 
-<!-- Menu -->
 <?php get_template_part('template-parts/page-menu'); ?>
 
 <div class="container">
@@ -123,7 +122,7 @@ No Cards Added
 
 <style>
 
-/* KEEP SAME */
+
 
 .cell-cards-wrapper{
 padding:60px 0;
@@ -264,7 +263,7 @@ font-size:20px;
 
 }
 
-/* RESPONSIVE */
+
 
 @media(max-width:1199px){
 
