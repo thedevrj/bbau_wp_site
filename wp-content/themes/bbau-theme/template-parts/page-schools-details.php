@@ -122,7 +122,7 @@ get_header();
                 class="<?php echo ($tab === 'departments') ? 'active' : ''; ?>">Departments</a>
             <?php if (!empty($matched_centres)): ?>
             <a href="<?php echo school_tab_url($slug, 'centers'); ?>"
-                class="<?php echo ($tab === 'centers') ? 'active' : ''; ?>">Centers</a>
+                class="<?php echo ($tab === 'centers') ? 'active' : ''; ?>">Centres</a>
             <?php endif; ?>
 
         </div>
@@ -237,10 +237,10 @@ get_header();
 
             <?php elseif ($tab === 'centers') : ?>
             <div class="section-card">
-                <h3 class="dept-title-gradient">Centers under <?php echo $name; ?> </h3>
+                <h3 class="dept-title-gradient">Centres under <?php echo $name; ?> </h3>
                 <div class="centers-grid-modern">
                     <?php foreach ($matched_centres as $center) : ?>
-                    <a href="/centers/<?php echo esc_attr($center['slug'] ); ?>" class="center-box">
+                    <a href="/centres/<?php echo esc_attr($center['slug'] ); ?>" class="center-box">
                         <!-- <div class="center-icon"></div> -->
                         <h4><?php echo esc_html($center['name']); ?></h4>
                     </a>

@@ -170,6 +170,7 @@ require get_template_directory() . '/inc/template-functions.php';
  */
 require get_template_directory() . '/inc/customizer.php';
 
+require get_template_directory() . '/dynamic-sitemap.php';
 /**
  * Load Jetpack compatibility file.
  */
@@ -394,3 +395,248 @@ function get_centre_display_name($centre) {
     if (empty($centre)) return '';
     return $centre['name'] ?? '';
 }
+
+
+//  Helper fn for dynamic SEO data from the Django API
+
+function bbau_get_dynamic_seo_data($slug, $type) {
+    if (empty($slug)) {
+        return null;
+    }
+
+    static $static_cache = [];
+    $cache_key = $type . '_' . $slug;
+
+    if (isset($static_cache[$cache_key])) {
+        return $static_cache[$cache_key];
+    }
+
+    // Attempt to load from WordPress Transients cache
+    $transient_key = 'bbau_seo_' . $type . '_' . md5($slug);
+    $cached = get_transient($transient_key);
+    if ($cached !== false) {
+        $static_cache[$cache_key] = $cached;
+        return $cached;
+    }
+
+    $api_base = getenv('DJANGO_API_URL');
+    if (empty($api_base)) {
+        return null;
+    }
+
+    switch ($type) {
+        case 'department':
+            $url = $api_base . '/api/v1/departments/' . urlencode($slug) . '/';
+            break;
+        case 'centre':
+            $url = $api_base . '/api/v1/centres/' . urlencode($slug) . '/';
+            break;
+        case 'school':
+            $url = $api_base . '/api/v1/schools/' . urlencode($slug) . '/';
+            break;
+        case 'faculty':
+            $url = $api_base . '/api/v1/faculty/' . urlencode($slug) . '/';
+            break;
+        default:
+            return null;
+    }
+
+    $res = wp_remote_get($url, array('timeout' => 5));
+    if (!is_wp_error($res) && wp_remote_retrieve_response_code($res) === 200) {
+        $data = json_decode(wp_remote_retrieve_body($res), true);
+        if (!empty($data)) {
+            // Save to transient for 2 hours to optimize performance
+            set_transient($transient_key, $data, 2 * HOUR_IN_SECONDS);
+            $static_cache[$cache_key] = $data;
+            return $data;
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Returns contextual SEO title and meta description based on current page and query parameters.
+ */
+function bbau_get_dynamic_seo_meta() {
+    $seo = [
+        'title' => '',
+        'desc'  => '',
+    ];
+
+    $request_slug = isset($_GET['slug']) ? sanitize_title(wp_unslash($_GET['slug'])) : '';
+    $dept_slug    = get_query_var('dept_slug');
+    $centre_slug  = get_query_var('centre_slug');
+    $school_slug  = get_query_var('school_slug');
+
+    // The legacy `slug` query parameter is used by several page templates.
+    // Apply it only to the current template so one slug cannot match all types.
+    if (empty($dept_slug) && is_page('department')) {
+        $dept_slug = $request_slug;
+    } elseif (empty($centre_slug) && is_page('centre')) {
+        $centre_slug = $request_slug;
+    } elseif (empty($school_slug) && is_page('school-detail')) {
+        $school_slug = $request_slug;
+    }
+    $faculty_slug = get_query_var('faculty_slug');
+
+    // Fallback detection for faculty slug from request URI.
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
+    if (empty($faculty_slug) && (is_page('faculty-profile') || strpos($request_uri, '/faculty/') !== false)) {
+        $parts = explode('/faculty/', $request_uri);
+        if (isset($parts[1])) {
+            $faculty_slug = sanitize_title(current(explode('/', $parts[1])));
+        }
+    }
+
+    $tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : 'about';
+
+    $tab_labels = [
+        'about'        => 'About',
+        'thrust'       => 'Thrust Areas',
+        'programs'     => 'Programmes Offered',
+        'faculty'      => 'Faculty & People',
+        'notices'      => 'Announcements & Notices',
+        'research'     => 'Research Activities',
+        'timetable'    => 'Time Table',
+        'committees'   => 'Committees',
+        'gallery'      => 'Gallery',
+        'school_board' => 'School Board Members',
+        'minutes'      => 'School Board Minutes',
+        'departments'  => 'Departments',
+        'centers'      => 'Centers',
+    ];
+
+    // Department templates
+    if (!empty($dept_slug)) {
+        $data = bbau_get_dynamic_seo_data($dept_slug, 'department');
+        if ($data && !empty($data['name'])) {
+            $name = $data['name'];
+            $is_amethi = ($data['campus'] ?? '') === 'Satellite Campus Amethi';
+            $campus_suffix = $is_amethi ? ' (Amethi Campus)' : '';
+            $campus_text = $is_amethi ? 'Satellite Campus, Amethi' : 'Babasaheb Bhimrao Ambedkar University (BBAU)';
+
+            $label = $tab_labels[$tab] ?? 'About';
+
+            $seo['title'] = ($tab === 'about')
+                ? "Department of {$name}{$campus_suffix} | BBAU"
+                : "{$label} - Department of {$name}{$campus_suffix} | BBAU";
+
+            switch ($tab) {
+                case 'faculty':
+                    $seo['desc'] = "Meet the faculty members, staff, and researchers in the Department of {$name} at {$campus_text}. Access profiles, designations, and contacts.";
+                    break;
+                case 'programs':
+                    $seo['desc'] = "View all undergraduate, postgraduate, and PhD academic programmes, admission details, and courses offered by the Department of {$name} at {$campus_text}.";
+                    break;
+                case 'research':
+                    $seo['desc'] = "Discover the core research thrust areas, research publications, journals, and doctoral research activities in the Department of {$name} at {$campus_text}.";
+                    break;
+                case 'notices':
+                    $seo['desc'] = "Stay updated with the latest circulars, semester exams, admission alerts, and official notices from the Department of {$name} at {$campus_text}.";
+                    break;
+                default:
+                    $seo['desc'] = "Explore the Department of {$name} at {$campus_text}. Read about our department profile, course structures, activities, and faculty directories.";
+                    break;
+            }
+        }
+    }
+    // Centre templates
+    elseif (!empty($centre_slug)) {
+        $data = bbau_get_dynamic_seo_data($centre_slug, 'centre');
+        if ($data && !empty($data['name'])) {
+            $name = $data['name'];
+            $label = $tab_labels[$tab] ?? 'About';
+
+            $seo['title'] = ($tab === 'about')
+                ? "{$name} | BBAU"
+                : "{$label} - {$name} | BBAU";
+
+            $seo['desc'] = "Explore the {$name} at Babasaheb Bhimrao Ambedkar University (BBAU). Find academic programmes, research thrust areas, news notifications, and board members.";
+        }
+    }
+    // School templates
+    elseif (!empty($school_slug)) {
+        $data = bbau_get_dynamic_seo_data($school_slug, 'school');
+        if ($data && !empty($data['name'])) {
+            $name = $data['name'];
+            $label = $tab_labels[$tab] ?? 'About';
+
+            $seo['title'] = ($tab === 'about')
+                ? "{$name} | BBAU"
+                : "{$label} - {$name} | BBAU";
+
+            $seo['desc'] = "Learn about the {$name} at Babasaheb Bhimrao Ambedkar University (BBAU). Access departments, centers under the school, and dean messages.";
+        }
+    }
+    // Faculty templates
+    elseif (!empty($faculty_slug)) {
+        $data = bbau_get_dynamic_seo_data($faculty_slug, 'faculty');
+        if ($data && !empty($data['name'])) {
+            $name = $data['name'];
+            $designation = $data['designation'] ?? 'Faculty Member';
+            $dept_name = $data['department']['name'] ?? '';
+
+            if (!empty($dept_name)) {
+                $seo['title'] = "{$name} - {$designation}, Department of {$dept_name} | BBAU";
+                $seo['desc'] = "View the academic profile of {$name}, {$designation} in the Department of {$dept_name} at Babasaheb Bhimrao Ambedkar University (BBAU). Learn about qualifications, research focus, publications, supervision, and contacts.";
+            } else {
+                $seo['title'] = "{$name} - {$designation} | BBAU";
+                $seo['desc'] = "View the academic profile of {$name}, {$designation} at Babasaheb Bhimrao Ambedkar University (BBAU). Learn about qualifications, research focus, publication history, supervision, and contacts.";
+            }
+        }
+    }
+
+    return array_filter($seo);
+}
+
+/**
+ * Filter default WordPress title tag
+ */
+add_filter('document_title_parts', function($title_parts) {
+    $seo = bbau_get_dynamic_seo_meta();
+    if (!empty($seo['title'])) {
+        $title_parts['title'] = $seo['title'];
+    }
+    return $title_parts;
+}, 100);
+
+/**
+ * Native Rank Math Filter Overrides
+ */
+add_filter('rank_math/frontend/title', function($title) {
+    $seo = bbau_get_dynamic_seo_meta();
+    return !empty($seo['title']) ? $seo['title'] : $title;
+}, 100);
+
+add_filter('rank_math/frontend/description', function($desc) {
+    $seo = bbau_get_dynamic_seo_meta();
+    return !empty($seo['desc']) ? $seo['desc'] : $desc;
+}, 100);
+
+// fix duplicate content issue in rank math
+
+add_filter('rank_math/frontend/canonical', function($canonical) {
+    $request_slug = isset($_GET['slug']) ? sanitize_title(wp_unslash($_GET['slug'])) : '';
+    $dept_slug    = get_query_var('dept_slug');
+    $centre_slug  = get_query_var('centre_slug');
+    $school_slug  = get_query_var('school_slug');
+
+    if (empty($dept_slug) && is_page('department')) {
+        $dept_slug = $request_slug;
+    } elseif (empty($centre_slug) && is_page('centre')) {
+        $centre_slug = $request_slug;
+    } elseif (empty($school_slug) && is_page('school-detail')) {
+        $school_slug = $request_slug;
+    }
+
+    // Set canonical to the clean dynamic page structure 
+    if (!empty($dept_slug)) {
+        return home_url("/departments/{$dept_slug}/");
+    } elseif (!empty($centre_slug)) {
+        return home_url("/centres/{$centre_slug}/");
+    } elseif (!empty($school_slug)) {
+        return home_url("/schools/{$school_slug}/");
+    }
+    return $canonical;
+}, 100);
