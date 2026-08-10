@@ -8,8 +8,8 @@ get_header();
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 
-$members_url = $api_base . '/api/v1/finance-committee-members/';
-$minutes_url = $media_base . '/api/v1/finance-committee-minutes/';
+$members_url = $api_base . '/api/v1/authorities/finance-committee-members/';
+$minutes_url = $media_base . '/api/v1/authorities/finance-committee-minutes/';
 
 $response_members = wp_remote_get($members_url, array('timeout' => 15));
 
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            let html = '<div class="minutes-list-modern">';
+            let html = '<div class="minutes-list-modern minute-row">';
             data.forEach(min => {
                 let fileUrl = '#';
                 if (min.file) {
@@ -272,5 +272,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
+<style>
+    .minutes-list-modern .minute-row{
+    width: calc(33% - 12px) !important;
+    flex: 0 0 calc(33% - 12px);
+}
+.minutes-list-modern{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+</style>
 <?php get_footer(); ?>
