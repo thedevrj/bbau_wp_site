@@ -127,16 +127,16 @@ get_header();
                     </ul>
                 </div>
                 <div class="hl-fun-card">
-                    <h4><span class="hl-icon-chip"><i class="fa-solid fa-moon"></i></span> Curfew, at a glance</h4>
+                    <h4><span class="hl-icon-chip"><i class="fa-solid fa-moon"></i></span> Hostel timings</h4>
                     <div class="hl-curfew-row">
                         <div class="hl-curfew-chip">
-                            <div class="k">General</div>
+                            <div class="k">Boys</div>
                             <div class="v">10:00 PM</div>
                             <div class="d">Back-in-hostel time</div>
                         </div>
                         <div class="hl-curfew-chip">
                             <div class="k">Girls Hostel</div>
-                            <div class="v">8 PM–5 AM</div>
+                            <div class="v">8 PM-5 AM</div>
                             <div class="d">Return by 8, out from 5</div>
                         </div>
                     </div>
@@ -222,7 +222,7 @@ get_header();
         <section class="hl-section">
             <div class="hl-section-head">
                 <span class="tag">Directory</span>
-                <h3>Meet all 11 hostels <i class="fa-solid fa-building"></i></h3>
+                <h3>Meet all hostels <i class="fa-solid fa-building"></i></h3>
                 <p>Allotted by the Dean, Students' Welfare — subject to seat availability.</p>
             </div>
 
