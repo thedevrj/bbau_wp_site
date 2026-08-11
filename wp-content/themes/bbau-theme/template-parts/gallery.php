@@ -299,7 +299,6 @@ document.addEventListener("DOMContentLoaded", function () {
 .next { right: 15px; }
 
 
-
 @media (max-width: 768px) {
     .lightbox-img {
         max-width: 100%;
