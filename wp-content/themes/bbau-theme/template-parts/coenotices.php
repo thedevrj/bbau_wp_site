@@ -1,14 +1,14 @@
 <?php
 /**
- * Template Name: Proctorial Board Notices Page
+ * Template Name: COE Notices Page
  */
 defined('ABSPATH') || exit;
 
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
-$BBAU_PBN_API = $media_base . '/api/v1/proctor/proctorial-board-notices/';
+$BBAU_COE_NOTICES_API = $media_base . '/api/v1/coe/coe-notices/';
 
-$response_notices = wp_remote_get($BBAU_PBN_API, array('timeout' => 15));
+$response_notices = wp_remote_get($BBAU_COE_NOTICES_API, array('timeout' => 15));
 
 $notices       = array();
 $notices_error = '';
@@ -39,7 +39,7 @@ get_header();
         <?php get_template_part('template-parts/breadcrumb'); ?>
 
         <h2 class="pb-page-title">
-            Proctorial Board Notices
+            COE Notices
         </h2>
 
         <?php if ($notices_error): ?>
