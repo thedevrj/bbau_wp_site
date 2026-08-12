@@ -1,17 +1,17 @@
 <?php
 /**
- * Template Name: Proctorial Board Notices Page
+ * Template Name: PhD Viva Voce Dates Page
  */
 defined('ABSPATH') || exit;
 
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
-$BBAU_PBN_API = $media_base . '/api/v1/proctor/proctorial-board-notices/';
+$BBAU_PHD_VIVA_API = $media_base . '/api/v1/coe/phd-viva-voce-dates/';
 
 $notices       = array();
 $notices_error = '';
 
-$cache_key = 'bbau_pbn_notices_all';
+$cache_key = 'bbau_phd_viva_dates_all';
 $cached    = get_transient($cache_key);
 
 if ($cached !== false) {
@@ -20,7 +20,7 @@ if ($cached !== false) {
 
 } else {
 
-    $next_url  = $BBAU_PBN_API;
+    $next_url  = $BBAU_PHD_VIVA_API;
     $safety_i  = 0; 
 
     while ($next_url && $safety_i < 50) {
@@ -70,7 +70,7 @@ get_header();
         <?php get_template_part('template-parts/breadcrumb'); ?>
 
         <h2 class="pb-page-title">
-            Proctorial Board Notices
+            Ph.D. Viva Voce Dates
         </h2>
 
         <?php if ($notices_error): ?>
@@ -79,7 +79,7 @@ get_header();
 
         <?php elseif (empty($notices)): ?>
 
-            <div class="alert alert-warning">No notices available.</div>
+            <div class="alert alert-warning">No viva voce dates available.</div>
 
         <?php else: ?>
 
@@ -117,7 +117,6 @@ get_header();
 
             </div>
 
-            <!-- Pagination controls -->
             <nav class="pb-pagination" aria-label="Notices pagination">
                 <button type="button" class="pb-page-btn pb-prev" disabled>
                     <i class="fa-solid fa-chevron-left"></i>
@@ -212,7 +211,7 @@ get_header();
     }
 }
 
-
+/* Pagination */
 .pb-pagination{
     display:flex;
     align-items:center;
@@ -234,6 +233,7 @@ get_header();
     justify-content:center;
     cursor:pointer;
     transition:.2s;
+    flex-shrink:0;
 }
 
 .pb-page-btn:hover:not(:disabled){
@@ -251,6 +251,7 @@ get_header();
     align-items:center;
     gap:6px;
     flex-wrap:wrap;
+    justify-content:center;
 }
 
 .pb-page-num{
@@ -264,6 +265,7 @@ get_header();
     font-weight:600;
     cursor:pointer;
     transition:.2s;
+    flex-shrink:0;
 }
 
 .pb-page-num:hover{
@@ -280,6 +282,53 @@ get_header();
     cursor:default;
     border:none;
     background:transparent;
+    min-width:20px;
+}
+
+@media (max-width: 577px){
+
+    .pb-pagination{
+        gap:6px;
+        margin-top:22px;
+    }
+
+    .pb-page-btn{
+        width:32px;
+        height:32px;
+        font-size:13px;
+    }
+
+    .pb-page-numbers{
+        gap:4px;
+    }
+
+    .pb-page-num{
+        min-width:32px;
+        height:32px;
+        padding:0 8px;
+        font-size:13px;
+    }
+
+    .pb-page-num.ellipsis{
+        min-width:14px;
+        padding:0 2px;
+    }
+}
+
+@media (max-width: 360px){
+
+    .pb-page-btn{
+        width:30px;
+        height:30px;
+        font-size:12px;
+    }
+
+    .pb-page-num{
+        min-width:30px;
+        height:30px;
+        padding:0 6px;
+        font-size:12px;
+    }
 }
 
 </style>
