@@ -6,7 +6,7 @@ defined('ABSPATH') || exit;
 
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
-$BBAU_COE_NOTICES_API = $media_base. '/api/v1/coe/coe-notices/';
+$BBAU_COE_NOTICES_API = $media_base . '/api/v1/coe/coe-notices/';
 
 $notices       = array();
 $notices_error = '';
@@ -21,7 +21,7 @@ if ($cached !== false) {
 } else {
 
     $next_url  = $BBAU_COE_NOTICES_API;
-    $safety_i  = 0; // hard stop so a misbehaving API can't loop forever
+    $safety_i  = 0; 
 
     while ($next_url && $safety_i < 50) {
 
@@ -116,8 +116,6 @@ get_header();
                 <?php endforeach; ?>
 
             </div>
-
-            <!-- Pagination controls -->
             <nav class="pb-pagination" aria-label="Notices pagination">
                 <button type="button" class="pb-page-btn pb-prev" disabled>
                     <i class="fa-solid fa-chevron-left"></i>
@@ -234,6 +232,7 @@ get_header();
     justify-content:center;
     cursor:pointer;
     transition:.2s;
+    flex-shrink:0;
 }
 
 .pb-page-btn:hover:not(:disabled){
@@ -251,6 +250,7 @@ get_header();
     align-items:center;
     gap:6px;
     flex-wrap:wrap;
+    justify-content:center;
 }
 
 .pb-page-num{
@@ -264,6 +264,7 @@ get_header();
     font-weight:600;
     cursor:pointer;
     transition:.2s;
+    flex-shrink:0;
 }
 
 .pb-page-num:hover{
@@ -280,6 +281,53 @@ get_header();
     cursor:default;
     border:none;
     background:transparent;
+    min-width:20px;
+}
+
+@media (max-width: 577px){
+
+    .pb-pagination{
+        gap:6px;
+        margin-top:22px;
+    }
+
+    .pb-page-btn{
+        width:32px;
+        height:32px;
+        font-size:13px;
+    }
+
+    .pb-page-numbers{
+        gap:4px;
+    }
+
+    .pb-page-num{
+        min-width:32px;
+        height:32px;
+        padding:0 8px;
+        font-size:13px;
+    }
+
+    .pb-page-num.ellipsis{
+        min-width:14px;
+        padding:0 2px;
+    }
+}
+
+@media (max-width: 360px){
+
+    .pb-page-btn{
+        width:30px;
+        height:30px;
+        font-size:12px;
+    }
+
+    .pb-page-num{
+        min-width:30px;
+        height:30px;
+        padding:0 6px;
+        font-size:12px;
+    }
 }
 
 </style>
@@ -291,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!grid) return;
 
     var items       = Array.prototype.slice.call(grid.querySelectorAll('.pb-notice-item'));
-    var perPage     = 10;
+    var perPage     = 20;
     var totalPages  = Math.max(1, Math.ceil(items.length / perPage));
     var currentPage = 1;
 
