@@ -6,25 +6,56 @@ defined('ABSPATH') || exit;
 
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
-$BBAU_COE_NOTICES_API = $media_base . '/api/v1/coe/coe-notices/';
-
-$response_notices = wp_remote_get($BBAU_COE_NOTICES_API, array('timeout' => 15));
+$BBAU_COE_NOTICES_API = $media_base. '/api/v1/coe/coe-notices/';
 
 $notices       = array();
 $notices_error = '';
 
-if (is_wp_error($response_notices)) {
+$cache_key = 'bbau_coe_notices_all';
+$cached    = get_transient($cache_key);
 
-    $notices_error = $response_notices->get_error_message();
+if ($cached !== false) {
 
-} elseif (wp_remote_retrieve_response_code($response_notices) !== 200) {
-
-    $notices_error = 'API Error : HTTP ' . wp_remote_retrieve_response_code($response_notices);
+    $notices = $cached;
 
 } else {
 
-    $decoded = json_decode(wp_remote_retrieve_body($response_notices), true);
-    $notices = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
+    $next_url  = $BBAU_COE_NOTICES_API;
+    $safety_i  = 0; // hard stop so a misbehaving API can't loop forever
+
+    while ($next_url && $safety_i < 50) {
+
+        $response = wp_remote_get($next_url, array('timeout' => 15));
+
+        if (is_wp_error($response)) {
+            $notices_error = $response->get_error_message();
+            break;
+        }
+
+        if (wp_remote_retrieve_response_code($response) !== 200) {
+            $notices_error = 'API Error : HTTP ' . wp_remote_retrieve_response_code($response);
+            break;
+        }
+
+        $decoded = json_decode(wp_remote_retrieve_body($response), true);
+
+        if (isset($decoded['results']) && is_array($decoded['results'])) {
+            $notices  = array_merge($notices, $decoded['results']);
+            $next_url = !empty($decoded['next']) ? $decoded['next'] : null;
+        } elseif (is_array($decoded)) {
+            // API isn't paginated after all, just a flat array
+            $notices  = array_merge($notices, $decoded);
+            $next_url = null;
+        } else {
+            $next_url = null;
+        }
+
+        $safety_i++;
+    }
+
+    if (!$notices_error) {
+        set_transient($cache_key, $notices, 10 * MINUTE_IN_SECONDS);
+    }
 }
 
 get_header();
@@ -52,7 +83,7 @@ get_header();
 
         <?php else: ?>
 
-            <div class="row">
+            <div class="row pb-notice-grid">
 
                 <?php foreach ($notices as $notice): ?>
 
@@ -70,7 +101,7 @@ get_header();
                     }
                     ?>
 
-                    <div class="col-lg-6 mb-3">
+                    <div class="col-lg-6 mb-3 pb-notice-item">
                         <a class="pb-notice-card" <?php if ($file): ?>href="<?php echo esc_url($file); ?>" target="_blank" rel="noopener"<?php endif; ?>>
                             <span class="pb-notice-icon">
                                 <i class="fa-solid fa-bullhorn"></i>
@@ -85,6 +116,17 @@ get_header();
                 <?php endforeach; ?>
 
             </div>
+
+            <!-- Pagination controls -->
+            <nav class="pb-pagination" aria-label="Notices pagination">
+                <button type="button" class="pb-page-btn pb-prev" disabled>
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="pb-page-numbers"></div>
+                <button type="button" class="pb-page-btn pb-next">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </nav>
 
         <?php endif; ?>
 
@@ -170,6 +212,168 @@ get_header();
     }
 }
 
+/* Pagination */
+.pb-pagination{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+.pb-page-btn{
+    width:38px;
+    height:38px;
+    border-radius:8px;
+    border:1px solid #5c1010;
+    background:#fff;
+    color:#5c1010;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.pb-page-btn:hover:not(:disabled){
+    background:#5c1010;
+    color:#fff;
+}
+
+.pb-page-btn:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+.pb-page-numbers{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.pb-page-num{
+    min-width:38px;
+    height:38px;
+    padding:0 10px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    background:#fff;
+    color:#1a1a1a;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.pb-page-num:hover{
+    border-color:#5c1010;
+}
+
+.pb-page-num.active{
+    background:#c9a84c;
+    border-color:#c9a84c;
+    color:#5c1010;
+}
+
+.pb-page-num.ellipsis{
+    cursor:default;
+    border:none;
+    background:transparent;
+}
+
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    var grid       = document.querySelector('.pb-notice-grid');
+    if (!grid) return;
+
+    var items       = Array.prototype.slice.call(grid.querySelectorAll('.pb-notice-item'));
+    var perPage     = 10;
+    var totalPages  = Math.max(1, Math.ceil(items.length / perPage));
+    var currentPage = 1;
+
+    var pagination  = document.querySelector('.pb-pagination');
+    var numbersWrap = pagination ? pagination.querySelector('.pb-page-numbers') : null;
+    var prevBtn     = pagination ? pagination.querySelector('.pb-prev') : null;
+    var nextBtn     = pagination ? pagination.querySelector('.pb-next') : null;
+
+    if (!pagination || totalPages <= 1) {
+        if (pagination) pagination.style.display = 'none';
+        return;
+    }
+
+    function renderItems() {
+        var start = (currentPage - 1) * perPage;
+        var end   = start + perPage;
+
+        items.forEach(function (item, idx) {
+            item.style.display = (idx >= start && idx < end) ? '' : 'none';
+        });
+    }
+
+    function renderNumbers() {
+        numbersWrap.innerHTML = '';
+
+        var pagesToShow = [];
+        var delta = 1;
+
+        for (var p = 1; p <= totalPages; p++) {
+            if (p === 1 || p === totalPages || (p >= currentPage - delta && p <= currentPage + delta)) {
+                pagesToShow.push(p);
+            }
+        }
+
+        var lastPushed = 0;
+        pagesToShow.forEach(function (p) {
+            if (lastPushed && p - lastPushed > 1) {
+                var dots = document.createElement('span');
+                dots.className = 'pb-page-num ellipsis';
+                dots.textContent = '…';
+                numbersWrap.appendChild(dots);
+            }
+
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'pb-page-num' + (p === currentPage ? ' active' : '');
+            btn.textContent = p;
+            btn.addEventListener('click', function () {
+                currentPage = p;
+                update();
+            });
+            numbersWrap.appendChild(btn);
+
+            lastPushed = p;
+        });
+
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+    }
+
+    function update() {
+        renderItems();
+        renderNumbers();
+        pagination.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    prevBtn.addEventListener('click', function () {
+        if (currentPage > 1) {
+            currentPage--;
+            update();
+        }
+    });
+
+    nextBtn.addEventListener('click', function () {
+        if (currentPage < totalPages) {
+            currentPage++;
+            update();
+        }
+    });
+
+    update();
+});
+</script>
 
 <?php get_footer(); ?>
