@@ -15,7 +15,6 @@ $response_members = wp_remote_get($members_url, array('timeout' => 15));
 
 $members = array();
 $minutes = array();
-$authority_title = "Board of Management";
 
 if (!is_wp_error($response_members) && wp_remote_retrieve_response_code($response_members) === 200) {
     $decoded = json_decode(wp_remote_retrieve_body($response_members), true);
