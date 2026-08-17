@@ -57,6 +57,8 @@ $schools = array_unique($schools);
                     </select>
 
                     <input type="text" id="dept-search" placeholder="Search departments...">
+                    <a href="<?php echo esc_url(get_permalink()); ?>"
+                        class="btn-fac-profile">Reset</a>
                 </div>
             </div>
 

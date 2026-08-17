@@ -28,8 +28,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         <div class="ra-glass-filters animate-up mt-4" style="animation-delay: 0.1s;">
             <div class="ra-search-box">
                 <i class="fas fa-search ra-search-icon"></i>
-                <input type="text" id="scholar-search" placeholder="Search by name, topic, or enrollment no, supervisior.."
-                    autocomplete="off">
+                <input type="text" id="scholar-search"
+                    placeholder="Search by name, topic, or enrollment no, supervisior.." autocomplete="off">
             </div>
 
             <div class="ra-filter-group">
@@ -56,6 +56,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     <label>To Date</label>
                     <input type="date" id="end-date" class="ra-select">
                 </div>
+                <a href="<?php echo esc_url(get_permalink()); ?>" class="btn-fac-profile">Reset</a>
             </div>
         </div>
 
@@ -116,7 +117,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const depts = await dRes.json();
                     const dData = depts.results || depts;
                     dData.forEach(d => {
-                        const displayName = d.campus === 'Satellite Campus Amethi' ? `${d.name} (Amethi)` : d.name;
+                        const displayName = d.campus === 'Satellite Campus Amethi' ?
+                            `${d.name} (Amethi)` : d.name;
                         deptFilter.innerHTML += `<option value="${d.slug}">${displayName}</option>`;
                     });
                     if (deptParam) {
@@ -159,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     currentUrl.searchParams.delete('department');
                 }
-                
+
                 // Reset page on filter change
                 currentUrl.searchParams.delete('page');
                 window.history.pushState({}, '', currentUrl);
@@ -178,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         tbody.innerHTML =
-        `<tr><td colspan="6" class="text-center py-5"><div class="rd-loader"></div></td></tr>`;
+            `<tr><td colspan="6" class="text-center py-5"><div class="rd-loader"></div></td></tr>`;
 
         fetch(url)
             .then(res => res.json())
@@ -280,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let startPage = Math.max(1, currentPage - 2);
         let endPage = Math.min(totalPages, currentPage + 2);
-        
+
         if (startPage > 1) {
             const firstBtn = document.createElement('button');
             firstBtn.className = 'btn-rd-profile';
