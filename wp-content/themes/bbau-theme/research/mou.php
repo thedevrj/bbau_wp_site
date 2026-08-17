@@ -41,6 +41,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     <label>To Signing Date</label>
                     <input type="date" id="end-date" class="ra-select">
                 </div>
+                <a href="<?php echo esc_url(get_permalink()); ?>" class="btn-fac-profile">Reset</a>
+
             </div>
         </div>
 
