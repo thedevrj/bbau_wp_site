@@ -78,6 +78,38 @@ if ($minutes_cached !== false) {
     }
 }
 
+$bbau_pb_year_options = array();
+if (!empty($minutes) && is_array($minutes)) {
+    foreach ($minutes as $minute) {
+        $date_raw = $minute['date_of_meeting'] ?? '';
+        if (!$date_raw) {
+            continue;
+        }
+        $ts = strtotime($date_raw);
+        if (!$ts) {
+            continue;
+        }
+        $year = date('Y', $ts);
+        $bbau_pb_year_options[$year] = $year;
+    }
+    krsort($bbau_pb_year_options);
+}
+
+$bbau_pb_month_options = array(
+    '01' => 'January',
+    '02' => 'February',
+    '03' => 'March',
+    '04' => 'April',
+    '05' => 'May',
+    '06' => 'June',
+    '07' => 'July',
+    '08' => 'August',
+    '09' => 'September',
+    '10' => 'October',
+    '11' => 'November',
+    '12' => 'December',
+);
+
 get_header();
 ?>
 
@@ -88,6 +120,7 @@ get_header();
     <div class="container">
 
         <?php get_template_part('template-parts/breadcrumb'); ?>
+        <?php get_template_part('menu/menu'); ?>
 
         <h2 class="pb-page-title">
             Proctorial Board
@@ -127,7 +160,7 @@ get_header();
 
                                 <div class="committee-body">
 
-                                    <table class="members-table">
+                                    <table class="members-table" id="pbMembersTable">
                                         <thead>
                                             <tr>
                                                 <th>Member Name</th>
@@ -207,24 +240,55 @@ get_header();
 
                 <?php else: ?>
 
+                    <div class="pb-filter-bar">
+                        <div class="pb-search-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="pbMinutesSearch" class="pb-search-input"
+                                   placeholder="Search by name...">
+                        </div>
+                        <div class="pb-select-wrap">
+                            <select id="pbMinutesYearFilter" class="pb-select-input">
+                                <option value="">All Years</option>
+                                <?php foreach ($bbau_pb_year_options as $year): ?>
+                                    <option value="<?php echo esc_attr($year); ?>"><?php echo esc_html($year); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="pb-select-wrap">
+                            <select id="pbMinutesMonthFilter" class="pb-select-input">
+                                <option value="">All Months</option>
+                                <?php foreach ($bbau_pb_month_options as $key => $label): ?>
+                                    <option value="<?php echo esc_attr($key); ?>"><?php echo esc_html($label); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <button type="button" id="pbMinutesClear" class="pb-clear-btn">
+                            <i class="fa-solid fa-xmark"></i> Clear
+                        </button>
+                    </div>
+
                     <div class="section-card">
 
-                        <div class="minutes-list-modern">
+                        <div class="minutes-list-modern" id="pbMinutesList">
 
                             <?php foreach ($minutes as $minute): ?>
 
                                 <?php
                                 $title    = esc_html($minute['meeting_title'] ?? '');
                                 $date_raw = $minute['date_of_meeting'] ?? '';
-                                $day      = '';
-                                $mon      = '';
-                                $file     = '';
+                                $day       = '';
+                                $mon       = '';
+                                $file      = '';
+                                $year_key  = '';
+                                $month_key = '';
 
                                 if ($date_raw) {
                                     $ts = strtotime($date_raw);
                                     if ($ts) {
-                                        $day = date('d', $ts);
-                                        $mon = date('M', $ts);
+                                        $day       = date('d', $ts);
+                                        $mon       = date('M', $ts);
+                                        $year_key  = date('Y', $ts);
+                                        $month_key = date('m', $ts);
                                     }
                                 }
 
@@ -235,9 +299,15 @@ get_header();
                                         $file = $media_base . $minute['file'];
                                     }
                                 }
+
+                                $search_blob = mb_strtolower(trim($minute['meeting_title'] ?? ''));
                                 ?>
 
-                                <a class="minute-row" <?php if ($file): ?>href="<?php echo esc_url($file); ?>" target="_blank" rel="noopener"<?php endif; ?>>
+                                <a class="minute-row"
+                                   data-search="<?php echo esc_attr($search_blob); ?>"
+                                   data-year="<?php echo esc_attr($year_key); ?>"
+                                   data-month="<?php echo esc_attr($month_key); ?>"
+                                   <?php if ($file): ?>href="<?php echo esc_url($file); ?>" target="_blank" rel="noopener"<?php endif; ?>>
 
                                     <div class="min-date">
                                         <span class="d"><?php echo esc_html($day); ?></span>
@@ -253,6 +323,10 @@ get_header();
 
                             <?php endforeach; ?>
 
+                        </div>
+
+                        <div class="pb-no-results" id="pbMinutesNoResults" style="display:none;">
+                            No minutes match your filters.
                         </div>
 
                         <nav class="pb-pagination" aria-label="Minutes pagination">
@@ -480,8 +554,131 @@ get_header();
         padding:10px 16px;
     }
 }
+.pb-filter-bar{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
 
-/* Pagination */
+.pb-search-wrap{
+    position:relative;
+    flex:1 1 200px;
+    min-width:180px;
+}
+
+.pb-search-wrap i{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#9691a8;
+    font-size:15px;
+    pointer-events:none;
+}
+
+.pb-search-input{
+    width:100%;
+    padding:10px 15px 10px 41px !important;
+    border:1px solid #ddd9ec;
+    border-radius:999px !important;
+    font-size:0.95rem;
+    color:#333;
+    background:#fff;
+    outline:none;
+    transition:.2s;
+}
+
+.pb-search-input::placeholder{
+    color:#9691a8;
+}
+
+.pb-search-input:focus{
+    border-color:#b7b0d6;
+    box-shadow:0 0 0 3px rgba(155,145,200,0.12);
+}
+
+.pb-select-wrap{
+    position:relative;
+    flex:0 0 auto;
+}
+
+.pb-select-input{
+    padding:10px 34px 10px 18px;
+    border:1px solid #d9d9d9;
+    border-radius:999px;
+    font-size:0.9rem;
+    color:#5c1010;
+    font-weight:600;
+    background:#fff url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235c1010' d='M1 1l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 14px center;
+    outline:none;
+    cursor:pointer;
+    appearance:none;
+    -webkit-appearance:none;
+    min-width:130px;
+}
+
+.pb-select-input:focus{
+    border-color:#8B1A1A;
+    box-shadow:0 0 0 3px rgba(139,26,26,0.10);
+}
+
+.pb-clear-btn{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:10px 18px;
+    border:1px solid #d9d9d9;
+    border-radius:999px;
+    background:#fff;
+    color:#5c1010;
+    font-size:0.9rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+    flex:0 0 auto;
+    white-space:nowrap;
+}
+
+.pb-clear-btn i{
+    font-size:11px;
+    color:#8B1A1A;
+}
+
+.pb-clear-btn:hover{
+    background:#fdfbf7;
+    border-color:#8B1A1A;
+}
+
+.pb-no-results{
+    text-align:center;
+    padding:20px;
+    color:#777;
+    font-size:0.9rem;
+    font-style:italic;
+}
+
+@media (max-width: 577px){
+    .pb-filter-bar{
+        gap:8px;
+    }
+    .pb-search-wrap{
+        flex:1 1 100%;
+    }
+    .pb-select-wrap{
+        flex:1 1 auto;
+    }
+    .pb-select-input{
+        width:100%;
+        min-width:0;
+    }
+    .pb-clear-btn{
+        flex:1 1 auto;
+        justify-content:center;
+    }
+}
+
 .pb-pagination{
     display:flex;
     align-items:center;
@@ -606,7 +803,7 @@ get_header();
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Accordion toggle
+  
     const toggleHeaders = document.querySelectorAll('.committee-header[data-bs-toggle="collapse"]');
     toggleHeaders.forEach(header => {
         header.addEventListener('click', function(e) {
@@ -647,13 +844,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Minutes pagination - 20 per page
-    const minutesWrap = document.querySelector('.minutes-list-modern');
+    const minutesWrap   = document.getElementById('pbMinutesList');
     if (!minutesWrap) return;
 
-    const rows        = Array.prototype.slice.call(minutesWrap.querySelectorAll('.minute-row'));
-    const perPage      = 20;
-    const totalPages   = Math.max(1, Math.ceil(rows.length / perPage));
+    const minutesSearchInput = document.getElementById('pbMinutesSearch');
+    const yearFilterSelect   = document.getElementById('pbMinutesYearFilter');
+    const monthFilterSelect  = document.getElementById('pbMinutesMonthFilter');
+    const clearBtn           = document.getElementById('pbMinutesClear');
+    const minutesNoResults   = document.getElementById('pbMinutesNoResults');
+
+    const allRows      = Array.prototype.slice.call(minutesWrap.querySelectorAll('.minute-row'));
+    const perPage       = 20;
+    let filteredRows   = allRows.slice();
     let currentPage    = 1;
 
     const pagination   = document.querySelector('.pb-pagination');
@@ -661,21 +863,58 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevBtn      = pagination ? pagination.querySelector('.pb-prev') : null;
     const nextBtn       = pagination ? pagination.querySelector('.pb-next') : null;
 
-    if (!pagination || totalPages <= 1) {
-        if (pagination) pagination.style.display = 'none';
-        return;
+    function applyFilters() {
+        const q     = minutesSearchInput ? minutesSearchInput.value.trim().toLowerCase() : '';
+        const year  = yearFilterSelect ? yearFilterSelect.value : '';
+        const month = monthFilterSelect ? monthFilterSelect.value : '';
+
+        filteredRows = allRows.filter(function (row) {
+            const haystack = row.getAttribute('data-search') || '';
+            const rowYear  = row.getAttribute('data-year') || '';
+            const rowMonth = row.getAttribute('data-month') || '';
+
+            const matchesSearch = !q || haystack.indexOf(q) !== -1;
+            const matchesYear   = !year || rowYear === year;
+            const matchesMonth  = !month || rowMonth === month;
+
+            return matchesSearch && matchesYear && matchesMonth;
+        });
+
+        allRows.forEach(function (row) {
+            row.style.display = 'none';
+        });
+
+        currentPage = 1;
+        renderPage();
     }
 
-    function renderRows() {
+    function renderPage() {
+        const totalPages = Math.max(1, Math.ceil(filteredRows.length / perPage));
+        if (currentPage > totalPages) currentPage = totalPages;
+
         const start = (currentPage - 1) * perPage;
         const end   = start + perPage;
 
-        rows.forEach(function (row, idx) {
-            row.style.display = (idx >= start && idx < end) ? '' : 'none';
+        allRows.forEach(function (row) {
+            row.style.display = 'none';
         });
+
+        filteredRows.slice(start, end).forEach(function (row) {
+            row.style.display = '';
+        });
+
+        if (minutesNoResults) {
+            minutesNoResults.style.display = filteredRows.length === 0 ? '' : 'none';
+        }
+
+        if (pagination) {
+            pagination.style.display = (totalPages <= 1) ? 'none' : 'flex';
+            renderNumbers(totalPages);
+        }
     }
 
-    function renderNumbers() {
+    function renderNumbers(totalPages) {
+        if (!numbersWrap) return;
         numbersWrap.innerHTML = '';
 
         const pagesToShow = [];
@@ -702,38 +941,58 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.textContent = p;
             btn.addEventListener('click', function () {
                 currentPage = p;
-                update();
+                renderPage();
             });
             numbersWrap.appendChild(btn);
 
             lastPushed = p;
         });
 
-        prevBtn.disabled = currentPage === 1;
-        nextBtn.disabled = currentPage === totalPages;
+        if (prevBtn) prevBtn.disabled = currentPage === 1;
+        if (nextBtn) nextBtn.disabled = currentPage === totalPages;
     }
 
-    function update() {
-        renderRows();
-        renderNumbers();
-        pagination.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function () {
+            if (currentPage > 1) {
+                currentPage--;
+                renderPage();
+            }
+        });
     }
 
-    prevBtn.addEventListener('click', function () {
-        if (currentPage > 1) {
-            currentPage--;
-            update();
-        }
-    });
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+            const totalPages = Math.max(1, Math.ceil(filteredRows.length / perPage));
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderPage();
+            }
+        });
+    }
 
-    nextBtn.addEventListener('click', function () {
-        if (currentPage < totalPages) {
-            currentPage++;
-            update();
-        }
-    });
+    if (minutesSearchInput) {
+        minutesSearchInput.addEventListener('input', applyFilters);
+    }
 
-    update();
+    if (yearFilterSelect) {
+        yearFilterSelect.addEventListener('change', applyFilters);
+    }
+
+    if (monthFilterSelect) {
+        monthFilterSelect.addEventListener('change', applyFilters);
+    }
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+            if (minutesSearchInput) minutesSearchInput.value = '';
+            if (yearFilterSelect) yearFilterSelect.value = '';
+            if (monthFilterSelect) monthFilterSelect.value = '';
+            applyFilters();
+        });
+    }
+
+    applyFilters();
 });
 </script>
 
