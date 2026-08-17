@@ -38,6 +38,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     </select>
                 </div>
             </div>
+            <a href="<?php echo esc_url(get_permalink()); ?>" class="btn-fac-profile">Reset</a>
         </div>
 
         <!-- RESEARCH AREAS GRID -->
