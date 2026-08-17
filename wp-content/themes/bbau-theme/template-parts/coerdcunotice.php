@@ -1,17 +1,17 @@
 <?php
 /**
- * Template Name: MPhil Viva Voce Dates Page
+ * Template Name: RDCU Notices Page
  */
 defined('ABSPATH') || exit;
 
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
-$BBAU_MPHIL_VIVA_API = $media_base . '/api/v1/coe/mphil-viva-voce-dates/';
+$BBAU_RDCU_API = $media_base . '/api/v1/coe/rdcu-notices/';
 
 $notices       = array();
 $notices_error = '';
 
-$cache_key = 'bbau_mphil_viva_dates_all';
+$cache_key = 'bbau_rdcu_notices_all';
 $cached    = get_transient($cache_key);
 
 if ($cached !== false) {
@@ -20,7 +20,7 @@ if ($cached !== false) {
 
 } else {
 
-    $next_url  = $BBAU_MPHIL_VIVA_API;
+    $next_url  = $BBAU_RDCU_API;
     $safety_i  = 0;
 
     while ($next_url && $safety_i < 50) {
@@ -58,19 +58,20 @@ if ($cached !== false) {
     }
 }
 
-$bbau_mphil_years = array();
+
+$bbau_rdcu_years = array();
 
 if (!empty($notices)) {
     foreach ($notices as $n) {
         if (!empty($n['date'])) {
             $ts = strtotime($n['date']);
             if ($ts) {
-                $bbau_mphil_years[(int) date('Y', $ts)] = true;
+                $bbau_rdcu_years[(int) date('Y', $ts)] = true;
             }
         }
     }
-    krsort($bbau_mphil_years);
-    $bbau_mphil_years = array_keys($bbau_mphil_years);
+    krsort($bbau_rdcu_years);
+    $bbau_rdcu_years = array_keys($bbau_rdcu_years);
 }
 
 $bbau_months = array(
@@ -92,7 +93,7 @@ get_header();
         <?php get_template_part('menu/menu'); ?>
 
         <h2 class="pb-page-title">
-            M.Phil. Viva Voce Dates
+            RDCU Notices
         </h2>
 
         <?php if ($notices_error): ?>
@@ -101,9 +102,11 @@ get_header();
 
         <?php elseif (empty($notices)): ?>
 
-            <div class="alert alert-warning">No viva voce dates available.</div>
+            <div class="alert alert-warning">No notices available.</div>
 
         <?php else: ?>
+
+            <!-- Filter bar -->
             <div class="pb-filter-bar">
 
                 <div class="pb-filter-search">
@@ -113,7 +116,7 @@ get_header();
 
                 <select id="pbYearFilter" class="pb-filter-select">
                     <option value="">All Years</option>
-                    <?php foreach ($bbau_mphil_years as $y): ?>
+                    <?php foreach ($bbau_rdcu_years as $y): ?>
                         <option value="<?php echo esc_attr($y); ?>"><?php echo esc_html($y); ?></option>
                     <?php endforeach; ?>
                 </select>
@@ -132,7 +135,7 @@ get_header();
             </div>
 
             <div class="pb-filter-empty" id="pbFilterEmpty" style="display:none;">
-                No viva voce dates match your filters.
+                No notices match your filters.
             </div>
 
             <div class="row pb-notice-grid">
@@ -210,6 +213,7 @@ get_header();
     border-left:5px solid #c9a84c;
     padding-left:15px;
 }
+
 .pb-filter-bar{
     display:flex;
     flex-wrap:wrap;
