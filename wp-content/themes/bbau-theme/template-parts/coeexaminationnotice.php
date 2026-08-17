@@ -44,7 +44,7 @@ if ($cached !== false) {
     list($mphil_count, $mphil_error)   = bbau_coe_count($media_base . '/api/v1/coe/mphil-viva-voce-dates/');
     list($phd_count, $phd_error)       = bbau_coe_count($media_base . '/api/v1/coe/phd-viva-voce-dates/');
     list($presub_count, $presub_error) = bbau_coe_count($media_base . '/api/v1/coe/phd-pre-submission-seminars/');
-    list($rdcu_count, $rdcu_error)     = bbau_coe_count($media_basee . '/api/v1/coe/rdcu-notices/');
+    list($rdcu_count, $rdcu_error)     = bbau_coe_count($media_base . '/api/v1/coe/rdcu-notices/');
 
     $card_data = array(
         array('count' => $mphil_count,  'error' => $mphil_error),
