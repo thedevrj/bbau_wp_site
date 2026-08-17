@@ -10,30 +10,72 @@ $media_base = getenv('DJANGO_MEDIA_URL');
 $BBAU_PB_MEMBERS_API = $media_base . '/api/v1/proctor/proctorial-board-members/';
 $BBAU_PB_MINUTES_API = $media_base . '/api/v1/proctor/proctorial-board-minutes/';
 
-$response_members  = wp_remote_get($BBAU_PB_MEMBERS_API, array('timeout' => 15));
-$response_minutes  = wp_remote_get($BBAU_PB_MINUTES_API, array('timeout' => 15));
+$members       = array();
+$minutes       = array();
+$members_error = '';
+$minutes_error = '';
 
-$members        = array();
-$minutes        = array();
-$members_error  = '';
-$minutes_error  = '';
 
-if (is_wp_error($response_members)) {
-    $members_error = $response_members->get_error_message();
-} elseif (wp_remote_retrieve_response_code($response_members) !== 200) {
-    $members_error = 'API Error : HTTP ' . wp_remote_retrieve_response_code($response_members);
-} else {
-    $decoded = json_decode(wp_remote_retrieve_body($response_members), true);
-    $members = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
+function bbau_pb_fetch_all($url, &$error) {
+
+    $all      = array();
+    $next_url = $url;
+    $safety_i = 0;
+
+    while ($next_url && $safety_i < 50) {
+
+        $response = wp_remote_get($next_url, array('timeout' => 15));
+
+        if (is_wp_error($response)) {
+            $error = $response->get_error_message();
+            break;
+        }
+
+        if (wp_remote_retrieve_response_code($response) !== 200) {
+            $error = 'API Error : HTTP ' . wp_remote_retrieve_response_code($response);
+            break;
+        }
+
+        $decoded = json_decode(wp_remote_retrieve_body($response), true);
+
+        if (isset($decoded['results']) && is_array($decoded['results'])) {
+            $all      = array_merge($all, $decoded['results']);
+            $next_url = !empty($decoded['next']) ? $decoded['next'] : null;
+        } elseif (is_array($decoded)) {
+            $all      = array_merge($all, $decoded);
+            $next_url = null;
+        } else {
+            $next_url = null;
+        }
+
+        $safety_i++;
+    }
+
+    return $all;
 }
 
-if (is_wp_error($response_minutes)) {
-    $minutes_error = $response_minutes->get_error_message();
-} elseif (wp_remote_retrieve_response_code($response_minutes) !== 200) {
-    $minutes_error = 'API Error : HTTP ' . wp_remote_retrieve_response_code($response_minutes);
+
+$members_cache_key = 'bbau_pb_members_all';
+$members_cached     = get_transient($members_cache_key);
+
+if ($members_cached !== false) {
+    $members = $members_cached;
 } else {
-    $decoded = json_decode(wp_remote_retrieve_body($response_minutes), true);
-    $minutes = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
+    $members = bbau_pb_fetch_all($BBAU_PB_MEMBERS_API, $members_error);
+    if (!$members_error) {
+        set_transient($members_cache_key, $members, 10 * MINUTE_IN_SECONDS);
+    }
+}
+$minutes_cache_key = 'bbau_pb_minutes_all';
+$minutes_cached     = get_transient($minutes_cache_key);
+
+if ($minutes_cached !== false) {
+    $minutes = $minutes_cached;
+} else {
+    $minutes = bbau_pb_fetch_all($BBAU_PB_MINUTES_API, $minutes_error);
+    if (!$minutes_error) {
+        set_transient($minutes_cache_key, $minutes, 10 * MINUTE_IN_SECONDS);
+    }
 }
 
 get_header();
@@ -77,7 +119,7 @@ get_header();
                                  aria-expanded="true" role="button">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h4>Proctorial Board</h4>
-                                    <span class="toggle-icon">&#9660;</span>
+                                   <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
                                 </div>
                             </div>
 
@@ -212,6 +254,16 @@ get_header();
                             <?php endforeach; ?>
 
                         </div>
+
+                        <nav class="pb-pagination" aria-label="Minutes pagination">
+                            <button type="button" class="pb-page-btn pb-prev" disabled>
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <div class="pb-page-numbers"></div>
+                            <button type="button" class="pb-page-btn pb-next">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </nav>
 
                     </div>
 
@@ -429,10 +481,132 @@ get_header();
     }
 }
 
+/* Pagination */
+.pb-pagination{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.pb-page-btn{
+    width:38px;
+    height:38px;
+    border-radius:8px;
+    border:1px solid #5c1010;
+    background:#fff;
+    color:#5c1010;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:.2s;
+    flex-shrink:0;
+}
+
+.pb-page-btn:hover:not(:disabled){
+    background:#5c1010;
+    color:#fff;
+}
+
+.pb-page-btn:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+.pb-page-numbers{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.pb-page-num{
+    min-width:38px;
+    height:38px;
+    padding:0 10px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    background:#fff;
+    color:#1a1a1a;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+    flex-shrink:0;
+}
+
+.pb-page-num:hover{
+    border-color:#5c1010;
+}
+
+.pb-page-num.active{
+    background:#c9a84c;
+    border-color:#c9a84c;
+    color:#5c1010;
+}
+
+.pb-page-num.ellipsis{
+    cursor:default;
+    border:none;
+    background:transparent;
+    min-width:20px;
+}
+
+@media (max-width: 577px){
+
+    .pb-pagination{
+        gap:6px;
+        margin-top:16px;
+    }
+
+    .pb-page-btn{
+        width:32px;
+        height:32px;
+        font-size:13px;
+    }
+
+    .pb-page-numbers{
+        gap:4px;
+    }
+
+    .pb-page-num{
+        min-width:32px;
+        height:32px;
+        padding:0 8px;
+        font-size:13px;
+    }
+
+    .pb-page-num.ellipsis{
+        min-width:14px;
+        padding:0 2px;
+    }
+}
+
+@media (max-width: 360px){
+
+    .pb-page-btn{
+        width:30px;
+        height:30px;
+        font-size:12px;
+    }
+
+    .pb-page-num{
+        min-width:30px;
+        height:30px;
+        padding:0 6px;
+        font-size:12px;
+    }
+}
+
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Accordion toggle
     const toggleHeaders = document.querySelectorAll('.committee-header[data-bs-toggle="collapse"]');
     toggleHeaders.forEach(header => {
         header.addEventListener('click', function(e) {
@@ -472,6 +646,94 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Minutes pagination - 20 per page
+    const minutesWrap = document.querySelector('.minutes-list-modern');
+    if (!minutesWrap) return;
+
+    const rows        = Array.prototype.slice.call(minutesWrap.querySelectorAll('.minute-row'));
+    const perPage      = 20;
+    const totalPages   = Math.max(1, Math.ceil(rows.length / perPage));
+    let currentPage    = 1;
+
+    const pagination   = document.querySelector('.pb-pagination');
+    const numbersWrap  = pagination ? pagination.querySelector('.pb-page-numbers') : null;
+    const prevBtn      = pagination ? pagination.querySelector('.pb-prev') : null;
+    const nextBtn       = pagination ? pagination.querySelector('.pb-next') : null;
+
+    if (!pagination || totalPages <= 1) {
+        if (pagination) pagination.style.display = 'none';
+        return;
+    }
+
+    function renderRows() {
+        const start = (currentPage - 1) * perPage;
+        const end   = start + perPage;
+
+        rows.forEach(function (row, idx) {
+            row.style.display = (idx >= start && idx < end) ? '' : 'none';
+        });
+    }
+
+    function renderNumbers() {
+        numbersWrap.innerHTML = '';
+
+        const pagesToShow = [];
+        const delta = 1;
+
+        for (let p = 1; p <= totalPages; p++) {
+            if (p === 1 || p === totalPages || (p >= currentPage - delta && p <= currentPage + delta)) {
+                pagesToShow.push(p);
+            }
+        }
+
+        let lastPushed = 0;
+        pagesToShow.forEach(function (p) {
+            if (lastPushed && p - lastPushed > 1) {
+                const dots = document.createElement('span');
+                dots.className = 'pb-page-num ellipsis';
+                dots.textContent = '…';
+                numbersWrap.appendChild(dots);
+            }
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'pb-page-num' + (p === currentPage ? ' active' : '');
+            btn.textContent = p;
+            btn.addEventListener('click', function () {
+                currentPage = p;
+                update();
+            });
+            numbersWrap.appendChild(btn);
+
+            lastPushed = p;
+        });
+
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+    }
+
+    function update() {
+        renderRows();
+        renderNumbers();
+        pagination.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    prevBtn.addEventListener('click', function () {
+        if (currentPage > 1) {
+            currentPage--;
+            update();
+        }
+    });
+
+    nextBtn.addEventListener('click', function () {
+        if (currentPage < totalPages) {
+            currentPage++;
+            update();
+        }
+    });
+
+    update();
 });
 </script>
 
