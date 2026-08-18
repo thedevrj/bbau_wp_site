@@ -110,7 +110,7 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
                                     <div class="mb-3">
                                         <label class="form-label">Email Address</label>
                                         <input type="email" id="email" name="email" class="form-control vig-input"
-                                            placeholder="abc@abc.com">
+                                            placeholder="abc@gmail.com">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Phone Number</label>
@@ -140,7 +140,7 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
                                     <label class="form-label">Upload Evidence (Optional)</label>
                                     <div class="file-drop-area"
                                         onclick="document.getElementById('uploaded_files').click()">
-                                        <i class="fas fa-cloud-upload-alt fa-3x mb-2 text-primary"></i>
+                                        <i class="fas fa-cloud-upload-alt fa-2x mb-2 text-primary"></i>
                                         <span class="file-message d-block">Click to upload files (PDF, JPG, PNG)</span>
                                         <input type="file" id="uploaded_files" name="uploaded_files" multiple
                                             accept=".pdf,.jpg,.jpeg,.png" style="display:none;"
@@ -349,9 +349,8 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
 }
 
 .vig-input {
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    padding: 12px 15px;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
     background-color: #f8fafc;
 }
 
@@ -362,10 +361,9 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
 }
 
 .vig-checkbox-group {
-    background: #f1f5f9;
     padding: 15px;
     border-radius: 8px;
-    border: 1px dashed #cbd5e1;
+    border: 2px dashed #cbd5e1;
     display: flex;
     align-items: center;
     gap: 10px;
