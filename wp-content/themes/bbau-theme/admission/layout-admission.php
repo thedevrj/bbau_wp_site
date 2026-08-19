@@ -11,6 +11,18 @@ get_header();
 
 $media_base = getenv('DJANGO_MEDIA_URL');
 $banner_url = "/wp-content/uploads/2026/04/language.png";
+$admission_tabs = array('notices', 'prospectuses', 'registration', 'counselling');
+$admission_tab_slugs = array(
+    'notices' => 'notices',
+    'prospectuses' => 'prospectuses',
+    'registration' => 'registration',
+    'counselling' => 'counselling-meritlist',
+);
+$requested_tab = sanitize_key(get_query_var('menu'));
+$requested_tab = $requested_tab === 'prospectus' ? 'prospectuses' : $requested_tab;
+$requested_tab = $requested_tab === 'counselling-meritlist' ? 'counselling' : $requested_tab;
+$active_admission_tab = in_array($requested_tab, $admission_tabs, true) ? $requested_tab : 'notices';
+$admission_base_url = trailingslashit(get_permalink());
 ?>
 
 <div class="satellite-campus-portal admission-portal-brand">
@@ -29,18 +41,18 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
         <div id="stream-content">
             <!-- FILTER PILLS NAVIGATION -->
             <div class="sc-filter-nav mb-5 text-center">
-                <button class="sc-pill active" data-target="notices">
+                <a href="<?php echo esc_url($admission_base_url . $admission_tab_slugs['notices'] . '/'); ?>" class="sc-pill <?php echo $active_admission_tab === 'notices' ? 'active' : ''; ?> text-decoration-none d-inline-block" data-target="notices">
                     <i class="fa-solid fa-bullhorn me-2"></i> Notices
-                </button>
-                <button class="sc-pill" data-target="prospectuses">
+                </a>
+                <a href="<?php echo esc_url($admission_base_url . $admission_tab_slugs['prospectuses'] . '/'); ?>" class="sc-pill <?php echo $active_admission_tab === 'prospectuses' ? 'active' : ''; ?> text-decoration-none d-inline-block" data-target="prospectuses">
                     <i class="fa-solid fa-file-pdf me-2"></i> Prospectus
-                </button>
-                <button class="sc-pill" data-target="registration">
+                </a>
+                <a href="<?php echo esc_url($admission_base_url . $admission_tab_slugs['registration'] . '/'); ?>" class="sc-pill <?php echo $active_admission_tab === 'registration' ? 'active' : ''; ?> text-decoration-none d-inline-block" data-target="registration">
                     <i class="fa-solid fa-link me-2"></i> Registration
-                </button>
-                <button class="sc-pill" data-target="counselling">
+                </a>
+                <a href="<?php echo esc_url($admission_base_url . $admission_tab_slugs['counselling'] . '/'); ?>" class="sc-pill <?php echo $active_admission_tab === 'counselling' ? 'active' : ''; ?> text-decoration-none d-inline-block" data-target="counselling">
                     <i class="fa-solid fa-trophy me-2"></i> Counselling & Merit Lists
-                </button>
+                </a>
                 <a href="/virtual-helpdesk/" class="sc-pill text-decoration-none d-inline-block">
                     <i class="fa-solid fa-headset me-2"></i> Virtual Helpdesk
                 </a>
@@ -56,25 +68,25 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                 </div>
 
                 <!-- Notices Tab -->
-                <div id="tab-notices" class="admission-tab-content">
+                <div id="tab-notices" class="admission-tab-content <?php echo $active_admission_tab === 'notices' ? '' : 'd-none'; ?>">
                     <h2 class="sc-section-title mb-4 text-center d-block">Notices & Updates</h2>
                     <div id="notices-list" class="row g-4"></div>
                 </div>
 
                 <!-- Prospectuses Tab -->
-                <div id="tab-prospectuses" class="admission-tab-content d-none">
+                <div id="tab-prospectuses" class="admission-tab-content <?php echo $active_admission_tab === 'prospectuses' ? '' : 'd-none'; ?>">
                     <h2 class="sc-section-title mb-4 text-center d-block">Prospectus & Brochures</h2>
                     <div class="row g-4 justify-content-center" id="prospectuses-list"></div>
                 </div>
 
                 <!-- Registration Tab -->
-                <div id="tab-registration" class="admission-tab-content d-none">
+                <div id="tab-registration" class="admission-tab-content <?php echo $active_admission_tab === 'registration' ? '' : 'd-none'; ?>">
                     <h2 class="sc-section-title mb-4 text-center d-block">Registration Portals</h2>
                     <div class="row g-4 justify-content-center" id="registration-list"></div>
                 </div>
 
                 <!-- Counselling & Results Tab -->
-                <div id="tab-counselling" class="admission-tab-content d-none">
+                <div id="tab-counselling" class="admission-tab-content <?php echo $active_admission_tab === 'counselling' ? '' : 'd-none'; ?>">
                     <h2 class="sc-section-title mb-4 text-center d-block">Counselling Phases & Merit Lists</h2>
 
                     <div class="row justify-content-center">
@@ -110,11 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const contents = document.querySelectorAll('.admission-tab-content');
     const loader = document.getElementById('loader');
 
-    function init() {
-        // Initialize with notices tab
-        switchTab('notices');
-    }
-
     function switchTab(targetId) {
         tabs.forEach(t => t.classList.remove('active'));
         contents.forEach(c => c.classList.add('d-none'));
@@ -129,10 +136,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
+        tab.addEventListener('click', (event) => {
+            // Keep the tab switch fast while still updating the canonical tab URL.
+            event.preventDefault();
             switchTab(tab.getAttribute('data-target'));
+            window.history.pushState({}, '', tab.href);
         });
     });
+
+    window.addEventListener('popstate', () => {
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
+        const pathTarget = pathParts[pathParts.length - 1];
+        const target = pathTarget === 'prospectus' || pathTarget === 'prospectuses'
+            ? 'prospectuses'
+            : (pathTarget === 'counselling-meritlist' ? 'counselling' : pathTarget);
+        const validTarget = [...tabs].some(tab => tab.getAttribute('data-target') === target) ? target : 'notices';
+        switchTab(validTarget);
+    });
+
+    switchTab('<?php echo esc_js($active_admission_tab); ?>');
 
     async function fetchTabData(tab) {
         const containerId = tab === 'counselling' ? 'counsellingAccordion' : `${tab}-list`;

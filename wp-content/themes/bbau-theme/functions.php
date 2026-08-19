@@ -366,6 +366,29 @@ function custom_menu_rewrite_rule() {
 }
 add_action('init', 'custom_menu_rewrite_rule');
 
+// Admission tabs rewrite rule
+function admission_menu_rewrite_rule() {
+    $admission_pages = 'ug-admission|pg-admission|phd-admission|other-admission|international-admission|ug-admissions|pg-admissions|phd-admissions|other-admissions|international-admissions';
+    $admission_tabs = 'notices|prospectus|prospectuses|registration|counselling|counselling-meritlist';
+
+    add_rewrite_rule(
+        '^(' . $admission_pages . ')/(' . $admission_tabs . ')/?$',
+        'index.php?pagename=$matches[1]&menu=$matches[2]',
+        'top'
+    );
+}
+add_action('init', 'admission_menu_rewrite_rule');
+
+function refresh_admission_menu_rewrite_rules() {
+    $rewrite_version = 'admission-menu-v2';
+
+    if (get_option('bbau_admission_menu_rewrite_version') !== $rewrite_version) {
+        flush_rewrite_rules(false);
+        update_option('bbau_admission_menu_rewrite_version', $rewrite_version);
+    }
+}
+add_action('init', 'refresh_admission_menu_rewrite_rules', 20);
+
 function custom_menu_query_var($vars) {
     $vars[] = 'menu';
     return $vars;
