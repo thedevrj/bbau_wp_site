@@ -79,12 +79,13 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                             <th>Title</th>
                             <th>Supervisor(s)</th>
                             <th>Status</th>
-                            <th class="text-center">Year</th>
+                            <th class="text-center">Year of Reg.</th>
+                            <th class="text-center"> Date of Award</th>
                         </tr>
                     </thead>
                     <tbody id="scholars-tbody">
                         <tr>
-                            <td colspan="6" class="text-center py-5">
+                            <td colspan="7" class="text-center py-5">
                                 <div class="rd-loader"></div>
                                 <p class="mt-3 text-muted">Retrieving scholarship records...</p>
                             </td>
@@ -180,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         tbody.innerHTML =
-            `<tr><td colspan="6" class="text-center py-5"><div class="rd-loader"></div></td></tr>`;
+            `<tr><td colspan="7" class="text-center py-5"><div class="rd-loader"></div></td></tr>`;
 
         fetch(url)
             .then(res => res.json())
@@ -193,21 +194,26 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(err => {
                 tbody.innerHTML =
-                    `<tr><td colspan="6" class="text-danger text-center py-4">Error loading scholar directory.</td></tr>`;
+                    `<tr><td colspan="7" class="text-danger text-center py-4">Error loading scholar directory.</td></tr>`;
             });
     }
 
     function renderTable(scholars) {
         if (scholars.length === 0) {
             tbody.innerHTML =
-                `<tr><td colspan="6" class="text-center py-5 text-muted">No scholars found.</td></tr>`;
+                `<tr><td colspan="7" class="text-center py-5 text-muted">No scholars found.</td></tr>`;
             return;
         }
 
         tbody.innerHTML = scholars.map((s, index) => {
             const statusClass = (s.status || '').toLowerCase().replace(' ', '-');
             const regYear = s.registration_year || '-';
-
+            const awardYear = s.award_date ?
+                new Date(s.award_date).toLocaleDateString('en-US', {
+                    month: 'short',
+                    year: 'numeric'
+                }).replace(' ', ', ') :
+                '-';
             let supervisorHtml =
                 `<div class="fw-bold" style="color: var(--rd-indigo);">${s.supervisor?.name || 'N/A'}</div>`;
             if (s.co_supervisor?.length > 0) {
@@ -219,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return `
                 <tr class="animate-up" style="animation-delay: ${index * 0.05}s">
                     <td class="fw-bold" style="color: var(--rd-royal);">${s.scholar_name}</td>
-                    <td class="font-monospace small">${s.enrollment_no || 'N/A'}</td>
+                    <td class="font-monospace small text-center">${s.enrollment_no || '-'}</td>
                     <td style="max-width: 350px;">
                         <div style="font-size: 0.9rem; font-weight: 600; line-height: 1.4;">${s.research_topic || s.subject || 'Topic not specified'}</div>
                         <div class="small text-muted mt-1" style="font-size: 0.75rem;">${s.department_name || ''}</div>
@@ -227,6 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${supervisorHtml}</td>
                     <td><span class="status-badge ${statusClass}">${s.status}</span></td>
                     <td class="text-center fw-bold">${regYear}</td>
+                    <td class="text-center fw-bold">${awardYear}</td>
                 </tr>
             `;
         }).join('');
