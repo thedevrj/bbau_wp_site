@@ -97,7 +97,7 @@ $menu_urls_json = htmlspecialchars(json_encode($menu_urls), ENT_QUOTES, 'UTF-8')
   width: auto;
   background: transparent;
   border-radius: 12px;
-  margin: 20px auto;
+  margin: 20px auto 40px;
   overflow: hidden;
   position: relative;
 }
