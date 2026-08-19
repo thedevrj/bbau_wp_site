@@ -19,7 +19,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
         <div class="row align-items-center mb-5 g-4">
             <div class="col-lg-12">
                 <div class="fc-section-intro text-center">
-                    <h2 class="fc-main-title">SC/ST, OBC, Disable & Minority Discrimination Complaint Portal</h2>
+                    <h2 class="fc-main-title">SC/ST, OBC, Disabled & Minority Discrimination Complaint Portal</h2>
                     <p class="fc-lead-text">
                         Online Portal for complaints regarding Caste Discrimination within University
                     </p>

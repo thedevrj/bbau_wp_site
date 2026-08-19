@@ -349,45 +349,6 @@ input[type="date"].ra-select::-webkit-calendar-picker-indicator {
     .rd-card-premium {
         padding: 20px;
         border-radius: 0;
-    }
-
-    /* PREMIUM TABLE MOBILE */
-    .premium-table thead {
-        display: none;
-    }
-
-    .premium-table tr {
-        display: block;
-        margin-bottom: 20px;
-        background: #fff;
-        border: 1px solid #f1f5f9;
-        border-radius: 16px;
-        overflow: hidden;
-    }
-
-    .premium-table td {
-        display: block;
-        text-align: left;
-        padding: 12px 20px;
-        border: none;
-        border-bottom: 1px solid #f8fafc;
-        width: 100% !important;
-    }
-
-    .premium-table td:last-child {
-        border-bottom: none;
-        background: #f8fafc;
-        text-align: center;
-    }
-
-    .premium-table td::before {
-        content: attr(data-label);
-        display: block;
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #94a3b8;
-        text-transform: uppercase;
-        margin-bottom: 4px;
-    }
+    } 
 }
 </style>
