@@ -61,7 +61,7 @@ function get_notice_href($notice) {
 
         <div class="hero-slideshow" id="heroSlideshow">
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/08/DSC_5814.jpg')"></div>
-            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/08/DSC_5855.jpg')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/08/DSC_5923.jpg')"></div>
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/covo1.jpeg')"></div>
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/convo-5.jpg')"></div>
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/convo4.webp')"></div>
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const slides     = slideshow ? slideshow.querySelectorAll(".hero-slide") : [];
     const dotsWrap   = document.getElementById("heroDots");
 
-    const VIDEO_DURATION = 30000; 
+    const VIDEO_DURATION = 15000; 
     const SLIDE_INTERVAL = 5000; 
     if (dotsWrap && slides.length) {
         slides.forEach((_, i) => {
