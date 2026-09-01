@@ -213,7 +213,6 @@ get_header();
     border-left:5px solid #c9a84c;
     padding-left:15px;
 }
-
 .pb-filter-bar{
     display:flex;
     flex-wrap:wrap;
