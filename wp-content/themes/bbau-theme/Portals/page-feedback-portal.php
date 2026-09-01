@@ -481,6 +481,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
 }
 </style>
 
+<?php get_template_part('template-parts/portal-form-validation'); ?>
 <script>
 // XSS Sanitization Helper
 function escapeHTML(str) {

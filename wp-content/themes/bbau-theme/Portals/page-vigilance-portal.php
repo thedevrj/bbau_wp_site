@@ -104,16 +104,16 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
 
                                 <div id="personal-details-section">
                                     <div class="mb-3">
-                                        <label class="form-label">Full Name</label>
+                                        <label class="form-label">Full Name<span class="text-danger fw-bold">&nbsp;*</span></label>
                                         <input type="text" id="name" name="name" class="form-control vig-input">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Email Address</label>
+                                        <label class="form-label">Email Address<span class="text-danger fw-bold">&nbsp;*</span></label>
                                         <input type="email" id="email" name="email" class="form-control vig-input"
                                             placeholder="abc@gmail.com">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Phone Number</label>
+                                        <label class="form-label">Phone Number<span class="text-danger fw-bold">&nbsp;*</span></label>
                                         <input type="text" id="phone" name="phone" class="form-control vig-input"
                                             placeholder="1234567890" minlength="10" maxlength="10" pattern="\d{10}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     </div>
@@ -610,6 +610,7 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
 }
 </style>
 
+<?php get_template_part('template-parts/portal-form-validation'); ?>
 <script>
 // XSS Sanitization Helper
 function escapeHTML(str) {

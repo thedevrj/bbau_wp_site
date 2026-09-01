@@ -58,15 +58,7 @@ if ($cached !== false) {
 
 
 $coe_cards = array(
-    array(
-        'icon'  => 'fa-user-graduate',
-        'title' => 'M.Phil Viva Voce Dates',
-        'desc'  => 'Scheduled viva voce dates for M.Phil candidates.',
-        'url'   => home_url('/mphil-viva-voce-dates/'),
-        'count' => $card_data[0]['count'],
-        'error' => $card_data[0]['error'],
-    ),
-    array(
+     array(
         'icon'  => 'fa-graduation-cap',
         'title' => 'Ph.D Viva Voce Dates',
         'desc'  => 'Scheduled viva voce dates for Ph.D candidates.',
@@ -81,6 +73,14 @@ $coe_cards = array(
         'url'   => home_url('/phd-pre-submission-seminars/'),
         'count' => $card_data[2]['count'],
         'error' => $card_data[2]['error'],
+    ),
+    array(
+        'icon'  => 'fa-user-graduate',
+        'title' => 'M.Phil Viva Voce Dates',
+        'desc'  => 'Scheduled viva voce dates for M.Phil candidates.',
+        'url'   => home_url('/mphil-viva-voce-dates/'),
+        'count' => $card_data[0]['count'],
+        'error' => $card_data[0]['error'],
     ),
     array(
         'icon'  => 'fa-bullhorn',
@@ -106,7 +106,7 @@ get_header();
         <?php get_template_part('menu/menu'); ?>
 
         <h2 class="pb-page-title">
-            COE Notices &amp; Schedules
+            Examination Notices
         </h2>
 
         <div class="row coe-hub-row">
