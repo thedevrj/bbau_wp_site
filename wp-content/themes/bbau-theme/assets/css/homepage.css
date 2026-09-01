@@ -28,9 +28,82 @@
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  opacity: 1;
+  transition: opacity 1.8s ease;
 
   /* BRIGHT + RICH LOOK */
   filter: brightness(1.1) contrast(1.0) saturate(1.0);
+}
+
+.hero-video.is-hidden {
+  opacity: 0;
+}
+
+/* ================= HERO PHOTO SLIDESHOW ================= */
+.hero-slideshow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.8s ease-in-out, transform 6s ease-out;
+  filter: brightness(1.1) contrast(1.0) saturate(1.0);
+}
+
+.hero-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+  animation: heroKenBurns 6s ease-in-out forwards;
+}
+
+@keyframes heroKenBurns {
+  from { transform: scale(1.08); }
+  to   { transform: scale(1); }
+}
+
+/* dot indicators for the slideshow phase */
+.hero-dots {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.hero-dots.is-visible {
+  opacity: 1;
+}
+
+.hero-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(184, 150, 62, 0.7);
+  transition: background 0.4s ease, transform 0.4s ease;
+}
+
+.hero-dots .dot.is-active {
+  background: var(--gold, #B8963E);
+  border-color: var(--gold-shine, #d9bc6a);
+  transform: scale(1.3);
 }
 
 /* ================= LIGHTER OVERLAY ================= */
@@ -48,7 +121,7 @@
     linear-gradient(160deg,
       rgba(3, 2, 12, 0.03) 0%,
       rgba(3, 2, 12, 0.18) 100%);
-  z-index: 1;
+  z-index: 2;
 }
 
 /* ================= POPUP CAPTION ================= */
@@ -173,8 +246,6 @@
 }
 
 /* ================= HERO RANKINGS ================= */
-/* nirf ranking css on hero banner */
-
 .hero-rankings {
   position: absolute;
   left: 52px;
@@ -291,8 +362,6 @@
     display: none;
   }
 
-  /* nirf ranking css on hero banner */
-
   .hero-rankings {
     left: 14px;
     right: 14px;
@@ -324,8 +393,11 @@
   .ranking-sub {
     font-size: 0.6rem;
   }
-}
 
+  .hero-dots {
+    bottom: 84px; /* clear the mobile ranking bar */
+  }
+}
 /* ================= ANNOUNCEMENT BAR ================= */
 .announce-bar {
   width: 100%;

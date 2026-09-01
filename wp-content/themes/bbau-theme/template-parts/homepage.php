@@ -54,11 +54,22 @@ function get_notice_href($notice) {
 
 <!-- ================= HERO SECTION ================= -->
 <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline>
-        <source src="/wp-content/uploads/2026/01/BBAU-home-video-HD-1080p.mp4" type="video/mp4">
-    </video>
+    <div class="hero-media">
+        <video class="hero-video" id="heroVideo" autoplay muted loop playsinline>
+            <source src="/wp-content/uploads/2026/01/BBAU-home-video-HD-1080p.mp4" type="video/mp4">
+        </video>
 
-    <div class="hero-overlay"></div>
+        <div class="hero-slideshow" id="heroSlideshow">
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/08/DSC_5814.jpg')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/08/DSC_5855.jpg')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/covo1.jpeg')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/convo-5.jpg')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/convo4.webp')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/06/IMG_7011-scaled.jpg')"></div>
+        </div>
+
+        <div class="hero-dots" id="heroDots"></div>
+    </div>
 
     <div class="hero-rankings">
         <a href="/about-us/accreditation/" class="ranking-card nirf-card">
@@ -66,7 +77,6 @@ function get_notice_href($notice) {
             <div class="ranking-info">
                 <span class="ranking-title">NIRF </span>
                 <span class="ranking-value">Rank 37</span>
-                <!-- <span class="ranking-sub">University Category</span> -->
             </div>
         </a>
         <a href="/about-us/accreditation/" class="ranking-card naac-card">
@@ -81,24 +91,87 @@ function get_notice_href($notice) {
 
     <div class="hero-caption">
         <p>
-            ““It is the education which is the right weapon to cut the social slavery and it is the
+            “It is the education which is the right weapon to cut the social slavery and it is the
             education which will enlighten the downtrodden masses to come up and gain social status,
             economic betterment and political freedom.”
         </p>
         <p class="author">Dr. B. R. Ambedkar, Bharat Ratna</p>
     </div>
 </section>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const video = document.querySelector(".hero-video");
 
-    if (video) {
-        video.muted = true;
-        video.play().catch(() => {
-            video.muted = true;
-            video.play();
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const video      = document.getElementById("heroVideo");
+    const slideshow  = document.getElementById("heroSlideshow");
+    const slides     = slideshow ? slideshow.querySelectorAll(".hero-slide") : [];
+    const dotsWrap   = document.getElementById("heroDots");
+
+    const VIDEO_DURATION = 30000; 
+    const SLIDE_INTERVAL = 5000; 
+    if (dotsWrap && slides.length) {
+        slides.forEach((_, i) => {
+            const dot = document.createElement("span");
+            dot.className = "dot" + (i === 0 ? " is-active" : "");
+            dot.dataset.index = i;
+            dotsWrap.appendChild(dot);
         });
     }
+    const dots = dotsWrap ? dotsWrap.querySelectorAll(".dot") : [];
+
+    function setActiveDot(index) {
+        dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
+    }
+
+    function showSlide(index) {
+        slides.forEach((s, i) => s.classList.toggle("is-active", i === index));
+        setActiveDot(index);
+    }
+
+    function playVideoPhase() {
+        if (dotsWrap) dotsWrap.classList.remove("is-visible");
+        slides.forEach(s => s.classList.remove("is-active"));
+
+        if (video) {
+            video.currentTime = 0;
+            video.muted = true;
+            video.classList.remove("is-hidden");
+            video.play().catch(() => {
+                video.muted = true;
+                video.play();
+            });
+        }
+
+        setTimeout(playSlideshowPhase, VIDEO_DURATION);
+    }
+
+    function playSlideshowPhase() {
+        if (!slides.length) {
+            
+            setTimeout(playVideoPhase, VIDEO_DURATION);
+            return;
+        }
+
+        if (video) video.classList.add("is-hidden");
+        setTimeout(() => { if (video) video.pause(); }, 1800);
+
+        let currentSlide = 0;
+        showSlide(currentSlide);
+        if (dotsWrap) dotsWrap.classList.add("is-visible");
+
+        const slideTimer = setInterval(() => {
+            currentSlide++;
+
+            if (currentSlide >= slides.length) {
+                clearInterval(slideTimer);
+                playVideoPhase();
+                return;
+            }
+
+            showSlide(currentSlide);
+        }, SLIDE_INTERVAL);
+    }
+
+    playVideoPhase();
 });
 </script>
 
