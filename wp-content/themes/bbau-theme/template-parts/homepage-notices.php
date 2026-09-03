@@ -29,6 +29,13 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     $notices_data = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
 }
 
+$notices_data = array_values(array_filter($notices_data, function ($n) {
+    if (!empty($n['is_deleted'])) return false;
+    if (isset($n['is_active']) && !$n['is_active']) return false;
+    if (!empty($n['is_archived'])) return false;
+    return true;
+}));
+
 function get_notice_href_page($n) {
     if (!empty($n['attachment'])) return $n['attachment'];
     if (!empty($n['link'])) return $n['link'];
@@ -60,6 +67,7 @@ $months_list = array(
     '10' => 'October',  '11' => 'November', '12' => 'December'
 );
 
+/* ===== Apply search / year / month filters ===== */
 if ($search_param !== '' || $year_param !== '' || $month_param !== '') {
     $notices_data = array_values(array_filter($notices_data, function ($n) use ($search_param, $year_param, $month_param) {
         if ($search_param !== '') {
@@ -95,6 +103,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
 
 $has_active_filters = ($search_param !== '' || $year_param !== '' || $month_param !== '');
 
+/* Keep the category param alive when clearing other filters / paging */
 $base_args = array();
 if (!empty($category_param)) {
     $base_args['category'] = $category_param;
@@ -184,7 +193,9 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
             $index = $offset + $i + 1;
             $href = esc_url(get_notice_href_page($notice));
             $is_new = ($index === 1 && !$has_active_filters);
-            $label = !empty($category_param) ? strtolower($category_param) : 'notice';
+            $label = (!empty($notice['categories']) && is_array($notice['categories']) && !empty($notice['categories'][0]))
+                ? strtolower($notice['categories'][0])
+                : (!empty($category_param) ? strtolower($category_param) : 'notice');
         ?>
 
         <a class="ntl-item" href="<?php echo $href; ?>" target="_blank">
@@ -274,7 +285,6 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     padding-bottom: 60px;
     min-height: 80vh;
 }
-
 .ntl-wrap {
     font-family: 'Outfit', sans-serif;
     width: 100%;
@@ -361,8 +371,8 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
 }
 
 .ntl-search {
-    flex: 1 1 260px;
-    min-width: 220px;
+    flex: 0 0 auto;
+    width: 260px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -467,7 +477,6 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     text-decoration: none;
     display: block;
 }
-
 .ntl-card {
     background: #fff;
     border: 1.5px solid #6d2e34;
@@ -539,6 +548,7 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     padding: 2px 8px;
     border-radius: 20px;
 }
+
 .ntl-empty {
     text-align: center;
     padding: 2rem;
