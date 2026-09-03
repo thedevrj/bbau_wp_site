@@ -6,8 +6,11 @@ Template name: Notices Template
 get_header();
 
 $category_param = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
-$current_page   = isset($_GET['notice_page']) ? max(1, intval($_GET['notice_page'])) : 1;
-$per_page       = 20; 
+$search_param    = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
+$year_param      = isset($_GET['year']) ? sanitize_text_field($_GET['year']) : '';
+$month_param     = isset($_GET['month']) ? sanitize_text_field($_GET['month']) : '';
+$current_page    = isset($_GET['notice_page']) ? max(1, intval($_GET['notice_page'])) : 1;
+$per_page        = 20; 
 
 
 $api_base = getenv('DJANGO_API_URL');
@@ -32,12 +35,52 @@ function get_notice_href_page($n) {
     return '#';
 }
 
-
 $page_name = !empty($category_param) ? ucfirst($category_param) : 'Notice';
 
 function pluralize($word) {
     if (strtolower($word) === 'news') return 'News';
     return strtolower($word) . 's';
+}
+
+$available_years = array();
+foreach ($notices_data as $n) {
+    if (!empty($n['date_posted'])) {
+        $y = date('Y', strtotime($n['date_posted']));
+        if ($y && !in_array($y, $available_years)) {
+            $available_years[] = $y;
+        }
+    }
+}
+rsort($available_years);
+
+$months_list = array(
+    '01' => 'January', '02' => 'February', '03' => 'March',
+    '04' => 'April',   '05' => 'May',      '06' => 'June',
+    '07' => 'July',    '08' => 'August',   '09' => 'September',
+    '10' => 'October',  '11' => 'November', '12' => 'December'
+);
+
+if ($search_param !== '' || $year_param !== '' || $month_param !== '') {
+    $notices_data = array_values(array_filter($notices_data, function ($n) use ($search_param, $year_param, $month_param) {
+        if ($search_param !== '') {
+            $title = isset($n['title']) ? $n['title'] : '';
+            if (mb_stripos($title, $search_param) === false) {
+                return false;
+            }
+        }
+        if (!empty($n['date_posted'])) {
+            $ts = strtotime($n['date_posted']);
+            if ($year_param !== '' && date('Y', $ts) !== $year_param) {
+                return false;
+            }
+            if ($month_param !== '' && date('m', $ts) !== $month_param) {
+                return false;
+            }
+        } elseif ($year_param !== '' || $month_param !== '') {
+            return false;
+        }
+        return true;
+    }));
 }
 
 $total_notices = count($notices_data);
@@ -49,6 +92,14 @@ if ($current_page > $total_pages && $total_pages > 0) {
 
 $offset = ($current_page - 1) * $per_page;
 $notices_to_display = array_slice($notices_data, $offset, $per_page);
+
+$has_active_filters = ($search_param !== '' || $year_param !== '' || $month_param !== '');
+
+$base_args = array();
+if (!empty($category_param)) {
+    $base_args['category'] = $category_param;
+}
+$clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
 ?>
 
 <div class="page-bg">
@@ -76,21 +127,71 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
             </div>
         </div>
     </div>
+    <form class="ntl-filterbar" id="ntl-filter-form" method="get">
+        <?php if (!empty($category_param)) : ?>
+            <input type="hidden" name="category" value="<?php echo esc_attr($category_param); ?>">
+        <?php endif; ?>
+
+        <label class="ntl-search">
+            <i class="fa fa-search"></i>
+            <input
+                type="text"
+                name="s"
+                id="ntl-search-input"
+                placeholder="Search by name..."
+                value="<?php echo esc_attr($search_param); ?>"
+                autocomplete="off"
+            >
+        </label>
+
+        <div class="ntl-select-wrap">
+            <select name="year" id="ntl-year-select" class="ntl-select">
+                <option value="">All Years</option>
+                <?php foreach ($available_years as $y) : ?>
+                    <option value="<?php echo esc_attr($y); ?>" <?php selected($year_param, $y); ?>>
+                        <?php echo esc_html($y); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="ntl-select-wrap">
+            <select name="month" id="ntl-month-select" class="ntl-select">
+                <option value="">All Months</option>
+                <?php foreach ($months_list as $mnum => $mname) : ?>
+                    <option value="<?php echo esc_attr($mnum); ?>" <?php selected($month_param, $mnum); ?>>
+                        <?php echo esc_html($mname); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <?php if ($has_active_filters) : ?>
+            <a href="<?php echo esc_url($clear_url); ?>" class="ntl-clear-btn">
+                <i class="fa fa-times"></i> Clear
+            </a>
+        <?php else : ?>
+            <button type="button" class="ntl-clear-btn ntl-clear-btn--off" disabled>
+                <i class="fa fa-times"></i> Clear
+            </button>
+        <?php endif; ?>
+    </form>
 
     <div class="ntl-grid">
 
         <?php if (!empty($notices_to_display)) : ?>
-        <?php foreach ($notices_to_display as $i => $notice) : 
+        <?php foreach ($notices_to_display as $i => $notice) :
             $index = $offset + $i + 1;
             $href = esc_url(get_notice_href_page($notice));
-            $is_new = ($index === 1);
+            $is_new = ($index === 1 && !$has_active_filters);
+            $label = !empty($category_param) ? strtolower($category_param) : 'notice';
         ?>
 
         <a class="ntl-item" href="<?php echo $href; ?>" target="_blank">
 
             <div class="ntl-card">
-                <div class="ntl-card-num">
-                    <?php echo str_pad($index, 2, '0', STR_PAD_LEFT); ?>
+                <div class="ntl-card-icon">
+                    <i class="fa fa-bullhorn"></i>
                 </div>
 
                 <div class="ntl-card-body">
@@ -99,16 +200,13 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
                     </p>
 
                     <div class="ntl-card-date">
-                        <?php echo esc_html(date('F j, Y', strtotime($notice['date_posted']))); ?>
+                        <?php echo esc_html($label); ?> &bull; <?php echo esc_html(date('d F Y', strtotime($notice['date_posted']))); ?>
                     </div>
                 </div>
 
-                <div class="ntl-card-right">
-                    <?php if ($is_new) : ?>
-                        <span class="ntl-new-pill">New</span>
-                    <?php endif; ?>
-                    <span class="ntl-arr">→</span>
-                </div>
+                <?php if ($is_new) : ?>
+                    <span class="ntl-new-pill">New</span>
+                <?php endif; ?>
             </div>
         </a>
 
@@ -118,6 +216,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
         <?php endif; ?>
 
     </div>
+
     <div class="ntl-foot">
 
         <a href="/" class="ntl-back-btn"><i class="fa fa-arrow-left"></i> Back to home</a>
@@ -156,7 +255,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
 </main>
 </div>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Serif:wght@600;700&family=Noto+Serif+Devanagari:wght@600;700&display=swap');
 
 * {
     margin: 0;
@@ -187,7 +286,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.75rem;
 }
 
 .ntl-hdr-left {
@@ -222,17 +321,11 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     50% { opacity: 0.3; }
 }
 
-
 .ntl-title {
     font-size: 1.9rem;
     font-weight: 700;
     color: #1c1917;
     line-height: 1.1;
-}
-
-.ntl-title em {
-    color: #f97316;
-    font-style: normal;
 }
 
 .ntl-hdr-box {
@@ -258,10 +351,115 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     font-size: 9px;
     color: #fb923c;
 }
+
+.ntl-filterbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 2rem;
+}
+
+.ntl-search {
+    flex: 1 1 260px;
+    min-width: 220px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1.5px solid #e7e1d6;
+    border-radius: 999px;
+    padding: 11px 20px;
+    transition: 0.2s;
+}
+
+.ntl-search:focus-within {
+    border-color: #8a3a3a;
+    box-shadow: 0 0 0 3px rgba(138, 58, 58, 0.08);
+}
+
+.ntl-search i {
+    color: #a39c8e;
+    font-size: 14px;
+}
+
+.ntl-search input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    color: #1c1917;
+    width: 100%;
+}
+
+.ntl-search input::placeholder {
+    color: #a39c8e;
+}
+
+.ntl-select-wrap {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.ntl-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23716a5c' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center;
+    border: 1.5px solid #e7e1d6;
+    border-radius: 999px;
+    padding: 11px 38px 11px 20px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1c1917;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.ntl-select:hover,
+.ntl-select:focus {
+    border-color: #8a3a3a;
+    outline: none;
+}
+
+.ntl-clear-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1.5px solid #e7e1d6;
+    border-radius: 999px;
+    padding: 11px 20px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1c1917;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.ntl-clear-btn i {
+    color: #b02a2a;
+    font-size: 12px;
+}
+
+.ntl-clear-btn:hover {
+    border-color: #b02a2a;
+    background: #fdf2f2;
+}
+
+.ntl-clear-btn--off {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
 .ntl-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 22px;
 }
 
 .ntl-item {
@@ -272,103 +470,75 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
 
 .ntl-card {
     background: #fff;
-    border: 1px solid #e7e5e4;
+    border: 1.5px solid #6d2e34;
     border-radius: 14px;
-    padding: 14px 18px;
+    padding: 18px 20px;
     display: flex;
-    align-items: center;
-    gap: 14px;
+    align-items: flex-start;
+    gap: 16px;
     height: 100%;
-    transition: 0.25s;
+    position: relative;
+    transition: 0.2s;
 }
 
 .ntl-item:hover .ntl-card {
-    background: #fff7ed;
-    border-color: #fed7aa;
+    background: #fdf8f2;
+    box-shadow: 0 6px 18px rgba(109, 46, 52, 0.12);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(249, 115, 22, 0.12);
 }
 
-.ntl-card-num {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    background: #fff7ed;
-    border: 1px solid #fed7aa;
+.ntl-card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: #f6ecd9;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-    color: #fb923c;
     flex-shrink: 0;
-    transition: 0.25s;
+    color: #2b2723;
+    font-size: 17px;
 }
 
-.ntl-item:hover .ntl-card-num {
-    background: #f97316;
-    color: #fff;
-}
 .ntl-card-body {
     flex: 1;
     min-width: 0;
 }
 
 .ntl-card-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1c1917;
-    margin-bottom: 4px;
-    white-space: nowrap;
+    font-family: 'Noto Serif Devanagari', 'Noto Serif', 'Georgia', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1b1712;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.ntl-item:hover .ntl-card-title {
-    color: #9a3412;
 }
 
 .ntl-card-date {
-    font-size: 11px;
-    color: #78716c;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.ntl-card-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 5px;
-    flex-shrink: 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #8a7a3d;
+    text-transform: capitalize;
 }
 
 .ntl-new-pill {
+    position: absolute;
+    top: 14px;
+    right: 16px;
     font-size: 9px;
     font-weight: 700;
     text-transform: uppercase;
     background: #fff7ed;
     color: #c2410c;
     border: 1px solid #fed7aa;
-    padding: 2px 7px;
+    padding: 2px 8px;
     border-radius: 20px;
 }
-
-/* ARROW */
-.ntl-arr {
-    font-size: 14px;
-    color: #fb923c;
-    opacity: 0;
-    transform: translateX(-5px);
-    transition: 0.2s;
-}
-
-.ntl-item:hover .ntl-arr {
-    opacity: 1;
-    transform: translateX(0);
-}
-
 .ntl-empty {
     text-align: center;
     padding: 2rem;
@@ -386,7 +556,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     border-top: 1px dashed #fed7aa;
 }
 
-/* BACK BUTTON */
 .ntl-back-btn {
     padding: 7px 16px;
     border-radius: 8px;
@@ -402,7 +571,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     background: #ffedd5;
 }
 
-/* PAGINATION */
 .ntl-pager {
     display: flex;
     gap: 5px;
@@ -449,15 +617,15 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     }
 
     .ntl-card-title {
-        font-size: 13px;
+        font-size: 14px;
     }
 
     .ntl-hdr-box {
         width: auto;
         height: auto;
         margin: 8px;
-
     }
+
     .ntl-hdr-lbl {
         font-size: 7px;
     }
@@ -469,6 +637,52 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     .ntl-grid {
         grid-template-columns: 1fr;
     }
+
+    .ntl-filterbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ntl-search,
+    .ntl-select-wrap,
+    .ntl-select,
+    .ntl-clear-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 </style>
+
+<script>
+(function () {
+    var form = document.getElementById('ntl-filter-form');
+    if (!form) return;
+
+    var searchInput = document.getElementById('ntl-search-input');
+    var yearSelect  = document.getElementById('ntl-year-select');
+    var monthSelect = document.getElementById('ntl-month-select');
+    var debounceTimer;
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function () {
+                form.submit();
+            }, 500);
+        });
+    }
+
+    if (yearSelect) {
+        yearSelect.addEventListener('change', function () {
+            form.submit();
+        });
+    }
+
+    if (monthSelect) {
+        monthSelect.addEventListener('change', function () {
+            form.submit();
+        });
+    }
+})();
+</script>
 <?php get_footer(); ?>
