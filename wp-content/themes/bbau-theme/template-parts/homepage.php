@@ -49,7 +49,6 @@ function get_notice_href($notice) {
     if (!empty($notice['link'])) return $notice['link'];
     return '#';
 }
-// =====================================
 ?>
 
 <!-- ================= HERO SECTION ================= -->
@@ -60,12 +59,16 @@ function get_notice_href($notice) {
         </video>
 
         <div class="hero-slideshow" id="heroSlideshow">
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/covo1.jpeg')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/batch_IMG_3169-scaled.jpg')"></div>
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/08/DSC_5814.jpg')"></div>
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/08/DSC_5923.jpg')"></div>
-            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/covo1.jpeg')"></div>
-            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/convo-5.jpg')"></div>
+             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/batch_DSC_6675-scaled.jpg')"></div>     
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/convo4.webp')"></div>
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/06/IMG_7011-scaled.jpg')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/batch_IMG_3298-scaled.jpg')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/batch_DSC_6681-scaled.jpg')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/batch_DSC_6681-scaled.jpg')"></div>
         </div>
 
         <div class="hero-dots" id="heroDots"></div>
@@ -106,12 +109,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const slides     = slideshow ? slideshow.querySelectorAll(".hero-slide") : [];
     const dotsWrap   = document.getElementById("heroDots");
 
-    const VIDEO_DURATION = 15000; 
-    const SLIDE_INTERVAL = 5000; 
+    const VIDEO_DURATION  = 10000; 
+    const SLIDE_INTERVAL  = 5000;  
+    const PHOTOS_PER_CYCLE = 2;    
+
+    let slidePointer = 0; 
     if (dotsWrap && slides.length) {
         slides.forEach((_, i) => {
             const dot = document.createElement("span");
-            dot.className = "dot" + (i === 0 ? " is-active" : "");
+            dot.className = "dot";
             dot.dataset.index = i;
             dotsWrap.appendChild(dot);
         });
@@ -146,31 +152,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function playSlideshowPhase() {
         if (!slides.length) {
-            
             setTimeout(playVideoPhase, VIDEO_DURATION);
             return;
         }
 
         if (video) video.classList.add("is-hidden");
         setTimeout(() => { if (video) video.pause(); }, 1800);
-
-        let currentSlide = 0;
-        showSlide(currentSlide);
+        const total = slides.length;
+        const pairIndices = [];
+        for (let i = 0; i < PHOTOS_PER_CYCLE && i < total; i++) {
+            pairIndices.push((slidePointer + i) % total);
+        }
+        let step = 0;
+        showSlide(pairIndices[0]);
         if (dotsWrap) dotsWrap.classList.add("is-visible");
 
         const slideTimer = setInterval(() => {
-            currentSlide++;
+            step++;
 
-            if (currentSlide >= slides.length) {
+            if (step >= pairIndices.length) {
+                
                 clearInterval(slideTimer);
+                slidePointer = (slidePointer + PHOTOS_PER_CYCLE) % total;
                 playVideoPhase();
                 return;
             }
 
-            showSlide(currentSlide);
+            showSlide(pairIndices[step]);
         }, SLIDE_INTERVAL);
     }
-
     playVideoPhase();
 });
 </script>
