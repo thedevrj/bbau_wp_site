@@ -7,9 +7,9 @@ get_header();
 
 $category_param = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
 $current_page   = isset($_GET['notice_page']) ? max(1, intval($_GET['notice_page'])) : 1;
-$per_page       = 9;
+$per_page       = 20; 
 
-/* ===== API ===== */
+
 $api_base = getenv('DJANGO_API_URL');
 $api_url  = $api_base . '/api/v1/global-notices/?page_size=100';
 
@@ -26,14 +26,13 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     $notices_data = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
 }
 
-/* ===== HELPERS ===== */
 function get_notice_href_page($n) {
     if (!empty($n['attachment'])) return $n['attachment'];
     if (!empty($n['link'])) return $n['link'];
     return '#';
 }
 
-/* ===== DYNAMIC PAGE NAME ===== */
+
 $page_name = !empty($category_param) ? ucfirst($category_param) : 'Notice';
 
 function pluralize($word) {
@@ -41,7 +40,6 @@ function pluralize($word) {
     return strtolower($word) . 's';
 }
 
-/* ===== PAGINATION ===== */
 $total_notices = count($notices_data);
 $total_pages   = ceil($total_notices / $per_page);
 
@@ -57,7 +55,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
 <main id="primary" class="site-main">
 <div class="ntl-wrap">
 
-    <!-- HEADER -->
     <div class="ntl-hdr">
         <div class="ntl-hdr-left">
             <div class="ntl-tag-line">
@@ -80,8 +77,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
         </div>
     </div>
 
-    <!-- TIMELINE -->
-    <div class="ntl-timeline">
+    <div class="ntl-grid">
 
         <?php if (!empty($notices_to_display)) : ?>
         <?php foreach ($notices_to_display as $i => $notice) : 
@@ -91,7 +87,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
         ?>
 
         <a class="ntl-item" href="<?php echo $href; ?>" target="_blank">
-            <div class="ntl-dot"></div>
 
             <div class="ntl-card">
                 <div class="ntl-card-num">
@@ -123,8 +118,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
         <?php endif; ?>
 
     </div>
-
-    <!-- FOOTER -->
     <div class="ntl-foot">
 
         <a href="/" class="ntl-back-btn"><i class="fa fa-arrow-left"></i> Back to home</a>
@@ -165,14 +158,12 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 
-/* ===== GLOBAL RESET ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* ===== FULL WIDTH FIX ===== */
 .site-main,
 .page-bg {
     width: 100% !important;
@@ -185,7 +176,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     min-height: 80vh;
 }
 
-/* ===== CONTAINER ===== */
 .ntl-wrap {
     font-family: 'Outfit', sans-serif;
     width: 100%;
@@ -193,7 +183,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     padding: 3rem clamp(16px, 5vw, 60px);
 }
 
-/* ================= HEADER ================= */
 .ntl-hdr {
     display: flex;
     align-items: center;
@@ -205,7 +194,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     max-width: 70%;
 }
 
-/* TAG */
 .ntl-tag-line {
     display: inline-flex;
     align-items: center;
@@ -234,7 +222,7 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     50% { opacity: 0.3; }
 }
 
-/* TITLE */
+
 .ntl-title {
     font-size: 1.9rem;
     font-weight: 700;
@@ -247,7 +235,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     font-style: normal;
 }
 
-/* COUNT BOX */
 .ntl-hdr-box {
     width: auto;
     height: auto;
@@ -271,60 +258,18 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     font-size: 9px;
     color: #fb923c;
 }
-
-/* ================= TIMELINE ================= */
-.ntl-timeline {
-    position: relative;
-    padding-left: 28px;
+.ntl-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 20px;
 }
 
-/* LINE */
-.ntl-timeline::before {
-    content: '';
-    position: absolute;
-    left: 7px;
-    top: 10px;
-    bottom: 10px;
-    width: 2px;
-    background: repeating-linear-gradient(
-        to bottom,
-        #fed7aa 0,
-        #fed7aa 6px,
-        transparent 6px,
-        transparent 12px
-    );
-}
-
-/* ITEM */
 .ntl-item {
     position: relative;
-    margin-bottom: 10px;
     text-decoration: none;
     display: block;
 }
 
-/* DOT */
-.ntl-dot {
-    position: absolute;
-    left: -24px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #fff;
-    border: 2.5px solid #fed7aa;
-    transition: 0.25s;
-    z-index: 2;
-}
-
-.ntl-item:hover .ntl-dot {
-    background: #f97316;
-    border-color: #f97316;
-    transform: translateY(-50%) scale(1.25);
-}
-
-/* CARD */
 .ntl-card {
     background: #fff;
     border: 1px solid #e7e5e4;
@@ -333,16 +278,17 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     display: flex;
     align-items: center;
     gap: 14px;
+    height: 100%;
     transition: 0.25s;
 }
 
 .ntl-item:hover .ntl-card {
     background: #fff7ed;
     border-color: #fed7aa;
-    transform: translateX(4px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(249, 115, 22, 0.12);
 }
 
-/* NUMBER */
 .ntl-card-num {
     width: 34px;
     height: 34px;
@@ -363,8 +309,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     background: #f97316;
     color: #fff;
 }
-
-/* BODY */
 .ntl-card-body {
     flex: 1;
     min-width: 0;
@@ -392,15 +336,14 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     gap: 4px;
 }
 
-/* RIGHT SIDE */
 .ntl-card-right {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 5px;
+    flex-shrink: 0;
 }
 
-/* NEW TAG */
 .ntl-new-pill {
     font-size: 9px;
     font-weight: 700;
@@ -426,14 +369,13 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     transform: translateX(0);
 }
 
-/* EMPTY */
 .ntl-empty {
     text-align: center;
     padding: 2rem;
     color: #78716c;
+    grid-column: 1 / -1;
 }
 
-/* ================= FOOTER ================= */
 .ntl-foot {
     margin-top: 2rem;
     display: flex;
@@ -497,7 +439,6 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
     pointer-events: none;
 }
 
-/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
     .ntl-wrap {
         padding: 2rem 1rem;
@@ -523,6 +464,10 @@ $notices_to_display = array_slice($notices_data, $offset, $per_page);
 
     .ntl-hdr-num {
         font-size: 1.3rem;
+    }
+
+    .ntl-grid {
+        grid-template-columns: 1fr;
     }
 }
 </style>
