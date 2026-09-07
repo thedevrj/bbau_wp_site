@@ -5,7 +5,6 @@ Template name: Homepage Template
 get_header();
 defined( 'ABSPATH' ) || exit;
 
-// === Fetch Global Notices ===
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 $api_url = $api_base . "/api/v1/global-notices/?page_size=100";
@@ -293,11 +292,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 class="info-title">Announcement</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($announcement_notices) ) : ?>
-                        <?php foreach ( $announcement_notices as $an ) : ?>
-                            <a href="<?php echo $media_base . esc_url(get_notice_href($an)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($an['title']); ?></a>
-                        <?php endforeach; ?>
+                    <?php foreach ( $announcement_notices as $an ) : $href = get_notice_href($an);
+                    if (filter_var($href, FILTER_VALIDATE_URL)) {
+                        $final_url = $href;
+                    } else {
+                        $final_url = $media_base . $href;
+                    }
+                    ?>
+                    <a href="<?php echo esc_url($final_url); ?>" class="info-item" target="_blank"
+                        rel="noopener noreferrer"><?php echo esc_html($an['title']); ?></a>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <span class="info-item" style="color:#777;">No announcements found.</span>
+                    <span class="info-item" style="color:#777;">No announcements found.</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -305,8 +311,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 View All Announcements
                 <span class="arrow-icon">
                     <svg viewBox="0 0 24 24">
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                        <polyline points="12 5 19 12 12 19"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
                     </svg>
                 </span>
             </a>
@@ -318,11 +324,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 class="info-title">Events</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($event_notices) ) : ?>
-                        <?php foreach ( $event_notices as $en ) : ?>
-                            <a href="<?php echo $media_base . esc_url(get_notice_href($en)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($en['title']); ?></a>
-                        <?php endforeach; ?>
+                    <?php foreach ( $event_notices as $en ) : 
+                    $href = get_notice_href($en);
+                    if (filter_var($href, FILTER_VALIDATE_URL)) {
+                        $final_url = $href;
+                    } else {
+                        $final_url = $media_base . $href;
+                    }
+                    ?>
+                    <a href="<?php echo esc_url($final_url); ?>" class="info-item" target="_blank"
+                        rel="noopener noreferrer"><?php echo esc_html($en['title']); ?></a>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <span class="info-item" style="color:#777;">No events found.</span>
+                    <span class="info-item" style="color:#777;">No events found.</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -330,8 +344,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 View All Events
                 <span class="arrow-icon">
                     <svg viewBox="0 0 24 24">
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                        <polyline points="12 5 19 12 12 19"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
                     </svg>
                 </span>
             </a>
@@ -343,11 +357,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 class="info-title">Appointments</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($appointment_notices) ) : ?>
-                        <?php foreach ( $appointment_notices as $ap ) : ?>
-                            <a href="<?php echo $media_base . esc_url(get_notice_href($ap)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($ap['title']); ?></a>
-                        <?php endforeach; ?>
+                    <?php foreach ( $appointment_notices as $ap ) : $href = get_notice_href($ap);
+                    if (filter_var($href, FILTER_VALIDATE_URL)) {
+                        $final_url = $href;
+                    } else {
+                        $final_url = $media_base . $href;
+                    }
+                    ?>
+                    <a href="<?php echo esc_url($final_url); ?>" class="info-item" target="_blank"
+                        rel="noopener noreferrer"><?php echo esc_html($ap['title']); ?></a>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <span class="info-item" style="color:#777;">No appointments found.</span>
+                    <span class="info-item" style="color:#777;">No appointments found.</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -355,8 +376,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 View All Appointments
                 <span class="arrow-icon">
                     <svg viewBox="0 0 24 24">
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                        <polyline points="12 5 19 12 12 19"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
                     </svg>
                 </span>
             </a>
@@ -368,11 +389,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 class="info-title">Tenders</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($tender_notices) ) : ?>
-                        <?php foreach ( $tender_notices as $tn ) : ?>
-                            <a href="<?php echo $media_base .  esc_url(get_notice_href($tn)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($tn['title']); ?></a>
-                        <?php endforeach; ?>
+                    <?php foreach ( $tender_notices as $tn ) : $href = get_notice_href($tn);
+                    if (filter_var($href, FILTER_VALIDATE_URL)) {
+                        $final_url = $href;
+                    } else {
+                        $final_url = $media_base . $href;
+                    }
+                    ?>
+                    <a href="<?php echo esc_url($final_url); ?>" class="info-item" target="_blank"
+                        rel="noopener noreferrer"><?php echo esc_html($tn['title']); ?></a>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <span class="info-item" style="color:#777;">No tenders found.</span>
+                    <span class="info-item" style="color:#777;">No tenders found.</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -380,8 +408,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 View All Tenders
                 <span class="arrow-icon">
                     <svg viewBox="0 0 24 24">
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                        <polyline points="12 5 19 12 12 19"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
                     </svg>
                 </span>
             </a>
