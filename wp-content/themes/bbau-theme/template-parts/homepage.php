@@ -5,7 +5,6 @@ Template name: Homepage Template
 get_header();
 defined( 'ABSPATH' ) || exit;
 
-// === Fetch Global Notices ===
 $api_base   = getenv('DJANGO_API_URL');
 $media_base = getenv('DJANGO_MEDIA_URL');
 $api_url = $api_base . "/api/v1/global-notices/?page_size=100";
@@ -43,11 +42,32 @@ foreach ( $notices_data as $notice ) {
         }
     }
 }
-
 function get_notice_href($notice) {
-    if (!empty($notice['attachment'])) return $notice['attachment'];
-    if (!empty($notice['link'])) return $notice['link'];
-    return '#';
+    if (!empty($notice['attachment'])) {
+        return [
+            'url'  => $notice['attachment'],
+            'type' => 'attachment'
+        ];
+    }
+
+    if (!empty($notice['link'])) {
+        return [
+            'url'  => $notice['link'],
+            'type' => 'link'
+        ];
+    }
+
+    if (!empty($notice['internal_link'])) {
+        return [
+            'url'  => $notice['internal_link'],
+            'type' => 'internal'
+        ];
+    }
+
+    return [
+        'url'  => '#',
+        'type' => 'none'
+    ];
 }
 ?>
 
@@ -60,15 +80,21 @@ function get_notice_href($notice) {
 
         <div class="hero-slideshow" id="heroSlideshow">
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/covo1.jpeg')"></div>
-            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/batch_IMG_3169-scaled.jpg')"></div>
+            <div class="hero-slide"
+                style="background-image:url('/wp-content/uploads/2026/09/batch_IMG_3169-scaled.jpg')"></div>
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/08/DSC_5814.jpg')"></div>
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/08/DSC_5923.jpg')"></div>
-             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/batch_DSC_6675-scaled.jpg')"></div>     
+            <div class="hero-slide"
+                style="background-image:url('/wp-content/uploads/2026/09/batch_DSC_6675-scaled.jpg')"></div>
             <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/convo4.webp')"></div>
-            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/06/IMG_7011-scaled.jpg')"></div>
-            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/batch_IMG_3298-scaled.jpg')"></div>
-            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/batch_DSC_6681-scaled.jpg')"></div>
-            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/09/batch_DSC_6681-scaled.jpg')"></div>
+            <div class="hero-slide" style="background-image:url('/wp-content/uploads/2026/06/IMG_7011-scaled.jpg')">
+            </div>
+            <div class="hero-slide"
+                style="background-image:url('/wp-content/uploads/2026/09/batch_IMG_3298-scaled.jpg')"></div>
+            <div class="hero-slide"
+                style="background-image:url('/wp-content/uploads/2026/09/batch_DSC_6681-scaled.jpg')"></div>
+            <div class="hero-slide"
+                style="background-image:url('/wp-content/uploads/2026/09/batch_DSC_6681-scaled.jpg')"></div>
         </div>
 
         <div class="hero-dots" id="heroDots"></div>
@@ -103,17 +129,17 @@ function get_notice_href($notice) {
 </section>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const video      = document.getElementById("heroVideo");
-    const slideshow  = document.getElementById("heroSlideshow");
-    const slides     = slideshow ? slideshow.querySelectorAll(".hero-slide") : [];
-    const dotsWrap   = document.getElementById("heroDots");
+document.addEventListener("DOMContentLoaded", function() {
+    const video = document.getElementById("heroVideo");
+    const slideshow = document.getElementById("heroSlideshow");
+    const slides = slideshow ? slideshow.querySelectorAll(".hero-slide") : [];
+    const dotsWrap = document.getElementById("heroDots");
 
-    const VIDEO_DURATION  = 10000; 
-    const SLIDE_INTERVAL  = 5000;  
-    const PHOTOS_PER_CYCLE = 2;    
+    const VIDEO_DURATION = 10000;
+    const SLIDE_INTERVAL = 5000;
+    const PHOTOS_PER_CYCLE = 2;
 
-    let slidePointer = 0; 
+    let slidePointer = 0;
     if (dotsWrap && slides.length) {
         slides.forEach((_, i) => {
             const dot = document.createElement("span");
@@ -157,7 +183,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (video) video.classList.add("is-hidden");
-        setTimeout(() => { if (video) video.pause(); }, 1800);
+        setTimeout(() => {
+            if (video) video.pause();
+        }, 1800);
         const total = slides.length;
         const pairIndices = [];
         for (let i = 0; i < PHOTOS_PER_CYCLE && i < total; i++) {
@@ -171,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
             step++;
 
             if (step >= pairIndices.length) {
-                
+
                 clearInterval(slideTimer);
                 slidePointer = (slidePointer + PHOTOS_PER_CYCLE) % total;
                 playVideoPhase();
@@ -191,9 +219,26 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="announce-track">
             <?php if ( !empty($marquee_notices) ) : ?>
             <?php foreach ( $marquee_notices as $mn ) : ?>
-            <span><a target="_blank"
-                    href="<?php echo $media_base . esc_url(get_notice_href($mn)); ?>"><?php echo esc_html($mn['title']); ?></a></span>
-            <?php endforeach; ?>
+                <?php foreach ( $marquee_notices as $mn ) : 
+                    $notice_data = get_notice_href($mn);
+                    $href = $notice_data['url'];
+                    $type = $notice_data['type'];
+
+                    if ($type === 'internal') {
+                        $final_url = home_url($href);
+                    } elseif (filter_var($href, FILTER_VALIDATE_URL)) {
+                        $final_url = $href;
+                    } else {
+                        $final_url = $media_base . $href;
+                    }
+                ?>
+                    <span>
+                        <a target="_blank" href="<?php echo esc_url($final_url); ?>">
+                            <?php echo esc_html($mn['title']); ?>
+                        </a>
+                    </span>
+                <?php endforeach; ?>
+                    <?php endforeach; ?>
             <?php else: ?>
             <span><a href="#">No new marquee updates at this time.</a></span>
             <?php endif; ?>
@@ -293,11 +338,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 class="info-title">Announcement</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($announcement_notices) ) : ?>
-                        <?php foreach ( $announcement_notices as $an ) : ?>
-                            <a href="<?php echo $media_base . esc_url(get_notice_href($an)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($an['title']); ?></a>
-                        <?php endforeach; ?>
+                    <?php foreach ($announcement_notices as $an) : 
+                        $notice_data = get_notice_href($an);
+                        $href = $notice_data['url'];
+                        $type = $notice_data['type'];
+
+                        if ($type === 'internal') {
+                            $final_url = home_url($href);
+                        } elseif (filter_var($href, FILTER_VALIDATE_URL)) {
+                            $final_url = $href;
+                        } else {
+                            $final_url = $media_base . $href;
+                        }
+                    ?>
+                    <a href="<?php echo esc_url($final_url); ?>" class="info-item" target="_blank"
+                        rel="noopener noreferrer"><?php echo esc_html($an['title']); ?></a>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <span class="info-item" style="color:#777;">No announcements found.</span>
+                    <span class="info-item" style="color:#777;">No announcements found.</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -305,8 +363,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 View All Announcements
                 <span class="arrow-icon">
                     <svg viewBox="0 0 24 24">
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                        <polyline points="12 5 19 12 12 19"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
                     </svg>
                 </span>
             </a>
@@ -318,11 +376,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 class="info-title">Events</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($event_notices) ) : ?>
-                        <?php foreach ( $event_notices as $en ) : ?>
-                            <a href="<?php echo $media_base . esc_url(get_notice_href($en)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($en['title']); ?></a>
-                        <?php endforeach; ?>
+                        <?php foreach ($event_notices as $en) : 
+                        $notice_data = get_notice_href($en);
+                        $href = $notice_data['url'];
+                        $type = $notice_data['type'];
+
+                        if ($type === 'internal') {
+                            $final_url = home_url($href);
+                        } elseif (filter_var($href, FILTER_VALIDATE_URL)) {
+                            $final_url = $href;
+                        } else {
+                            $final_url = $media_base . $href;
+                        }
+                    ?>
+                    <a href="<?php echo esc_url($final_url); ?>" class="info-item" target="_blank"
+                        rel="noopener noreferrer"><?php echo esc_html($en['title']); ?></a>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <span class="info-item" style="color:#777;">No events found.</span>
+                    <span class="info-item" style="color:#777;">No events found.</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -330,8 +401,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 View All Events
                 <span class="arrow-icon">
                     <svg viewBox="0 0 24 24">
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                        <polyline points="12 5 19 12 12 19"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
                     </svg>
                 </span>
             </a>
@@ -343,11 +414,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 class="info-title">Appointments</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($appointment_notices) ) : ?>
-                        <?php foreach ( $appointment_notices as $ap ) : ?>
-                            <a href="<?php echo $media_base . esc_url(get_notice_href($ap)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($ap['title']); ?></a>
-                        <?php endforeach; ?>
+                        <?php foreach ($appointment_notices as $ap) : 
+                        $notice_data = get_notice_href($ap);
+                        $href = $notice_data['url'];
+                        $type = $notice_data['type'];
+
+                        if ($type === 'internal') {
+                            $final_url = home_url($href);
+                        } elseif (filter_var($href, FILTER_VALIDATE_URL)) {
+                            $final_url = $href;
+                        } else {
+                            $final_url = $media_base . $href;
+                        }
+                    ?>
+                    <a href="<?php echo esc_url($final_url); ?>" class="info-item" target="_blank"
+                        rel="noopener noreferrer"><?php echo esc_html($ap['title']); ?></a>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <span class="info-item" style="color:#777;">No appointments found.</span>
+                    <span class="info-item" style="color:#777;">No appointments found.</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -355,8 +439,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 View All Appointments
                 <span class="arrow-icon">
                     <svg viewBox="0 0 24 24">
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                        <polyline points="12 5 19 12 12 19"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
                     </svg>
                 </span>
             </a>
@@ -368,11 +452,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 class="info-title">Tenders</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($tender_notices) ) : ?>
-                        <?php foreach ( $tender_notices as $tn ) : ?>
-                            <a href="<?php echo $media_base .  esc_url(get_notice_href($tn)); ?>" class="info-item" target="_blank" rel="noopener noreferrer"><?php echo esc_html($tn['title']); ?></a>
-                        <?php endforeach; ?>
+                        <?php foreach ($tender_notices as $tn) : 
+                        $notice_data = get_notice_href($tn);
+                        $href = $notice_data['url'];
+                        $type = $notice_data['type'];
+
+                        if ($type === 'internal') {
+                            $final_url = home_url($href);
+                        } elseif (filter_var($href, FILTER_VALIDATE_URL)) {
+                            $final_url = $href;
+                        } else {
+                            $final_url = $media_base . $href;
+                        }
+                    ?>
+                    <a href="<?php echo esc_url($final_url); ?>" class="info-item" target="_blank"
+                        rel="noopener noreferrer"><?php echo esc_html($tn['title']); ?></a>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <span class="info-item" style="color:#777;">No tenders found.</span>
+                    <span class="info-item" style="color:#777;">No tenders found.</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -380,8 +477,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 View All Tenders
                 <span class="arrow-icon">
                     <svg viewBox="0 0 24 24">
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                        <polyline points="12 5 19 12 12 19"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
                     </svg>
                 </span>
             </a>
