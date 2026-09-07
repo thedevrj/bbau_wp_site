@@ -976,7 +976,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function loadCommittee() {
         try {
-            const res = await fetch(apiBase + '/api/v1/antiragging/antiragging-committee-members/');
+            const res = await fetch(apiBase + '/api/v1/antiragging/antiragging-committee-members/?page_size=100');
             if (res.ok) {
                 const data = await res.json();
                 committeeData = data.results || data;
@@ -1138,7 +1138,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function loadResources() {
         try {
-            const res = await fetch(apiBase + '/api/v1/antiragging/resources/');
+            const res = await fetch(apiBase + '/api/v1/antiragging/resources/?page_size=500');
             if (res.ok) {
                 const data = await res.json();
                 resourceData = data.results || data;
@@ -1210,7 +1210,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load FAQs
     async function loadFAQs() {
         try {
-            const res = await fetch(apiBase + '/api/v1/antiragging/antiragging-faqs/');
+            const res = await fetch(apiBase + '/api/v1/antiragging/antiragging-faqs/?page_size=500');
             if (res.ok) {
                 const data = await res.json();
                 const items = data.results || data;

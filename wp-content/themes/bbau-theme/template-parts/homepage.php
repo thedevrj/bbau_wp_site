@@ -335,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <!-- ================= CARD 1 ================= -->
         <div class="info-col">
             <div class="info-card">
-                <h3 class="info-title">Announcement</h3>
+                <h3 class="info-title">Announcements</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($announcement_notices) ) : ?>
                     <?php foreach ($announcement_notices as $an) : 
