@@ -725,6 +725,7 @@ body {
 }
 
 @media (max-width: 768px) {
+/*    
     .faculty-glass-filters {
         margin-top: 0;
         border-radius: 0;
@@ -733,7 +734,6 @@ body {
         align-items: stretch;
     }
 
-    /* FACULTY TABLE MOBILE */
     .fac-table thead {
         display: none;
     }
@@ -772,7 +772,6 @@ body {
         margin-bottom: 4px;
     }
 
-    /* FACULTY SINGLE PROFILE MOBILE */
     .premium-hero-fac {
         padding: 30px 0;
         min-height: auto;
@@ -790,7 +789,7 @@ body {
         text-align: center;
         gap: 25px !important;
         width: 100%;
-    }
+    }/*/
 
     .portfolio-avatar-wrap {
         width: 140px;
@@ -857,5 +856,5 @@ body {
         margin-left: 0 !important;
         margin-right: 0;
         padding-left: 15px;
-    }
+    } 
 }
