@@ -6,12 +6,11 @@ Template name: Notices Template
 get_header();
 
 $category_param = isset($_GET['category']) ? sanitize_text_field($_GET['category']) : '';
-$search_param    = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
-$year_param      = isset($_GET['year']) ? sanitize_text_field($_GET['year']) : '';
-$month_param     = isset($_GET['month']) ? sanitize_text_field($_GET['month']) : '';
+$search_param    = isset($_GET['nsearch']) ? sanitize_text_field($_GET['nsearch']) : '';
+$year_param      = isset($_GET['nyear']) ? sanitize_text_field($_GET['nyear']) : '';
+$month_param     = isset($_GET['nmonth']) ? sanitize_text_field($_GET['nmonth']) : '';
 $current_page    = isset($_GET['notice_page']) ? max(1, intval($_GET['notice_page'])) : 1;
 $per_page        = 20; 
-
 
 $api_base = getenv('DJANGO_API_URL');
 $api_url  = $api_base . '/api/v1/global-notices/?page_size=100';
@@ -28,7 +27,6 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
     $decoded = json_decode($body, true);
     $notices_data = isset($decoded['results']) ? $decoded['results'] : (is_array($decoded) ? $decoded : array());
 }
-
 $notices_data = array_values(array_filter($notices_data, function ($n) {
     if (!empty($n['is_deleted'])) return false;
     if (isset($n['is_active']) && !$n['is_active']) return false;
@@ -48,7 +46,6 @@ function pluralize($word) {
     if (strtolower($word) === 'news') return 'News';
     return strtolower($word) . 's';
 }
-
 $available_years = array();
 foreach ($notices_data as $n) {
     if (!empty($n['date_posted'])) {
@@ -102,8 +99,6 @@ $offset = ($current_page - 1) * $per_page;
 $notices_to_display = array_slice($notices_data, $offset, $per_page);
 
 $has_active_filters = ($search_param !== '' || $year_param !== '' || $month_param !== '');
-
-/* Keep the category param alive when clearing other filters / paging */
 $base_args = array();
 if (!empty($category_param)) {
     $base_args['category'] = $category_param;
@@ -145,7 +140,7 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
             <i class="fa fa-search"></i>
             <input
                 type="text"
-                name="s"
+                name="nsearch"
                 id="ntl-search-input"
                 placeholder="Search by name..."
                 value="<?php echo esc_attr($search_param); ?>"
@@ -154,7 +149,7 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
         </label>
 
         <div class="ntl-select-wrap">
-            <select name="year" id="ntl-year-select" class="ntl-select">
+            <select name="nyear" id="ntl-year-select" class="ntl-select">
                 <option value="">All Years</option>
                 <?php foreach ($available_years as $y) : ?>
                     <option value="<?php echo esc_attr($y); ?>" <?php selected($year_param, $y); ?>>
@@ -165,7 +160,7 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
         </div>
 
         <div class="ntl-select-wrap">
-            <select name="month" id="ntl-month-select" class="ntl-select">
+            <select name="nmonth" id="ntl-month-select" class="ntl-select">
                 <option value="">All Months</option>
                 <?php foreach ($months_list as $mnum => $mname) : ?>
                     <option value="<?php echo esc_attr($mnum); ?>" <?php selected($month_param, $mnum); ?>>
@@ -228,6 +223,7 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
 
     </div>
 
+    <!-- FOOTER -->
     <div class="ntl-foot">
 
         <a href="/" class="ntl-back-btn"><i class="fa fa-arrow-left"></i> Back to home</a>
@@ -273,7 +269,6 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     padding: 0;
     box-sizing: border-box;
 }
-
 .site-main,
 .page-bg {
     width: 100% !important;
@@ -285,6 +280,7 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     padding-bottom: 60px;
     min-height: 80vh;
 }
+
 .ntl-wrap {
     font-family: 'Outfit', sans-serif;
     width: 100%;
@@ -361,7 +357,6 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     font-size: 9px;
     color: #fb923c;
 }
-
 .ntl-filterbar {
     display: flex;
     align-items: center;
@@ -477,6 +472,8 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     text-decoration: none;
     display: block;
 }
+
+/* CARD */
 .ntl-card {
     background: #fff;
     border: 1.5px solid #6d2e34;
@@ -495,7 +492,6 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     box-shadow: 0 6px 18px rgba(109, 46, 52, 0.12);
     transform: translateY(-2px);
 }
-
 .ntl-card-icon {
     width: 52px;
     height: 52px;
@@ -534,7 +530,6 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     color: #8a7a3d;
     text-transform: capitalize;
 }
-
 .ntl-new-pill {
     position: absolute;
     top: 14px;
@@ -549,6 +544,7 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     border-radius: 20px;
 }
 
+/* EMPTY */
 .ntl-empty {
     text-align: center;
     padding: 2rem;
@@ -616,7 +612,6 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     opacity: 0.3;
     pointer-events: none;
 }
-
 @media (max-width: 768px) {
     .ntl-wrap {
         padding: 2rem 1rem;
