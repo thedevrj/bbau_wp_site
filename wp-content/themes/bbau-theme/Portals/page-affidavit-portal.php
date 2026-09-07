@@ -752,7 +752,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     async function loadPortalContent() {
         // Load Guidelines
         try {
-            const res = await fetch(apiBase + '/api/v1/affidavits/affidavit-guidelines/');
+            const res = await fetch(apiBase + '/api/v1/affidavits/affidavit-guidelines/?page_size=100');
             if (res.ok) {
                 const data = await res.json();
                 const items = data.results || data;
@@ -808,7 +808,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
         // Load FAQs
         try {
-            const res = await fetch(apiBase + '/api/v1/affidavits/affidavit-faqs/');
+            const res = await fetch(apiBase + '/api/v1/affidavits/affidavit-faqs/?page_size=200');
             if (res.ok) {
                 const data = await res.json();
                 const items = data.results || data;
