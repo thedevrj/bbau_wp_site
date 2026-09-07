@@ -497,11 +497,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderData(type, records, container) {
-        let html = '<div class="table-responsive fac-table-scroll"><table class="fac-table"><thead><tr>';
+        let html = '<div class="table-responsive fac-table-scroll"><table class="fac-table"><thead class="text-center"><tr>';
 
         // Dynamic Headers
         if (type === 'publications') {
-            html += '<th>Title</th><th>Journal</th><th>Year</th>';
+            html += '<th style= "width:50%">Title</th><th>Journal/Conference/Book</th><th>Publication Type</th><th>Year</th>';
         } else if (type === 'patents') {
             html += '<th>Innovation</th><th>Patent ID</th><th>Status</th>';
         } else if (type === 'consultancies') {
@@ -520,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function() {
             html += '<tr>';
             if (type === 'publications') {
                 html +=
-                    `<td class="fw-bold" data-label="Title">${r.title}</td><td data-label="Journal">${r.name_of_journal_or_conference_or_publisher || '-'}</td><td data-label="Year">${r.publication_date ? new Date(r.publication_date).getFullYear() : '-'}</td>`;
+                    `<td class="fw-bold" data-label="Title">${r.title}</td><td data-label="Journal">${r.name_of_journal_or_conference_or_publisher || '-'}</td><td data-label="Type">${r.publication_type } </td> <td data-label="Year">${r.publication_date ? new Date(r.publication_date).getFullYear() : '-'}</td>`;
             } else if (type === 'patents') {
                 html +=
                     `<td class="fw-bold" data-label="Innovation">${r.title}</td><td data-label="Patent ID">${r.patent_number || '-'}</td><td data-label="Status"><span class="fac-status-badge ${(r.status||'').toLowerCase()}">${r.status}</span></td>`;
