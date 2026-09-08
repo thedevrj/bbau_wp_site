@@ -40,9 +40,9 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                         now <i class="fas fa-arrow-right"></i></a>
                 </article>
                 <article class="ar-feature"><span class="ar-feature-icon"><i class="fas fa-check-circle"></i></span>
-                    <h3>Digital verification</h3>
-                    <p>Affidavits are reviewed by the University for authenticity.</p><a href="#track-status">How it
-                        works <i class="fas fa-arrow-right"></i></a>
+                    <h3>Check Status</h3>
+                    <p>Track the status of your affidavit submission in real-time.</p><a href="#track-status">Track
+                        Status<i class="fas fa-arrow-right"></i></a>
                 </article>
                 <article class="ar-feature"><span class="ar-feature-icon"><i class="fas fa-file-pdf"></i></span>
                     <h3>Sample affidavits</h3>
@@ -124,7 +124,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     <section class="ar-section ar-section-soft" id="materials">
         <div class="ar-container">
             <div class="ar-section-heading"><span class="ar-kicker">SUBMISSION GUIDELINES</span>
-                <h2>Resources and support</h2>
+                <h2>Resources and guidelines</h2>
             </div>
             <div class="ar-content-grid" id="ar-documents">
                 <div class="ar-loading"><i class="fas fa-spinner fa-spin"></i> Loading submission guidelines…</div>
@@ -402,9 +402,145 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
 .ar-track-result {
     flex-basis: 100%;
-    padding: 12px;
-    background: #eef8f0;
-    border-radius: 4px
+    margin-top: 15px;
+    background: #fff;
+    border: 1px solid var(--ar-line);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(20, 40, 70, .06);
+}
+
+.ar-track-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--ar-line);
+    margin-bottom: 18px;
+}
+
+.ar-track-meta-item small {
+    display: block;
+    color: var(--ar-muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.ar-track-meta-item strong {
+    font-size: 0.95rem;
+    color: var(--ar-ink);
+}
+
+.ar-status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-submitted {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-under_verification,
+.status-under_review {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-verified,
+.status-resolved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.ar-timeline-title {
+    font-size: 0.95rem;
+    font-weight: 750;
+    color: var(--ar-brand);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ar-timeline {
+    position: relative;
+    padding-left: 24px;
+    margin: 0;
+    list-style: none;
+}
+
+.ar-timeline::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: 7px;
+    width: 2px;
+    background: var(--ar-line);
+}
+
+.ar-timeline-item {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.ar-timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.ar-timeline-dot {
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--ar-brand);
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 1px var(--ar-brand);
+}
+
+.ar-timeline-item:last-child .ar-timeline-dot {
+    background: var(--ar-gold);
+    box-shadow: 0 0 0 1px var(--ar-gold);
+}
+
+.ar-timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.ar-timeline-header strong {
+    font-size: 0.9rem;
+    color: var(--ar-ink);
+}
+
+.ar-timeline-time {
+    font-size: 0.78rem;
+    color: var(--ar-muted);
+}
+
+.ar-timeline-desc {
+    font-size: 0.85rem;
+    color: var(--ar-muted);
+    margin: 0;
+    line-height: 1.45;
 }
 
 .ar-resource-grid {
@@ -590,6 +726,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     .ar-faq-answer {
         padding-left: 18px;
     }
+
     .ar-feature-grid,
     .ar-trust-grid,
     .ar-form-grid,
@@ -706,7 +843,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
             if (!data) {
                 throw new Error(
                     'Submitted, but the server response could not be read. Please note the time and check with us if you don\'t receive confirmation.'
-                    );
+                );
             }
 
             message.textContent = 'Submitted successfully. Your tracking ID is ' + data.tracking_id;
@@ -726,7 +863,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         const result = this.querySelector('.ar-track-result');
         const trackButton = this.querySelector('button');
         result.hidden = false;
-        result.textContent = 'Checking status…';
+        result.innerHTML =
+            '<p class="ar-loading" style="margin:0;"><i class="fas fa-spinner fa-spin"></i> Checking status…</p>';
         trackButton.disabled = true;
         try {
             const response = await fetch(apiBase + '/api/v1/affidavits/affidavits/track/' +
@@ -734,11 +872,84 @@ $api_base = getenv('DJANGO_MEDIA_URL');
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'Tracking ID not found.');
 
-            let statusText = (data.status || '').replace('_', ' ').toUpperCase();
-            let remarksText = data.remarks ? ` | Remarks: ${data.remarks}` : '';
-            result.textContent = 'Status: ' + statusText + remarksText;
+            const statusClass = 'status-' + (data.status || '').toLowerCase();
+            const statusDisplay = escapeHtml(data.status_display || (data.status || '').replace('_',
+                ' ').toUpperCase());
+            const studentName = escapeHtml(data.student_name || 'N/A');
+            const rollNo = escapeHtml(data.roll_number || 'N/A');
+            const deptName = escapeHtml(data.department_name || 'General');
+
+            // Format Timeline
+            let timelineHtml = '';
+            const historyList = (data.history && Array.isArray(data.history) && data.history.length >
+                0) ? data.history : [{
+                    date: data.submitted_on,
+                    status: data.status,
+                    status_display: statusDisplay,
+                    description: 'Affidavit submitted online by student.',
+                    remarks: data.remarks
+                }];
+
+            timelineHtml = historyList.map(item => {
+                const itemDate = new Date(item.date);
+                const dateStr = !isNaN(itemDate.getTime()) ? itemDate.toLocaleDateString(
+                    'en-IN', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : escapeHtml(item.date);
+
+                const itemStatusClass = 'status-' + (item.status || '').toLowerCase();
+                const itemStatusDisplay = escapeHtml(item.status_display || (item.status || '')
+                    .replace('_', ' ').toUpperCase());
+                const itemDesc = escapeHtml(item.description || item.remarks ||
+                    'Status updated');
+
+                return `
+                    <li class="ar-timeline-item">
+                        <span class="ar-timeline-dot"></span>
+                        <div class="ar-timeline-content">
+                            <div class="ar-timeline-header">
+                                <div>
+                                    <span class="ar-status-badge ${itemStatusClass}">${itemStatusDisplay}</span>
+                                </div>
+                                <span class="ar-timeline-time"><i class="far fa-clock"></i> ${dateStr}</span>
+                            </div>
+                            <p class="ar-timeline-desc">${itemDesc}</p>
+                        </div>
+                    </li>
+                `;
+            }).join('');
+
+            result.innerHTML = `
+                <div class="ar-track-meta">
+                    <div class="ar-track-meta-item">
+                        <small>Tracking ID</small>
+                        <strong>${escapeHtml(data.tracking_id || id)}</strong>
+                    </div>
+                    <div class="ar-track-meta-item">
+                        <small>Current Status</small>
+                        <span class="ar-status-badge ${statusClass}">${statusDisplay}</span>
+                    </div>
+                    <div class="ar-track-meta-item">
+                        <small>Student Name</small>
+                        <strong>${studentName}</strong>
+                    </div>
+                    <div class="ar-track-meta-item">
+                        <small>Roll / Dept</small>
+                        <strong>${rollNo} (${deptName})</strong>
+                    </div>
+                </div>
+                <div class="ar-timeline-title"><i class="fas fa-history"></i> Status History</div>
+                <ul class="ar-timeline">
+                    ${timelineHtml}
+                </ul>
+            `;
         } catch (error) {
-            result.textContent = error.message || 'Tracking ID not found.';
+            result.innerHTML =
+                `<p style="color: #721c24; margin:0;"><i class="fas fa-exclamation-circle"></i> ${escapeHtml(error.message || 'Tracking ID not found.')}</p>`;
         }
         trackButton.disabled = false;
     });
@@ -778,7 +989,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     return '<article class="ar-content-card"><h3>' + escapeHtml(item.title) +
                         '</h3><p>Category: ' + escapeHtml(categoryLabel) + '</p>' +
                         (item.file ? '<a target="_blank" rel="noopener" href="' + escapeHtml(item
-                            .file) + '">Download Sample <i class="fas fa-arrow-right"></i></a>' : '') +
+                                .file) + '">Download Sample <i class="fas fa-arrow-right"></i></a>' :
+                            '') +
                         '</article>';
                 }).join('') || '<p class="ar-loading">No sample affidavits currently published.</p>';
             }

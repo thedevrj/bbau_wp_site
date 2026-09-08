@@ -73,7 +73,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
             <form method="GET" action="" id="faculty-filter-form" class="w-100 d-flex flex-wrap gap-4 align-items-end">
                 <div class="faculty-search-box" style="flex: 1; min-width: 300px;">
                     <i class="fas fa-search faculty-search-icon"></i>
-                    <input type="text" name="search" placeholder="Search by name, expertise or designation..."
+                    <input type="text" name="search" placeholder="Search by name or designation..."
                         value="<?php echo esc_attr($_GET['search'] ?? ''); ?>" autocomplete="off">
                 </div>
 
