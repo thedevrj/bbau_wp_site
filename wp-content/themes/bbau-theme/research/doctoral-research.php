@@ -49,11 +49,11 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     </select>
                 </div>
                 <div class="filter-item">
-                    <label>From Date</label>
+                    <label id="start-date-label">From Date</label>
                     <input type="date" id="start-date" class="ra-select">
                 </div>
                 <div class="filter-item">
-                    <label>To Date</label>
+                    <label id="end-date-label">To Date</label>
                     <input type="date" id="end-date" class="ra-select">
                 </div>
                 <a href="<?php echo esc_url(get_permalink()); ?>" class="btn-fac-profile">Reset</a>
@@ -138,12 +138,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const statusFilter = document.getElementById('status-filter');
     const startDate = document.getElementById('start-date');
     const endDate = document.getElementById('end-date');
+    const startDateLabel = document.getElementById('start-date-label');
+    const endDateLabel = document.getElementById('end-date-label');
     const tbody = document.getElementById('scholars-tbody');
     const recordCount = document.getElementById('record-count');
     const paginationControls = document.getElementById('pagination-controls');
     const apiBase = "<?php echo esc_js($api_base); ?>";
 
     let debounceTimer;
+
+    function updateDateLabels() {
+        const status = statusFilter ? statusFilter.value : '';
+        if (status === 'Awarded') {
+            if (startDateLabel) startDateLabel.textContent = 'Award Date From';
+            if (endDateLabel) endDateLabel.textContent = 'Award Date To';
+        } else if (status === 'Thesis Submitted') {
+            if (startDateLabel) startDateLabel.textContent = 'Submission Date From';
+            if (endDateLabel) endDateLabel.textContent = 'Submission Date To';
+        } else {
+            if (startDateLabel) startDateLabel.textContent = 'Reg. Date From';
+            if (endDateLabel) endDateLabel.textContent = 'Reg. Date To';
+        }
+    }
 
     function fetchScholars(url = null) {
         if (!url) {
@@ -152,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const status = statusFilter.value;
             const start = startDate.value;
             const end = endDate.value;
-
 
             // Update the URL with the new department slug
             if (typeof dept !== 'undefined') {
@@ -176,8 +191,18 @@ document.addEventListener('DOMContentLoaded', function() {
             if (query) url += `search=${encodeURIComponent(query)}&`;
             if (dept) url += `department_slug=${encodeURIComponent(dept)}&`;
             if (status) url += `status=${encodeURIComponent(status)}&`;
-            if (start) url += `registration_date_after=${encodeURIComponent(start)}&`;
-            if (end) url += `registration_date_before=${encodeURIComponent(end)}&`;
+
+            // Dynamic date filter according to selected status:
+            if (status === 'Awarded') {
+                if (start) url += `award_date_after=${encodeURIComponent(start)}&`;
+                if (end) url += `award_date_before=${encodeURIComponent(end)}&`;
+            } else if (status === 'Thesis Submitted') {
+                if (start) url += `thesis_submission_date_after=${encodeURIComponent(start)}&`;
+                if (end) url += `thesis_submission_date_before=${encodeURIComponent(end)}&`;
+            } else {
+                if (start) url += `registration_date_after=${encodeURIComponent(start)}&`;
+                if (end) url += `registration_date_before=${encodeURIComponent(end)}&`;
+            }
         }
 
         tbody.innerHTML =
@@ -345,8 +370,15 @@ document.addEventListener('DOMContentLoaded', function() {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => fetchScholars(), 400);
     };
-    [deptFilter, statusFilter, startDate, endDate].forEach(el => el.onchange = () => fetchScholars());
+    [deptFilter, startDate, endDate].forEach(el => el.onchange = () => fetchScholars());
+    if (statusFilter) {
+        statusFilter.onchange = () => {
+            updateDateLabels();
+            fetchScholars();
+        };
+    }
 
+    updateDateLabels();
     fetchScholars();
 });
 </script>
