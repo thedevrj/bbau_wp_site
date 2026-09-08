@@ -987,6 +987,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+
     function renderCommitteeRow(m) {
         const displayName = m.faculty_name || m.name || '';
         const nameWords = displayName.replace(/^(dr|mr|mrs|ms|prof|shri|smt)\.?\s+/i, '').split(/\s+/).filter(Boolean);
@@ -997,7 +998,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="ar-member-avatar">${escapeHtml(initials || '?')}</span>
             <div class="ar-committee-identity">
                 <h4>${escapeHtml(displayName)}</h4>
+                ${m.affiliation ? `<div class="ar-member-affiliation">${escapeHtml(m.affiliation)}</div>` : ''}
                 <div class="ar-member-role">${escapeHtml(m.designation || '')}</div>
+                
+                ${m.other_designation ? `<div class="ar-member-other-designation">${escapeHtml(m.other_designation)}</div>` : ''}
             </div>
             ${hasContact ? `
             <div class="ar-committee-contact">
