@@ -19,14 +19,67 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
         <div class="row align-items-center mb-5 g-4">
             <div class="col-lg-12">
                 <div class="fc-section-intro text-center">
-                    <h2 class="fc-main-title">Grievance Redressal Portal</h2>
+                    <h2 class="fc-main-title"><?php echo get_the_title();?></h2>
                     <p class="fc-lead-text">
-                        The Grievance Redressal Portal provides a transparent, secure, and accessible channel for
+                        The <?php echo get_the_title();?> provides a transparent, secure, and accessible channel for
                         students, faculty, and staff to register their grievances.
                     </p>
                 </div>
             </div>
         </div>
+
+        <!-- PORTAL OVERVIEW -->
+        <section class="grv-overview" aria-labelledby="grv-overview-title">
+            <div class="grv-overview-copy">
+                <span class="grv-eyebrow"><i class="fas fa-shield-alt" aria-hidden="true"></i>Grievance redressal</span>
+                <h2 id="grv-overview-title">A simple way to raise and track your concern.</h2>
+                <p>Submit a complaint securely, attach supporting documents, and follow its progress using your tracking ID.</p>
+                <div class="grv-overview-actions">
+                    <button type="button" class="grv-action grv-action-primary" data-grievance-tab="register-section"><i class="fas fa-pen" aria-hidden="true"></i> File a Grievance</button>
+                    <button type="button" class="grv-action grv-action-secondary" data-grievance-tab="track-section"><i class="fas fa-search" aria-hidden="true"></i> Track Status</button>
+                </div>
+            </div>
+
+            <div class="grv-stats" aria-label="Grievance statistics" aria-live="polite">
+                <div class="grv-stats-header">
+                    <span><i class="fas fa-chart-line" aria-hidden="true"></i> Complaints overview</span>
+                    <small id="grievance-stats-message"></small>
+                </div>
+                <article class="grv-stat-card">
+                    <i class="fas fa-file-alt" aria-hidden="true"></i>
+                    <span class="grv-stat-value" data-grievance-stat="total">—</span>
+                    <span>Total grievances</span>
+                </article>
+                <article class="grv-stat-card grv-stat-resolved">
+                    <i class="fas fa-check-circle" aria-hidden="true"></i>
+                    <span class="grv-stat-value" data-grievance-stat="resolved">—</span>
+                    <span>Resolved</span>
+                </article>
+                <article class="grv-stat-card grv-stat-progress">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <span class="grv-stat-value" data-grievance-stat="in_progress">—</span>
+                    <span>In progress</span>
+                </article>
+                <article class="grv-stat-card grv-stat-pending">
+                    <i class="fas fa-hourglass-half" aria-hidden="true"></i>
+                    <span class="grv-stat-value" data-grievance-stat="pending">—</span>
+                    <span>Pending review</span>
+                </article>
+            </div>
+        </section>
+
+        <section class="grv-process" aria-labelledby="grv-process-title">
+            <div class="grv-process-heading">
+                <span class="grv-eyebrow">How it works</span>
+            </div>
+            <ol class="grv-process-steps">
+                <li><span class="grv-step-icon"><i class="fas fa-file-signature" aria-hidden="true"></i></span><strong>Register</strong><small>Submit your complaint and contact details.</small></li>
+                <li><span class="grv-step-icon"><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i></span><strong>Add evidence</strong><small>Upload documents that support your concern.</small></li>
+                <li><span class="grv-step-icon"><i class="fas fa-receipt" aria-hidden="true"></i></span><strong>Get tracking ID</strong><small>Save the ID issued after successful submission.</small></li>
+                <li><span class="grv-step-icon"><i class="fas fa-user-check" aria-hidden="true"></i></span><strong>Review &amp; action</strong><small>The concerned office reviews and acts on it.</small></li>
+                <li><span class="grv-step-icon"><i class="fas fa-check-double" aria-hidden="true"></i></span><strong>Resolution</strong><small>Track the outcome with your tracking ID.</small></li>
+            </ol>
+        </section>
 
         <div class="row">
             <!-- TAB NAVIGATION -->
@@ -73,6 +126,8 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
                                                 process</option>
                                             <option value="refusing_admission">Refusing admission in accordance with the
                                                 declared admission policy of the institute</option>
+                                            <option value="ragging">Ragging</option>
+                                            <option value="sexual_harassment">Sexual harassment</option>
                                             <option value="non_publication_of_prospectus">Non publication of prospectus
                                             </option>
                                             <option value="false_misleading_prospectus">Publishing false or misleading
@@ -327,22 +382,27 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
 
 <style>
 :root {
-    --fc-maroon: #8B1A1A;
-    --fc-maroon-dark: #5c1010;
-    --fc-gold: #c9a84c;
-    --fc-cream: #fdfaf6;
+    --fc-maroon: #173d6b;
+    --fc-maroon-dark: #101722;
+    --fc-gold: #d6a531;
+    --fc-cream: #f5f7fb;
+    --fc-ink: #172033;
+    --fc-muted: #657083;
+    --fc-line: #e5e9ef;
+    --fc-soft-blue: #edf3fa;
 }
 
 .vigilance-portal {
-    background: var(--fc-cream);
+    background: linear-gradient(180deg, #f8faff 0, var(--fc-cream) 320px);
     min-height: 80vh;
-    font-family: 'Nunito', sans-serif;
+    color: var(--fc-ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 .fc-main-title {
     font-family: 'Merriweather', serif !important;
     color: var(--fc-maroon-dark);
-    font-size: 32px;
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
     position: relative;
     display: inline-block;
 }
@@ -360,48 +420,346 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
 }
 
 .fc-lead-text {
-    color: #475569;
-    line-height: 1.4;
+    max-width: 760px;
+    color: var(--fc-muted);
+    line-height: 1.65;
     margin: 0 auto;
+}
+
+/* Portal overview and live grievance statistics */
+.grv-overview {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(350px, 1fr);
+    overflow: hidden;
+    margin-bottom: 28px;
+    border: 1px solid #1f4c82;
+    border-radius: 22px;
+    background: linear-gradient(125deg, #0d172b 0%, #102b51 48%, #1a4b80 100%);
+    box-shadow: 0 20px 46px rgba(16, 42, 77, 0.2);
+}
+
+.grv-overview::before,
+.grv-overview::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.grv-overview::before {
+    width: 330px;
+    height: 330px;
+    top: -185px;
+    right: 26%;
+    border: 46px solid rgba(214, 165, 49, 0.1);
+}
+
+.grv-overview::after {
+    width: 210px;
+    height: 210px;
+    right: -80px;
+    bottom: -110px;
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.grv-overview-copy {
+    position: relative;
+    z-index: 1;
+    padding: 36px;
+}
+
+.grv-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #f0d47d;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.grv-overview h2,
+.grv-process h2 {
+    margin: 9px 0 12px;
+    color: var(--fc-maroon-dark);
+    font-family: 'Merriweather', serif;
+    font-size: 1.55rem;
+    line-height: 1.35;
+}
+
+.grv-overview h2 {
+    max-width: 610px;
+    color: #fff;
+    font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+}
+
+.grv-overview p {
+    max-width: 570px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.65;
+}
+
+.grv-overview-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.grv-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.grv-action:hover {
+    transform: translateY(-1px);
+}
+
+.grv-action:focus-visible,
+.vig-tab-btn:focus-visible,
+.vig-submit-btn:focus-visible {
+    outline: 3px solid rgba(214, 165, 49, 0.45);
+    outline-offset: 3px;
+}
+
+.grv-action-primary {
+    border: 1px solid var(--fc-gold);
+    background: var(--fc-gold);
+    color: #101722;
+    box-shadow: 0 6px 14px rgba(214, 165, 49, 0.22);
+}
+
+.grv-action-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.grv-action-secondary:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+}
+
+.grv-stats {
+    position: relative;
+    z-index: 1;
+    align-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 22px;
+    background: rgba(5, 14, 30, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.grv-stats-header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 2px 5px;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.grv-stats-header span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.grv-stats-header i {
+    color: var(--fc-gold);
+}
+
+.grv-stats-header small {
+    color: rgba(255, 255, 255, 0.66);
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+.grv-stat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 116px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.78rem;
+}
+
+.grv-stat-card:nth-of-type(2n) {
+    border-right: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.grv-stat-card:nth-of-type(n + 3) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.grv-stat-card > i {
+    margin-bottom: 10px;
+    color: var(--fc-gold);
+    font-size: 1.05rem;
+}
+
+.grv-stat-value {
+    margin-bottom: 2px;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.grv-process {
+    margin-bottom: 32px;
+    padding: 26px 28px;
+    border: 1px solid var(--fc-line);
+    border-radius: 14px;
+    background: #fff;
+}
+
+.grv-process-heading {
+    text-align: center;
+}
+
+.grv-process .grv-eyebrow {
+    color: var(--fc-maroon);
+}
+
+.grv-process-heading h2 {
+    margin-bottom: 24px;
+    font-size: 1.3rem;
+}
+
+.grv-process-steps {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    counter-reset: grievance-step;
+}
+
+.grv-process-steps li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: var(--fc-muted);
+    counter-increment: grievance-step;
+}
+
+.grv-process-steps li::after {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: calc(50% + 31px);
+    width: calc(100% - 45px);
+    height: 1px;
+    background: #cbd9e9;
+}
+
+.grv-process-steps li:last-child::after {
+    display: none;
+}
+
+.grv-step-icon {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    margin-bottom: 10px;
+    border: 1px solid #cbd9e9;
+    border-radius: 50%;
+    background: var(--fc-soft-blue);
+    color: var(--fc-maroon);
+}
+
+.grv-process-steps strong {
+    margin-bottom: 4px;
+    color: var(--fc-maroon-dark);
+    font-size: 0.84rem;
+}
+
+.grv-process-steps small {
+    max-width: 145px;
+    font-size: 0.74rem;
+    line-height: 1.4;
 }
 
 /* Tabs */
 .vigilance-tabs {
     display: inline-flex;
+    gap: 4px;
+    padding: 6px;
+    border: 1px solid var(--fc-line);
+    border-radius: 10px;
     background: #fff;
-    padding: 8px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 5px 15px rgba(20, 40, 70, 0.06);
 }
 
 .vig-tab-btn {
     border: none;
     background: transparent;
-    padding: 10px 24px;
-    font-weight: 700;
-    color: #475569;
-    border-radius: 8px;
+    min-height: 42px;
+    padding: 10px 22px;
+    color: var(--fc-muted);
+    border-radius: 6px;
+    font-weight: 800;
     transition: all 0.3s;
 }
 
 .vig-tab-btn.active {
     background: var(--fc-maroon);
     color: #fff;
+    box-shadow: 0 4px 10px rgba(23, 61, 107, 0.22);
 }
 
 /* Cards & Forms */
 .vig-card {
     background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(226, 217, 204, 0.6);
+    border: 1px solid var(--fc-line);
+    border-radius: 14px;
+    box-shadow: 0 12px 28px rgba(20, 40, 70, 0.07);
     overflow: hidden;
 }
 
 .vig-card-header {
-    background: #fafaf9;
-    padding: 20px;
-    border-bottom: 1px solid rgba(226, 217, 204, 0.6);
+    position: relative;
+    padding: 22px;
+    border-bottom: 1px solid var(--fc-line);
+    background: linear-gradient(90deg, #fff, var(--fc-soft-blue));
+}
+
+.vig-card-header::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: var(--fc-gold);
 }
 
 .vig-card-header h3 {
@@ -415,25 +773,33 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     padding: 30px;
 }
 
+.vig-card-body h5 {
+    margin-top: 34px !important;
+    color: var(--fc-maroon) !important;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
 .vig-input {
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
+    border: 1px solid #d6e0eb;
+    border-radius: 7px;
     padding: 12px 15px;
-    background-color: #f8fafc;
+    background-color: #fbfcfe;
 }
 
 .vig-input:focus {
-    border-color: var(--fc-gold);
-    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.2);
+    border-color: var(--fc-maroon);
+    box-shadow: 0 0 0 3px rgba(23, 61, 107, 0.14);
     background-color: #fff;
 }
 
 .file-drop-area {
-    border: 2px dashed #cbd5e1;
-    border-radius: 8px;
+    border: 2px dashed #b9cce0;
+    border-radius: 10px;
     padding: 30px;
     text-align: center;
-    background: #f8fafc;
+    background: var(--fc-soft-blue);
     cursor: pointer;
     transition: all 0.3s;
 }
@@ -460,16 +826,38 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     font-size: 28px;
     font-weight: 800;
     color: var(--fc-maroon);
-    background: #fff;
+    background: var(--fc-soft-blue);
     padding: 10px;
     border-radius: 8px;
     display: inline-block;
-    border: 2px dashed var(--fc-gold);
+    border: 2px dashed #9fb3cc;
     margin: 15px 0;
 }
 
 /* RESPONSIVENESS */
 @media (max-width: 768px) {
+    .grv-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .grv-overview-copy {
+        padding: 28px;
+    }
+
+    .grv-stats {
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        border-left: 0;
+    }
+
+    .grv-process-steps {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        row-gap: 24px;
+    }
+
+    .grv-process-steps li::after {
+        display: none;
+    }
+
     .vigilance-tabs {
         display: flex;
         flex-wrap: wrap;
@@ -489,6 +877,34 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
 }
 
 @media (max-width: 480px) {
+    .grv-overview-copy,
+    .grv-process {
+        padding: 22px;
+    }
+
+    .grv-overview h2 {
+        font-size: 1.32rem;
+    }
+
+    .grv-overview-actions,
+    .grv-action {
+        width: 100%;
+    }
+
+    .grv-stats,
+    .grv-process-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grv-stat-card {
+        min-height: 124px;
+        padding: 18px;
+    }
+
+    .grv-process-steps li:last-child {
+        grid-column: 1 / -1;
+    }
+
     .fc-main-title {
         font-size: 24px;
     }
@@ -611,6 +1027,74 @@ document.addEventListener('DOMContentLoaded', function() {
             switchTab('register-section', false);
         }
     });
+
+    document.querySelectorAll('[data-grievance-tab]').forEach(action => {
+        action.addEventListener('click', () => {
+            const targetId = action.dataset.grievanceTab;
+            switchTab(targetId);
+            document.getElementById(targetId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    });
+
+    // Public aggregate-only data: this endpoint must not return complaint records.
+    async function loadGrievanceStats() {
+        const statElements = document.querySelectorAll('[data-grievance-stat]');
+        const statusMessage = document.getElementById('grievance-stats-message');
+        if (!statElements.length) return;
+
+        try {
+            // Support both singular and plural route conventions used by the grievance API.
+            const endpoints = [
+                `${apiBase}/api/v1/portals/grievance/stats/`,
+                `${apiBase}/api/v1/portals/grievances/stats/`
+            ];
+            let payload = null;
+
+            for (const endpoint of endpoints) {
+                const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
+                if (!response.ok) continue;
+
+                const candidate = await response.json();
+                const values = candidate.stats || candidate.data || candidate;
+                const countKeys = ['total', 'total_grievances', 'total_complaints', 'count', 'resolved', 'in_progress', 'pending'];
+                const hasStats = values && typeof values === 'object' && !Array.isArray(values) &&
+                    (countKeys.some(key => values[key] !== undefined) || values.status_counts || values.counts);
+                if (hasStats) {
+                    payload = candidate;
+                    break;
+                }
+            }
+
+            if (!payload) throw new Error('Unable to load grievance statistics.');
+
+            const stats = payload.stats || payload.data || payload;
+            const statusCounts = stats.status_counts || stats.counts || {};
+            const aliases = {
+                total: ['total', 'total_grievances', 'total_complaints', 'count'],
+                resolved: ['resolved', 'resolved_count'],
+                in_progress: ['in_progress', 'in_progress_count', 'under_review', 'forwarded'],
+                pending: ['pending', 'pending_count', 'awaiting_review', 'open']
+            };
+
+            Object.entries(aliases).forEach(([name, keys]) => {
+                const value = keys.map(key => stats[key] ?? statusCounts[key]).find(value => value !== undefined && value !== null);
+                const target = document.querySelector(`[data-grievance-stat="${name}"]`);
+                if (target && value !== undefined) {
+                    const number = Number(value);
+                    target.textContent = Number.isFinite(number) ? number.toLocaleString('en-IN') : value;
+                }
+            });
+
+        } catch (error) {
+            if (statusMessage) statusMessage.textContent = 'Live statistics are currently unavailable';
+            console.warn('Grievance statistics are unavailable.', error);
+        }
+    }
+
+    loadGrievanceStats();
 
     // Grievance Submission
     document.getElementById('grievance-form').addEventListener('submit', async function(e) {

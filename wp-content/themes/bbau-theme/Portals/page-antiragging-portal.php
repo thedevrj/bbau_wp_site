@@ -584,9 +584,10 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     letter-spacing: 0.03em;
 }
 .ar-committee-contact {
-    flex-shrink: 0;
-    display: flex;
-    flex-wrap: wrap;
+    flex: 0 0 500px;
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr);
+    align-items: center;
     gap: 4px 18px;
 }
 .ar-committee-contact a {
@@ -596,6 +597,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     display: flex;
     align-items: center;
     gap: 7px;
+    min-width: 0;
     white-space: nowrap;
 }
 .ar-committee-contact a:hover {
@@ -772,27 +774,80 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 /* HELPLINES DARK GRID */
 .ar-helpline-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
 .ar-helpline-card {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    min-height: 148px;
+    padding: 22px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
 }
 
-.ar-helpline-card i {
-    font-size: 0.7rem;
+.ar-helpline-icon {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(225, 190, 0, 0.16);
     color: var(--ar-gold);
-    margin-bottom: 10px;
+    font-size: 1.05rem;
+}
+
+.ar-helpline-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.ar-helpline-role {
+    margin: 0 0 3px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .ar-helpline-card h4 {
     color: #fff;
-    margin: 0 0 6px;
+    margin: 0 0 12px;
+    font-size: 1.05rem;
+    line-height: 1.3;
+}
+
+.ar-helpline-call {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ar-gold);
+    font-size: 1rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.ar-helpline-call:hover {
+    color: #ffe15a;
+}
+
+.ar-helpline-hours {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.76rem;
+}
+
+.ar-helpline-hours i {
+    color: var(--ar-gold);
 }
 
 /* FAQS ACCORDION */
@@ -822,6 +877,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     padding: 16px 18px;
     cursor: pointer;
     font-weight: 700;
+    font-size: 0.9rem;
     color: var(--ar-ink);
 }
 
@@ -908,6 +964,28 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     .ar-resource-download {
         margin-left: 56px;
     }
+    .ar-faq-item summary {
+        font-size: 0.75rem;
+    }
+
+    .ar-committee-contact {
+        flex: 1 1 100%;
+        width: calc(100% - 58px);
+        margin-left: 58px;
+        grid-template-columns: minmax(120px, 34%) minmax(0, 1fr);
+    }
+
+    /* Keep resource filters evenly sized instead of leaving uneven wrapped rows. */
+    #resource-tab-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #resource-tab-buttons .ar-tab-btn {
+        min-width: 0;
+        padding-inline: 12px;
+        text-align: center;
+    }
 }
 
 @media (max-width: 480px) {
@@ -929,6 +1007,22 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
     .ar-faq-answer {
         padding-left: 18px;
+    }
+
+    .ar-committee-contact {
+        width: 100%;
+        margin-left: 0;
+        grid-template-columns: 1fr;
+        gap: 0px;
+    }
+
+    .ar-committee-contact a {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    #resource-tab-buttons {
+        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -1005,8 +1099,12 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             ${hasContact ? `
             <div class="ar-committee-contact">
+                <div class="ar-contact-phone">
                 ${m.phone ? '<a href="tel:' + escapeHtml(m.phone) + '"><i class="fas fa-phone"></i> ' + escapeHtml(m.phone) + '</a>' : ''}
+                </div>
+                <div class="ar-contact-email">
                 ${m.email ? '<a href="mailto:' + escapeHtml(m.email) + '"><i class="fas fa-envelope"></i> ' + escapeHtml(m.email) + '</a>' : ''}
+                </div>
             </div>` : ''}
         </div>`;
     }
@@ -1197,11 +1295,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 container.innerHTML = items.map(c => `
                     <div class="ar-helpline-card">
-                        
-                        <h4>${escapeHtml(c.name)}</h4>
-                        <p style="margin: 0;"><small style="color:rgba(255,255,255,0.8);">${escapeHtml(c.role)}</small></p>
-                        <p style="margin: 0;"><strong><i class="fas fa-phone-alt"></i>&nbsp;<a href="tel:${escapeHtml(c.phone)}" style="color:var(--ar-gold); text-decoration:none;">${escapeHtml(c.phone)}</a></strong></p>
-                        ${c.available_hours ? '<p style="margin: 0;"><small style="color:rgba(255,255,255,0.7);">Available Hours: ' + escapeHtml(c.available_hours) + '</small></p>' : ''}
+                        <span class="ar-helpline-icon"><i class="fas fa-phone-alt" aria-hidden="true"></i></span>
+                        <div class="ar-helpline-content">
+                            ${c.role ? '<p class="ar-helpline-role">' + escapeHtml(c.role) + '</p>' : ''}
+                            <h4>${escapeHtml(c.name)}</h4>
+                            <a class="ar-helpline-call" href="tel:${escapeHtml(c.phone)}" aria-label="Call ${escapeHtml(c.name)} at ${escapeHtml(c.phone)}"><i class="fas fa-phone-alt" aria-hidden="true"></i>${escapeHtml(c.phone)}</a>
+                            ${c.available_hours ? '<span class="ar-helpline-hours"><i class="far fa-clock" aria-hidden="true"></i>Available: ' + escapeHtml(c.available_hours) + '</span>' : ''}
+                        </div>
                     </div>
                 `).join('');
             }
