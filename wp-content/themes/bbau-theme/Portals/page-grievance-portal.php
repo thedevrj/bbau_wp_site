@@ -120,33 +120,12 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
                                             class="form-select vig-input" required
                                             onchange="toggleOtherField(this, 'other_nature_wrapper', 'others_nature_of_grievance')">
                                             <option value="">Select</option>
-                                            <option value="admission_contrary_to_merit">Making admission contrary to
-                                                merit</option>
-                                            <option value="irregularity_in_admission">Irregularity in the admission
-                                                process</option>
-                                            <option value="refusing_admission">Refusing admission in accordance with the
-                                                declared admission policy of the institute</option>
-                                            <option value="ragging">Ragging</option>
-                                            <option value="sexual_harassment">Sexual harassment</option>
-                                            <option value="non_publication_of_prospectus">Non publication of prospectus
-                                            </option>
-                                            <option value="false_misleading_prospectus">Publishing false or misleading
-                                                information in the prospectus</option>
-                                            <option value="withhold_documents">Withhold or refuse to return any document
-                                            </option>
-                                            <option value="excess_fee_demand">Demand of money in excess of that
-                                                specified in the declared admission policy</option>
-                                            <option value="reservation_policy_breach">Breach of the policy for
-                                                reservation in admission</option>
-                                            <option value="discrimination">Complaints of alleged discrimination of
-                                                students from SC/ST/OBC/Women/Minority or Disabled categories</option>
-                                            <option value="scholarship_delay">Non payment or delay in payment of
-                                                scholarships to any student</option>
-                                            <option value="exam_delay">Delay in conduct of examinations or declaration
-                                                of results</option>
-                                            <option value="no_student_amenities">No provision of student amenities
-                                            </option>
-                                            <option value="unfair_evaluation">Unfair evaluation practices</option>
+
+                                            <option value="ragging">Ragging Related Complaint</option>
+                                            <option value="admission">Admission Related Complaint</option>
+                                            <option value="examination">Examination Related Complaint</option>
+                                            <option value="unfair_means">Unfair Means Related Complaint</option>
+                                            <option value="scholarship">Scholarship Related Complaint</option>
                                             <option value="other">Other</option>
                                         </select>
                                     </div>

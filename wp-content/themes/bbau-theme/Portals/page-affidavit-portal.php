@@ -1009,7 +1009,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 if (deptSelect && Array.isArray(items)) {
                     deptSelect.innerHTML = '<option value="">Select Department</option>' + items.map(function(
                         dept) {
-                        return '<option value="' + escapeHtml(dept.id) + '">' + escapeHtml(dept.name) +
+                            const displayName = dept.campus === 'Satellite Campus Amethi' ? `${dept.name} (Amethi)` : dept.name;
+                        return '<option value="' + escapeHtml(dept.id) + '">' + escapeHtml(displayName) +
                             '</option>';
                     }).join('');
                 }
