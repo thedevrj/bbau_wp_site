@@ -72,7 +72,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     <span class="ar-feature-icon"><i class="fas fa-bullhorn"></i></span>
                     <h3>Complaint Mechanism</h3>
                     <p>Report ragging incidents online. Your identity will be kept completely confidential.</p>
-                    <a href="#report-ragging">Report Incident <i class="fas fa-arrow-right"></i></a>
+                    <a href="/complaint-management-portal/" target="_blank">Report Incident <i class="fas fa-external-link-alt"></i></a>
                 </article>
 
                 <!-- Affidavits -->
@@ -106,8 +106,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     <span class="ar-feature-icon"><i class="fas fa-building"></i></span>
                     <h3>Hostel Safety</h3>
                     <p>Information on hostel security, wardens, safety measures, and monitoring systems.</p>
-                    <a href="#resources-tab" onclick="switchCategory('hostel_safety')">Hostel Safety <i
-                            class="fas fa-arrow-right"></i></a>
+                    <a href="/hostels/" target="_blank">Hostel Safety <i
+                            class="fas fa-external-link-alt"></i></a>
                 </article>
 
                 <!-- Annual Compliance Reports -->
@@ -175,8 +175,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     onclick="switchCategory('university_policy', this)">University Policy</button>
                 <button class="ar-tab-btn" data-category="awareness_material"
                     onclick="switchCategory('awareness_material', this)">Awareness Materials</button>
-                <button class="ar-tab-btn" data-category="hostel_safety"
-                    onclick="switchCategory('hostel_safety', this)">Hostel Safety</button>
+                <!-- <button class="ar-tab-btn" data-category="hostel_safety"
+                    onclick="switchCategory('hostel_safety', this)">Hostel Safety</button> -->
                 <button class="ar-tab-btn" data-category="annual_report"
                     onclick="switchCategory('annual_report', this)">Annual Reports</button>
             </div>
@@ -191,7 +191,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     </section>
 
     <!-- COMPLAINT / INCIDENT REPORTING FORM -->
-    <section class="ar-section" id="report-ragging">
+    <!-- <section class="ar-section" id="report-ragging">
         <div class="ar-container ar-two-col">
             <div>
                 <span class="ar-kicker">CONFIDENTIAL REPORTING</span>
@@ -245,7 +245,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 </form>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- EMERGENCY CONTACTS & HELPLINES -->
     <section class="ar-section ar-section-dark" id="contact-helplines">
@@ -716,7 +716,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     gap: 36px;
     align-items: start;
 }
-
+/* 
 .ar-notice {
     margin-top: 24px;
     border-left: 4px solid var(--ar-gold);
@@ -724,7 +724,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     padding: 16px 18px;
     font-size: .9rem;
     border-radius: 0 6px 6px 0;
-}
+} */
 
 .ar-form {
     background: #fff;
@@ -928,14 +928,14 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     padding: 30px;
     color: var(--ar-muted);
 }
-
+/* 
 .ar-track-result {
     padding: 12px;
     background: #eef8f0;
     border-radius: 4px;
     color: #1b5e20;
     font-size: 0.95rem;
-}
+} */
 
 /* RESPONSIVE MEDIA QUERIES */
 @media (max-width: 1024px) {
@@ -1185,10 +1185,10 @@ document.addEventListener('DOMContentLoaded', function() {
             label: 'Awareness Material',
             icon: 'fa-book-open'
         },
-        hostel_safety: {
-            label: 'Hostel Safety',
-            icon: 'fa-building'
-        },
+        // hostel_safety: {
+        //     label: 'Hostel Safety',
+        //     icon: 'fa-building'
+        // },
         annual_report: {
             label: 'Annual Report',
             icon: 'fa-chart-bar'
@@ -1340,7 +1340,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle Incident Reporting Form
-    const complaintForm = document.getElementById('antiragging-complaint-form');
+   /* const complaintForm = document.getElementById('antiragging-complaint-form');
     if (complaintForm) {
         complaintForm.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -1411,7 +1411,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonHtml;
         });
-    }
+    }*/
 
     loadCommittee();
     loadResources();
