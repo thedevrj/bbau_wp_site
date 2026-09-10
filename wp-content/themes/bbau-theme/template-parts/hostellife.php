@@ -147,8 +147,8 @@ get_header();
         <section class="hl-section">
             <div class="hl-section-head">
                 <span class="tag">Life in pictures</span>
-                <h3>A peek into hostel life <i class="fa-solid fa-camera"></i></h3>
-                <p>Illustrated for now — swap these for real photos from your hostels anytime.</p>
+                <h3> hostel life <i class="fa-solid fa-camera"></i></h3>
+                
             </div>
             <div class="hl-pic-grid">
                 <figure class="hl-pic-card">
@@ -166,7 +166,7 @@ get_header();
                         <circle cx="228" cy="85" r="16" fill="#5a3a28"/>
                         <rect x="214" y="99" width="28" height="34" rx="10" fill="#DCE3C8"/>
                     </svg>
-                    <figcaption><strong>Mess Hall</strong><span>Shared meals, shared stories</span></figcaption>
+                    <figcaption><strong>Mess Hall</strong></figcaption>
                 </figure>
 
                 <figure class="hl-pic-card">
@@ -183,7 +183,7 @@ get_header();
                         <circle cx="260" cy="85" r="15" fill="#7a4a34"/>
                         <rect x="246" y="99" width="28" height="34" rx="10" fill="#8B1A1A"/>
                     </svg>
-                    <figcaption><strong>Common Room</strong><span>Carrom, cards, and lazy evenings</span></figcaption>
+                    <figcaption><strong>Common Room</strong></figcaption>
                 </figure>
 
                 <figure class="hl-pic-card">
@@ -198,7 +198,7 @@ get_header();
                         <circle cx="150" cy="100" r="15" fill="#5a3a28"/>
                         <rect x="136" y="114" width="28" height="40" rx="10" fill="#DCE3C8"/>
                     </svg>
-                    <figcaption><strong>Sports Ground</strong><span>Evening matches after class</span></figcaption>
+                    <figcaption><strong>Sports Ground</strong></figcaption>
                 </figure>
 
                 <figure class="hl-pic-card">
@@ -214,7 +214,7 @@ get_header();
                         <circle cx="180" cy="105" r="15" fill="#7a4a34"/>
                         <rect x="166" y="119" width="28" height="46" rx="10" fill="#E8B84B"/>
                     </svg>
-                    <figcaption><strong>Festival Nights</strong><span>Diwali &amp; Holi in the courtyard</span></figcaption>
+                    <figcaption><strong>Festival Nights</strong></figcaption>
                 </figure>
             </div>
         </section>
@@ -228,28 +228,28 @@ get_header();
 
             <div class="hl-sticker-label"><i class="fa-solid fa-venus"></i> Girls Hostels</div>
             <div class="hl-sticker-grid">
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">Girls Hostel</div><div class="name">Yashodhara</div></div>
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">Girls Hostel</div><div class="name">Sanghmitra</div></div>
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">Extension</div><div class="name">Sanghmitra Ext.</div></div>
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">Girls Hostel</div><div class="name">Chitralekha</div></div>
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">OBC</div><div class="name">OBC Girls Hostel</div></div>
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">Girls Hostel</div><div class="name">Savitri Bai Phule</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">Yashodhara</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">Sanghmitra</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">Sanghmitra Ext.</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">Chitralekha</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">OBC Girls Hostel</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">Savitri Bai Phule</div></div>
             </div>
 
             <div class="hl-sticker-label" style="margin-top:34px;"><i class="fa-solid fa-mars"></i> Boys Hostels</div>
             <div class="hl-sticker-grid">
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">Boys Hostel</div><div class="name">Ashoka</div></div>
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">Boys Hostel</div><div class="name">Kanishka</div></div>
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">Boys Hostel</div><div class="name">Siddhartha</div></div>
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">RCA</div><div class="name">RCA Boys Hostel</div></div>
-                <div class="hl-sticker"><div class="tape"></div><div class="sub">OBC</div><div class="name">OBC Boys Hostel</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">Ashoka</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">Kanishka</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">Siddhartha</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">RCA Boys Hostel</div></div>
+                <div class="hl-sticker"><div class="tape"></div><div class="name">OBC Boys Hostel</div></div>
             </div>
         </section>
 
         <section class="hl-section">
             <div class="hl-section-head">
-                <span class="tag">Money talk</span>
-                <h3>Hostel fee, made simple <i class="fa-solid fa-coins"></i></h3>
+              
+                <h3>Hostel Fees <i class="fa-solid fa-coins"></i></h3>
                 <p>Room rental, electrical &amp; services charges are per semester. Caution deposit is one-time &amp; refundable.</p>
             </div>
             <div class="hl-fee-card">
@@ -266,8 +266,8 @@ get_header();
 
         <section class="hl-section" id="hl-rules">
             <div class="hl-section-head">
-                <span class="tag">The fine print</span>
-                <h3>Rules, admission &amp; residence <i class="fa-solid fa-clipboard-list"></i></h3>
+              
+                <h3>Rules <i class="fa-solid fa-clipboard-list"></i></h3>
                 <p>Tap a card to open it up.</p>
             </div>
             <div class="hl-rule-grid">
@@ -338,10 +338,10 @@ get_header();
         <section class="hl-section">
             <div class="hl-cta-band">
                 <div>
-                    <h4>Ready to move in? <i class="fa-solid fa-champagne-glasses"></i></h4>
+                    
                     <p>Download the hostel admission form from the University website and submit it to the DSW office with your registration proof and Aadhar Card.</p>
                 </div>
-                <a href="#" class="hl-btn">Go to Hostel Office →</a>
+                <a href="#" class="hl-btn"> Hostel admission form →</a>
             </div>
         </section>
 
