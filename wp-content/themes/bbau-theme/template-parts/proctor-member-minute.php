@@ -415,7 +415,7 @@ get_header();
 }
 
 .min-date .d {
-    font-weight: 800;
+    font-weight: 700;
     font-size: 20px;
     line-height: 1;
 }

@@ -189,7 +189,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 .ar-eyebrow,
 .ar-kicker {
     font-size: .76rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: .13em
 }
 
@@ -249,7 +249,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     background: #edf3fa;
     color: var(--ar-brand);
     font-size: 1.1rem;
-    font-weight: 800
+    font-weight: 700
 }
 
 .ar-trust-grid strong,
@@ -437,7 +437,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.8rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }

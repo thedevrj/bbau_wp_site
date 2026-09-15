@@ -254,7 +254,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 }
 
 .sidebar-section-group .group-header {
-    font-weight: 800;
+    font-weight: 700;
     font-size: 0.8rem;
     text-transform: uppercase;
     color: var(--fc-gold);
@@ -343,7 +343,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 
 .course-code-sub {
     font-size: 0.95rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--fc-gold);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -484,7 +484,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 
 .material-type-tag {
     font-size: 0.7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     color: #64748b;
     letter-spacing: 1px;

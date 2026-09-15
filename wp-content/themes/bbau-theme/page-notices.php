@@ -214,16 +214,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const loggedUsername = document.getElementById('logged-username');
     const tabPrivate = document.getElementById('tab-private');
 
-    function updateAuthUI() {
-        const token = localStorage.getItem('portal_access_token');
+    async function updateAuthUI() {
         const user = localStorage.getItem('portal_user');
-        if (token) {
+        let authenticated = false;
+        try {
+            const session = await fetch(`${apiBase.replace('/api/v1', '')}/portal/api/session/`, {
+                credentials: 'include'
+            });
+            authenticated = session.ok;
+        } catch (e) {}
+        if (authenticated) {
             authUnlogged.classList.add('d-none');
             authLogged.classList.remove('d-none');
             tabPrivate.classList.remove('d-none');
             loggedUsername.textContent = user;
-            currentTab = 'private'; // Default to private on login
-            tabPrivate.classList.add('btn-success');
+            currentTab = 'private';
+            tabPrivate.classList.remove('btn-success');
         } else {
             authUnlogged.classList.remove('d-none');
             authLogged.classList.add('d-none');
@@ -234,14 +240,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchNotices() {
-        const token = localStorage.getItem('portal_access_token');
-        const headers = token ? {
-            'Authorization': `Bearer ${token}`
-        } : {};
+        const headers = {};
 
         try {
             const res = await fetch(`${apiBase}/global-notices/?page_size=500`, {
-                headers
+                headers,
+                credentials: 'include'
             });
             const data = await res.json();
 
@@ -318,6 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Using our custom security-aware login endpoint
             const res = await fetch(`${apiBase.replace('/api/v1', '')}/portal/api/login/`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -328,18 +333,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (res.ok) {
                 // Check if user is forced to change password
                 if (resData.force_password_change) {
-                    localStorage.setItem('temp_token', resData
-                        .access); // Save token for password change
-                    localStorage.setItem('temp_user', data.username);
-                    localStorage.setItem('temp_old_pass', data
-                        .password); // Needed for password change verification
                     toggleModal('login-modal', false);
                     toggleModal('password-modal', true);
                     return;
                 }
 
-                localStorage.setItem('portal_access_token', resData.access);
-                localStorage.setItem('portal_user', data.username);
+                // The backend owns the HttpOnly auth cookie.
                 toggleModal('login-modal', false);
                 updateAuthUI();
                 fetchNotices();
@@ -373,30 +372,25 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const token = localStorage.getItem('temp_token');
-        const oldPass = localStorage.getItem('temp_old_pass');
-        const username = localStorage.getItem('temp_user');
+        const oldPass = document.getElementById('old-password')?.value || '';
 
         try {
             const res = await fetch(
                 `${apiBase.replace('/api/v1', '')}/portal/api/change-password/`, {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
-                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         old_password: oldPass,
-                        new_password: newPass
+                        new_password: newPass,
+                        confirm_password: confirmPass
                     })
                 });
 
             if (res.ok) {
                 // Password changed! Now log them in properly
-                localStorage.removeItem('temp_old_pass');
-                localStorage.removeItem('temp_token');
-                localStorage.setItem('portal_access_token', token);
-                localStorage.setItem('portal_user', username);
 
                 toggleModal('password-modal', false);
                 updateAuthUI();
@@ -413,10 +407,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.getElementById('btn-logout').addEventListener('click', () => {
-        localStorage.clear();
-        updateAuthUI();
-        fetchNotices();
+    document.getElementById('btn-logout').addEventListener('click', async () => {
+        try {
+            await fetch(`${apiBase.replace('/api/v1', '')}/portal/logout/`, {
+                method: 'GET',
+                credentials: 'include'
+            });
+        } finally {
+            localStorage.removeItem('portal_user');
+            currentTab = 'all';
+            updateAuthUI();
+            fetchNotices();
+        }
     });
 
     // Event Listeners for Filters

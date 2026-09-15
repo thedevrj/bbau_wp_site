@@ -211,7 +211,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 
 .fc-stats-number {
     font-size: 2.5rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--fc-maroon-dark);
     line-height: 1;
 }
@@ -460,7 +460,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 
 .fc-panel-title {
     font-size: 0.85rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--fc-maroon-dark);
