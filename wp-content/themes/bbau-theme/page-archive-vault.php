@@ -563,11 +563,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* ── Auth UI ───────────────────────────────────────────── */
-    function updateAuthUI() {
-        const token = localStorage.getItem('portal_access_token');
+    async function updateAuthUI() {
         const user = localStorage.getItem('portal_user');
+        let authenticated = false;
+        try {
+            const session = await fetch(`${djangoBase}/portal/api/session/`, {
+                credentials: 'include'
+            });
+            authenticated = session.ok;
+        } catch (e) {}
 
-        if (token) {
+        if (authenticated) {
             lockedScreen.classList.add('d-none');
             openScreen.classList.remove('d-none');
             loggedUsername.textContent = user || 'Authorized User';
@@ -580,9 +586,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* ── Fetch ─────────────────────────────────────────────── */
     async function fetchArchives(endpoint) {
-        const token = localStorage.getItem('portal_access_token');
-        if (!token) return;
-
         listContainer.innerHTML = `
             <div class="sc-shimmer"></div>
             <div class="sc-shimmer"></div>
@@ -591,12 +594,12 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const res = await fetch(`${apiBase}${endpoint}?page_size=500`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
-                }
+                    // Authentication is provided by the HttpOnly cookie.
+                },
+                credentials: 'include'
             });
 
             if (res.status === 401 || res.status === 403) {
-                localStorage.removeItem('portal_access_token');
                 updateAuthUI();
                 return;
             }
@@ -839,6 +842,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const res = await fetch(`${djangoBase}/portal/api/login/`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -853,7 +857,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     loginError.classList.remove('d-none');
                     return;
                 }
-                localStorage.setItem('portal_access_token', resData.access);
                 localStorage.setItem('portal_user', fd.username);
                 toggleModal('login-modal', false);
                 updateAuthUI();
@@ -868,9 +871,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('btn-logout').addEventListener('click', () => {
-        localStorage.removeItem('portal_access_token');
-        localStorage.removeItem('portal_user');
-        updateAuthUI();
+        fetch(`${djangoBase}/portal/logout/`, {
+            method: 'GET',
+            credentials: 'include'
+        }).finally(() => {
+            localStorage.removeItem('portal_user');
+            updateAuthUI();
+        });
     });
 
     updateAuthUI();

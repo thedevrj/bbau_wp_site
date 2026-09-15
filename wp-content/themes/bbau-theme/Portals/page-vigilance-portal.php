@@ -406,7 +406,7 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
 
 .tracking-id-display {
     font-size: 28px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--fc-maroon);
     background: #fff;
     padding: 10px;
@@ -531,7 +531,7 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
     color: var(--fc-maroon);
     border-radius: 4px;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.5px;
     border: 1px solid rgba(201, 168, 76, 0.3);
 }

@@ -158,9 +158,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const minutesContainer = document.getElementById('minutes-container');
 
     function updateAuthButtons() {
-        const token = localStorage.getItem('portal_access_token');
         const user = localStorage.getItem('portal_user');
-        if (token) {
+        if (user) {
             btnLogin.style.display = 'none';
             btnLogout.style.display = 'inline-flex';
             labelUsername.textContent = `(${user})`;
@@ -172,13 +171,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchMinutes() {
-        const token = localStorage.getItem('portal_access_token');
-        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+        const headers = {};
         
         minutesContainer.innerHTML = '<div style="padding:40px; text-align:center;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>';
         
         try {
-            const res = await fetch(minutesApiUrl, { headers });
+            const res = await fetch(minutesApiUrl, { headers, credentials: 'include' });
             if (!res.ok) throw new Error('Failed to fetch');
             const data_raw = await res.json();
             const data = data_raw.results !== undefined ? data_raw.results : data_raw;
@@ -213,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const title = min.meeting_title || 'Authority Meeting';
                 
                 const privateBadge = min.is_private ? '<span class="badge" style="background:#8B1A1A; color:#fff; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Private</span>' : '';
-                const isLoggedIn = !!localStorage.getItem('portal_access_token');
+                const isLoggedIn = !!localStorage.getItem('portal_user');
                 
                 if (min.is_private && !isLoggedIn) {
                     html += `

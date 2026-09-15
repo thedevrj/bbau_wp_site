@@ -839,7 +839,7 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
 .cbcs-level-badge {
     display: inline-block;
     font-size: .68rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: .04em;
     padding: 3px 9px;
     border-radius: 20px;

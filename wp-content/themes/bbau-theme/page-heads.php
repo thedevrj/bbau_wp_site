@@ -163,7 +163,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
 /* .leader-label {
     display: inline-block;
     font-size: 0.65rem;
-    font-weight: 800;
+    font-weight: 700;
     color: #1e293b;
     background: #f1f5f9;
     padding: 3px 12px;

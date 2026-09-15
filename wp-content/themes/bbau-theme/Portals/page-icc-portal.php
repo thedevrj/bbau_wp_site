@@ -418,7 +418,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
 
 .tracking-id-display {
     font-size: 28px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--fc-maroon);
     background: #fff;
     padding: 10px;

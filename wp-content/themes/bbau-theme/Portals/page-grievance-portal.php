@@ -120,33 +120,12 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
                                             class="form-select vig-input" required
                                             onchange="toggleOtherField(this, 'other_nature_wrapper', 'others_nature_of_grievance')">
                                             <option value="">Select</option>
-                                            <option value="admission_contrary_to_merit">Making admission contrary to
-                                                merit</option>
-                                            <option value="irregularity_in_admission">Irregularity in the admission
-                                                process</option>
-                                            <option value="refusing_admission">Refusing admission in accordance with the
-                                                declared admission policy of the institute</option>
-                                            <option value="ragging">Ragging</option>
-                                            <option value="sexual_harassment">Sexual harassment</option>
-                                            <option value="non_publication_of_prospectus">Non publication of prospectus
-                                            </option>
-                                            <option value="false_misleading_prospectus">Publishing false or misleading
-                                                information in the prospectus</option>
-                                            <option value="withhold_documents">Withhold or refuse to return any document
-                                            </option>
-                                            <option value="excess_fee_demand">Demand of money in excess of that
-                                                specified in the declared admission policy</option>
-                                            <option value="reservation_policy_breach">Breach of the policy for
-                                                reservation in admission</option>
-                                            <option value="discrimination">Complaints of alleged discrimination of
-                                                students from SC/ST/OBC/Women/Minority or Disabled categories</option>
-                                            <option value="scholarship_delay">Non payment or delay in payment of
-                                                scholarships to any student</option>
-                                            <option value="exam_delay">Delay in conduct of examinations or declaration
-                                                of results</option>
-                                            <option value="no_student_amenities">No provision of student amenities
-                                            </option>
-                                            <option value="unfair_evaluation">Unfair evaluation practices</option>
+
+                                            <option value="ragging">Ragging Related Complaint</option>
+                                            <option value="admission">Admission Related Complaint</option>
+                                            <option value="examination">Examination Related Complaint</option>
+                                            <option value="unfair_means">Unfair Means Related Complaint</option>
+                                            <option value="scholarship">Scholarship Related Complaint</option>
                                             <option value="other">Other</option>
                                         </select>
                                     </div>
@@ -476,7 +455,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     gap: 7px;
     color: #f0d47d;
     font-size: 0.74rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.09em;
     text-transform: uppercase;
 }
@@ -518,7 +497,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     min-height: 44px;
     padding: 10px 16px;
     border-radius: 8px;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 0.88rem;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -574,7 +553,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     padding: 0 2px 5px;
     color: #fff;
     font-size: 0.78rem;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .grv-stats-header span {
@@ -625,7 +604,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     margin-bottom: 2px;
     color: #fff;
     font-size: 2rem;
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.1;
 }
 
@@ -728,7 +707,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     padding: 10px 22px;
     color: var(--fc-muted);
     border-radius: 6px;
-    font-weight: 800;
+    font-weight: 700;
     transition: all 0.3s;
 }
 
@@ -777,7 +756,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     margin-top: 34px !important;
     color: var(--fc-maroon) !important;
     font-size: 0.9rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.02em;
 }
 
@@ -824,7 +803,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
 
 .tracking-id-display {
     font-size: 28px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--fc-maroon);
     background: var(--fc-soft-blue);
     padding: 10px;
