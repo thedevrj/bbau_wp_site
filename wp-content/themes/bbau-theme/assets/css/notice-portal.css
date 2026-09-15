@@ -436,6 +436,57 @@
     animation: scPulse 1.5s infinite;
 }
 
+.notice-pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px;
+    margin-top: 24px;
+    padding-top: 12px;
+    border-top: 1px solid #ececec;
+    flex-wrap: wrap;
+}
+
+.notice-page-btn {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    background: #fff;
+    color: #444;
+    font-size: .82rem;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s, border-color .15s, color .15s;
+}
+
+.notice-page-btn:hover:not(:disabled) {
+    background: #f0f4ff;
+    border-color: var(--sc-gold);
+    color: var(--sc-midnight);
+}
+
+.notice-page-btn.active {
+    background: var(--sc-midnight);
+    border-color: var(--sc-midnight);
+    color: #fff;
+    font-weight: 700;
+}
+
+.notice-page-btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.notice-page-ellipsis {
+    color: #64748b;
+    padding: 0 2px;
+}
+
 @keyframes scPulse {
 
     0%,

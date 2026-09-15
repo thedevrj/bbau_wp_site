@@ -15,7 +15,6 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
 
 <div class="satellite-campus-portal notice-portal-brand">
 
-    <!-- HERO SECTION - Aligned with Satellite Campus -->
     <div class="sc-hero" style="background-image: url('<?php echo esc_url($banner_url); ?>');">
         <div class="sc-hero-overlay">
             <div class="sc-hero-card">
@@ -126,6 +125,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                         <div class="sc-shimmer"></div>
                         <div class="sc-shimmer"></div>
                     </div>
+                    <nav id="notice-pagination" class="notice-pagination" aria-label="Notice pages"></nav>
                 </section>
             </div>
         </div>
@@ -203,6 +203,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let allNotices = [];
     let currentCat = '';
     let currentTab = 'all';
+    let currentPage = 1;
+    const noticesPerPage =10;
+    let firstLoginOldPassword = '';
+    let firstLoginUsername = '';
 
     const listContainer = document.getElementById('notices-list');
     const searchInput = document.getElementById('notice-search');
@@ -291,12 +295,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.getElementById('result-count').textContent = `Total: ${filtered.length}`;
 
+        const totalPages = Math.ceil(filtered.length / noticesPerPage);
+        if (totalPages > 0 && currentPage > totalPages) currentPage = totalPages;
+        const pageStart = (currentPage - 1) * noticesPerPage;
+        const pageNotices = filtered.slice(pageStart, pageStart + noticesPerPage);
+
         if (filtered.length === 0) {
             listContainer.innerHTML = '<p class="py-5 text-center">No announcements found.</p>';
+            renderPagination(0);
             return;
         }
 
-        listContainer.innerHTML = filtered.map(n => `
+        listContainer.innerHTML = pageNotices.map(n => `
             <a href="${n.attachment || n.link || '#'}" target="_blank" class="sc-notice-card ${n.is_private ? 'is-private' : ''}">
                 <div class="sc-notice-icon">
                     <i class="fa-solid ${n.is_private ? 'fa-lock-open' : 'fa-bullhorn'}"></i>
@@ -309,6 +319,48 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </a>
         `).join('');
+        renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+        const pagination = document.getElementById('notice-pagination');
+        pagination.innerHTML = '';
+        if (totalPages <= 1) return;
+
+        const addButton = (label, page, disabled = false, current = false) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = `notice-page-btn${current ? ' active' : ''}`;
+            button.innerHTML = label === '<'
+                ? '<i class="fa-solid fa-chevron-left" style="font-size:.7rem;" aria-hidden="true"></i>'
+                : label === '>'
+                    ? '<i class="fa-solid fa-chevron-right" style="font-size:.7rem;" aria-hidden="true"></i>'
+                    : label;
+            button.disabled = disabled;
+            if (current) button.setAttribute('aria-current', 'page');
+            button.setAttribute('aria-label', label === '<' ? 'Previous page' : label === '>' ? 'Next page' : `Page ${page}`);
+            button.addEventListener('click', () => {
+                currentPage = page;
+                render();
+                document.getElementById('notices-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+            pagination.appendChild(button);
+        };
+
+        addButton('<', currentPage - 1, currentPage === 1);
+        for (let page = 1; page <= totalPages; page++) {
+            if (totalPages > 7 && page > 2 && page < totalPages - 1 && Math.abs(page - currentPage) > 1) {
+                if (page === 3 || page === totalPages - 2) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'notice-page-ellipsis';
+                    ellipsis.textContent = '…';
+                    pagination.appendChild(ellipsis);
+                }
+                continue;
+            }
+            addButton(String(page), page, false, page === currentPage);
+        }
+        addButton('>', currentPage + 1, currentPage === totalPages);
     }
 
     // Auth Actions
@@ -333,12 +385,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (res.ok) {
                 // Check if user is forced to change password
                 if (resData.force_password_change) {
+                    firstLoginOldPassword = data.password;
+                    firstLoginUsername = data.username;
                     toggleModal('login-modal', false);
                     toggleModal('password-modal', true);
                     return;
                 }
 
                 // The backend owns the HttpOnly auth cookie.
+                localStorage.setItem('portal_user', data.username);
                 toggleModal('login-modal', false);
                 updateAuthUI();
                 fetchNotices();
@@ -372,8 +427,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const oldPass = document.getElementById('old-password')?.value || '';
-
         try {
             const res = await fetch(
                 `${apiBase.replace('/api/v1', '')}/portal/api/change-password/`, {
@@ -383,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        old_password: oldPass,
+                        old_password: firstLoginOldPassword,
                         new_password: newPass,
                         confirm_password: confirmPass
                     })
@@ -391,6 +444,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (res.ok) {
                 // Password changed! Now log them in properly
+                firstLoginOldPassword = '';
+                localStorage.setItem('portal_user', firstLoginUsername);
 
                 toggleModal('password-modal', false);
                 updateAuthUI();
@@ -423,8 +478,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event Listeners for Filters
     [searchInput, timelineSelect, sortSelect].forEach(el => {
-        el.addEventListener('change', render);
-        if (el === searchInput) el.addEventListener('input', render);
+        const updateResults = () => { currentPage = 1; render(); };
+        el.addEventListener('change', updateResults);
+        if (el === searchInput) el.addEventListener('input', updateResults);
     });
 
     document.querySelectorAll('.sc-cat-item').forEach(li => {
@@ -434,12 +490,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 'active'));
             li.classList.add('active');
             currentCat = li.dataset.cat;
+            currentPage = 1;
             render();
         });
     });
 
     tabPrivate.addEventListener('click', () => {
         currentTab = currentTab === 'all' ? 'private' : 'all';
+        currentPage = 1;
         tabPrivate.classList.toggle('btn-success', currentTab === 'private');
         render();
     });
@@ -449,6 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timelineSelect.value = 'all';
         sortSelect.value = 'desc';
         currentCat = '';
+        currentPage = 1;
         document.querySelectorAll('.sc-cat-item').forEach(l => l.classList.remove('active'));
         document.querySelector('[data-cat=""]').classList.add('active');
         render();
