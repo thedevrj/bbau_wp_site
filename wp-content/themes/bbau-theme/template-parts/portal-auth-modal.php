@@ -243,6 +243,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const mediaBase = "<?= $media_base ?>";
     const apiBase = isLocal ? 'http://localhost:8001/api/v1/' : `${mediaBase}/api/v1/`;
     const authApiBase = apiBase.replace('/api/v1/', '');
+    let firstLoginOldPassword = '';
+    let firstLoginUsername = '';
 
     // Handle Login Submit
     const loginForm = document.getElementById('staff-login-form');
@@ -266,6 +268,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (res.ok) {
                     if (resData.force_password_change) {
+                        firstLoginOldPassword = data.password;
+                        firstLoginUsername = data.username;
                         toggleModal('login-modal', false);
                         toggleModal('password-modal', true);
                         return;
@@ -301,7 +305,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const oldPass = document.getElementById('old-password')?.value || '';
 
             try {
                 const res = await fetch(`${authApiBase}/portal/api/change-password/`, {
@@ -311,13 +314,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        old_password: oldPass,
+                        old_password: firstLoginOldPassword,
                         new_password: newPass,
                         confirm_password: confirmPass
                     })
                 });
 
                 if (res.ok) {
+                    firstLoginOldPassword = '';
+                    localStorage.setItem('portal_user', firstLoginUsername);
 
                     toggleModal('password-modal', false);
                     document.dispatchEvent(new Event('portalAuthStatusChanged'));

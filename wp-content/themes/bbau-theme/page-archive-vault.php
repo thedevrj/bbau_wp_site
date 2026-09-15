@@ -853,7 +853,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (res.ok) {
                 if (resData.force_password_change) {
                     loginError.textContent =
-                        "Please update your password on the main Notice Portal first.";
+                        "Please update your password on the Notice Portal first.";
                     loginError.classList.remove('d-none');
                     return;
                 }
