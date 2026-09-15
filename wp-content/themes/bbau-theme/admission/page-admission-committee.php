@@ -153,9 +153,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const minutesContainer = document.getElementById('minutes-container');
 
     function updateAuthButtons() {
-        const token = localStorage.getItem('portal_access_token');
         const user = localStorage.getItem('portal_user');
-        if (token) {
+        if (user) {
             btnLogin.style.display = 'none';
             btnLogout.style.display = 'inline-flex';
             labelUsername.textContent = `(${user})`;
@@ -167,17 +166,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchMinutes() {
-        const token = localStorage.getItem('portal_access_token');
-        const headers = token ? {
-            'Authorization': `Bearer ${token}`
-        } : {};
+        const headers = {};
 
         minutesContainer.innerHTML =
             '<div style="padding:40px; text-align:center;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>';
 
         try {
             const res = await fetch(minutesApiUrl, {
-                headers
+                headers,
+                credentials: 'include'
             });
             if (!res.ok) throw new Error('Failed to fetch');
             const data = await res.json();

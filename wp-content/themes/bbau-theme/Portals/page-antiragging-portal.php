@@ -2,8 +2,7 @@
 /**
  * Template Name: Anti-Ragging Portal
  *
- * Anti-Ragging Portal Template for Babasaheb Bhimrao Ambedkar University (BBAU)
- */
+ **/
 defined('ABSPATH') || exit;
 get_header();
 
@@ -59,20 +58,21 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                             class="fas fa-arrow-right"></i></a>
                 </article>
 
-                 <!-- Committee & Squad -->
-                 <article class="ar-feature">
+                <!-- Committee & Squad -->
+                <article class="ar-feature">
                     <span class="ar-feature-icon"><i class="fas fa-users"></i></span>
                     <h3>Committee &amp; Squad</h3>
                     <p>Details of Anti-Ragging Committee and Squad members across university departments.</p>
                     <a href="#committee-members">View Members <i class="fas fa-arrow-right"></i></a>
                 </article>
-                
+
                 <!-- Complaint Mechanism -->
                 <article class="ar-feature">
                     <span class="ar-feature-icon"><i class="fas fa-bullhorn"></i></span>
                     <h3>Complaint Mechanism</h3>
                     <p>Report ragging incidents online. Your identity will be kept completely confidential.</p>
-                    <a href="#report-ragging">Report Incident <i class="fas fa-arrow-right"></i></a>
+                    <a href="/complaint-management-portal/" target="_blank">Report Incident <i
+                            class="fas fa-external-link-alt"></i></a>
                 </article>
 
                 <!-- Affidavits -->
@@ -106,8 +106,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     <span class="ar-feature-icon"><i class="fas fa-building"></i></span>
                     <h3>Hostel Safety</h3>
                     <p>Information on hostel security, wardens, safety measures, and monitoring systems.</p>
-                    <a href="#resources-tab" onclick="switchCategory('hostel_safety')">Hostel Safety <i
-                            class="fas fa-arrow-right"></i></a>
+                    <a href="/hostels/" target="_blank">Hostel Safety <i class="fas fa-external-link-alt"></i></a>
                 </article>
 
                 <!-- Annual Compliance Reports -->
@@ -140,8 +139,10 @@ $api_base = getenv('DJANGO_MEDIA_URL');
             </div>
 
             <div class="ar-tab-buttons">
-                <button class="ar-tab-btn active" onclick="filterCommittee('committee', this)"><i class="fas fa-user-shield"></i> Anti-Ragging Committee</button>
-                <button class="ar-tab-btn" onclick="filterCommittee('squad', this)"><i class="fas fa-users"></i> Anti-Ragging Squad</button>
+                <button class="ar-tab-btn active" onclick="filterCommittee('committee', this)"><i
+                        class="fas fa-user-shield"></i> Anti-Ragging Committee</button>
+                <button class="ar-tab-btn" onclick="filterCommittee('squad', this)"><i class="fas fa-users"></i>
+                    Anti-Ragging Squad</button>
             </div>
 
             <div class="ar-search-bar">
@@ -175,8 +176,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     onclick="switchCategory('university_policy', this)">University Policy</button>
                 <button class="ar-tab-btn" data-category="awareness_material"
                     onclick="switchCategory('awareness_material', this)">Awareness Materials</button>
-                <button class="ar-tab-btn" data-category="hostel_safety"
-                    onclick="switchCategory('hostel_safety', this)">Hostel Safety</button>
+                <!-- <button class="ar-tab-btn" data-category="hostel_safety"
+                    onclick="switchCategory('hostel_safety', this)">Hostel Safety</button> -->
                 <button class="ar-tab-btn" data-category="annual_report"
                     onclick="switchCategory('annual_report', this)">Annual Reports</button>
             </div>
@@ -191,7 +192,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     </section>
 
     <!-- COMPLAINT / INCIDENT REPORTING FORM -->
-    <section class="ar-section" id="report-ragging">
+    <!-- <section class="ar-section" id="report-ragging">
         <div class="ar-container ar-two-col">
             <div>
                 <span class="ar-kicker">CONFIDENTIAL REPORTING</span>
@@ -245,7 +246,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 </form>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- EMERGENCY CONTACTS & HELPLINES -->
     <section class="ar-section ar-section-dark" id="contact-helplines">
@@ -304,7 +305,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 .ar-eyebrow,
 .ar-kicker {
     font-size: .76rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: .13em;
     text-transform: uppercase;
 }
@@ -384,7 +385,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     background: #edf3fa;
     color: var(--ar-brand);
     font-size: 1.1rem;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .ar-trust-grid strong,
@@ -514,6 +515,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     max-width: 380px;
     margin-bottom: 18px;
 }
+
 .ar-search-bar i {
     position: absolute;
     left: 14px;
@@ -522,6 +524,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     color: var(--ar-muted);
     font-size: 0.85rem;
 }
+
 .ar-search-bar input {
     width: 100%;
     padding: 10px 14px 10px 38px;
@@ -530,6 +533,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     font: inherit;
     background: #fff;
 }
+
 .ar-search-bar input:focus {
     outline: none;
     border-color: var(--ar-brand);
@@ -541,6 +545,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     border-radius: 10px;
     overflow: hidden;
 }
+
 .ar-committee-row {
     display: flex;
     align-items: center;
@@ -549,9 +554,11 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     border-bottom: 1px solid var(--ar-line);
     flex-wrap: wrap;
 }
+
 .ar-committee-row:last-child {
     border-bottom: none;
 }
+
 .ar-member-avatar {
     flex-shrink: 0;
     width: 42px;
@@ -561,14 +568,16 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     color: #fff;
     display: grid;
     place-items: center;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 0.85rem;
     letter-spacing: 0.02em;
 }
+
 .ar-committee-identity {
     flex: 1 1 220px;
     min-width: 0;
 }
+
 .ar-committee-identity h4 {
     color: var(--ar-ink);
     margin: 0;
@@ -576,6 +585,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     font-weight: 700;
     line-height: 1.3;
 }
+
 .ar-member-role {
     color: var(--ar-brand);
     font-weight: 700;
@@ -583,6 +593,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     text-transform: uppercase;
     letter-spacing: 0.03em;
 }
+
 .ar-committee-contact {
     flex: 0 0 500px;
     display: grid;
@@ -590,6 +601,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     align-items: center;
     gap: 4px 18px;
 }
+
 .ar-committee-contact a {
     color: var(--ar-muted);
     text-decoration: none;
@@ -600,13 +612,16 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     min-width: 0;
     white-space: nowrap;
 }
+
 .ar-committee-contact a:hover {
     color: var(--ar-brand);
 }
+
 .ar-committee-contact i {
     width: 14px;
     color: var(--ar-brand);
 }
+
 .ar-committee-no-contact {
     flex-shrink: 0;
     margin: 0;
@@ -655,7 +670,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 .ar-resource-tag {
     display: block;
     color: var(--ar-brand);
-    font-weight: 800;
+    font-weight: 700;
     font-size: 0.4rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -717,6 +732,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     align-items: start;
 }
 
+/* 
 .ar-notice {
     margin-top: 24px;
     border-left: 4px solid var(--ar-gold);
@@ -724,7 +740,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     padding: 16px 18px;
     font-size: .9rem;
     border-radius: 0 6px 6px 0;
-}
+} */
 
 .ar-form {
     background: #fff;
@@ -829,7 +845,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     gap: 8px;
     color: var(--ar-gold);
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 600;
     text-decoration: none;
 }
 
@@ -929,13 +945,14 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     color: var(--ar-muted);
 }
 
+/* 
 .ar-track-result {
     padding: 12px;
     background: #eef8f0;
     border-radius: 4px;
     color: #1b5e20;
     font-size: 0.95rem;
-}
+} */
 
 /* RESPONSIVE MEDIA QUERIES */
 @media (max-width: 1024px) {
@@ -964,6 +981,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     .ar-resource-download {
         margin-left: 56px;
     }
+
     .ar-faq-item summary {
         font-size: 0.75rem;
     }
@@ -1070,21 +1088,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function loadCommittee() {
         try {
-            const res = await fetch(apiBase + '/api/v1/antiragging/antiragging-committee-members/?page_size=100');
+            const res = await fetch(apiBase +
+                '/api/v1/antiragging/antiragging-committee-members/?page_size=100');
             if (res.ok) {
                 const data = await res.json();
                 committeeData = data.results || data;
                 filterCommittee('committee');
             }
         } catch (e) {
-            document.getElementById('committee-grid').innerHTML = '<p class="ar-loading">Committee details currently unavailable.</p>';
+            document.getElementById('committee-grid').innerHTML =
+                '<p class="ar-loading">Committee details currently unavailable.</p>';
         }
     }
 
 
     function renderCommitteeRow(m) {
         const displayName = m.faculty_name || m.name || '';
-        const nameWords = displayName.replace(/^(dr|mr|mrs|ms|prof|shri|smt)\.?\s+/i, '').split(/\s+/).filter(Boolean);
+        const nameWords = displayName.replace(/^(dr|mr|mrs|ms|prof|shri|smt)\.?\s+/i, '').split(/\s+/).filter(
+            Boolean);
         const initials = nameWords.slice(0, 2).map(w => w[0]).join('').toUpperCase();
         const hasContact = m.phone || m.email;
         return `
@@ -1158,7 +1179,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.filterCommittee = function(type, el) {
         const buttons = document.querySelectorAll('#committee-members .ar-tab-btn');
         buttons.forEach(btn => btn.classList.remove('active'));
-        const activeButton = el || Array.from(buttons).find(btn => btn.textContent.trim().toLowerCase().includes(type));
+        const activeButton = el || Array.from(buttons).find(btn => btn.textContent.trim().toLowerCase()
+            .includes(type));
         if (activeButton) activeButton.classList.add('active');
 
         activeCommitteeType = type;
@@ -1185,10 +1207,10 @@ document.addEventListener('DOMContentLoaded', function() {
             label: 'Awareness Material',
             icon: 'fa-book-open'
         },
-        hostel_safety: {
-            label: 'Hostel Safety',
-            icon: 'fa-building'
-        },
+        // hostel_safety: {
+        //     label: 'Hostel Safety',
+        //     icon: 'fa-building'
+        // },
         annual_report: {
             label: 'Annual Report',
             icon: 'fa-chart-bar'
@@ -1297,9 +1319,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="ar-helpline-card">
                         <span class="ar-helpline-icon"><i class="fas fa-phone-alt" aria-hidden="true"></i></span>
                         <div class="ar-helpline-content">
-                            ${c.role ? '<p class="ar-helpline-role">' + escapeHtml(c.role) + '</p>' : ''}
                             <h4>${escapeHtml(c.name)}</h4>
+                            ${c.role ? '<p class="ar-helpline-role">' + escapeHtml(c.role) + '</p>' : ''}
                             <a class="ar-helpline-call" href="tel:${escapeHtml(c.phone)}" aria-label="Call ${escapeHtml(c.name)} at ${escapeHtml(c.phone)}"><i class="fas fa-phone-alt" aria-hidden="true"></i>${escapeHtml(c.phone)}</a>
+                            <a class="ar-helpline-call" href="mailto:${escapeHtml(c.email)}" aria-label="Email ${escapeHtml(c.name)} at ${escapeHtml(c.email)}"><i class="fas fa-envelope" aria-hidden="true"></i>${escapeHtml(c.email)}</a>
                             ${c.available_hours ? '<span class="ar-helpline-hours"><i class="far fa-clock" aria-hidden="true"></i>Available: ' + escapeHtml(c.available_hours) + '</span>' : ''}
                         </div>
                     </div>
@@ -1340,78 +1363,78 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle Incident Reporting Form
-    const complaintForm = document.getElementById('antiragging-complaint-form');
-    if (complaintForm) {
-        complaintForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const msgBox = document.getElementById('complaint-form-message');
-            const submitButton = complaintForm.querySelector('button[type="submit"]');
-            const isAnonymous = document.getElementById('complainant_anonymous').checked;
+    /* const complaintForm = document.getElementById('antiragging-complaint-form');
+     if (complaintForm) {
+         complaintForm.addEventListener('submit', async function(e) {
+             e.preventDefault();
+             const msgBox = document.getElementById('complaint-form-message');
+             const submitButton = complaintForm.querySelector('button[type="submit"]');
+             const isAnonymous = document.getElementById('complainant_anonymous').checked;
 
-            // Reset any styling left over from a previous error before this attempt
-            msgBox.style.display = 'none';
-            msgBox.style.background = '';
-            msgBox.style.color = '';
+             // Reset any styling left over from a previous error before this attempt
+             msgBox.style.display = 'none';
+             msgBox.style.background = '';
+             msgBox.style.color = '';
 
-            const rawFormData = new FormData(complaintForm);
-            const locationText = (rawFormData.get('location') || '').trim();
-            const descriptionText = (rawFormData.get('description') || '').trim();
+             const rawFormData = new FormData(complaintForm);
+             const locationText = (rawFormData.get('location') || '').trim();
+             const descriptionText = (rawFormData.get('description') || '').trim();
 
-            const payload = new FormData();
-            payload.set('category', 'ragging');
-            payload.set('is_anonymous', isAnonymous ? 'true' : 'false');
-            payload.set('complainant_name', isAnonymous ? '' : (rawFormData.get(
-                'complainant_name') || '').trim());
-            payload.set('phone', isAnonymous ? '' : (rawFormData.get('phone') || '').trim());
-            payload.set('email', isAnonymous ? '' : (rawFormData.get('email') || '').trim());
-            payload.set('description', `Location: ${locationText}\n\nDetails: ${descriptionText}`);
-            const evidenceFile = complaintForm.querySelector('[name="evidence"]').files[0];
-            if (evidenceFile) payload.set('evidence', evidenceFile);
+             const payload = new FormData();
+             payload.set('category', 'ragging');
+             payload.set('is_anonymous', isAnonymous ? 'true' : 'false');
+             payload.set('complainant_name', isAnonymous ? '' : (rawFormData.get(
+                 'complainant_name') || '').trim());
+             payload.set('phone', isAnonymous ? '' : (rawFormData.get('phone') || '').trim());
+             payload.set('email', isAnonymous ? '' : (rawFormData.get('email') || '').trim());
+             payload.set('description', `Location: ${locationText}\n\nDetails: ${descriptionText}`);
+             const evidenceFile = complaintForm.querySelector('[name="evidence"]').files[0];
+             if (evidenceFile) payload.set('evidence', evidenceFile);
 
-            submitButton.disabled = true;
-            const originalButtonHtml = submitButton.innerHTML;
-            submitButton.innerHTML = 'Submitting…';
+             submitButton.disabled = true;
+             const originalButtonHtml = submitButton.innerHTML;
+             submitButton.innerHTML = 'Submitting…';
 
-            try {
-                const res = await fetch(apiBase + '/api/v1/portals/grievances/', {
-                    method: 'POST',
-                    body: payload
-                });
+             try {
+                 const res = await fetch(apiBase + '/api/v1/portals/grievances/', {
+                     method: 'POST',
+                     body: payload
+                 });
 
-                let data = null;
-                try {
-                    data = await res.json();
-                } catch (parseError) {
-                    data = null;
-                }
+                 let data = null;
+                 try {
+                     data = await res.json();
+                 } catch (parseError) {
+                     data = null;
+                 }
 
-                if (!res.ok) {
-                    throw new Error((data && data.detail) ||
-                        'Failed to submit report. Please try again in a few minutes.');
-                }
-                if (!data) {
-                    throw new Error(
-                        'Submitted, but the server response could not be read. Please note the time and check with us if you don\'t receive confirmation.'
-                    );
-                }
+                 if (!res.ok) {
+                     throw new Error((data && data.detail) ||
+                         'Failed to submit report. Please try again in a few minutes.');
+                 }
+                 if (!data) {
+                     throw new Error(
+                         'Submitted, but the server response could not be read. Please note the time and check with us if you don\'t receive confirmation.'
+                     );
+                 }
 
-                msgBox.textContent = 'Report submitted successfully. Your tracking code is: ' + (
-                    data.tracking_id || data.id);
-                msgBox.style.display = 'block';
-                complaintForm.reset();
-                identityFields.forEach(field => {
-                    if (field) field.disabled = false;
-                });
-            } catch (err) {
-                msgBox.textContent = err.message || 'Submission failed. Please try again.';
-                msgBox.style.display = 'block';
-                msgBox.style.background = '#f8d7da';
-                msgBox.style.color = '#721c24';
-            }
-            submitButton.disabled = false;
-            submitButton.innerHTML = originalButtonHtml;
-        });
-    }
+                 msgBox.textContent = 'Report submitted successfully. Your tracking code is: ' + (
+                     data.tracking_id || data.id);
+                 msgBox.style.display = 'block';
+                 complaintForm.reset();
+                 identityFields.forEach(field => {
+                     if (field) field.disabled = false;
+                 });
+             } catch (err) {
+                 msgBox.textContent = err.message || 'Submission failed. Please try again.';
+                 msgBox.style.display = 'block';
+                 msgBox.style.background = '#f8d7da';
+                 msgBox.style.color = '#721c24';
+             }
+             submitButton.disabled = false;
+             submitButton.innerHTML = originalButtonHtml;
+         });
+     }*/
 
     loadCommittee();
     loadResources();
