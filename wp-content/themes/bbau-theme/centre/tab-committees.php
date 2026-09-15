@@ -198,7 +198,7 @@ if (!is_wp_error($minutes_res) && wp_remote_retrieve_response_code($minutes_res)
 }
 
 .min-date .d {
-    font-weight: 800;
+    font-weight: 700;
     font-size: 20px;
     line-height: 1;
 }

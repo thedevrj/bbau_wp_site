@@ -455,7 +455,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     gap: 7px;
     color: #f0d47d;
     font-size: 0.74rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.09em;
     text-transform: uppercase;
 }
@@ -497,7 +497,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     min-height: 44px;
     padding: 10px 16px;
     border-radius: 8px;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 0.88rem;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -553,7 +553,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     padding: 0 2px 5px;
     color: #fff;
     font-size: 0.78rem;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .grv-stats-header span {
@@ -604,7 +604,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     margin-bottom: 2px;
     color: #fff;
     font-size: 2rem;
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.1;
 }
 
@@ -707,7 +707,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     padding: 10px 22px;
     color: var(--fc-muted);
     border-radius: 6px;
-    font-weight: 800;
+    font-weight: 700;
     transition: all 0.3s;
 }
 
@@ -756,7 +756,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     margin-top: 34px !important;
     color: var(--fc-maroon) !important;
     font-size: 0.9rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.02em;
 }
 
@@ -803,7 +803,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
 
 .tracking-id-display {
     font-size: 28px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--fc-maroon);
     background: var(--fc-soft-blue);
     padding: 10px;

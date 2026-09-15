@@ -198,7 +198,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 .sc-hero-card h1 {
     font-family: 'Merriweather', serif;
     font-size: 2.5rem;
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 10px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }

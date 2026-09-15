@@ -42,11 +42,13 @@ $media_base = getenv('DJANGO_MEDIA_URL');
             <form id="change-password-form">
                 <div class="sc-input-group">
                     <label class="sc-input-label">New Password</label>
-                    <input type="password" id="new-password" name="new_password" class="sc-input" placeholder="Min. 8 characters" required>
+                    <input type="password" id="new-password" name="new_password" class="sc-input"
+                        placeholder="Min. 8 characters" required>
                 </div>
                 <div class="sc-input-group">
                     <label class="sc-input-label">Confirm Password</label>
-                    <input type="password" id="confirm-password" class="sc-input" placeholder="Confirm your new password" required>
+                    <input type="password" id="confirm-password" class="sc-input"
+                        placeholder="Confirm your new password" required>
                 </div>
                 <div id="password-error" class="alert alert-danger d-none mb-4"></div>
                 <button type="submit" class="btn-sc-submit" id="btn-pass-submit">
@@ -202,11 +204,14 @@ $media_base = getenv('DJANGO_MEDIA_URL');
     align-items: center;
     gap: 8px;
 }
+
 .btn-auth-trigger:hover {
     background-color: #5c1010;
     color: #fff;
     border-color: #5c1010;
-    sc-modal-subtitle}
+    sc-modal-subtitle
+}
+
 .btn-auth-logout {
     background-color: #fff;
     color: #dc3545;
@@ -219,6 +224,7 @@ $media_base = getenv('DJANGO_MEDIA_URL');
     align-items: center;
     gap: 8px;
 }
+
 .btn-auth-logout:hover {
     background-color: #dc3545;
     color: #fff;
@@ -235,7 +241,7 @@ function toggleModal(id, show) {
 document.addEventListener('DOMContentLoaded', function() {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const mediaBase = "<?= $media_base ?>";
-    const apiBase = isLocal ? 'http://localhost:8001/api/v1/' :`${mediaBase}/api/v1/`;
+    const apiBase = isLocal ? 'http://localhost:8001/api/v1/' : `${mediaBase}/api/v1/`;
     const authApiBase = apiBase.replace('/api/v1/', '');
 
     // Handle Login Submit
@@ -246,26 +252,25 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = Object.fromEntries(new FormData(e.target).entries());
             const loginError = document.getElementById('login-error');
             loginError.classList.add('d-none');
-            
+
             try {
                 const res = await fetch(`${authApiBase}/portal/api/login/`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(data)
                 });
                 const resData = await res.json();
-                
+
                 if (res.ok) {
                     if (resData.force_password_change) {
-                        localStorage.setItem('temp_token', resData.access);
-                        localStorage.setItem('temp_user', data.username);
-                        localStorage.setItem('temp_old_pass', data.password);
                         toggleModal('login-modal', false);
                         toggleModal('password-modal', true);
                         return;
                     }
-                    
-                    localStorage.setItem('portal_access_token', resData.access);
+
                     localStorage.setItem('portal_user', data.username);
                     toggleModal('login-modal', false);
                     document.dispatchEvent(new Event('portalAuthStatusChanged'));
@@ -296,28 +301,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const tempToken = localStorage.getItem('temp_token');
-            const oldPass = localStorage.getItem('temp_old_pass');
+            const oldPass = document.getElementById('old-password')?.value || '';
 
             try {
                 const res = await fetch(`${authApiBase}/portal/api/change-password/`, {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${tempToken}`
                     },
                     body: JSON.stringify({
                         old_password: oldPass,
-                        new_password: newPass
+                        new_password: newPass,
+                        confirm_password: confirmPass
                     })
                 });
 
                 if (res.ok) {
-                    localStorage.setItem('portal_access_token', tempToken);
-                    localStorage.setItem('portal_user', localStorage.getItem('temp_user'));
-                    localStorage.removeItem('temp_token');
-                    localStorage.removeItem('temp_old_pass');
-                    
+
                     toggleModal('password-modal', false);
                     document.dispatchEvent(new Event('portalAuthStatusChanged'));
                 } else {
@@ -335,9 +336,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle Global Logout
     document.addEventListener('click', function(e) {
         if (e.target.matches('.btn-auth-logout') || e.target.closest('.btn-auth-logout')) {
-            localStorage.removeItem('portal_access_token');
-            localStorage.removeItem('portal_user');
-            document.dispatchEvent(new Event('portalAuthStatusChanged'));
+            fetch(`${authApiBase}/portal/logout/`, {
+                method: 'GET',
+                credentials: 'include'
+            }).finally(() => {
+                localStorage.removeItem('portal_user');
+                document.dispatchEvent(new Event('portalAuthStatusChanged'));
+            });
         }
         if (e.target.matches('.btn-auth-trigger') || e.target.closest('.btn-auth-trigger')) {
             toggleModal('login-modal', true);

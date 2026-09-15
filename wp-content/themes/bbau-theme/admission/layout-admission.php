@@ -474,7 +474,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .sc-hero-card h1 {
     font-family: 'Merriweather', serif;
     font-size: 2rem;
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 10px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
@@ -796,7 +796,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .sc-notice-date-box .day {
     font-size: 1.4rem;
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.1;
 }
 
@@ -1025,7 +1025,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .reg-title {
     font-size: 1.2rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--sc-midnight);
     margin-bottom: 8px;
     line-height: 1.3;
