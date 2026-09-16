@@ -71,6 +71,340 @@ function get_notice_href($notice) {
 }
 ?>
 
+<div class="parda-overlay" id="pardaOverlay" aria-hidden="true">
+
+    <div class="shilanyas-stone" id="shilanyasStone">
+        <div class="stone-line stone-title">बाबासाहेब भीमराव अम्बेडकर विश्वविद्यालय</div>
+        <div class="stone-line stone-sub">Babasaheb Bhimrao Ambedkar University, Lucknow</div>
+        <div class="stone-divider"></div>
+        <div class="stone-line stone-org">Developed by: WebTeam &amp; ComputerCentre, BBAU</div>
+        <div class="stone-line stone-inaugurated">Inaugurated by</div>
+        <div class="stone-line stone-vc">Prof. Raj Kumar Mittal</div>
+        <div class="stone-line stone-desig">Hon&rsquo;ble Vice Chancellor</div>
+    </div>
+
+    <div class="ribbon-wrap" id="ribbonWrap">
+        <div class="ribbon-half ribbon-left"></div>
+        <div class="ribbon-bow" id="ribbonBow"></div>
+        <div class="ribbon-half ribbon-right"></div>
+        <div class="scissors-icon" id="scissorsIcon"><i class="fa fa-cut" aria-hidden="true"></i></div>
+        <div class="snip-flash" id="snipFlash"></div>
+    </div>
+
+</div>
+
+<style>
+    body.parda-active {
+        overflow: hidden;
+        height: 100vh;
+    }
+
+    .parda-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at center, #3a2a1a 0%, #1c1210 70%, #0f0a08 100%);
+        overflow: hidden;
+    }
+
+  
+    .shilanyas-stone {
+        position: relative;
+        z-index: 2;
+        width: min(560px, 82vw);
+        padding: 34px 28px 42px;
+        text-align: center;
+        border-radius: 6px;
+        background:
+            radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 60%),
+            linear-gradient(160deg, #8d8d8d 0%, #6b6b6b 45%, #4d4d4d 100%);
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.55),
+            inset 0 0 0 2px rgba(201, 168, 76, 0.55),
+            inset 0 0 30px rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        transform: scale(0.85) translateY(10px);
+        animation: stoneIn 0.9s ease-out 0.2s forwards;
+    }
+
+    @keyframes stoneIn {
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    .stone-line {
+        font-family: Georgia, 'Times New Roman', serif;
+        color: #f4e6c8;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.15), 0 -1px 1px rgba(0, 0, 0, 0.6);
+    }
+
+    .stone-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #e8d9a8;
+        margin-bottom: 4px;
+    }
+
+    .stone-sub {
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+        color: #d9c48f;
+        margin-bottom: 16px;
+    }
+
+    .stone-divider {
+        width: 70px;
+        height: 2px;
+        margin: 0 auto 16px;
+        background: #c9a84c;
+        opacity: 0.8;
+    }
+
+    .stone-org {
+        font-size: 0.78rem;
+        color: #cbb894;
+        margin-bottom: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .stone-inaugurated {
+        font-size: 0.78rem;
+        color: #cbb894;
+        margin-bottom: 4px;
+        font-style: italic;
+    }
+
+    .stone-vc {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f4e6c8;
+        margin-bottom: 2px;
+    }
+
+    .stone-desig {
+        font-size: 0.8rem;
+        color: #cbb894;
+    }
+
+   
+    .ribbon-wrap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 16px;
+        transform: translateY(-50%);
+        z-index: 3;
+        opacity: 0;
+        animation: ribbonIn 0.6s ease-out 0.9s forwards;
+    }
+
+    @keyframes ribbonIn {
+        to {
+            opacity: 1;
+        }
+    }
+
+    .ribbon-half {
+        position: absolute;
+        top: 0;
+        width: 52%;
+        height: 16px;
+        background: linear-gradient(180deg, #b3231e 0%, #8B1A1A 50%, #6e1414 100%);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+        transition: transform 0.9s cubic-bezier(0.6, -0.2, 0.8, 0.2), opacity 0.9s ease;
+    }
+
+    .ribbon-left {
+        left: 0;
+        clip-path: polygon(0% 50%, 18px 0%, 100% 0%, 100% 100%, 18px 100%);
+    }
+
+    .ribbon-right {
+        right: 0;
+        clip-path: polygon(100% 50%, calc(100% - 18px) 0%, 0% 0%, 0% 100%, calc(100% - 18px) 100%);
+    }
+
+    .ribbon-bow {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 34px;
+        height: 34px;
+        transform: translate(-50%, -50%);
+        z-index: 4;
+        background: #c9a84c;
+        border-radius: 50%;
+        box-shadow: 0 0 0 3px #8B1A1A, 0 3px 8px rgba(0, 0, 0, 0.5);
+        transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    /* Cut state: halves fall away, bow pops off */
+    .ribbon-wrap.cut .ribbon-left {
+        transform: translate(-30px, 90px) rotate(-25deg);
+        opacity: 0;
+    }
+
+    .ribbon-wrap.cut .ribbon-right {
+        transform: translate(30px, 90px) rotate(25deg);
+        opacity: 0;
+    }
+
+    .ribbon-wrap.cut .ribbon-bow {
+        transform: translate(-50%, -50%) scale(1.6);
+        opacity: 0;
+    }
+
+    .scissors-icon {
+        position: absolute;
+        top: 50%;
+        left: 8%;
+        transform: translate(-50%, -50%) rotate(0deg);
+        z-index: 5;
+        font-size: 30px;
+        color: #f4e6c8;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        transition: left 1.6s ease-in-out, transform 0.25s ease;
+        animation: scissorsIn 0.4s ease-out 1s forwards;
+    }
+
+    @keyframes scissorsIn {
+        to {
+            opacity: 1;
+        }
+    }
+
+    .scissors-icon.scissors-move {
+        left: 50%;
+    }
+
+    .scissors-icon.snip {
+        transform: translate(-50%, -50%) rotate(-18deg) scale(1.15);
+    }
+
+    /* ---------- Snip flash ---------- */
+    .snip-flash {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 10px;
+        height: 10px;
+        transform: translate(-50%, -50%) scale(0);
+        border-radius: 50%;
+        background: radial-gradient(circle, #fff 0%, #c9a84c 40%, transparent 70%);
+        z-index: 4;
+        opacity: 0;
+    }
+
+    .snip-flash.flash {
+        animation: snipFlash 0.5s ease-out forwards;
+    }
+
+    @keyframes snipFlash {
+        0% {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0.9;
+        }
+
+        60% {
+            transform: translate(-50%, -50%) scale(6);
+            opacity: 0.6;
+        }
+
+        100% {
+            transform: translate(-50%, -50%) scale(9);
+            opacity: 0;
+        }
+    }
+
+  
+    .parda-overlay.parda-out {
+        transition: opacity 3s ease-in-out;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .parda-overlay.parda-out .shilanyas-stone {
+        transition: transform 3s ease-in-out, opacity 3s ease-in-out;
+        transform: scale(0.92) translateY(-16px);
+        opacity: 0;
+    }
+
+    @media (max-width: 767px) {
+        .stone-title {
+            font-size: 0.95rem;
+        }
+
+        .stone-vc {
+            font-size: 1.05rem;
+        }
+
+        .scissors-icon {
+            font-size: 24px;
+        }
+    }
+</style>
+
+<script>
+(function () {
+    var overlay = document.getElementById('pardaOverlay');
+    var ribbonWrap = document.getElementById('ribbonWrap');
+    var scissors = document.getElementById('scissorsIcon');
+    var snipFlash = document.getElementById('snipFlash');
+    if (!overlay || !ribbonWrap || !scissors) return;
+
+    document.body.classList.add('parda-active');
+
+    function removeOverlay() {
+        document.body.classList.remove('parda-active');
+        if (overlay && overlay.parentNode) {
+            overlay.style.display = 'none';
+            overlay.remove();
+        }
+    }
+
+    function runSequence() {
+        
+        setTimeout(function () {
+            scissors.classList.add('scissors-move');
+        }, 1200);
+
+     
+        setTimeout(function () {
+            scissors.classList.add('snip');
+            if (snipFlash) snipFlash.classList.add('flash');
+            ribbonWrap.classList.add('cut');
+        }, 2900);
+
+        setTimeout(function () {
+            scissors.classList.remove('snip');
+        }, 3150);
+
+       
+        setTimeout(function () {
+            overlay.classList.add('parda-out');
+        }, 3900);
+
+        setTimeout(removeOverlay, 6900);
+    }
+
+    window.addEventListener('load', runSequence);
+    if (document.readyState === 'complete') {
+        runSequence();
+    }
+
+    // Safety fallback in case something above doesn't fire
+    setTimeout(removeOverlay, 8500);
+})();
+</script>
+
 <!-- ================= HERO SECTION ================= -->
 <section class="hero">
     <div class="hero-media">

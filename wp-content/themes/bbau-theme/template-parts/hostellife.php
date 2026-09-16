@@ -143,7 +143,7 @@ get_header();
                 </div>
             </div>
         </section>
->
+
         <section class="hl-section">
             <div class="hl-section-head">
                 <span class="tag">Life in pictures</span>
@@ -341,7 +341,7 @@ get_header();
                     
                     <p>Download the hostel admission form from the University website and submit it to the DSW office with your registration proof and Aadhar Card.</p>
                 </div>
-                <a href="#" class="hl-btn"> Hostel admission form →</a>
+                <a href="/wp-content/uploads/2026/04/HotelForm23.pdf" class="hl-btn"> Hostel admission form →</a>
             </div>
         </section>
 
