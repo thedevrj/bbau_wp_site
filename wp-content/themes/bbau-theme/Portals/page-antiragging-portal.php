@@ -801,6 +801,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     display: flex;
     align-items: flex-start;
     gap: 16px;
+    min-width: 0;
+    box-sizing: border-box;
     min-height: 148px;
     padding: 22px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
@@ -843,13 +845,16 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 }
 
 .ar-helpline-call {
-    display: inline-flex;
+    display: flex;
+    max-width: 100%;
     align-items: center;
     gap: 8px;
     color: var(--ar-gold);
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 600;
     text-decoration: none;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .ar-helpline-call:hover {
