@@ -10,6 +10,7 @@ wp-content/upgrade/
 # Allow themes only
 !wp-content/themes/
 !wp-content/themes/**
+wp-content/themes/twenty*/
 
 # Logs & OS
 *.log
@@ -20,3 +21,12 @@ Thumbs.db
 
 # Database / volumes
 db_data/
+
+# database backups
+*.sql
+*.sql.gz
+*.dump
+
+# local backups
+backups/
+backup/
