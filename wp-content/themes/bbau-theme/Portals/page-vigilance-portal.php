@@ -52,7 +52,7 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
 <div class="vigilance-portal py-5">
     <div class="container">
         <?php get_template_part('template-parts/breadcrumb'); ?>
-
+                <?php get_template_part('menu/menu');?>
 
         <!-- INTRO -->
         <div class="row align-items-center mb-5 g-4">

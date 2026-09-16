@@ -14,6 +14,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
 <div class="vigilance-portal py-5">
     <div class="container">
         <?php get_template_part('template-parts/breadcrumb'); ?>
+        <?php get_template_part('menu/menu');?>
 
         <!-- INTRO -->
         <div class="row align-items-center mb-5 g-4">
