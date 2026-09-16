@@ -30,6 +30,9 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
     <!-- CORE PORTAL SECTIONS / QUICK NAVIGATION GRID -->
     <section class="ar-section ar-section-soft" id="portal-services">
+        <?php get_template_part('template-parts/breadcrumb'); ?>
+        <?php get_template_part('menu/menu');?>
+
         <div class="container">
             <div class="ar-section-heading">
                 <span class="ar-kicker">EXPLORE RESOURCES &amp; SERVICES</span>
@@ -404,7 +407,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 }
 
 .ar-section {
-    padding: 74px 0;
+    padding: 30px 0;
 }
 
 .ar-section-soft {
