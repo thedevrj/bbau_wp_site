@@ -203,7 +203,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let allNotices = [];
     let currentCat = '';
     let currentTab = 'all';
-    let currentPage = 1;
+    const initialPage = parseInt(new URLSearchParams(window.location.search).get('page'), 10);
+    let currentPage = Number.isInteger(initialPage) && initialPage > 0 ? initialPage : 1;
     const noticesPerPage =10;
     let firstLoginOldPassword = '';
     let firstLoginUsername = '';
@@ -217,6 +218,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const authLogged = document.getElementById('auth-logged');
     const loggedUsername = document.getElementById('logged-username');
     const tabPrivate = document.getElementById('tab-private');
+
+    function updatePageUrl(page) {
+        const url = new URL(window.location.href);
+        if (page > 1) url.searchParams.set('page', page);
+        else url.searchParams.delete('page');
+        window.history.replaceState({ page }, '', url);
+    }
 
     async function updateAuthUI() {
         const user = localStorage.getItem('portal_user');
@@ -297,6 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const totalPages = Math.ceil(filtered.length / noticesPerPage);
         if (totalPages > 0 && currentPage > totalPages) currentPage = totalPages;
+        updatePageUrl(currentPage);
         const pageStart = (currentPage - 1) * noticesPerPage;
         const pageNotices = filtered.slice(pageStart, pageStart + noticesPerPage);
 
@@ -341,6 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
             button.setAttribute('aria-label', label === '<' ? 'Previous page' : label === '>' ? 'Next page' : `Page ${page}`);
             button.addEventListener('click', () => {
                 currentPage = page;
+                updatePageUrl(currentPage);
                 render();
                 document.getElementById('notices-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
@@ -474,6 +484,12 @@ document.addEventListener('DOMContentLoaded', function() {
             updateAuthUI();
             fetchNotices();
         }
+    });
+
+    window.addEventListener('popstate', () => {
+        const pageFromUrl = parseInt(new URLSearchParams(window.location.search).get('page'), 10);
+        currentPage = Number.isInteger(pageFromUrl) && pageFromUrl > 0 ? pageFromUrl : 1;
+        render();
     });
 
     // Event Listeners for Filters

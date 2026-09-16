@@ -526,7 +526,8 @@ document.addEventListener('DOMContentLoaded', function() {
     /* ── State ─────────────────────────────────────────────── */
     let allRecords = [];
     let currentEndpoint = '/archived-global-notices/';
-    let currentPage = 1;
+    const initialPage = parseInt(new URLSearchParams(window.location.search).get('page'), 10);
+    let currentPage = Number.isInteger(initialPage) && initialPage > 0 ? initialPage : 1;
     const PAGE_SIZE = 15;
 
     const listContainer = document.getElementById('archive-list');
@@ -539,6 +540,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const loggedUsername = document.getElementById('logged-username');
     const lockedScreen = document.getElementById('vault-locked-screen');
     const openScreen = document.getElementById('vault-open-screen');
+
+    function updatePageUrl(page) {
+        const url = new URL(window.location.href);
+        if (page > 1) url.searchParams.set('page', page);
+        else url.searchParams.delete('page');
+        window.history.replaceState({ page }, '', url);
+    }
 
     /* ── Accordion navigation (Bootstrap-independent) ───────── */
     function setGroupOpen(collapse, open) {
@@ -682,6 +690,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Clamp currentPage in case filters reduced total pages
         if (currentPage > totalPages) currentPage = Math.max(1, totalPages);
+        updatePageUrl(currentPage);
 
         resultCount.textContent = `${total} record${total !== 1 ? 's' : ''}`;
 
@@ -780,6 +789,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const p = parseInt(btn.getAttribute('data-page'));
                 if (!isNaN(p) && p >= 1 && p <= totalPages) {
                     currentPage = p;
+                    updatePageUrl(currentPage);
                     render();
                     // Scroll list into view
                     listContainer.scrollIntoView({
