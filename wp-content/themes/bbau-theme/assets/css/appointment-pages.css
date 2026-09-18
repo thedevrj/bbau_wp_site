@@ -130,12 +130,19 @@
   background: #159a9c;
   color: #fff !important;
   white-space: nowrap;
-  font-size: .65rem;
+  font-size: 0.65rem;
   font-weight: 700;
   text-decoration: none;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+.sc-empty-state{
+  text-align: center;
+  padding: 50px 0;
 }
 .notice-portal-brand .sc-notice-number {
   grid-column: 1;
@@ -160,6 +167,8 @@
   white-space: nowrap;
   font-size: 0.99rem;
   color: #12304a;
+  text-decoration: none;
+  text-align: left;
 }
 .notice-portal-brand .sc-notice-heading a:hover,
 .notice-portal-brand .sc-notice-link:hover {
