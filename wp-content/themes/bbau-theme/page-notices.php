@@ -46,7 +46,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <select id="notice-sort" class="form-select sc-select">
-                        <option value="desc">Newest First</option>
+                        <option value="desc">Latest First</option>
                         <option value="asc">Oldest First</option>
                     </select>
                 </div>
