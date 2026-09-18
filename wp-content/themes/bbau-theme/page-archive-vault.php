@@ -235,7 +235,7 @@ $media_base = getenv('DJANGO_MEDIA_URL');
                             </div>
                             <div class="col-md-3">
                                 <select id="filter-sort" class="form-select sc-select">
-                                    <option value="desc">Newest First</option>
+                                    <option value="desc">Latest First</option>
                                     <option value="asc">Oldest First</option>
                                 </select>
                             </div>
