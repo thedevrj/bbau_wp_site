@@ -162,10 +162,7 @@
 }
 .notice-portal-brand .sc-notice-heading a {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 0.99rem;
+  font-size: 0.9rem;
   color: #12304a;
   text-decoration: none;
   text-align: left;
@@ -284,9 +281,6 @@
     margin: 0;
   }
   .notice-portal-brand .sc-notice-heading a {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-size: 1.05rem;
   }
   .notice-portal-brand .sc-notice-link {
