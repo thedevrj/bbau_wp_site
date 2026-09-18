@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="sc-shimmer"></div>`;
         try {
             const url =
-                `${apiBase}/global-notices/?category=Appointment&appointment_type=${encodeURIComponent(appointmentType)}&limit=100`;
+                `${apiBase}/global-notices/?category=Appointment&appointment_type=${encodeURIComponent(appointmentType)}&page_size=500`;
             const response = await fetch(url);
             if (!response.ok) throw new Error('Network error');
             const data = await response.json();
