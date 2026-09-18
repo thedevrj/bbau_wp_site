@@ -9,6 +9,7 @@
 @import url("authorities.css");
 @import url("notice-portal.css");
 @import url("faculty.css");
+@import url("appointment-pages.css");
 
 p:empty {
     display: none;
