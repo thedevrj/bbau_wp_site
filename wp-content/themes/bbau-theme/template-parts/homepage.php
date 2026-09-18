@@ -71,6 +71,95 @@ function get_notice_href($notice) {
 }
 ?>
 
+<div class="parda-overlay" id="pardaOverlay" aria-hidden="true">
+
+    <div class="shilanyas-stone" id="shilanyasStone">
+        <div class="stone-line stone-title">बाबासाहेब भीमराव अम्बेडकर विश्वविद्यालय</div>
+        <div class="stone-line stone-sub">Babasaheb Bhimrao Ambedkar University, Lucknow</div>
+        <div class="stone-divider"></div>
+        <div class="stone-line stone-org">Developed by: Computer Centre, BBAU</div>
+        <div class="stone-line stone-inaugurated">Inaugurated by</div>
+        <div class="stone-line stone-vc">Prof. Raj Kumar Mittal</div>
+        <div class="stone-line stone-desig">Hon&rsquo;ble Vice Chancellor</div>
+    </div>
+
+    <div class="ribbon-wrap" id="ribbonWrap">
+        <div class="ribbon-half ribbon-left"></div>
+        <div class="ribbon-bow" id="ribbonBow"></div>
+        <div class="ribbon-half ribbon-right"></div>
+        <div class="scissors-icon" id="scissorsIcon"><i class="fa fa-cut" aria-hidden="true"></i></div>
+        <div class="snip-flash" id="snipFlash"></div>
+    </div>
+
+</div>
+
+<script>
+  
+(function() {
+    var overlay = document.getElementById('pardaOverlay');
+    var ribbonWrap = document.getElementById('ribbonWrap');
+    var scissors = document.getElementById('scissorsIcon');
+    var snipFlash = document.getElementById('snipFlash');
+    if (!overlay || !ribbonWrap || !scissors) return;
+
+    document.body.classList.add('parda-active');
+
+    function removeOverlay() {
+        document.body.classList.remove('parda-active');
+        if (overlay && overlay.parentNode) {
+            overlay.style.display = 'none';
+            overlay.remove();
+        }
+    }
+
+    function runSequence() {
+
+        setTimeout(function() {
+            scissors.classList.add('scissors-move');
+        }, 1200);
+
+
+        setTimeout(function() {
+            scissors.classList.add('snip');
+            if (snipFlash) snipFlash.classList.add('flash');
+            ribbonWrap.classList.add('cut');
+        }, 2900);
+
+        setTimeout(function() {
+            scissors.classList.add('snip');
+
+            if (snipFlash) {
+                snipFlash.classList.add('flash');
+            }
+
+            // Start ribbon cut
+            ribbonWrap.classList.add('cut');
+
+            // Hide scissors after ribbon finishes moving away
+            setTimeout(function() {
+                scissors.classList.add('scissors-hide');
+            }, 900);
+
+        }, 2900);
+
+
+        setTimeout(function() {
+            overlay.classList.add('parda-out');
+        }, 5900);
+
+        setTimeout(removeOverlay, 9900);
+    }
+
+    window.addEventListener('load', runSequence);
+    if (document.readyState === 'complete') {
+        runSequence();
+    }
+
+    // Safety fallback in case something above doesn't fire
+    setTimeout(removeOverlay, 8500);
+})();
+</script>
+
 <!-- ================= HERO SECTION ================= -->
 <section class="hero">
     <div class="hero-media">
@@ -219,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="announce-track">
             <?php if ( !empty($marquee_notices) ) : ?>
             <?php foreach ( $marquee_notices as $mn ) : ?>
-                <?php foreach ( $marquee_notices as $mn ) : 
+            <?php foreach ( $marquee_notices as $mn ) : 
                     $notice_data = get_notice_href($mn);
                     $href = $notice_data['url'];
                     $type = $notice_data['type'];
@@ -232,13 +321,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         $final_url = $media_base . $href;
                     }
                 ?>
-                    <span>
-                        <a target="_blank" href="<?php echo esc_url($final_url); ?>">
-                            <?php echo esc_html($mn['title']); ?>
-                        </a>
-                    </span>
-                <?php endforeach; ?>
-                    <?php endforeach; ?>
+            <span>
+                <a target="_blank" href="<?php echo esc_url($final_url); ?>">
+                    <?php echo esc_html($mn['title']); ?>
+                </a>
+            </span>
+            <?php endforeach; ?>
+            <?php endforeach; ?>
             <?php else: ?>
             <span><a href="#">No new marquee updates at this time.</a></span>
             <?php endif; ?>
@@ -376,7 +465,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <h3 class="info-title">Events</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($event_notices) ) : ?>
-                        <?php foreach ($event_notices as $en) : 
+                    <?php foreach ($event_notices as $en) : 
                         $notice_data = get_notice_href($en);
                         $href = $notice_data['url'];
                         $type = $notice_data['type'];
@@ -414,7 +503,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <h3 class="info-title">Appointments</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($appointment_notices) ) : ?>
-                        <?php foreach ($appointment_notices as $ap) : 
+                    <?php foreach ($appointment_notices as $ap) : 
                         $notice_data = get_notice_href($ap);
                         $href = $notice_data['url'];
                         $type = $notice_data['type'];
@@ -452,7 +541,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <h3 class="info-title">Tenders</h3>
                 <div class="info-scroll">
                     <?php if ( !empty($tender_notices) ) : ?>
-                        <?php foreach ($tender_notices as $tn) : 
+                    <?php foreach ($tender_notices as $tn) : 
                         $notice_data = get_notice_href($tn);
                         $href = $notice_data['url'];
                         $type = $notice_data['type'];

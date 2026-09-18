@@ -30,6 +30,9 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 
     <!-- CORE PORTAL SECTIONS / QUICK NAVIGATION GRID -->
     <section class="ar-section ar-section-soft" id="portal-services">
+        <?php get_template_part('template-parts/breadcrumb'); ?>
+        <?php get_template_part('menu/menu');?>
+
         <div class="container">
             <div class="ar-section-heading">
                 <span class="ar-kicker">EXPLORE RESOURCES &amp; SERVICES</span>
@@ -404,7 +407,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 }
 
 .ar-section {
-    padding: 74px 0;
+    padding: 30px 0;
 }
 
 .ar-section-soft {
@@ -798,6 +801,8 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     display: flex;
     align-items: flex-start;
     gap: 16px;
+    min-width: 0;
+    box-sizing: border-box;
     min-height: 148px;
     padding: 22px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
@@ -840,13 +845,16 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 }
 
 .ar-helpline-call {
-    display: inline-flex;
+    display: flex;
+    max-width: 100%;
     align-items: center;
     gap: 8px;
     color: var(--ar-gold);
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 600;
     text-decoration: none;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .ar-helpline-call:hover {

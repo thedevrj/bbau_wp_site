@@ -25,6 +25,10 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     tracking</strong><small>Check your submission status.</small></div>
         </div>
     </section>
+    <div class="container">
+        <?php get_template_part('template-parts/breadcrumb'); ?>
+        <?php get_template_part('menu/menu');?>
+    </div>
 
     <section class="ar-section" id="about">
         <div class="container">
@@ -268,7 +272,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
 }
 
 .ar-section {
-    padding: 74px 0
+    padding: 30px 0
 }
 
 .ar-section-soft {
@@ -883,12 +887,12 @@ $api_base = getenv('DJANGO_MEDIA_URL');
             let timelineHtml = '';
             const historyList = (data.history && Array.isArray(data.history) && data.history.length >
                 0) ? data.history : [{
-                    date: data.submitted_on,
-                    status: data.status,
-                    status_display: statusDisplay,
-                    description: 'Affidavit submitted online by student.',
-                    remarks: data.remarks
-                }];
+                date: data.submitted_on,
+                status: data.status,
+                status_display: statusDisplay,
+                description: 'Affidavit submitted online by student.',
+                remarks: data.remarks
+            }];
 
             timelineHtml = historyList.map(item => {
                 const itemDate = new Date(item.date);
@@ -1009,8 +1013,10 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 if (deptSelect && Array.isArray(items)) {
                     deptSelect.innerHTML = '<option value="">Select Department</option>' + items.map(function(
                         dept) {
-                            const displayName = dept.campus === 'Satellite Campus Amethi' ? `${dept.name} (Amethi)` : dept.name;
-                        return '<option value="' + escapeHtml(dept.id) + '">' + escapeHtml(displayName) +
+                        const displayName = dept.campus === 'Satellite Campus Amethi' ?
+                            `${dept.name} (Amethi)` : dept.name;
+                        return '<option value="' + escapeHtml(dept.id) + '">' + escapeHtml(
+                            displayName) +
                             '</option>';
                     }).join('');
                 }
