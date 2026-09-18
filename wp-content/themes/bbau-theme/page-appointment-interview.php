@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Appointment - Resource Person
+ * Template Name: Appointment - Interview
  *
  * @package BBAU_Theme
  */
@@ -8,7 +8,6 @@
 get_header();
 
 $media_base = getenv('DJANGO_MEDIA_URL');
-$banner_url = "/wp-content/uploads/2026/04/language.png"; 
 ?>
 
 <div class="satellite-campus-portal notice-portal-brand">
@@ -26,7 +25,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                     <div class="sc-search-wrap">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <input type="text" id="notice-search" class="form-control"
-                            placeholder="Search in Resource Person Appointments...">
+                            placeholder="Search in Interview ...">
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -53,7 +52,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
             <div class="col-12">
                 <section class="sc-section">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2 class="sc-section-title mb-0">Resource Person Appointments</h2>
+                        <h2 class="sc-section-title mb-0">Interview </h2>
                         <span class="sc-count-badge" id="result-count">0</span>
                     </div>
 
@@ -75,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const mediaBase = "<?= $media_base ?>";
     const apiBase = isLocal ? 'http://localhost:8001/api/v1' : `${mediaBase}/api/v1`;
-    const appointmentType = "Resource Person";
+    const appointmentType = "Interview";
 
     let allNotices = [];
     const initialPage = parseInt(new URLSearchParams(window.location.search).get('page'), 10);
@@ -163,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="sc-empty-state">
                     <i class="fa-solid fa-folder-open"></i>
                     <h3>No notices found</h3>
-                    <p>There are currently no active ${appointmentType} appointment notices.</p>
+                    <p>There are currently no active ${appointmentType} notices.</p>
                 </div>`;
             document.getElementById('notice-pagination').innerHTML = '';
             return;
@@ -176,29 +175,27 @@ document.addEventListener('DOMContentLoaded', function() {
         const start = (currentPage - 1) * noticesPerPage;
         const pageItems = filtered.slice(start, start + noticesPerPage);
 
-        listContainer.innerHTML =
-            '<div class="sc-notice-table-head text-center"><span>S.No</span><span>Date Posted</span><span>Advertisement</span><span>Action</span></div>' +
-            pageItems.map((notice, itemIndex) => {
-                const postedDate = new Date(notice.date_posted);
-                const formattedDate = !isNaN(postedDate) ?
-                    postedDate.toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    }).replace(/\//g, '/') :
-                    (notice.date_posted || '');
+        listContainer.innerHTML = '<div class="sc-notice-table-head text-center"><span>S.No</span><span>Date Posted</span><span>Interview Details</span><span>Download</span></div>' + pageItems.map((notice, itemIndex) => {
+            const postedDate = new Date(notice.date_posted);
+            const formattedDate = !isNaN(postedDate) ?
+                postedDate.toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                }).replace(/\//g, '/') :
+                (notice.date_posted || '');
 
-                let targetUrl = '#';
-                if (notice.internal_link) {
-                    targetUrl = notice.internal_link;
-                } else if (notice.link) {
-                    targetUrl = notice.link;
-                } else if (notice.attachment) {
-                    targetUrl = notice.attachment.startsWith('http') ? notice.attachment :
-                        `${mediaBase}${notice.attachment}`;
-                }
+            let targetUrl = '#';
+            if (notice.internal_link) {
+                targetUrl = notice.internal_link;
+            } else if (notice.link) {
+                targetUrl = notice.link;
+            } else if (notice.attachment) {
+                targetUrl = notice.attachment.startsWith('http') ? notice.attachment :
+                    `${mediaBase}${notice.attachment}`;
+            }
 
-                return `
+            return `
                 <article class="sc-notice-card text-center">
                     <div class="sc-notice-number">${start + itemIndex + 1}</div>
                     <div class="sc-notice-meta">
@@ -211,11 +208,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     </h3>
                     <div class="sc-notice-footer">
                         <a href="${targetUrl}" class="sc-notice-link" target="_blank" rel="noopener noreferrer">
-                            View <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            Download <i class="fa-solid fa-download"></i>
                         </a>
                     </div>
                 </article>`;
-            }).join('');
+        }).join('');
 
         renderPagination(totalPages);
     }
