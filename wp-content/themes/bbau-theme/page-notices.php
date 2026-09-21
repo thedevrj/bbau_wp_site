@@ -146,12 +146,12 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                 <div class="sc-input-group">
                     <label class="sc-input-label">Username</label>
                     <input type="text" name="username" class="sc-input" placeholder="Enter your Username" required
-                        autocomplete="username">
+                        autocomplete="username" maxlength="150">
                 </div>
                 <div class="sc-input-group">
                     <label class="sc-input-label">Password</label>
                     <input type="password" name="password" class="sc-input" placeholder="••••••••" required
-                        autocomplete="current-password">
+                        autocomplete="current-password" maxlength="256">
                 </div>
                 <div id="login-error" class="alert alert-danger d-none mb-4"></div>
                 <button type="submit" class="btn-sc-submit" id="btn-login-submit">
@@ -315,15 +315,27 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        const safeExternalUrl = (value) => {
+            try {
+                const url = new URL(value || '#', window.location.origin);
+                return ['http:', 'https:'].includes(url.protocol) ? url.href : '#';
+            } catch (e) {
+                return '#';
+            }
+        };
+        const escapeHtml = (value) => String(value ?? '').replace(/[&<>\"']/g, c => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;'
+        }[c]));
+
         listContainer.innerHTML = pageNotices.map(n => `
-            <a href="${n.attachment || n.link || '#'}" target="_blank" class="sc-notice-card ${n.is_private ? 'is-private' : ''}">
+            <a href="${safeExternalUrl(n.attachment || n.link)}" target="_blank" rel="noopener noreferrer" class="sc-notice-card ${n.is_private ? 'is-private' : ''}">
                 <div class="sc-notice-icon">
                     <i class="fa-solid ${n.is_private ? 'fa-lock-open' : 'fa-bullhorn'}"></i>
                 </div>
                 <div class="sc-notice-info">
-                    <h3>${n.title}</h3>
+                    <h3>${escapeHtml(n.title)}</h3>
                     <div class="sc-notice-meta">
-                        ${n.cat} &bull; ${n.date.toLocaleDateString('en-GB')}
+                        ${escapeHtml(n.cat)} &bull; ${n.date.toLocaleDateString('en-GB')}
                     </div>
                 </div>
             </a>
@@ -376,6 +388,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auth Actions
     document.getElementById('staff-login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
+        const submitButton = document.getElementById('btn-login-submit');
+        if (submitButton.disabled) return;
+        submitButton.disabled = true;
         const data = Object.fromEntries(new FormData(e.target).entries());
         const loginError = document.getElementById('login-error');
         loginError.classList.add('d-none');
@@ -414,6 +429,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (i) {
             loginError.textContent = "Network error. Please try again.";
             loginError.classList.remove('d-none');
+        } finally {
+            submitButton.disabled = false;
         }
     });
 
@@ -475,8 +492,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('btn-logout').addEventListener('click', async () => {
         try {
             await fetch(`${apiBase.replace('/api/v1', '')}/portal/logout/`, {
-                method: 'GET',
-                credentials: 'include'
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'X-CSRFToken': document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1] || ''
+                }
             });
         } finally {
             localStorage.removeItem('portal_user');
