@@ -342,8 +342,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(e) {
         if (e.target.matches('.btn-auth-logout') || e.target.closest('.btn-auth-logout')) {
             fetch(`${authApiBase}/portal/logout/`, {
-                method: 'GET',
-                credentials: 'include'
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'X-CSRFToken': document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1] || ''
+                }
             }).finally(() => {
                 localStorage.removeItem('portal_user');
                 document.dispatchEvent(new Event('portalAuthStatusChanged'));

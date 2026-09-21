@@ -1,5 +1,5 @@
 /* Shared design for the four appointment templates. */
-.notice-portal-brand {
+.appointment-portal-brand {
   --sc-midnight: #12304a;
   --sc-slate: #425466;
   --sc-gold: #159a9c;
@@ -7,77 +7,77 @@
   --sc-bg: #f4f8fb;
   background: linear-gradient(180deg, #f4f8fb 0%, #eef5f8 100%);
 }
-.notice-portal-brand .container {
+.appointment-portal-brand .container {
   max-width: 1240px;
 }
-.notice-portal-brand .sc-content-card,
-.notice-portal-brand .sc-section {
+.appointment-portal-brand .sc-content-card,
+.appointment-portal-brand .sc-section {
   background: #fff;
   border: 1px solid #dce8ee;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(18, 48, 74, 0.06);
 }
-.notice-portal-brand .sc-content-card {
+.appointment-portal-brand .sc-content-card {
   padding: 22px;
 }
-.notice-portal-brand .sc-search-wrap input,
-.notice-portal-brand .sc-select {
+.appointment-portal-brand .sc-search-wrap input,
+.appointment-portal-brand .sc-select {
   min-height: 48px;
   border: 1px solid #d6e2e9;
   border-radius: 10px;
   background: #fbfdfe;
 }
-.notice-portal-brand .sc-select {
+.appointment-portal-brand .sc-select {
   appearance: auto;
   -webkit-appearance: menulist;
   cursor: pointer;
   padding-right: 34px;
 }
-.notice-portal-brand .sc-search-wrap input:focus,
-.notice-portal-brand .sc-select:focus {
+.appointment-portal-brand .sc-search-wrap input:focus,
+.appointment-portal-brand .sc-select:focus {
   border-color: #159a9c;
   box-shadow: 0 0 0 3px rgba(21, 154, 156, 0.14);
 }
-.notice-portal-brand .sc-btn-gold {
+.appointment-portal-brand .sc-btn-gold {
   min-height: 48px;
   border-radius: 10px;
   background: #12304a !important;
   color: #fff !important;
   box-shadow: none;
 }
-.notice-portal-brand .sc-btn-gold:hover {
+.appointment-portal-brand .sc-btn-gold:hover {
   background: #159a9c !important;
   color: #fff !important;
 }
-.notice-portal-brand .sc-section {
+.appointment-portal-brand .sc-section {
   padding: 28px;
   box-shadow: 0 10px 28px rgba(18, 48, 74, 0.07);
 }
-.notice-portal-brand .sc-section-title {
+.appointment-portal-brand .sc-section-title {
   font-family: inherit;
   font-size: clamp(1.45rem, 2vw, 2rem);
   font-weight: 750;
   letter-spacing: -0.02em;
 }
-.notice-portal-brand .sc-section-title::after {
+.appointment-portal-brand .sc-section-title::after {
   height: 3px;
   width: 64px;
   border-radius: 99px;
   background: #159a9c;
 }
-.notice-portal-brand .sc-count-badge {
+.appointment-portal-brand .sc-count-badge {
   background: #e5f5f4;
   color: #087678;
   border: 1px solid #b9e1df;
 }
-.notice-portal-brand .sc-notice-grid {
+.appointment-portal-brand .sc-notice-grid {
   display: grid;
   gap: 0;
   border: 1px solid #dce8ee;
   border-radius: 12px;
   overflow: hidden;
 }
-.notice-portal-brand .sc-notice-table-head {
+.appointment-portal-brand .sc-notice-table-head {
   display: grid;
   grid-template-columns: 64px 180px minmax(0, 1fr) 180px;
   gap: 18px;
@@ -87,7 +87,7 @@
   font-size: 0.85rem;
   font-weight: 700;
 }
-.notice-portal-brand .sc-notice-card {
+.appointment-portal-brand .sc-notice-card {
   display: grid;
   grid-template-columns: 64px 180px minmax(0, 1fr) 180px;
   align-items: center;
@@ -100,25 +100,25 @@
   background: #fff;
   box-shadow: none;
 }
-.notice-portal-brand .sc-notice-meta {
+.appointment-portal-brand .sc-notice-meta {
   grid-column: 2;
   display: block;
 }
-.notice-portal-brand .sc-notice-type,
-.notice-portal-brand .sc-notice-date {
+.appointment-portal-brand .sc-notice-type,
+.appointment-portal-brand .sc-notice-date {
   display: block;
   margin: 3px 0;
 }
-.notice-portal-brand .sc-notice-heading {
+.appointment-portal-brand .sc-notice-heading {
   grid-column: 3;
   margin: 0;
   min-width: 0;
 }
-.notice-portal-brand .sc-notice-footer {
+.appointment-portal-brand .sc-notice-footer {
   grid-column: 4;
   min-width: 0;
 }
-.notice-portal-brand .sc-notice-link {
+.appointment-portal-brand .sc-notice-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -130,7 +130,7 @@
   background: #159a9c;
   color: #fff !important;
   white-space: nowrap;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-decoration: none;
   overflow: hidden;
@@ -144,100 +144,100 @@
   text-align: center;
   padding: 50px 0;
 }
-.notice-portal-brand .sc-notice-number {
+.appointment-portal-brand .sc-notice-number {
   grid-column: 1;
   color: #12304a;
   font-weight: 700;
 }
-.notice-portal-brand .sc-notice-link:hover {
+.appointment-portal-brand .sc-notice-link:hover {
   background: #12304a !important;
   border-color: #12304a;
   color: #fff !important;
   transform: translateY(-1px);
 }
-.notice-portal-brand .sc-notice-card:hover {
+.appointment-portal-brand .sc-notice-card:hover {
   transform: translateY(-2px);
   border-color: #159a9c;
   box-shadow: 0 10px 22px rgba(18, 48, 74, 0.1);
 }
-.notice-portal-brand .sc-notice-heading a {
+.appointment-portal-brand .sc-notice-heading a {
   display: block;
   font-size: 0.9rem;
   color: #12304a;
   text-decoration: none;
   text-align: left;
 }
-.notice-portal-brand .sc-notice-heading a:hover,
-.notice-portal-brand .sc-notice-link:hover {
+.appointment-portal-brand .sc-notice-heading a:hover,
+.appointment-portal-brand .sc-notice-link:hover {
   color: #087678;
 }
-.notice-portal-brand .sc-notice-meta {
+.appointment-portal-brand .sc-notice-meta {
   color: #087678 !important;
 }
-.notice-portal-brand .notice-page-btn:hover:not(:disabled),
-.notice-portal-brand .notice-page-btn.active {
+.appointment-portal-brand .notice-page-btn:hover:not(:disabled),
+.appointment-portal-brand .notice-page-btn.active {
   background: #12304a;
   border-color: #12304a;
   color: #fff;
 }
-.notice-portal-brand .notice-pagination {
+.appointment-portal-brand .notice-pagination {
   justify-content: center;
   margin-top: 22px;
   border-top: 0;
 }
 
 @media (max-width: 767px) {
-  .notice-portal-brand {
+  .appointment-portal-brand {
     overflow-x: hidden;
   }
-  .notice-portal-brand .sc-section {
+  .appointment-portal-brand .sc-section {
     padding: 18px 12px;
   }
-  .notice-portal-brand .sc-section-title {
+  .appointment-portal-brand .sc-section-title {
     font-size: 1.25rem;
   }
-  .notice-portal-brand .sc-notice-grid {
+  .appointment-portal-brand .sc-notice-grid {
     width: 100%;
     overflow: hidden;
   }
-  .notice-portal-brand .sc-notice-table-head {
+  .appointment-portal-brand .sc-notice-table-head {
     display: none;
   }
-  .notice-portal-brand .sc-notice-card {
+  .appointment-portal-brand .sc-notice-card {
     display: block;
     padding: 16px;
     border-left-width: 3px;
   }
-  .notice-portal-brand .sc-notice-number {
+  .appointment-portal-brand .sc-notice-number {
     display: inline-block;
     margin-right: 12px;
     min-width: 24px;
     text-align: left;
   }
-  .notice-portal-brand .sc-notice-meta {
+  .appointment-portal-brand .sc-notice-meta {
     display: inline-flex;
     flex-wrap: wrap;
     gap: 5px 12px;
     vertical-align: middle;
   }
-  .notice-portal-brand .sc-notice-type,
-  .notice-portal-brand .sc-notice-date {
+  .appointment-portal-brand .sc-notice-type,
+  .appointment-portal-brand .sc-notice-date {
     display: inline-block;
     margin: 0;
   }
-  .notice-portal-brand .sc-notice-heading {
+  .appointment-portal-brand .sc-notice-heading {
     margin: 14px 0 12px;
   }
-  .notice-portal-brand .sc-notice-heading a {
+  .appointment-portal-brand .sc-notice-heading a {
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
     font-size: 1.05rem;
   }
-  .notice-portal-brand .sc-notice-footer {
+  .appointment-portal-brand .sc-notice-footer {
     display: block;
   }
-  .notice-portal-brand .sc-notice-link {
+  .appointment-portal-brand .sc-notice-link {
     width: 100%;
     min-width: 0;
   }
@@ -245,17 +245,17 @@
 
 /* Preserve the table on narrow screens and allow horizontal scrolling. */
 @media (max-width: 767px) {
-  .notice-portal-brand .sc-notice-grid {
+  .appointment-portal-brand .sc-notice-grid {
     display: block;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
   }
-  .notice-portal-brand .sc-notice-table-head {
+  .appointment-portal-brand .sc-notice-table-head {
     display: grid;
     min-width: 760px;
   }
-  .notice-portal-brand .sc-notice-card {
+  .appointment-portal-brand .sc-notice-card {
     display: grid;
     min-width: 760px;
     grid-template-columns: 64px 180px minmax(300px, 1fr) 180px;
@@ -263,28 +263,27 @@
     gap: 18px;
     padding: 18px 22px;
   }
-  .notice-portal-brand .sc-notice-number {
+  .appointment-portal-brand .sc-notice-number {
     display: block;
     min-width: 0;
     margin: 0;
     text-align: center;
   }
-  .notice-portal-brand .sc-notice-meta {
+  .appointment-portal-brand .sc-notice-meta {
     display: block;
   }
-  .notice-portal-brand .sc-notice-type,
-  .notice-portal-brand .sc-notice-date {
+  .appointment-portal-brand .sc-notice-type,
+  .appointment-portal-brand .sc-notice-date {
     display: block;
     margin: 3px 0;
   }
-  .notice-portal-brand .sc-notice-heading {
+  .appointment-portal-brand .sc-notice-heading {
     margin: 0;
   }
-  .notice-portal-brand .sc-notice-heading a {
+  .appointment-portal-brand .sc-notice-heading a {
     font-size: 1.05rem;
   }
-  .notice-portal-brand .sc-notice-link {
+  .appointment-portal-brand .sc-notice-link {
     width: auto;
-    min-width: 142px;
   }
 }

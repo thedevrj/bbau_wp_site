@@ -882,8 +882,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('btn-logout').addEventListener('click', () => {
         fetch(`${djangoBase}/portal/logout/`, {
-            method: 'GET',
-            credentials: 'include'
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'X-CSRFToken': document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1] || ''
+            }
         }).finally(() => {
             localStorage.removeItem('portal_user');
             updateAuthUI();
