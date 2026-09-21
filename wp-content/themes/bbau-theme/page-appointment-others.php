@@ -11,7 +11,7 @@ $media_base = getenv('DJANGO_MEDIA_URL');
 $banner_url = "/wp-content/uploads/2026/04/language.png"; 
 ?>
 
-<div class="satellite-campus-portal notice-portal-brand">
+<div class="satellite-campus-portal appointment-portal-brand">
     <?php get_template_part('banners/about-banner'); ?>
 
 
