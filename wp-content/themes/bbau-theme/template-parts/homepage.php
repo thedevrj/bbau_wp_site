@@ -154,8 +154,6 @@ function get_notice_href($notice) {
     if (document.readyState === 'complete') {
         runSequence();
     }
-
-    // Safety fallback in case something above doesn't fire
     setTimeout(removeOverlay, 8500);
 })();
 </script>
@@ -224,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const slides = slideshow ? slideshow.querySelectorAll(".hero-slide") : [];
     const dotsWrap = document.getElementById("heroDots");
 
-    const VIDEO_DURATION = 10000;
+    const VIDEO_DURATION = 6000;
     const SLIDE_INTERVAL = 5000;
     const PHOTOS_PER_CYCLE = 2;
 
@@ -253,7 +251,6 @@ document.addEventListener("DOMContentLoaded", function() {
         slides.forEach(s => s.classList.remove("is-active"));
 
         if (video) {
-            video.currentTime = 0;
             video.muted = true;
             video.classList.remove("is-hidden");
             video.play().catch(() => {
