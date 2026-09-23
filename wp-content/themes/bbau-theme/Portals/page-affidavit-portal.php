@@ -171,6 +171,27 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         </section> -->
 </main>
 
+<div class="ar-success-modal" id="ar-success-modal" hidden role="dialog" aria-modal="true"
+    aria-labelledby="ar-success-title">
+    <div class="ar-success-backdrop" data-ar-close-success></div>
+    <div class="ar-success-dialog">
+        <button class="ar-success-close" type="button" aria-label="Close" data-ar-close-success>&times;</button>
+        <div class="ar-success-check"><i class="fas fa-check"></i></div>
+        <h2 id="ar-success-title">Affidavit submitted successfully</h2>
+        <p>Please save this tracking ID to check your verification status later.</p>
+        <div class="ar-tracking-highlight">
+            <small>YOUR TRACKING ID</small>
+            <strong id="ar-success-tracking-id"></strong>
+        </div>
+        <div class="ar-success-actions">
+            <button class="ar-button ar-button-secondary" type="button" id="ar-copy-tracking-id"><i
+                    class="fas fa-copy"></i> Copy tracking ID</button>
+            <!-- <button class="ar-button ar-button-secondary" type="button" data-ar-close-success>Continue</button> -->
+        </div>
+        <span class="ar-copy-feedback" id="ar-copy-feedback" role="status" hidden>Tracking ID copied.</span>
+    </div>
+</div>
+
 <style>
 .antiragging-portal {
     --ar-ink: #172033;
@@ -353,6 +374,156 @@ $api_base = getenv('DJANGO_MEDIA_URL');
     border-radius: 7px;
     padding: 26px;
     box-shadow: 0 5px 18px rgba(20, 40, 70, .05)
+}
+
+.ar-form-message {
+    display: block;
+    margin: 0 0 22px;
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.ar-form-message.is-success {
+    border: 2px solid #198754;
+    background: #e8f7ee;
+    color: #0d5c35;
+    box-shadow: 0 4px 12px rgba(25, 135, 84, .16);
+}
+
+.ar-form-message.is-error {
+    border: 1px solid #dc3545;
+    background: #fff0f1;
+    color: #8b1e2d;
+}
+
+.ar-success-modal[hidden] {
+    display: none;
+}
+
+.ar-success-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+
+.ar-success-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 20, 35, .72);
+    backdrop-filter: blur(3px);
+}
+
+.ar-success-dialog {
+    position: relative;
+    width: min(500px, 100%);
+    padding: 34px 30px 30px;
+    border-radius: 12px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, .3);
+    animation: ar-success-pop .18s ease-out;
+}
+
+.ar-success-close {
+    position: absolute;
+    top: 8px;
+    right: 13px;
+    border: 0;
+    background: transparent;
+    color: #657083;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.ar-success-check {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: #d9f3e4;
+    color: #198754;
+    font-size: 1.55rem;
+}
+
+.ar-success-dialog h2 {
+    margin: 0 0 8px;
+    color: #172033;
+    font-size: 1.55rem;
+}
+
+.ar-success-dialog p {
+    margin: 0 auto 20px;
+    color: #657083;
+}
+
+.ar-tracking-highlight {
+    margin: 20px 0;
+    padding: 18px 16px;
+    border: 2px dashed #d6a531;
+    border-radius: 8px;
+    background: #fff9e6;
+}
+
+.ar-tracking-highlight small {
+    display: block;
+    margin-bottom: 6px;
+    color: #856404;
+    font-size: .75rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.ar-tracking-highlight strong {
+    display: block;
+    color: #172033;
+    font-size: clamp(1.3rem, 5vw, 1.0rem);
+    word-break: break-word;
+}
+
+.ar-success-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ar-button-secondary {
+    border: 1px solid #cfd6e1;
+    background: #f5f7fb;
+    color: #172033;
+}
+
+.ar-copy-feedback {
+    display: block;
+    margin-top: 12px;
+    color: #198754;
+    font-size: .85rem;
+    font-weight: 700;
+}
+
+@keyframes ar-success-pop {
+    from {
+        opacity: 0;
+        transform: scale(.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+body.ar-modal-open {
+    overflow: hidden;
 }
 
 .ar-form-grid {
@@ -807,16 +978,16 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         }
 
         // File size check (matches the 10 MB notice above the form)
-        const maxBytes = 10 * 1024 * 1024;
+        const maxBytes = 5 * 1024 * 1024;
         const studentFile = form.querySelector('[name="student_affidavit"]').files[0];
         const parentFile = form.querySelector('[name="parent_affidavit"]').files[0];
         if (studentFile && studentFile.size > maxBytes) {
-            message.textContent = 'Student affidavit file must be under 10 MB.';
+            message.textContent = 'Student affidavit file must be under 5 MB.';
             message.className = 'ar-form-message is-error';
             return;
         }
         if (parentFile && parentFile.size > maxBytes) {
-            message.textContent = 'Parent affidavit file must be under 10 MB.';
+            message.textContent = 'Parent affidavit file must be under 5 MB.';
             message.className = 'ar-form-message is-error';
             return;
         }
@@ -850,9 +1021,13 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 );
             }
 
-            message.textContent = 'Submitted successfully. Your tracking ID is ' + data.tracking_id;
+            const trackingId = data.tracking_id || '';
+            message.innerHTML =
+                '<i class="fas fa-check-circle"></i> Submitted successfully. Your tracking ID is <strong>' +
+                escapeHtml(trackingId) + '</strong>';
             message.className = 'ar-form-message is-success';
             form.reset();
+            showSuccessModal(trackingId);
         } catch (error) {
             message.textContent = error.message || 'Submission failed. Please try again.';
             message.className = 'ar-form-message is-error';
@@ -964,6 +1139,40 @@ $api_base = getenv('DJANGO_MEDIA_URL');
         return div.innerHTML;
     }
 
+    const successModal = document.getElementById('ar-success-modal');
+    const successTrackingId = document.getElementById('ar-success-tracking-id');
+    const copyTrackingButton = document.getElementById('ar-copy-tracking-id');
+    const copyFeedback = document.getElementById('ar-copy-feedback');
+
+    function showSuccessModal(trackingId) {
+        successTrackingId.textContent = trackingId || 'Please contact support';
+        successModal.hidden = false;
+        document.body.classList.add('ar-modal-open');
+        successModal.querySelector('.ar-success-close').focus();
+    }
+
+    function closeSuccessModal() {
+        successModal.hidden = true;
+        document.body.classList.remove('ar-modal-open');
+    }
+
+    successModal.querySelectorAll('[data-ar-close-success]').forEach(function(button) {
+        button.addEventListener('click', closeSuccessModal);
+    });
+
+    copyTrackingButton.addEventListener('click', async function() {
+        const trackingId = successTrackingId.textContent;
+        try {
+            await navigator.clipboard.writeText(trackingId);
+            copyFeedback.hidden = false;
+            setTimeout(function() {
+                copyFeedback.hidden = true;
+            }, 2500);
+        } catch (error) {
+            window.prompt('Copy your tracking ID:', trackingId);
+        }
+    });
+
     async function loadPortalContent() {
         // Load Guidelines
         try {
@@ -1016,7 +1225,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                         const displayName = dept.campus === 'Satellite Campus Amethi' ?
                             `${dept.name} (Amethi)` : dept.name;
                         return '<option value="' + escapeHtml(dept.id) + '">' + escapeHtml(
-                            displayName) +
+                                displayName) +
                             '</option>';
                     }).join('');
                 }

@@ -334,6 +334,20 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     </div>
 </div>
 
+<div class="portal-tracking-modal" id="portal-tracking-modal" hidden role="dialog" aria-modal="true"
+    aria-labelledby="portal-tracking-title">
+    <div class="portal-tracking-backdrop" data-close-tracking-modal></div>
+    <div class="portal-tracking-dialog"><button class="portal-tracking-close" type="button" aria-label="Close"
+            data-close-tracking-modal>&times;</button>
+        <div class="portal-tracking-check"><i class="fas fa-check"></i></div>
+        <h2 id="portal-tracking-title">Complaint submitted successfully</h2>
+        <p>Please save this tracking ID for future reference.</p>
+        <div class="portal-tracking-value"><small>TRACKING ID</small><strong id="portal-tracking-value"></strong></div>
+        <button class="btn btn-primary" type="button" id="portal-copy-tracking"><i class="fas fa-copy"></i> Copy
+            tracking ID</button>
+        <span id="portal-copy-feedback" class="portal-copy-feedback" hidden>Tracking ID copied.</span>
+    </div>
+</div>
 <style>
 :root {
     --fc-maroon: #8B1A1A;
@@ -675,6 +689,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('disc-form').style.display = 'none';
                 document.getElementById('tracking-id-text').innerText = data.tracking_id;
                 document.getElementById('disc-success').style.display = 'block';
+                showPortalTrackingPopup(data.tracking_id);
                 window.scrollTo(0, document.getElementById('disc-success').offsetTop - 100);
             } else {
                 const err = await response.json();
@@ -786,6 +801,30 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.innerText = 'Check Status';
         }
     });
+});
+
+function showPortalTrackingPopup(trackingId) {
+    document.getElementById('portal-tracking-value').textContent = trackingId || '';
+    document.getElementById('portal-tracking-modal').hidden = false;
+    document.body.classList.add('portal-modal-open');
+    document.querySelector('#portal-tracking-modal .portal-tracking-close').focus();
+}
+
+function closePortalTrackingPopup() {
+    document.getElementById('portal-tracking-modal').hidden = true;
+    document.body.classList.remove('portal-modal-open');
+}
+document.querySelectorAll('[data-close-tracking-modal]').forEach(function(button) {
+    button.addEventListener('click', closePortalTrackingPopup);
+});
+document.getElementById('portal-copy-tracking').addEventListener('click', async function() {
+    const id = document.getElementById('portal-tracking-value').textContent;
+    try {
+        await navigator.clipboard.writeText(id);
+        document.getElementById('portal-copy-feedback').hidden = false;
+    } catch (error) {
+        window.prompt('Copy your tracking ID:', id);
+    }
 });
 </script>
 

@@ -33,10 +33,13 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
             <div class="grv-overview-copy">
                 <span class="grv-eyebrow"><i class="fas fa-shield-alt" aria-hidden="true"></i>Grievance redressal</span>
                 <h2 id="grv-overview-title">A simple way to raise and track your concern.</h2>
-                <p>Submit a complaint securely, attach supporting documents, and follow its progress using your tracking ID.</p>
+                <p>Submit a complaint securely, attach supporting documents, and follow its progress using your tracking
+                    ID.</p>
                 <div class="grv-overview-actions">
-                    <button type="button" class="grv-action grv-action-primary" data-grievance-tab="register-section"><i class="fas fa-pen" aria-hidden="true"></i> File a Grievance</button>
-                    <button type="button" class="grv-action grv-action-secondary" data-grievance-tab="track-section"><i class="fas fa-search" aria-hidden="true"></i> Track Status</button>
+                    <button type="button" class="grv-action grv-action-primary" data-grievance-tab="register-section"><i
+                            class="fas fa-pen" aria-hidden="true"></i> File a Grievance</button>
+                    <button type="button" class="grv-action grv-action-secondary" data-grievance-tab="track-section"><i
+                            class="fas fa-search" aria-hidden="true"></i> Track Status</button>
                 </div>
             </div>
 
@@ -73,11 +76,20 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
                 <span class="grv-eyebrow">How it works</span>
             </div>
             <ol class="grv-process-steps">
-                <li><span class="grv-step-icon"><i class="fas fa-file-signature" aria-hidden="true"></i></span><strong>Register</strong><small>Submit your complaint and contact details.</small></li>
-                <li><span class="grv-step-icon"><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i></span><strong>Add evidence</strong><small>Upload documents that support your concern.</small></li>
-                <li><span class="grv-step-icon"><i class="fas fa-receipt" aria-hidden="true"></i></span><strong>Get tracking ID</strong><small>Save the ID issued after successful submission.</small></li>
-                <li><span class="grv-step-icon"><i class="fas fa-user-check" aria-hidden="true"></i></span><strong>Review &amp; action</strong><small>The concerned office reviews and acts on it.</small></li>
-                <li><span class="grv-step-icon"><i class="fas fa-check-double" aria-hidden="true"></i></span><strong>Resolution</strong><small>Track the outcome with your tracking ID.</small></li>
+                <li><span class="grv-step-icon"><i class="fas fa-file-signature"
+                            aria-hidden="true"></i></span><strong>Register</strong><small>Submit your complaint and
+                        contact details.</small></li>
+                <li><span class="grv-step-icon"><i class="fas fa-cloud-upload-alt"
+                            aria-hidden="true"></i></span><strong>Add evidence</strong><small>Upload documents that
+                        support your concern.</small></li>
+                <li><span class="grv-step-icon"><i class="fas fa-receipt" aria-hidden="true"></i></span><strong>Get
+                        tracking ID</strong><small>Save the ID issued after successful submission.</small></li>
+                <li><span class="grv-step-icon"><i class="fas fa-user-check"
+                            aria-hidden="true"></i></span><strong>Review &amp; action</strong><small>The concerned
+                        office reviews and acts on it.</small></li>
+                <li><span class="grv-step-icon"><i class="fas fa-check-double"
+                            aria-hidden="true"></i></span><strong>Resolution</strong><small>Track the outcome with your
+                        tracking ID.</small></li>
             </ol>
         </section>
 
@@ -359,6 +371,27 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     </div>
 </div>
 
+<div class="ar-success-modal" id="ar-success-modal" hidden role="dialog" aria-modal="true"
+    aria-labelledby="ar-success-title">
+    <div class="ar-success-backdrop" data-ar-close-success></div>
+    <div class="ar-success-dialog">
+        <button class="ar-success-close" type="button" aria-label="Close" data-ar-close-success>&times;</button>
+        <div class="ar-success-check"><i class="fas fa-check"></i></div>
+        <h2 id="ar-success-title">Grievance submitted successfully</h2>
+        <p>Please save this tracking ID to check your grievance status later.</p>
+        <div class="ar-tracking-highlight">
+            <small>YOUR TRACKING ID</small>
+            <strong id="ar-success-tracking-id"></strong>
+        </div>
+        <div class="ar-success-actions">
+            <button class="ar-button ar-button-secondary" type="button" id="ar-copy-tracking-id"><i
+                    class="fas fa-copy"></i> Copy tracking ID</button>
+            <!-- <button class="ar-button ar-button-secondary" type="button" data-ar-close-success>Continue</button> -->
+        </div>
+        <span class="ar-copy-feedback" id="ar-copy-feedback" role="status" hidden>Tracking ID copied.</span>
+    </div>
+</div>
+
 <style>
 :root {
     --fc-maroon: #173d6b;
@@ -594,7 +627,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     border-bottom: 1px solid rgba(255, 255, 255, 0.13);
 }
 
-.grv-stat-card > i {
+.grv-stat-card>i {
     margin-bottom: 10px;
     color: var(--fc-gold);
     font-size: 1.05rem;
@@ -687,6 +720,133 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
     max-width: 145px;
     font-size: 0.74rem;
     line-height: 1.4;
+}
+
+.ar-success-modal[hidden] {
+    display: none;
+}
+
+.ar-success-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+
+.ar-success-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 20, 35, .72);
+    backdrop-filter: blur(3px);
+}
+
+.ar-success-dialog {
+    position: relative;
+    width: min(500px, 100%);
+    padding: 34px 30px 30px;
+    border-radius: 12px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, .3);
+    animation: ar-success-pop .18s ease-out;
+}
+
+.ar-success-close {
+    position: absolute;
+    top: 8px;
+    right: 13px;
+    border: 0;
+    background: transparent;
+    color: #657083;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.ar-success-check {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: #d9f3e4;
+    color: #198754;
+    font-size: 1.55rem;
+}
+
+.ar-success-dialog h2 {
+    margin: 0 0 8px;
+    color: #172033;
+    font-size: 1.55rem;
+}
+
+.ar-success-dialog p {
+    margin: 0 auto 20px;
+    color: #657083;
+}
+
+.ar-tracking-highlight {
+    margin: 20px 0;
+    padding: 18px 16px;
+    border: 2px dashed #d6a531;
+    border-radius: 8px;
+    background: #fff9e6;
+}
+
+.ar-tracking-highlight small {
+    display: block;
+    margin-bottom: 6px;
+    color: #856404;
+    font-size: .75rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.ar-tracking-highlight strong {
+    display: block;
+    color: #172033;
+    font-size: clamp(1.3rem, 5vw, 1.0rem);
+    word-break: break-word;
+}
+
+.ar-success-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ar-button-secondary {
+    border: 1px solid #cfd6e1;
+    background: #f5f7fb;
+    color: #172033;
+}
+
+.ar-copy-feedback {
+    display: block;
+    margin-top: 12px;
+    color: #198754;
+    font-size: .85rem;
+    font-weight: 700;
+}
+
+@keyframes ar-success-pop {
+    from {
+        opacity: 0;
+        transform: scale(.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+body.ar-modal-open {
+    overflow: hidden;
 }
 
 /* Tabs */
@@ -856,6 +1016,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
 }
 
 @media (max-width: 480px) {
+
     .grv-overview-copy,
     .grv-process {
         padding: 22px;
@@ -1033,14 +1194,21 @@ document.addEventListener('DOMContentLoaded', function() {
             let payload = null;
 
             for (const endpoint of endpoints) {
-                const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
+                const response = await fetch(endpoint, {
+                    headers: {
+                        Accept: 'application/json'
+                    }
+                });
                 if (!response.ok) continue;
 
                 const candidate = await response.json();
                 const values = candidate.stats || candidate.data || candidate;
-                const countKeys = ['total', 'total_grievances', 'total_complaints', 'count', 'resolved', 'in_progress', 'pending'];
+                const countKeys = ['total', 'total_grievances', 'total_complaints', 'count', 'resolved',
+                    'in_progress', 'pending'
+                ];
                 const hasStats = values && typeof values === 'object' && !Array.isArray(values) &&
-                    (countKeys.some(key => values[key] !== undefined) || values.status_counts || values.counts);
+                    (countKeys.some(key => values[key] !== undefined) || values.status_counts || values
+                        .counts);
                 if (hasStats) {
                     payload = candidate;
                     break;
@@ -1059,11 +1227,13 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             Object.entries(aliases).forEach(([name, keys]) => {
-                const value = keys.map(key => stats[key] ?? statusCounts[key]).find(value => value !== undefined && value !== null);
+                const value = keys.map(key => stats[key] ?? statusCounts[key]).find(value =>
+                    value !== undefined && value !== null);
                 const target = document.querySelector(`[data-grievance-stat="${name}"]`);
                 if (target && value !== undefined) {
                     const number = Number(value);
-                    target.textContent = Number.isFinite(number) ? number.toLocaleString('en-IN') : value;
+                    target.textContent = Number.isFinite(number) ? number.toLocaleString('en-IN') :
+                        value;
                 }
             });
 
@@ -1128,6 +1298,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('grievance-form').style.display = 'none';
                 document.getElementById('tracking-id-text').innerText = data.tracking_id;
                 document.getElementById('grievance-success').style.display = 'block';
+                showGrievanceTrackingPopup(data.tracking_id);
                 window.scrollTo(0, document.getElementById('grievance-success').offsetTop - 100);
             } else {
                 const err = await response.json();
@@ -1239,6 +1410,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+    const grievanceModal = document.getElementById('ar-success-modal');
+    const grievanceTrackingId = document.getElementById('ar-success-tracking-id');
+    const grievanceCopyButton = document.getElementById('ar-copy-tracking-id');
+    const grievanceCopyFeedback = document.getElementById('ar-copy-feedback');
+
+    function showGrievanceTrackingPopup(trackingId) {
+        grievanceTrackingId.textContent = trackingId || 'Please contact support';
+        grievanceModal.hidden = false;
+        document.body.classList.add('ar-modal-open');
+        grievanceModal.querySelector('.ar-success-close').focus();
+    }
+
+    function closeGrievanceTrackingPopup() {
+        grievanceModal.hidden = true;
+        document.body.classList.remove('ar-modal-open');
+    }
+
+    grievanceModal.querySelectorAll('[data-ar-close-success]').forEach(function(button) {
+        button.addEventListener('click', closeGrievanceTrackingPopup);
+    });
+
+    grievanceCopyButton.addEventListener('click', async function() {
+        const trackingId = grievanceTrackingId.textContent;
+        try {
+            await navigator.clipboard.writeText(trackingId);
+            grievanceCopyFeedback.hidden = false;
+            setTimeout(function() { grievanceCopyFeedback.hidden = true; }, 2500);
+        } catch (error) {
+            window.prompt('Copy your tracking ID:', trackingId);
+        }
+    });
 </script>
 
 <?php get_footer(); ?>
