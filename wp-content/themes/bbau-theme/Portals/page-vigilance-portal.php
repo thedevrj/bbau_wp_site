@@ -52,7 +52,7 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
 <div class="vigilance-portal py-5">
     <div class="container">
         <?php get_template_part('template-parts/breadcrumb'); ?>
-                <?php get_template_part('menu/menu');?>
+        <?php get_template_part('menu/menu');?>
 
         <!-- INTRO -->
         <div class="row align-items-center mb-5 g-4">
@@ -104,23 +104,28 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
 
                                 <div id="personal-details-section">
                                     <div class="mb-3">
-                                        <label class="form-label">Full Name<span class="text-danger fw-bold">&nbsp;*</span></label>
+                                        <label class="form-label">Full Name<span
+                                                class="text-danger fw-bold">&nbsp;*</span></label>
                                         <input type="text" id="name" name="name" class="form-control vig-input">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Email Address<span class="text-danger fw-bold">&nbsp;*</span></label>
+                                        <label class="form-label">Email Address<span
+                                                class="text-danger fw-bold">&nbsp;*</span></label>
                                         <input type="email" id="email" name="email" class="form-control vig-input"
                                             placeholder="abc@gmail.com">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Phone Number<span class="text-danger fw-bold">&nbsp;*</span></label>
+                                        <label class="form-label">Phone Number<span
+                                                class="text-danger fw-bold">&nbsp;*</span></label>
                                         <input type="text" id="phone" name="phone" class="form-control vig-input"
-                                            placeholder="1234567890" minlength="10" maxlength="10" pattern="\d{10}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                            placeholder="1234567890" minlength="10" maxlength="10" pattern="\d{10}"
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Complaint Category <span class="text-danger fw-bold">*</span></label>
+                                    <label class="form-label">Complaint Category <span
+                                            class="text-danger fw-bold">*</span></label>
                                     <select id="category" name="category" class="form-select vig-input" required>
                                         <option value="">Select a category</option>
                                         <option value="corruption">Corruption</option>
@@ -131,7 +136,8 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Complaint Details <span class="text-danger fw-bold">*</span></label>
+                                    <label class="form-label">Complaint Details <span
+                                            class="text-danger fw-bold">*</span></label>
                                     <textarea id="description" name="description" class="form-control vig-input"
                                         rows="5" required></textarea>
                                 </div>
@@ -165,7 +171,8 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
                         <div class="vig-card-body">
                             <form id="track-status-form">
                                 <div class="mb-4">
-                                    <label class="form-label">Tracking ID <span class="text-danger fw-bold">*</span></label>
+                                    <label class="form-label">Tracking ID <span
+                                            class="text-danger fw-bold">*</span></label>
                                     <input type="text" id="track_id"
                                         class="form-control vig-input text-center text-uppercase fs-5"
                                         placeholder="e.g., VIG-202XXX-XX" required>
@@ -258,6 +265,20 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
     </div>
 </div>
 
+<div class="portal-tracking-modal" id="portal-tracking-modal" hidden role="dialog" aria-modal="true"
+    aria-labelledby="portal-tracking-title">
+    <div class="portal-tracking-backdrop" data-close-tracking-modal></div>
+    <div class="portal-tracking-dialog"><button class="portal-tracking-close" type="button" aria-label="Close"
+            data-close-tracking-modal>&times;</button>
+        <div class="portal-tracking-check"><i class="fas fa-check"></i></div>
+        <h2 id="portal-tracking-title">Submission successful</h2>
+        <p>Please save this tracking ID for future reference.</p>
+        <div class="portal-tracking-value"><small>TRACKING ID</small><strong id="portal-tracking-value"></strong></div>
+        <button class="btn btn-primary" type="button" id="portal-copy-tracking"><i class="fas fa-copy"></i> Copy
+            tracking ID</button> <span id="portal-copy-feedback" class="portal-copy-feedback" hidden>Tracking ID
+            copied.</span>
+    </div>
+</div>
 <style>
 :root {
     --fc-maroon: #8B1A1A;
@@ -615,14 +636,14 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
 // XSS Sanitization Helper
 function escapeHTML(str) {
     if (!str) return '';
-    return String(str).replace(/[&<>'"]/g, 
+    return String(str).replace(/[&<>'"]/g,
         tag => ({
             '&': '&amp;',
             '<': '&lt;',
             '>': '&gt;',
             "'": '&#39;',
             '"': '&quot;'
-        }[tag] || tag)
+        } [tag] || tag)
     );
 }
 
@@ -671,7 +692,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const tabName = targetId.replace('-section', '');
             const url = new URL(window.location);
             url.searchParams.set('tab', tabName);
-            window.history.pushState({ tab: targetId }, '', url);
+            window.history.pushState({
+                tab: targetId
+            }, '', url);
         }
     }
 
@@ -688,7 +711,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetId = initialTab + '-section';
         switchTab(targetId, false);
     } else {
-        window.history.replaceState({ tab: 'register-section' }, '', window.location.href);
+        window.history.replaceState({
+            tab: 'register-section'
+        }, '', window.location.href);
     }
 
     // Handle browser back/forward buttons
@@ -751,7 +776,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
 
         const formData = new FormData(this);
-        
+
         // Sanitize string entries to prevent XSS payloads
         for (let [key, value] of formData.entries()) {
             if (typeof value === 'string') {
@@ -777,6 +802,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('vigilance-form').style.display = 'none';
                 document.getElementById('tracking-id-text').innerText = data.tracking_id;
                 document.getElementById('vigilance-success').style.display = 'block';
+                showPortalTrackingPopup(data.tracking_id);
             } else {
                 const err = await response.json();
                 console.error('Validation Error:', err);
@@ -893,6 +919,30 @@ function updateFileText(input) {
         msg.innerText = 'Click to upload files (PDF, JPG, PNG)';
     }
 }
+
+function showPortalTrackingPopup(trackingId) {
+    document.getElementById('portal-tracking-value').textContent = trackingId || '';
+    document.getElementById('portal-tracking-modal').hidden = false;
+    document.body.classList.add('portal-modal-open');
+    document.querySelector('#portal-tracking-modal .portal-tracking-close').focus();
+}
+
+function closePortalTrackingPopup() {
+    document.getElementById('portal-tracking-modal').hidden = true;
+    document.body.classList.remove('portal-modal-open');
+}
+document.querySelectorAll('[data-close-tracking-modal]').forEach(function(button) {
+    button.addEventListener('click', closePortalTrackingPopup);
+});
+document.getElementById('portal-copy-tracking').addEventListener('click', async function() {
+    const id = document.getElementById('portal-tracking-value').textContent;
+    try {
+        await navigator.clipboard.writeText(id);
+        document.getElementById('portal-copy-feedback').hidden = false;
+    } catch (error) {
+        window.prompt('Copy your tracking ID:', id);
+    }
+});
 </script>
 
 <?php get_footer(); ?>
