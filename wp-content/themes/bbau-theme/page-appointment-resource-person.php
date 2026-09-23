@@ -53,7 +53,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
             <div class="col-12">
                 <section class="sc-section">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2 class="sc-section-title mb-0">contractual & Guest Faculty Appointments</h2>
+                        <h2 class="sc-section-title mb-0">Contractual & Guest Faculty Appointments</h2>
                         <span class="sc-count-badge" id="result-count">0</span>
                     </div>
 
