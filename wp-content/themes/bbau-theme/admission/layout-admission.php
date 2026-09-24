@@ -36,6 +36,7 @@ $admission_base_url = trailingslashit(get_permalink());
             </div>
         </div>
     </div>
+    <div id="main-content"></div>
 
     <div class="container py-5">
         <div id="stream-content">

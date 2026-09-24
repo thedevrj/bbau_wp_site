@@ -62,6 +62,7 @@ $total_pages = ($total_count > 0) ? ceil($total_count / 20) : 1;
         </div>
     </div>
 </section>
+<div id="main-content"></div>
 
 <main id="primary" class="site-main faculty-directory" style="background:#fdfaf6; padding-bottom:60px;">
     <div class="container pt-4">

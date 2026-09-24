@@ -34,6 +34,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
             </div>
         </div>
     </div>
+    <div id="main-content"></div>
 
     <div class="container py-lg-5">
 

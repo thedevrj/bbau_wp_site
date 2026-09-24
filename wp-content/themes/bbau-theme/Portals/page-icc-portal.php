@@ -772,7 +772,20 @@ document.getElementById('portal-copy-tracking').addEventListener('click', async 
         await navigator.clipboard.writeText(id);
         document.getElementById('portal-copy-feedback').hidden = false;
     } catch (error) {
-        window.prompt('Copy your tracking ID:', id);
+        const fallback = document.createElement('textarea');
+        fallback.value = id;
+        fallback.setAttribute('readonly', '');
+        fallback.style.position = 'fixed';
+        fallback.style.opacity = '0';
+        document.body.appendChild(fallback);
+        fallback.focus();
+        fallback.select();
+        const copied = document.execCommand('copy');
+        fallback.remove();
+        const feedback = document.getElementById('portal-copy-feedback');
+        feedback.textContent = copied ? 'Tracking ID copied.' :
+            'Please select and copy the tracking ID above.';
+        feedback.hidden = false;
     }
 });
 </script>

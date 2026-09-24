@@ -117,6 +117,7 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
         </div>
     </div>
 </div>
+<div id="main-content"></div>
 
 <div class="container">
     <div class="cbcs-filter-bar">
