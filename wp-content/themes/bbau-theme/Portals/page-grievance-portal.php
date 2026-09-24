@@ -1438,7 +1438,18 @@ document.addEventListener('DOMContentLoaded', function() {
             grievanceCopyFeedback.hidden = false;
             setTimeout(function() { grievanceCopyFeedback.hidden = true; }, 2500);
         } catch (error) {
-            window.prompt('Copy your tracking ID:', trackingId);
+            const fallback = document.createElement('textarea');
+            fallback.value = trackingId;
+            fallback.setAttribute('readonly', '');
+            fallback.style.position = 'fixed';
+            fallback.style.opacity = '0';
+            document.body.appendChild(fallback);
+            fallback.focus();
+            fallback.select();
+            const copied = document.execCommand('copy');
+            fallback.remove();
+            grievanceCopyFeedback.textContent = copied ? 'Tracking ID copied.' : 'Please select and copy the tracking ID above.';
+            grievanceCopyFeedback.hidden = false;
         }
     });
 </script>

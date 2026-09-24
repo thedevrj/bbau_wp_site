@@ -37,6 +37,7 @@ if (!is_wp_error($team_res) && wp_remote_retrieve_response_code($team_res) === 2
             </div>
         </div>
     </section>
+    <div id="main-content"></div>
 
     <!-- ELEGANT TAB NAVIGATION -->
     <div class="rd-tab-nav-wrapper">

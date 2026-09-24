@@ -53,6 +53,7 @@ get_header();
         </div>
     </div>
 </div>
+<div id="main-content"></div>
 
 <?php if (empty($centre_data)): ?>
     <div class="container py-5" style="text-align:center; min-height: 50vh;">

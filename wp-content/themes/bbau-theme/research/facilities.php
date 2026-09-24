@@ -27,6 +27,7 @@ if (!is_wp_error($facilities_res) && wp_remote_retrieve_response_code($facilitie
             </div>
         </div>
     </section>
+    <div id="main-content"></div>
 
     <div class="research-container container">
         <?php get_template_part('template-parts/breadcrumb');?>
