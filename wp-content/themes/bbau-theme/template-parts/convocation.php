@@ -85,6 +85,7 @@ get_header();
                 <?php endif; ?>
 
             </div>
+            <div id="main-content"></div>
 
            
 

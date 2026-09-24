@@ -12,6 +12,7 @@ get_header();
         <h1><?php the_title(); ?></h1>
         <span class="kulgeet-subtitle">The Soul of Our University</span>
         <?php get_template_part('template-parts/breadcrumb'); ?>
+        <div id="main-content"></div>
     </section>
 
     <!-- Video -->

@@ -18,6 +18,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
         </div>
     </div>
 </div>
+<div id="main-content"></div>
 
 <div class="admission-portal-brand helpdesk-portal py-5">
 

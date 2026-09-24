@@ -58,6 +58,7 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
         </div>
     </div>
 </section>
+<div id="main-content"></div>
 
 <main id="primary" class="site-main faculty-profile-page" style="background:#fdfaf6; padding-bottom:60px;">
     <div class="container pt-4">
