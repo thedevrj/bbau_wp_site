@@ -489,7 +489,7 @@ $media_base = getenv('DJANGO_MEDIA_URL');
         <button class="sc-modal-close" onclick="toggleModal('login-modal', false)">&times;</button>
         <div class="sc-modal-header">
             <h3>Vault Authentication</h3>
-            <p class="sc-modal-subtitle">Secure access for Faculty &amp; Staff</p>
+            <p class="sc-modal-subtitle">Login to view archived records.</p>
         </div>
         <div class="sc-modal-body">
             <form id="staff-login-form">
@@ -652,7 +652,7 @@ document.addEventListener('DOMContentLoaded', function() {
             render();
         } catch (e) {
             listContainer.innerHTML =
-                '<p class="text-danger py-3"><i class="fa-solid fa-triangle-exclamation me-2"></i>Error securely retrieving records. Please try again.</p>';
+                '<p class="text-danger py-3"><i class="fa-solid fa-triangle-exclamation me-2"></i>Error retrieving records. Please try again.</p>';
         }
     }
 
