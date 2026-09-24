@@ -1169,7 +1169,18 @@ body.ar-modal-open {
                 copyFeedback.hidden = true;
             }, 2500);
         } catch (error) {
-            window.prompt('Copy your tracking ID:', trackingId);
+            const fallback = document.createElement('textarea');
+            fallback.value = trackingId;
+            fallback.setAttribute('readonly', '');
+            fallback.style.position = 'fixed';
+            fallback.style.opacity = '0';
+            document.body.appendChild(fallback);
+            fallback.focus();
+            fallback.select();
+            const copied = document.execCommand('copy');
+            fallback.remove();
+            copyFeedback.textContent = copied ? 'Tracking ID copied.' : 'Please select and copy the tracking ID above.';
+            copyFeedback.hidden = false;
         }
     });
 

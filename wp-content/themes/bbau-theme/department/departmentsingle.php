@@ -36,7 +36,8 @@ get_header();
 <div class="container-fluid position-relative px-0 overflow-hidden">
     <img src="<?php echo get_field('desktop_1x', $page_id); ?>"
         srcset="<?php echo get_field('desktop_1x', $page_id); ?>"
-        class="img-fluid d-lg-block d-none h_xl_250 object-fit-cover" alt="<?php the_title();?> Banner" width="100%" height="250">
+        class="img-fluid d-lg-block d-none h_xl_250 object-fit-cover" alt="<?php the_title();?> Banner" width="100%"
+        height="250">
 
     <!-- Mobile Image (only show if mobile_1x exists) -->
     <?php if(get_field('mobile_1x', $page_id)) : ?>
@@ -54,12 +55,12 @@ get_header();
         </div>
     </div>
 </div>
-
+<div id="main-content"></div>
 <?php if (empty($dept_data)): ?>
-    <div class="container py-5" style="text-align:center; min-height: 50vh;">
-        <h2>Department not found or slug not provided.</h2>
-        <p>Please access this page through a valid department link.</p>
-    </div>
+<div class="container py-5" style="text-align:center; min-height: 50vh;">
+    <h2>Department not found or slug not provided.</h2>
+    <p>Please access this page through a valid department link.</p>
+</div>
 <?php else: ?>
 
 <!--  PAGE WRAPPER (Scoped Styling) -->
@@ -74,15 +75,24 @@ get_header();
                 return esc_url(add_query_arg(['tab' => $target_tab], home_url($wp->request)));
             }
             ?>
-            <a href="<?php echo dept_nav_url($slug, 'about'); ?>" class="<?php echo ($tab === 'about') ? 'active' : ''; ?>">About</a>
-            <a href="<?php echo dept_nav_url($slug, 'thrust'); ?>" class="<?php echo ($tab === 'thrust') ? 'active' : ''; ?>">Thrust Areas</a>
-            <a href="<?php echo dept_nav_url($slug, 'programs'); ?>" class="<?php echo ($tab === 'programs') ? 'active' : ''; ?>">Programmes</a>
-            <a href="<?php echo dept_nav_url($slug, 'faculty'); ?>" class="<?php echo ($tab === 'faculty') ? 'active' : ''; ?>">People</a>
-            <a href="<?php echo dept_nav_url($slug, 'notices'); ?>" class="<?php echo ($tab === 'notices') ? 'active' : ''; ?>">Notices</a>
-            <a href="<?php echo dept_nav_url($slug, 'research'); ?>" class="<?php echo ($tab === 'research') ? 'active' : ''; ?>">Research Activities</a>
-            <a href="<?php echo dept_nav_url($slug, 'timetable'); ?>" class="<?php echo ($tab === 'timetable') ? 'active' : ''; ?>">Time Table</a>
-            <a href="<?php echo dept_nav_url($slug, 'committees'); ?>" class="<?php echo ($tab === 'committees') ? 'active' : ''; ?>">Committees</a>
-            <a href="<?php echo dept_nav_url($slug, 'gallery'); ?>" class="<?php echo ($tab === 'gallery') ? 'active' : ''; ?>">Gallery</a>
+            <a href="<?php echo dept_nav_url($slug, 'about'); ?>"
+                class="<?php echo ($tab === 'about') ? 'active' : ''; ?>">About</a>
+            <a href="<?php echo dept_nav_url($slug, 'thrust'); ?>"
+                class="<?php echo ($tab === 'thrust') ? 'active' : ''; ?>">Thrust Areas</a>
+            <a href="<?php echo dept_nav_url($slug, 'programs'); ?>"
+                class="<?php echo ($tab === 'programs') ? 'active' : ''; ?>">Programmes</a>
+            <a href="<?php echo dept_nav_url($slug, 'faculty'); ?>"
+                class="<?php echo ($tab === 'faculty') ? 'active' : ''; ?>">People</a>
+            <a href="<?php echo dept_nav_url($slug, 'notices'); ?>"
+                class="<?php echo ($tab === 'notices') ? 'active' : ''; ?>">Notices</a>
+            <a href="<?php echo dept_nav_url($slug, 'research'); ?>"
+                class="<?php echo ($tab === 'research') ? 'active' : ''; ?>">Research Activities</a>
+            <a href="<?php echo dept_nav_url($slug, 'timetable'); ?>"
+                class="<?php echo ($tab === 'timetable') ? 'active' : ''; ?>">Time Table</a>
+            <a href="<?php echo dept_nav_url($slug, 'committees'); ?>"
+                class="<?php echo ($tab === 'committees') ? 'active' : ''; ?>">Committees</a>
+            <a href="<?php echo dept_nav_url($slug, 'gallery'); ?>"
+                class="<?php echo ($tab === 'gallery') ? 'active' : ''; ?>">Gallery</a>
         </div>
     </div>
 
@@ -174,27 +184,30 @@ get_header();
     max-width: 700px;
     transition: 0.3s;
 }
-.dept-page-wrapper .dept-title-gradient {
-  font-family: 'Merriweather', serif;
-  font-size: 32px;
-  font-weight: 700;
-  color: #5c1010;
 
-  position: relative;
-  display: inline-block;
-  margin-bottom: 20px;
+.dept-page-wrapper .dept-title-gradient {
+    font-family: 'Merriweather', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #5c1010;
+
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
 }
 
 /*  UNDERLINE */
 .dept-page-wrapper .dept-title-gradient::after {
-  content: "";
-  display: block;
-  width: 180px;
-  height: 4px;
-  background: linear-gradient(90deg, #8B1A1A, #c9a84c); /* 🔥 red → gold */
-  margin-top: 8px;
-  border-radius: 2px;
+    content: "";
+    display: block;
+    width: 180px;
+    height: 4px;
+    background: linear-gradient(90deg, #8B1A1A, #c9a84c);
+    /* 🔥 red → gold */
+    margin-top: 8px;
+    border-radius: 2px;
 }
+
 .avatar {
     overflow: hidden;
 }
@@ -230,7 +243,7 @@ get_header();
     border-radius: 50%;
     border: 5px solid #c9a84c;
     overflow: hidden;
-}   
+}
 
 /* ================= BADGE ================= */
 .hod-badge {

@@ -9,7 +9,6 @@ get_header();
 
 $media_base = getenv('DJANGO_MEDIA_URL');
 
-// Reuse background from satellite campus if available, otherwise a placeholder
 $banner_url = "/wp-content/uploads/2026/04/language.png"; 
 ?>
 
@@ -24,6 +23,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
             </div>
         </div>
     </div>
+    <div id="main-content"></div>
 
     <div class="container py-5">
         <!-- SEARCH & FILTER BAR -->

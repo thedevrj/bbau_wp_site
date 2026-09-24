@@ -19,6 +19,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
             </div>
         </div>
     </section>
+    <div id="main-content"></div>
 
     <div class="research-container container">
         <?php get_template_part('template-parts/breadcrumb');?>
