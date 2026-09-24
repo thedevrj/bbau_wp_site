@@ -36,7 +36,7 @@ get_header();
                 </ul>
 
                 <div class="accreditation-links">
-                    <a href="/about-us/accreditation/report/" target="_blank">
+                    <a href="/accreditation/report/" target="_blank">
                         View Report (PDF)
                     </a>
 

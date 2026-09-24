@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                         <div class="sc-list-action">
-                            View PDF <i class="fa-solid fa-download"></i>
+                            View <i class="fa-solid fa-download"></i>
                         </div>
                     </div>
                 </a>
@@ -629,7 +629,7 @@ document.addEventListener('DOMContentLoaded', function() {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 25px;
+    padding: 16px 25px;
     margin-bottom: 12px;
     border: 1px solid var(--sc-light-border);
     border-radius: 16px;
@@ -693,7 +693,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .sc-list-title {
     font-weight: 700;
     color: var(--sc-midnight);
-    font-size: 1.15rem;
+    font-size: 1.0rem;
     margin: 0;
     transition: color 0.3s ease;
 }
@@ -796,7 +796,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .sc-notice-date-box .day {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 700;
     line-height: 1.1;
 }
@@ -1181,7 +1181,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     .sc-notice-title {
-        font-size: 1rem;
+        font-size: 20px;
     }
 
     .sc-notice-action {
@@ -1250,6 +1250,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     .sc-list-action {
         align-self: flex-end;
+        font-size: 15px;
     }
 }
 </style>
