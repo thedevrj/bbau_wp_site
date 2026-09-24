@@ -21,7 +21,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
                 <div class="fc-section-intro text-center">
                     <h2 class="fc-main-title"><?php echo get_the_title();?></h2>
                     <p class="fc-lead-text">
-                        The <?php echo get_the_title();?> provides a transparent, secure, and accessible channel for
+                        The <?php echo get_the_title();?> provides a transparent and accessible channel for
                         students, faculty, and staff to register their grievances.
                     </p>
                 </div>
@@ -33,7 +33,7 @@ $api_public_base = getenv('DJANGO_MEDIA_URL');
             <div class="grv-overview-copy">
                 <span class="grv-eyebrow"><i class="fas fa-shield-alt" aria-hidden="true"></i>Grievance redressal</span>
                 <h2 id="grv-overview-title">A simple way to raise and track your concern.</h2>
-                <p>Submit a complaint securely, attach supporting documents, and follow its progress using your tracking
+                <p>Submit a complaint, attach supporting documents, and follow its progress using your tracking
                     ID.</p>
                 <div class="grv-overview-actions">
                     <button type="button" class="grv-action grv-action-primary" data-grievance-tab="register-section"><i

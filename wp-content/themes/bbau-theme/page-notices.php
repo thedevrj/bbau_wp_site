@@ -87,10 +87,10 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
                     </section>
 
                     <section class="sc-section">
-                        <h2 class="sc-section-title">Secure Access</h2>
+                        <h2 class="sc-section-title">Login for Official Notices</h2>
                         <div class="sc-content-card text-center" id="staff-auth-card">
                             <div id="auth-unlogged">
-                                <p class=" text-muted mb-3">Faculty and Staff login for internal notices.</p>
+                                <p class=" text-muted mb-3">Faculty and Staff login for official notices.</p>
                                 <button class="btn sc-btn-midnight w-100" onclick="toggleModal('login-modal', true)">
                                     <i class="fa-solid fa-user-lock me-2"></i> Login
                                 </button>
@@ -139,7 +139,7 @@ $banner_url = "/wp-content/uploads/2026/04/language.png";
         <button class="sc-modal-close" onclick="toggleModal('login-modal', false)">&times;</button>
         <div class="sc-modal-header">
             <h3>Portal Authentication</h3>
-            <p class="sc-modal-subtitle">Secure access for Faculty & Staff</p>
+            <p class="sc-modal-subtitle">Login to access official notices.</p>
         </div>
         <div class="sc-modal-body">
             <form id="staff-login-form">
