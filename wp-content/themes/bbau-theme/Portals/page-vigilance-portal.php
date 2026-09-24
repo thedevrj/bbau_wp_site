@@ -60,7 +60,7 @@ if (!is_wp_error($docs_response) && wp_remote_retrieve_response_code($docs_respo
                 <div class="fc-section-intro text-center">
                     <h2 class="fc-main-title"><?php echo get_the_title();?></h2>
                     <p class="fc-lead-text">
-                        The Vigilance Portal provides a transparent, secure, and easily accessible channel for members
+                        The Vigilance Portal provides a transparent, and easily accessible channel for members
                         report corruption, malpractice, or procedural lapses directly to the University Vigilance Cell.
                     </p>
                 </div>

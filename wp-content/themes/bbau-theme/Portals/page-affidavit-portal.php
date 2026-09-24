@@ -75,7 +75,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                     receive after
                     submission.</p>
                 <div class="ar-notice"><strong>Before you submit</strong><br>Ensure both documents are signed, legible
-                    and less than 10 MB each.</div>
+                    and less than 5 MB each.</div>
             </div>
             <form class="ar-form" id="ar-affidavit-form" enctype="multipart/form-data">
                 <div class="ar-form-message" role="status" hidden></div>
@@ -104,7 +104,7 @@ $api_base = getenv('DJANGO_MEDIA_URL');
                 </div>
                 <label class="ar-check"><input required type="checkbox" name="declaration_accepted" value="true"> I
                     confirm that the information and documents submitted are correct.</label>
-                <button class="ar-button ar-button-primary" type="submit">Submit securely <i
+                <button class="ar-button ar-button-primary" type="submit">Submit <i
                         class="fas fa-arrow-right"></i></button>
             </form>
         </div>
@@ -1033,7 +1033,7 @@ body.ar-modal-open {
             message.className = 'ar-form-message is-error';
         }
         button.disabled = false;
-        button.innerHTML = 'Submit securely <i class="fas fa-arrow-right"></i>';
+        button.innerHTML = 'Submit <i class="fas fa-arrow-right"></i>';
     });
 
     document.getElementById('ar-track-form').addEventListener('submit', async function(event) {
