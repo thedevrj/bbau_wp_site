@@ -70,7 +70,7 @@ function get_notice_href($notice) {
     ];
 }
 ?>
-
+<!--
 <div class="parda-overlay" id="pardaOverlay" aria-hidden="true">
 
     <div class="shilanyas-stone" id="shilanyasStone">
@@ -91,7 +91,7 @@ function get_notice_href($notice) {
         <div class="snip-flash" id="snipFlash"></div>
     </div>
 
-</div>
+</div> -->
 
 <script>
   
@@ -304,7 +304,6 @@ document.addEventListener("DOMContentLoaded", function() {
     <div class="announce-container">
         <div class="announce-track">
             <?php if ( !empty($marquee_notices) ) : ?>
-            <?php foreach ( $marquee_notices as $mn ) : ?>
             <?php foreach ( $marquee_notices as $mn ) : 
                     $notice_data = get_notice_href($mn);
                     $href = $notice_data['url'];
@@ -323,7 +322,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     <?php echo esc_html($mn['title']); ?>
                 </a>
             </span>
-            <?php endforeach; ?>
             <?php endforeach; ?>
             <?php else: ?>
             <span><a href="#">No new marquee updates at this time.</a></span>
@@ -595,6 +593,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
     </div>
 </section>
-<?php 
-get_footer();
+<script>
+(function () {
+  const sections = document.querySelectorAll(".glance-section, .vc-section, .info-section, .auto-slider");
+  if (!sections.length) return;
+  sections.forEach((section, index) => {
+    section.classList.add(index % 3 === 1 ? "reveal-from-left" : index % 3 === 2 ? "reveal-from-right" : "reveal-up");
+  });
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    sections.forEach(section => section.classList.add("is-visible"));
+    return;
+  }
+  const observer = new IntersectionObserver((entries, instance) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      instance.unobserve(entry.target);
+    });
+  }, { threshold: 0.16, rootMargin: "0px 0px -60px" });
+  document.querySelectorAll(".glance-stats .stat, .info-col, .slider-card").forEach((item, index) => {
+    item.classList.add("reveal-item");
+    item.style.setProperty("--reveal-delay", (index % 6) * 90 + "ms");
+  });
+  sections.forEach(section => observer.observe(section));
+})();
+</script>
+<?php get_footer();
 ?>
