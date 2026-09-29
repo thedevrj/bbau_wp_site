@@ -41,10 +41,10 @@ function get_notice_href_page($n) {
 }
 
 $page_name = !empty($category_param) ? ucfirst($category_param) : 'Notice';
-
+$page_name = pluralize($page_name);
 function pluralize($word) {
-    if (strtolower($word) === 'news') return 'News';
-    return strtolower($word) . 's';
+    if (strtolower($word) === 'tenders') return 'Tenders';
+    return ($word) . 's';
 }
 $available_years = array();
 foreach ($notices_data as $n) {
@@ -354,7 +354,7 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
 }
 
 .ntl-hdr-lbl {
-    font-size: 9px;
+    font-size: 10px;
     color: #fb923c;
 }
 .ntl-filterbar {
@@ -588,7 +588,7 @@ $clear_url = add_query_arg($base_args, strtok($_SERVER['REQUEST_URI'], '?'));
     border-radius: 8px;
     border: 1px solid #e7e5e4;
     background: #fff;
-    color: #78716c;
+    color: #78716c !important;
     display: flex;
     align-items: center;
     justify-content: center;
