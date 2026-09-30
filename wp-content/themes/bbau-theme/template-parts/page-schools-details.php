@@ -100,7 +100,7 @@ get_header();
 <?php get_template_part('banners/about-banner'); ?>
 
 <!-- MAIN WRAPPER (Department Style) -->
-<div class="dept-page-wrapper py-lg-5">
+<div class="dept-page-wrapper py-5">
     <div class="container">
 
         <!-- NAVIGATION TABS -->
