@@ -200,7 +200,16 @@
 }
 
 /* --- Minutes Styling --- */
+.minutes-list-modern .minute-row {
+    width: calc(33% - 12px) !important;
+    flex: 0 0 calc(33% - 12px);
+}
 
+.minutes-list-modern{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
 
 /* iPad / Tablet */
 @media (max-width: 991px){
@@ -211,7 +220,7 @@
     .minutes-list-modern{
         display: flex;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 15px !important;
     }
 }
 

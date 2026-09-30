@@ -65,27 +65,31 @@ function format_designation($designation) {
         <!-- Custom Card Container -->
         <div class="authority-card">
             <!-- Tabs Menu -->
-            
+
             <!-- Authority Header Row -->
-            <div class="authority-header-row" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2d9cc; margin-bottom: 30px; flex-wrap:wrap; gap:15px;">
+            <div class="authority-header-row"
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2d9cc; margin-bottom: 30px; flex-wrap:wrap; gap:15px;">
                 <div class="authority-tabs" style="border-bottom: none; margin-bottom: 0;">
-                <button class="auth-tab-btn active" onclick="switchAuthorityTab(event, 'auth-members')">
-                    <i class="fa-solid fa-users" style="margin-right: 8px;"></i>Members
-                </button>
-                <button class="auth-tab-btn" onclick="switchAuthorityTab(event, 'auth-minutes')">
-                    <i class="fa-solid fa-file-pdf" style="margin-right: 8px;"></i>Minutes of Meetings
-                </button>
-            </div>
+                    <button class="auth-tab-btn active" onclick="switchAuthorityTab(event, 'auth-members')">
+                        <i class="fa-solid fa-users" style="margin-right: 8px;"></i>Members
+                    </button>
+                    <button class="auth-tab-btn" onclick="switchAuthorityTab(event, 'auth-minutes')">
+                        <i class="fa-solid fa-file-pdf" style="margin-right: 8px;"></i>Minutes of Meetings
+                    </button>
+                </div>
                 <div class="auth-login-controls">
-                    <button class="btn-auth-trigger" id="auth-btn-login" style="display:none;"><i class="fa-solid fa-lock"></i> Login</button>
-                    <button class="btn-auth-logout" id="auth-btn-logout" style="display:none;"><i class="fa-solid fa-sign-out-alt"></i> Logout <span id="auth-username" style="font-size: 0.8em; margin-left:5px;"></span></button>
+                    <button class="btn-auth-trigger" id="auth-btn-login" style="display:none;"><i
+                            class="fa-solid fa-lock"></i> Login</button>
+                    <button class="btn-auth-logout" id="auth-btn-logout" style="display:none;"><i
+                            class="fa-solid fa-sign-out-alt"></i> Logout <span id="auth-username"
+                            style="font-size: 0.8em; margin-left:5px;"></span></button>
                 </div>
             </div>
 
 
             <!-- Card Body Content -->
             <div class="authority-card-body">
-                
+
                 <!-- Members List Tab Panel -->
                 <div id="auth-members" class="auth-tab-panel active">
                     <?php if (!empty($members)): ?>
@@ -109,18 +113,22 @@ function format_designation($designation) {
                                 ?>
                                 <tr>
                                     <td class="col-sno"><strong><?php echo $sno++; ?></strong></td>
-                                    <td class="col-provision"><?php echo esc_html(!empty($member['provision']) ? $member['provision'] : '—'); ?></td>
+                                    <td class="col-provision">
+                                        <?php echo esc_html(!empty($member['provision']) ? $member['provision'] : '—'); ?>
+                                    </td>
                                     <td class="col-name">
                                         <div class="member-title"><?php echo esc_html($member['name']); ?></div>
                                         <?php if (!empty($member['designation'])): ?>
-                                            <div class="member-desc"><?php echo format_designation($member['designation']); ?></div>
+                                        <div class="member-desc">
+                                            <?php echo format_designation($member['designation']); ?></div>
                                         <?php endif; ?>
                                     </td>
                                     <td class="col-email">
                                         <?php if (!empty($member['email'])): ?>
-                                            <a href="mailto:<?php echo esc_attr($member['email']); ?>" class="member-link"><?php echo esc_html($member['email']); ?></a>
+                                        <a href="mailto:<?php echo esc_attr($member['email']); ?>"
+                                            class="member-link"><?php echo esc_html($member['email']); ?></a>
                                         <?php else: ?>
-                                            —
+                                        —
                                         <?php endif; ?>
                                     </td>
                                     <td class="col-phone">
@@ -129,10 +137,10 @@ function format_designation($designation) {
                                         if (!empty($phones)):
                                             foreach ($phones as $phone):
                                         ?>
-                                            <span class="phone-number"><?php echo esc_html($phone['number']); ?></span><br>
-                                            <?php if (!empty($phone['label'])): ?>
-                                                <span class="phone-lbl"><?php echo esc_html($phone['label']); ?></span><br>
-                                            <?php endif; ?>
+                                        <span class="phone-number"><?php echo esc_html($phone['number']); ?></span><br>
+                                        <?php if (!empty($phone['label'])): ?>
+                                        <span class="phone-lbl"><?php echo esc_html($phone['label']); ?></span><br>
+                                        <?php endif; ?>
                                         <?php 
                                             endforeach;
                                         else:
@@ -152,17 +160,18 @@ function format_designation($designation) {
                         </table>
                     </div>
                     <?php else: ?>
-                        <div class="auth-empty-state">
-                            <i class="fa-solid fa-users-slash"></i>
-                            <p>No members listed for this authority yet.</p>
-                        </div>
+                    <div class="auth-empty-state">
+                        <i class="fa-solid fa-users-slash"></i>
+                        <p>No members listed for this authority yet.</p>
+                    </div>
                     <?php endif; ?>
                 </div>
 
                 <!-- Minutes List Tab Panel -->
                 <div id="auth-minutes" class="auth-tab-panel">
                     <div id="minutes-container">
-                        <div style="padding:40px; text-align:center;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>
+                        <div style="padding:40px; text-align:center;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -193,11 +202,12 @@ function switchAuthorityTab(evt, panelId) {
 
 
 <?php get_template_part('template-parts/portal-auth-modal'); ?>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const minutesApiUrl = "<?php echo esc_js($minutes_url); ?>";
     const mediaBase = "<?php echo rtrim(getenv('DJANGO_MEDIA_URL'), '/'); ?>";
-    
+
     const btnLogin = document.getElementById('auth-btn-login');
     const btnLogout = document.getElementById('auth-btn-logout');
     const labelUsername = document.getElementById('auth-username');
@@ -218,15 +228,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchMinutes() {
         const headers = {};
-        
-        minutesContainer.innerHTML = '<div style="padding:40px; text-align:center;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>';
-        
+
+        minutesContainer.innerHTML =
+            '<div style="padding:40px; text-align:center;"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>';
+
         try {
-            const res = await fetch(minutesApiUrl, { headers, credentials: 'include' });
+            const res = await fetch(minutesApiUrl, {
+                headers,
+                credentials: 'include'
+            });
             if (!res.ok) throw new Error('Failed to fetch');
             const data_raw = await res.json();
             const data = data_raw.results !== undefined ? data_raw.results : data_raw;
-            
+
             if (data.length === 0) {
                 minutesContainer.innerHTML = `
                     <div class="auth-empty-state">
@@ -250,15 +264,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         fileUrl = mediaBase + (path.startsWith('/') ? path : '/' + path);
                     }
                 }
-                
+
                 const d = new Date(min.date_of_meeting);
                 const day = String(d.getDate()).padStart(2, '0');
-                const month = d.toLocaleString('en-US', { month: 'short' });
+                const month = d.toLocaleString('en-US', {
+                    month: 'short'
+                });
                 const title = min.meeting_title || 'Authority Meeting';
-                
-                const privateBadge = min.is_private ? '<span class="badge" style="background:#8B1A1A; color:#fff; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Private</span>' : '';
+
+                const privateBadge = min.is_private ?
+                    '<span class="badge" style="background:#8B1A1A; color:#fff; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Private</span>' :
+                    '';
                 const isLoggedIn = !!localStorage.getItem('portal_user');
-                
+
                 if (min.is_private && !isLoggedIn) {
                     html += `
                     <a href="javascript:void(0);" onclick="toggleModal('login-modal', true)" class="minute-row" style="border-left:4px solid #8B1A1A; background:#fffdf9;">
@@ -284,7 +302,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </a>`;
                 } else {
-                    let badgeStyles = min.is_private ? 'border-left:4px solid #8B1A1A; background:#fffdf9;' : '';
+                    let badgeStyles = min.is_private ?
+                        'border-left:4px solid #8B1A1A; background:#fffdf9;' : '';
                     html += `
                     <a href="${fileUrl}" class="minute-row" target="_blank" style="${badgeStyles}">
                         <div class="min-date">
@@ -302,7 +321,8 @@ document.addEventListener('DOMContentLoaded', function() {
             minutesContainer.innerHTML = html;
 
         } catch (e) {
-            minutesContainer.innerHTML = '<div style="padding:40px; text-align:center; color:red;">Error loading minutes.</div>';
+            minutesContainer.innerHTML =
+                '<div style="padding:40px; text-align:center; color:red;">Error loading minutes.</div>';
         }
     }
 
@@ -316,16 +336,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<style>
-    .minutes-list-modern .minute-row{
-    width: calc(33% - 12px) !important;
-    flex: 0 0 calc(33% - 12px);
-}
-.minutes-list-modern{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-</style>
 
 <?php get_footer(); ?>
