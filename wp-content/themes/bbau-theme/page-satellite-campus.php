@@ -344,7 +344,8 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
     color: #fff;
-    width: 340px;
+    width: 100%;
+    max-width: 340px;
 }
 
 
@@ -422,23 +423,28 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     opacity: 0.6;
 }
 
-@media (min-width: 991px) and (max-width: 1200px) {
+@media(max-width: 1200px) {
     .sc-osd-card {
         width: auto !important;
     }
 }
 
-.sc-contact-mini {
-    .c-line {
-        width: 30px;
-        height: 2px;
-        background: var(--sc-gold);
-        margin: 10px 0 15px;
+@media (max-width: 992px) {
+    .sc-leadership-slider-mobile {
+        width: 100%;
+        min-width: 0;
+        padding: 0 8px 28px;
+        overflow: hidden;
     }
 
-@media (max-width: 991px) {
+    .sc-leadership-slider-mobile .slick-list { overflow: visible; }
+    .sc-leadership-slider-mobile .slick-slide { padding: 0 5px; }
+    .sc-leadership-slider-mobile .slick-dots { bottom: 0; }
+
     .sc-osd-card {
-        margin: 0 10px;
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
         background: #fff;
         border-radius: 20px;
         overflow: hidden;
@@ -459,7 +465,6 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     .sc-hero-card h1 {
         font-size: 2rem;
     }
-}
 }
 
 
@@ -485,14 +490,15 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 <script type="text/javascript">
 jQuery(document).ready(function($) {
     function initLeadershipSlider() {
-        if ($(window).width() < 991) {
+        if ($(window).width() < 992) {
             if (!$('.sc-leadership-slider-mobile').hasClass('slick-initialized')) {
                 $('.sc-leadership-slider-mobile').slick({
                     dots: true,
                     infinite: false,
                     speed: 300,
                     slidesToShow: 1,
-                    centerMode: true,
+                    slidesToScroll: 1,
+                    centerMode: false,
                     
                 });
             }

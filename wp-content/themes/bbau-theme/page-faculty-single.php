@@ -358,7 +358,6 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                                     <thead>
                                         <tr>
                                             <th>Membership Name</th>
-                                            <th>Order No.</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                         </tr>
@@ -368,9 +367,6 @@ if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 2
                                         <tr>
                                             <td class="fw-bold" data-label="Name">
                                                 <?php echo esc_html($mem['name']); ?>
-                                            </td>
-                                            <td data-label="Order No.">
-                                                <?php echo !empty($mem['order_no']) ? esc_html($mem['order_no']) : '-'; ?>
                                             </td>
                                             <td data-label="Start Date">
                                                 <?php echo !empty($mem['start_date']) ? date('M d, Y', strtotime($mem['start_date'])) : '-'; ?>
