@@ -152,34 +152,12 @@ get_header();
                         </div>
 
                         <div class="stat-label">
-                            Graduates
+                            No. of Degree Awarded
                         </div>
 
                     </div>
 
-                    <div class="stat-card">
-
-                        <div class="stat-num">
-                            <?php echo esc_html($gold_medals); ?>
-                        </div>
-
-                        <div class="stat-label">
-                            Gold Medals
-                        </div>
-
-                    </div>
-
-                    <div class="stat-card">
-
-                        <div class="stat-num">
-                            <?php echo esc_html($departments); ?>
-                        </div>
-
-                        <div class="stat-label">
-                            Departments
-                        </div>
-
-                    </div>
+                   
 
                 </div>
 
@@ -200,9 +178,7 @@ get_header();
 
                         <?php endif; ?>
 
-                        <div class="card-caption">
-                            Main Ceremony
-                        </div>
+                        
 
                     </div>
 
@@ -219,9 +195,7 @@ get_header();
 
                             <?php endif; ?>
 
-                            <div class="card-caption">
-                                Ceremony Moment
-                            </div>
+                            
 
                         </div>
 
@@ -235,9 +209,7 @@ get_header();
 
                             <?php endif; ?>
 
-                            <div class="card-caption">
-                                Special Event
-                            </div>
+                           
 
                         </div>
 
@@ -257,9 +229,7 @@ get_header();
 
                         <?php endif; ?>
 
-                        <div class="card-caption">
-                            Academic Procession
-                        </div>
+                        
 
                     </div>
 
@@ -273,9 +243,7 @@ get_header();
 
                         <?php endif; ?>
 
-                        <div class="card-caption">
-                            Award Ceremony
-                        </div>
+                        
 
                     </div>
 
@@ -289,10 +257,7 @@ get_header();
 
                         <?php endif; ?>
 
-                        <div class="card-caption">
-                            Celebration Moment
-                        </div>
-
+                       
                     </div>
 
                 </div>
