@@ -663,3 +663,5 @@ add_filter('rank_math/frontend/canonical', function($canonical) {
     }
     return $canonical;
 }, 100);
+
+
