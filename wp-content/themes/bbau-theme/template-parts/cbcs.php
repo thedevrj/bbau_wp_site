@@ -13,8 +13,6 @@ define('BBAU_MEDIA_BASE',  $media_base);
 define('BBAU_CBCS_MAX_PAGES',  6);
 
 function bbau_get_departments() {
-    
-
     $response = wp_remote_get(BBAU_DEPARTMENTS_API, array('timeout' => 10));
     if (is_wp_error($response)) return array();
     $data = json_decode(wp_remote_retrieve_body($response), true);
@@ -25,8 +23,6 @@ function bbau_get_departments() {
 }
 
 function bbau_get_all_cbcs() {
-
-
     $all = array();
     for ($page = 1; $page <= BBAU_CBCS_MAX_PAGES; $page++) {
         $url      = add_query_arg(array('page' => $page), BBAU_CBCS_API);
@@ -182,7 +178,7 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
                 } elseif ($level === 'ug' || $level === 'pg') {
                     $data_level_attr = $level;
                 } else {
-                    $data_level_attr = 'all'; 
+                    $data_level_attr = 'all';
                 }
             ?>
         <div class="cbcs-dept-card" data-dept-id="<?php echo esc_attr($dept_id); ?>"
@@ -263,7 +259,7 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
                 </thead>
                 <tbody class="cbcs-inline-tbody">
                     <tr>
-                        <td colspan="5" class="cbcs-state-row">
+                        <td colspan="6" class="cbcs-state-row">
                             <span class="cbcs-spinner"></span> Loading…
                         </td>
                     </tr>
@@ -318,8 +314,6 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
             const cardLevels = (card.dataset.level || 'all').split(' ');
             const deptId      = parseInt(card.dataset.deptId, 10);
             const deptName    = (card.dataset.deptName || '').toLowerCase();
-
-            // Toggle individual UG/PG badges based on the active level filter
             const ugBadge = card.querySelector('.badge-ug');
             const pgBadge = card.querySelector('.badge-pg');
             if (ugBadge) ugBadge.style.display = (gState.level === 'all' || gState.level === 'ug') ? '' : 'none';
@@ -480,7 +474,7 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
 
         if (!filtered.length) {
             tbody.innerHTML =
-                '<tr><td colspan="5" class="cbcs-state-row cbcs-empty">No courses match your search.</td></tr>';
+                '<tr><td colspan="6" class="cbcs-state-row cbcs-empty">No courses match your search.</td></tr>';
             pagDiv.style.display = 'none';
             return;
         }
@@ -497,16 +491,16 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
             const level = classifyCode(code);
             const levelLabel = level === 'ug' ? 'UG' : (level === 'pg' ? 'PG' : '—');
             const levelClass = level === 'ug' ? 'badge-ug' : (level === 'pg' ? 'badge-pg' : 'badge-na');
-            const syllabus = r.syllabus ;
+            const syllabus = r.syllabus;
             return '<tr class="' + (i % 2 === 0 ? 'row-even' : 'row-odd') + '">' +
-                '<td class="col-code"><span class="code-chip">' + esc(code) + '</span></td>' +
-                '<td class="col-title">' + esc(title) + '</td>' +
-                '<td class="col-level"><span class="cbcs-level-badge ' + levelClass + '">' + levelLabel +
+                '<td class="col-code" data-label="Code"><span class="code-chip">' + esc(code) + '</span></td>' +
+                '<td class="col-title" data-label="Course Title">' + esc(title) + '</td>' +
+                '<td class="col-level" data-label="Level"><span class="cbcs-level-badge ' + levelClass + '">' + levelLabel +
                 '</span></td>' +
-                '<td class="col-sem">Sem&nbsp;' + esc(String(sem)) + '</td>' +
-                '<td class="col-credits"><span class="credit-pill">' + esc(String(credits)) +
+                '<td class="col-sem" data-label="Semester">Sem&nbsp;' + esc(String(sem)) + '</td>' +
+                '<td class="col-credits" data-label="Credits"><span class="credit-pill">' + esc(String(credits)) +
                 '&nbsp;</span></td>' +
-                '<td class="col-syllabus">' + (syllabus ? '<a href="'+ (syllabus.startsWith('/') ? mediaBase.replace(/\/$/, '') + syllabus : esc(syllabus)) +'" class="link-new credit-pill" data-code="' + esc(code) + '" target="_blank">View</a>' : '—') + '</td>' +
+                '<td class="col-syllabus" data-label="Syllabus">' + (syllabus ? '<a href="'+ (syllabus.startsWith('/') ? mediaBase.replace(/\/$/, '') + syllabus : esc(syllabus)) +'" class="link-new credit-pill" data-code="' + esc(code) + '" target="_blank" rel="noopener">View</a>' : '—') + '</td>' +
                 '</tr>';
         }).join('');
 
@@ -649,7 +643,7 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
     color: #8B1A1A;
 }
 
-/* Level tabs */
+
 .cbcs-level-tabs {
     display: flex;
     gap: 4px;
@@ -681,7 +675,6 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
     box-shadow: 0 2px 8px rgba(139, 26, 26, .28);
 }
 
-/* Select */
 .cbcs-select-wrap {
     position: relative;
 }
@@ -755,6 +748,10 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
     grid-auto-rows: auto;
     gap: 18px;
     align-items: start;
+}
+
+.cbcs-dept-grid > * {
+    min-width: 0;
 }
 
 .cbcs-inline-row {
@@ -1051,7 +1048,7 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
 
 .cbcs-table .col-title {
     text-align: left;
-    color: #fffff;
+    color: #333;
     font-weight: 500;
 }
 
@@ -1061,7 +1058,7 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
 
 .cbcs-table .col-sem {
     text-align: center;
-    color: #fffff;
+    color: #333;
 }
 
 .cbcs-table .col-credits {
@@ -1231,9 +1228,175 @@ foreach ($courses_by_dept as $dept_id => $dept_courses) {
     }
 }
 
+/* ================= Mobile (480px and below) ================= */
 @media (max-width: 480px) {
+
+   
+    .cbcs-filter-bar {
+        padding: 14px;
+        gap: 14px;
+        margin-top: 18px;
+        margin-bottom: 18px;
+        border-radius: 12px;
+    }
+
+    .cbcs-filter-group,
+    .cbcs-filter-group-grow {
+        width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .cbcs-select-wrap,
+    .cbcs-search-wrap {
+        width: 100%;
+    }
+
+    .cbcs-select,
+    .cbcs-search-input {
+        width: 100%;
+        min-width: 0;
+        font-size: 16px; 
+    }
+
+    .cbcs-level-tabs {
+        width: 100%;
+    }
+
+    .cbcs-level-btn {
+        flex: 1;
+        padding: 9px 6px;
+        font-size: .8rem;
+    }
+
     .cbcs-dept-grid {
         grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .cbcs-dept-card {
+        border-width: 3px;
+        min-height: 0;
+    }
+
+    .cbcs-dept-card-head h4 {
+        font-size: .95rem;
+        min-height: 0;
+    }
+
+    .cbcs-dept-card:hover {
+        transform: none; 
+    }
+
+    .cbcs-view-btn {
+        padding: 11px; 
+    }
+
+    .cbcs-inline-wrap {
+        border-radius: 12px;
+    }
+
+    .cbcs-inline-header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 14px;
+    }
+
+    .cbcs-inline-title {
+        font-size: 1rem;
+    }
+
+    .cbcs-inline-header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .cbcs-table-scroll {
+        overflow-x: visible;
+    }
+
+    .cbcs-table,
+    .cbcs-table tbody,
+    .cbcs-table tr,
+    .cbcs-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .cbcs-table thead {
+        display: none; 
+    }
+
+    .cbcs-table tbody tr {
+        padding: 10px 14px;
+        border-bottom: 2px solid #f0e8d8;
+    }
+
+    .cbcs-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .cbcs-table td,
+    .cbcs-table .col-code,
+    .cbcs-table .col-title,
+    .cbcs-table .col-level,
+    .cbcs-table .col-sem,
+    .cbcs-table .col-credits,
+    .cbcs-table .col-syllabus {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        text-align: right;
+        padding: 7px 0;
+        border-bottom: 1px dashed #f0e8d8;
+        background: transparent !important;
+    }
+
+    .cbcs-table td:last-child {
+        border-bottom: none;
+    }
+
+    .cbcs-table td::before {
+        content: attr(data-label);
+        flex-shrink: 0;
+        font-size: .68rem;
+        font-weight: 700;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+        color: #8B1A1A;
+        text-align: left;
+    }
+
+    /* Title gets its own full-width line */
+    .cbcs-table .col-title {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .cbcs-table td.cbcs-state-row {
+        display: block;
+        text-align: center;
+        padding: 28px 14px !important;
+    }
+
+    .cbcs-table td.cbcs-state-row::before {
+        content: none;
+    }
+
+
+    .cbcs-pagination {
+        padding: 12px 8px;
+        gap: 3px;
+    }
+
+    .cbcs-page-btn {
+        min-width: 34px;
+        height: 34px;
+        padding: 0 6px;
+        font-size: .78rem;
     }
 }
 </style>
