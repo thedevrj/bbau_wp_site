@@ -28,10 +28,11 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
             <div class="breadcrumb-wrap">
                 <?php get_template_part('template-parts/breadcrumb'); ?>
             </div>
-            <a href="/foundation-course/" class="fc-back-btn">
+            <a href="/foundation-course/" class="d-none d-lg-block fc-back-btn">
                 <i class="fa-solid fa-arrow-left me-2"></i> View Courses Directory
             </a>
         </div>
+        <?php get_template_part('menu/menu'); ?>
 
         <?php if (!empty($courses)): ?>
         <div class="row g-4">

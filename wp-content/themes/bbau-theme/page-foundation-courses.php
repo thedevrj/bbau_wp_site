@@ -22,6 +22,7 @@ if (!is_wp_error($courses_res) && wp_remote_retrieve_response_code($courses_res)
 <div class="admissions-portal py-5">
     <div class="container">
         <?php get_template_part('template-parts/breadcrumb'); ?>
+        <?php get_template_part('menu/menu'); ?>
 
         <!-- INTRO & STATS -->
         <div class="row align-items-center mb-5 g-4">
