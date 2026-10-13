@@ -24,7 +24,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
 <div class="satellite-campus-portal">
 
-    
+
     <div class="sc-hero" style="background-image: url('<?php echo esc_url($banner); ?>');">
         <div class="sc-hero-overlay">
             <div class="sc-hero-card">
@@ -80,7 +80,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
                 </aside>
             </div>
-           
+
             <div class="col-lg-8">
 
                 <section class="sc-section mb-5">
@@ -127,8 +127,6 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 </div>
 
 <style>
-
-
 :root {
     --sc-midnight: #0f172a;
     --sc-slate: #1e293b;
@@ -267,12 +265,12 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     border-radius: 18px;
     display: flex;
     align-items: stretch;
-  
+
     gap: 20px;
     text-decoration: none !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
-   
+
 }
 
 .sc-dept-card:hover {
@@ -311,7 +309,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     font-weight: 700;
     color: var(--sc-midnight);
     margin: 0 0 15px;
-   
+
 }
 
 .sc-view-link {
@@ -325,7 +323,7 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
     opacity: 0.8;
     margin-top: auto;
     white-space: nowrap;
-  
+
 }
 
 .sc-count-badge {
@@ -359,17 +357,12 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
 .sc-osd-photo {
     width: 180px;
-    
     height: 180px;
-  
     margin: 0 auto 20px;
-   
     border-radius: 50%;
-  
     overflow: hidden;
     background: #1e293b;
     border: 3px solid var(--sc-gold);
-    
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -395,14 +388,14 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
 
 .sc-osd-body {
     padding: 10px 20px 15px;
-   
+
     text-align: center;
 }
 
 .sc-osd-body h3 {
     font-family: 'Merriweather', serif;
     font-size: 1.3rem;
-  
+
     font-weight: 700;
     margin-bottom: 5px;
 }
@@ -437,15 +430,19 @@ if (!is_wp_error($depts_res) && wp_remote_retrieve_response_code($depts_res) ===
         overflow: hidden;
     }
 
-    .sc-leadership-slider-mobile .slick-list { overflow: visible; }
-    .sc-leadership-slider-mobile .slick-slide { padding: 0 5px; }
-    .sc-leadership-slider-mobile .slick-dots { bottom: 0; }
-
+    .sc-leadership-slider-mobile .slick-list {
+        overflow: hidden;
+    }
+    .sc-leadership-slider-mobile .slick-slide {
+        padding: 0 5px;
+    }
+    .sc-leadership-slider-mobile .slick-dots {
+        bottom: 0;
+    }
     .sc-osd-card {
         width: 100%;
         max-width: 340px;
         margin: 0 auto;
-        background: #fff;
         border-radius: 20px;
         overflow: hidden;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
@@ -499,7 +496,7 @@ jQuery(document).ready(function($) {
                     slidesToShow: 1,
                     slidesToScroll: 1,
                     centerMode: false,
-                    
+
                 });
             }
         } else {
