@@ -234,9 +234,22 @@ $media_base = getenv('DJANGO_MEDIA_URL');
 <script>
 function toggleModal(id, show) {
     const modal = document.getElementById(id);
+    if (!modal) return;
     if (show) modal.classList.add('active');
     else modal.classList.remove('active');
 }
+
+// Global session & inactivity helpers available across all templates
+window.isSessionActive = function() {
+    const user = localStorage.getItem('portal_user');
+    if (!user) return false;
+    const lastActivity = parseInt(localStorage.getItem('portal_last_activity') || '0', 10);
+    return (Date.now() - lastActivity) < (10 * 60 * 1000);
+};
+
+window.getPortalUser = function() {
+    return window.isSessionActive() ? localStorage.getItem('portal_user') : null;
+};
 
 document.addEventListener('DOMContentLoaded', function() {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -245,6 +258,49 @@ document.addEventListener('DOMContentLoaded', function() {
     const authApiBase = apiBase.replace('/api/v1/', '');
     let firstLoginOldPassword = '';
     let firstLoginUsername = '';
+
+    const INACTIVITY_LIMIT_MS = 10 * 60 * 1000; // 10 minutes of inactivity
+
+    function recordActivity() {
+        if (localStorage.getItem('portal_user')) {
+            localStorage.setItem('portal_last_activity', String(Date.now()));
+        }
+    }
+
+    // Throttle activity recording to at most once every 10 seconds
+    let lastRecorded = 0;
+    function onUserInteraction() {
+        const now = Date.now();
+        if (now - lastRecorded > 10000) {
+            lastRecorded = now;
+            recordActivity();
+        }
+    }
+
+    ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'click'].forEach(evt => {
+        window.addEventListener(evt, onUserInteraction, { passive: true });
+    });
+
+    async function performLogout(reason) {
+        localStorage.removeItem('portal_user');
+        localStorage.removeItem('portal_last_activity');
+        toggleModal('login-modal', false);
+        toggleModal('password-modal', false);
+
+        try {
+            await fetch(`${authApiBase}/portal/logout/`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'X-CSRFToken': document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1] || ''
+                }
+            });
+        } catch (e) {
+            // Ignore network errors during logout
+        } finally {
+            document.dispatchEvent(new Event('portalAuthStatusChanged'));
+        }
+    }
 
     // Handle Login Submit
     const loginForm = document.getElementById('staff-login-form');
@@ -276,6 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
 
                     localStorage.setItem('portal_user', data.username);
+                    localStorage.setItem('portal_last_activity', String(Date.now()));
                     toggleModal('login-modal', false);
                     document.dispatchEvent(new Event('portalAuthStatusChanged'));
                 } else {
@@ -305,7 +362,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-
             try {
                 const res = await fetch(`${authApiBase}/portal/api/change-password/`, {
                     method: 'POST',
@@ -323,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (res.ok) {
                     firstLoginOldPassword = '';
                     localStorage.setItem('portal_user', firstLoginUsername);
-
+                    localStorage.setItem('portal_last_activity', String(Date.now()));
                     toggleModal('password-modal', false);
                     document.dispatchEvent(new Event('portalAuthStatusChanged'));
                 } else {
@@ -338,23 +394,66 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle Global Logout
+    // Handle Global Logout button click
     document.addEventListener('click', function(e) {
         if (e.target.matches('.btn-auth-logout') || e.target.closest('.btn-auth-logout')) {
-            fetch(`${authApiBase}/portal/logout/`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'X-CSRFToken': document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1] || ''
-                }
-            }).finally(() => {
-                localStorage.removeItem('portal_user');
-                document.dispatchEvent(new Event('portalAuthStatusChanged'));
-            });
+            performLogout('manual');
         }
         if (e.target.matches('.btn-auth-trigger') || e.target.closest('.btn-auth-trigger')) {
             toggleModal('login-modal', true);
         }
     });
+
+    // Check Inactivity and Maintain Active Session
+    async function checkInactivityAndMaintainSession() {
+        const user = localStorage.getItem('portal_user');
+        if (!user) return;
+
+        const lastActivity = parseInt(localStorage.getItem('portal_last_activity') || '0', 10);
+        const elapsed = Date.now() - lastActivity;
+
+        // If inactive for 10 minutes or more, auto logout
+        if (elapsed >= INACTIVITY_LIMIT_MS) {
+            await performLogout('inactivity');
+            return;
+        }
+
+        // Only if the user IS active, check session and refresh if nearing access token expiry
+        try {
+            const res = await fetch(`${authApiBase}/portal/api/session/`, {
+                credentials: 'include'
+            });
+
+            if (!res.ok) {
+                // Access token expired, attempt silent token refresh because user is active
+                const refreshRes = await fetch(`${authApiBase}/api/v1/token/refresh/`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+
+                if (refreshRes.ok) {
+                    document.dispatchEvent(new Event('portalAuthStatusChanged'));
+                } else {
+                    // Tokens cannot be refreshed (revoked or refresh expired) -> Logout
+                    await performLogout('expired');
+                }
+            }
+        } catch (e) {
+            // Network error, ignore until next check
+        }
+    }
+
+    // Initialize last_activity if not set
+    if (localStorage.getItem('portal_user') && !localStorage.getItem('portal_last_activity')) {
+        localStorage.setItem('portal_last_activity', String(Date.now()));
+    }
+
+    // Verify session immediately on page load
+    checkInactivityAndMaintainSession();
+
+    // Check inactivity every 15 seconds
+    setInterval(checkInactivityAndMaintainSession, 15000);
 });
 </script>

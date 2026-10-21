@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const minutesContainer = document.getElementById('minutes-container');
 
     function updateAuthButtons() {
-        const user = localStorage.getItem('portal_user');
+        const user = getPortalUser();
         if (user) {
             btnLogin.style.display = 'none';
             btnLogout.style.display = 'inline-flex';
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const privateBadge = min.is_private ?
                     '<span class="badge" style="background:#8B1A1A; color:#fff; font-size:0.6rem; padding:3px 6px; margin-left:10px; border-radius:4px;"><i class="fa-solid fa-lock"></i> Private</span>' :
                     '';
-                const isLoggedIn = !!localStorage.getItem('portal_user');
+                const isLoggedIn = isSessionActive();
 
                 if (min.is_private && !isLoggedIn) {
                     html += `
