@@ -226,22 +226,98 @@ document.addEventListener('DOMContentLoaded', function() {
         window.history.replaceState({ page }, '', url);
     }
 
+    /* ── Inactivity & Auth UI ──────────────────────────────── */
+    const INACTIVITY_LIMIT_MS = 10 * 60 * 1000; // 10 minutes
+
+    function recordActivity() {
+        if (localStorage.getItem('portal_user')) {
+            localStorage.setItem('portal_last_activity', String(Date.now()));
+        }
+    }
+
+    let lastRecorded = 0;
+    function onUserInteraction() {
+        const now = Date.now();
+        if (now - lastRecorded > 10000) {
+            lastRecorded = now;
+            recordActivity();
+        }
+    }
+
+    ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'click'].forEach(evt => {
+        window.addEventListener(evt, onUserInteraction, { passive: true });
+    });
+
+    function isSessionActive() {
+        const user = localStorage.getItem('portal_user');
+        if (!user) return false;
+        const lastActivity = parseInt(localStorage.getItem('portal_last_activity') || '0', 10);
+        return (Date.now() - lastActivity) < INACTIVITY_LIMIT_MS;
+    }
+
+    async function performLogout() {
+        localStorage.removeItem('portal_user');
+        localStorage.removeItem('portal_last_activity');
+        authUnlogged.classList.remove('d-none');
+        authLogged.classList.add('d-none');
+        tabPrivate.classList.add('d-none');
+        currentTab = 'all';
+        tabPrivate.classList.remove('btn-success');
+        try {
+            await fetch(`${apiBase.replace('/api/v1', '')}/portal/logout/`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'X-CSRFToken': document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1] || ''
+                }
+            });
+        } catch (e) {} finally {
+            fetchNotices();
+        }
+    }
+
     async function updateAuthUI() {
         const user = localStorage.getItem('portal_user');
+        const active = isSessionActive();
+
+        if (user && !active) {
+            await performLogout();
+            return;
+        }
+
         let authenticated = false;
-        try {
-            const session = await fetch(`${apiBase.replace('/api/v1', '')}/portal/api/session/`, {
-                credentials: 'include'
-            });
-            authenticated = session.ok;
-        } catch (e) {}
+        if (active) {
+            try {
+                const session = await fetch(`${apiBase.replace('/api/v1', '')}/portal/api/session/`, {
+                    credentials: 'include'
+                });
+                authenticated = session.ok;
+            } catch (e) {}
+
+            // Only attempt silent refresh if the user is actively using the page
+            if (!authenticated && user) {
+                try {
+                    const refreshRes = await fetch(`${apiBase.replace('/api/v1', '')}/api/v1/token/refresh/`, {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({})
+                    });
+                    authenticated = refreshRes.ok;
+                } catch (e) {}
+                if (!authenticated) {
+                    await performLogout();
+                    return;
+                }
+            }
+        }
         if (authenticated) {
             authUnlogged.classList.add('d-none');
             authLogged.classList.remove('d-none');
             tabPrivate.classList.remove('d-none');
             loggedUsername.textContent = user;
             currentTab = 'private';
-            tabPrivate.classList.remove('btn-success');
+            tabPrivate.classList.add('btn-success');
         } else {
             authUnlogged.classList.remove('d-none');
             authLogged.classList.add('d-none');
@@ -419,9 +495,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // The backend owns the HttpOnly auth cookie.
                 localStorage.setItem('portal_user', data.username);
+                localStorage.setItem('portal_last_activity', String(Date.now()));
                 toggleModal('login-modal', false);
-                updateAuthUI();
-                fetchNotices();
+                await updateAuthUI();
+                await fetchNotices();
             } else {
                 loginError.textContent = resData.detail || "Login failed.";
                 loginError.classList.remove('d-none');
@@ -473,11 +550,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Password changed! Now log them in properly
                 firstLoginOldPassword = '';
                 localStorage.setItem('portal_user', firstLoginUsername);
+                localStorage.setItem('portal_last_activity', String(Date.now()));
 
                 toggleModal('password-modal', false);
                 updateAuthUI();
                 fetchNotices();
-                alert("Security updated! Welcome to the Portal.");
+                alert("Password updated! Welcome to the Portal.");
             } else {
                 const data = await res.json();
                 passError.textContent = data.detail || "Update failed.";
@@ -490,21 +568,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('btn-logout').addEventListener('click', async () => {
-        try {
-            await fetch(`${apiBase.replace('/api/v1', '')}/portal/logout/`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'X-CSRFToken': document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1] || ''
-                }
-            });
-        } finally {
-            localStorage.removeItem('portal_user');
-            currentTab = 'all';
-            updateAuthUI();
-            fetchNotices();
-        }
+        await performLogout();
     });
+
+    setInterval(() => {
+        if (localStorage.getItem('portal_user') && !isSessionActive()) {
+            performLogout();
+        }
+    }, 15000);
 
     window.addEventListener('popstate', () => {
         const pageFromUrl = parseInt(new URLSearchParams(window.location.search).get('page'), 10);
@@ -549,8 +620,11 @@ document.addEventListener('DOMContentLoaded', function() {
         render();
     });
 
-    updateAuthUI();
-    fetchNotices();
+    async function init() {
+        await updateAuthUI();
+        await fetchNotices();
+    }
+    init();
 });
 
 function toggleModal(id, show) {
