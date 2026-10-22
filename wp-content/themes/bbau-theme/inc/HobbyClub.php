@@ -4,9 +4,9 @@
  */
 
 get_header();
-$img_base  = get_template_directory_uri() . '/assets/images/hobby-club/';
-$chair_img = $img_base . '/wp-content/uploads/2026/03/drsang.jpg';
-$secy_img  = $img_base . '/wp-content/uploads/2026/03/Subhash-Photo.jpg';
+$upload    = wp_get_upload_dir();
+$chair_img = $upload['baseurl'] . '/2026/03/drsang.jpg';
+$secy_img  = $upload['baseurl'] . '2026/03/Subhash-Photo.jpg';
 $sop_links = array(
     array( 'label' => 'SoP of Hobby Club',                 'url' => '#' ),
     array( 'label' => 'Hobby Club Guidelines',             'url' => '#' ),
