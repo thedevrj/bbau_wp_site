@@ -5,8 +5,8 @@
 
 get_header();
 $img_base  = get_template_directory_uri() . '/assets/images/hobby-club/';
-$chair_img = $img_base . 'drsang.png';
-$secy_img  = $img_base . 'subhash-misra.jpg';
+$chair_img = $img_base . '/wp-content/uploads/2026/03/drsang.jpg';
+$secy_img  = $img_base . '/wp-content/uploads/2026/03/Subhash-Photo.jpg';
 $sop_links = array(
     array( 'label' => 'SoP of Hobby Club',                 'url' => '#' ),
     array( 'label' => 'Hobby Club Guidelines',             'url' => '#' ),
@@ -132,8 +132,6 @@ $categories = array(
                     </div>
                 </div>
             <?php endforeach; ?>
-
-            <!-- Bottom notes -->
             <div class="hc-notes">
                 <div class="hc-n1">
                     <span class="hc-nicon">&#128196;</span>
