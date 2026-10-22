@@ -96,6 +96,24 @@ $media_base = getenv('DJANGO_MEDIA_URL');
                             </div>
                         </div>
 
+                         <!-- Group: Placement  -->
+                        <div class="vault-group mb-2">
+                            <button class="vault-group-header" data-bs-toggle="collapse"
+                                data-bs-target="#grp-placement">
+                                <i class="fa-solid fa-graduation-cap me-2"></i> Placement
+                                <i class="fa-solid fa-chevron-down vault-chevron ms-auto"></i>
+                            </button>
+                            <div class="collapse" id="grp-placement">
+                                <div class="vault-group-body">
+                                    <a href="#" class="vault-nav-item" data-endpoint="/placement/archived-placement-notices/"
+                                        data-label="Placement Notices Archive">
+                                        <i class="fa-solid fa-bell me-2 text-muted"></i> Placement Notices
+                                    </a>
+                                   
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Group: Authorities -->
                         <div class="vault-group mb-2">
                             <button class="vault-group-header" data-bs-toggle="collapse" data-bs-target="#grp-auth">
@@ -570,16 +588,86 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    /* ── Auth UI ───────────────────────────────────────────── */
+    /* ── Inactivity & Auth UI ──────────────────────────────── */
+    const INACTIVITY_LIMIT_MS = 10 * 60 * 1000; // 10 minutes
+
+    function recordActivity() {
+        if (localStorage.getItem('portal_user')) {
+            localStorage.setItem('portal_last_activity', String(Date.now()));
+        }
+    }
+
+    let lastRecorded = 0;
+    function onUserInteraction() {
+        const now = Date.now();
+        if (now - lastRecorded > 10000) {
+            lastRecorded = now;
+            recordActivity();
+        }
+    }
+
+    ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'click'].forEach(evt => {
+        window.addEventListener(evt, onUserInteraction, { passive: true });
+    });
+
+    function isSessionActive() {
+        const user = localStorage.getItem('portal_user');
+        if (!user) return false;
+        const lastActivity = parseInt(localStorage.getItem('portal_last_activity') || '0', 10);
+        return (Date.now() - lastActivity) < INACTIVITY_LIMIT_MS;
+    }
+
+    async function performLogout() {
+        localStorage.removeItem('portal_user');
+        localStorage.removeItem('portal_last_activity');
+        lockedScreen.classList.remove('d-none');
+        openScreen.classList.add('d-none');
+        try {
+            await fetch(`${djangoBase}/portal/logout/`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'X-CSRFToken': document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1] || ''
+                }
+            });
+        } catch (e) {}
+    }
+
     async function updateAuthUI() {
         const user = localStorage.getItem('portal_user');
+        const active = isSessionActive();
+
+        if (user && !active) {
+            await performLogout();
+            return;
+        }
+
         let authenticated = false;
-        try {
-            const session = await fetch(`${djangoBase}/portal/api/session/`, {
-                credentials: 'include'
-            });
-            authenticated = session.ok;
-        } catch (e) {}
+        if (active) {
+            try {
+                const session = await fetch(`${djangoBase}/portal/api/session/`, {
+                    credentials: 'include'
+                });
+                authenticated = session.ok;
+            } catch (e) {}
+
+            // Only attempt silent refresh if the user is actively using the page
+            if (!authenticated && user) {
+                try {
+                    const refreshRes = await fetch(`${djangoBase}/api/v1/token/refresh/`, {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({})
+                    });
+                    authenticated = refreshRes.ok;
+                } catch (e) {}
+                if (!authenticated) {
+                    await performLogout();
+                    return;
+                }
+            }
+        }
 
         if (authenticated) {
             lockedScreen.classList.add('d-none');
@@ -868,6 +956,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 localStorage.setItem('portal_user', fd.username);
+                localStorage.setItem('portal_last_activity', String(Date.now()));
                 toggleModal('login-modal', false);
                 updateAuthUI();
             } else {
@@ -880,18 +969,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.getElementById('btn-logout').addEventListener('click', () => {
-        fetch(`${djangoBase}/portal/logout/`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'X-CSRFToken': document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1] || ''
-            }
-        }).finally(() => {
-            localStorage.removeItem('portal_user');
-            updateAuthUI();
-        });
+    document.getElementById('btn-logout').addEventListener('click', async () => {
+        await performLogout();
     });
+
+    setInterval(() => {
+        if (localStorage.getItem('portal_user') && !isSessionActive()) {
+            performLogout();
+        }
+    }, 15000);
 
     updateAuthUI();
 });
